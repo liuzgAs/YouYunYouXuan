@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fd464e</color>
+    <color name="colorPrimaryDark">#fd464e</color>
+    <color name="colorAccent">#fd464e</color>
+    <color name="basic_color">#fd464e</color>
+    <color name="basic_color01">#fd464e</color>
+    <color name="ligthBasic">#f98388</color>
+    <color name="light_black">#444444</color>
+    <color name="gray_white">#dcd5d5</color>
+    <color name="background">#f2f2f2</color>
+    <color name="line_gray">#f0f0f0</color>
+    <color name="text_gray">#999999</color>
+    <color name="tran">#00ffffff</color>
+    <color name="tranblack">#66000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="tranwhite">#66ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="basicText">#fd464e</color>
+    <color name="zhiShiQi">#fd464e</color>
+    <color name="lightWhite">#cfcfcf</color>
+</resources>

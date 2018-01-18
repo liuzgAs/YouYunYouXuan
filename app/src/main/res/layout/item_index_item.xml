@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/imageImg"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/shangpin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageImg"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/shape_tranblack_5dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="五星会员省8元"
+        android:textColor="@color/white"
+        android:textSize="@dimen/litterText" />
+
+    <ImageView
+        android:id="@+id/imageZiYin"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/imageImg"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/ziyin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageImg"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/imageZiYin"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="黑管双头口红黑管双头口红黑管双头口红黑管双头口红"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/bigText"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textDes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageZiYin"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="定制黑管双头口红刷头定制黑管双头口红刷头定制黑管双头口红刷头"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/litterText" />
+
+    <TextView
+        android:id="@+id/textPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDes"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:text="¥69"
+        android:textColor="@color/basic_color"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/textCutPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textPrice"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/textPrice"
+        android:text="¥89"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/moreLitterText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textCutPrice"
+        android:layout_alignParentRight="true"
+        android:text="已售4535"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/moreLitterText" />
+</RelativeLayout>
