@@ -16,12 +16,19 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.SpaceDecoration;
+import com.rd.PageIndicatorView;
+import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
+import com.vip.uyux.adapter.BannerAdapter;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.util.BannerSettingUtil;
+import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.IndexBannerImgHolderView;
+import com.vip.uyux.viewholder.IndexItemViewHolder;
 import com.vip.uyux.viewholder.IndexViewHolder;
 
 import java.util.ArrayList;
@@ -95,9 +102,16 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+            private View viewViewPager;
+            private RecyclerArrayAdapter<Integer> adapterZiYin;
+            private EasyRecyclerView recyclerZiYinView;
             private TextView textZhiShiQi;
             private ConvenientBanner banner;
             private List<Integer> bannerBeanList = new ArrayList<>();
+            private ViewPager id_viewpager;
+            private PageIndicatorView mPageIndicatorView;
+            private List<Integer> stringList = new ArrayList<>();
+
             @Override
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.header_index, null);
@@ -124,7 +138,62 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
                     }
                 });
+                recyclerZiYinView = view.findViewById(R.id.recyclerView);
+                initZiYinRecycler();
+                id_viewpager = view.findViewById(R.id.id_viewpager);
+                new BannerSettingUtil(id_viewpager,(int)getActivity().getResources().getDimension(R.dimen.leftAndRight),false).set();
+                mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
+                mPageIndicatorView.setAnimationType(AnimationType.WORM);
+                mPageIndicatorView.setCount(3);
+                id_viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        mPageIndicatorView.setSelection(position % 3);
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+                stringList.add(R.mipmap.viewpagerindex);
+                stringList.add(R.mipmap.viewpagerindex);
+                stringList.add(R.mipmap.viewpagerindex);
+                stringList.add(R.mipmap.viewpagerindex);
+                viewViewPager = view.findViewById(R.id.viewViewPager);
                 return view;
+            }
+
+            /**
+             * 初始化recyclerview
+             */
+            private void initZiYinRecycler() {
+                recyclerZiYinView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                recyclerZiYinView.setAdapter(adapterZiYin = new RecyclerArrayAdapter<Integer>(getContext()) {
+
+                    @Override
+                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                        int layout = R.layout.item_ziyin;
+                        return new IndexItemViewHolder(parent, layout);
+                    }
+                });
+                SpaceDecoration spaceDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(12, getContext()));
+                spaceDecoration.setPaddingEdgeSide(false);
+                recyclerZiYinView.addItemDecoration(spaceDecoration);
+                adapterZiYin.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+//                Intent intent = new Intent();
+//                intent.setClass(getContext(), CheLiangXQActivity.class);
+//                intent.putExtra(Constant.IntentKey.ID,data.getCar().get(position).getId());
+//                getContext().startActivity(intent);
+                    }
+                });
             }
 
             @Override
@@ -143,6 +212,17 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     }
                 } else {
                     textZhiShiQi.setText("0/0");
+                }
+                adapterZiYin.clear();
+                adapterZiYin.addAll(DataProvider.getPersonList(1));
+                if (stringList != null) {
+                    if (stringList.size() > 0) {
+                        viewViewPager.setVisibility(View.VISIBLE);
+                        id_viewpager.setAdapter(new BannerAdapter(getActivity(), stringList));
+                        id_viewpager.setCurrentItem(50);
+                    } else {
+                        viewViewPager.setVisibility(View.GONE);
+                    }
                 }
             }
         });

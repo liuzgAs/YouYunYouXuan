@@ -14,5 +14,6 @@
     <dimen name="leftAndRight">12dp</dimen>
     <dimen name="top">5dp</dimen>
     <dimen name="side_letter_bar_width">36dp</dimen>
-    <dimen name="indexBannerHeight">180dp</dimen>
+    <dimen name="indexBannerHeight">170dp</dimen>
+    <dimen name="itemIndexWidth">220dp</dimen>
 </resources>
