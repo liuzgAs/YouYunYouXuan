@@ -31,6 +31,20 @@
 
     <TextView
         android:textStyle="bold"
+        android:id="@+id/textPrice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textDes"
+        android:layout_alignBottom="@+id/textDes"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:text="¥25"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/MoreBigText" />
+
+    <TextView
+        android:textStyle="bold"
         android:id="@+id/textPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -53,8 +53,8 @@ public class WoDeYuEActivity extends ZjbBaseActivity implements View.OnClickList
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("不可提现佣金");
-        list.add("已评价");
-        list.add("待评价");
+        list.add("团队推广");
+        list.add("消费返佣");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         tablayout.setupWithViewPager(viewPager);
         tablayout.removeAllTabs();
@@ -108,9 +108,9 @@ public class WoDeYuEActivity extends ZjbBaseActivity implements View.OnClickList
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new YongJinFragment(1);
+                    return new YongJinFragment(0);
                 case 1:
-                    return new YongJinFragment(2);
+                    return new YongJinFragment(1);
                 default:
                     return new YongJinFragment(1);
             }

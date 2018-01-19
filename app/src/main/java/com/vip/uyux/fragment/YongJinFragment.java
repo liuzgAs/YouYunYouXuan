@@ -88,7 +88,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_chong_zhi_mx;
-                return new XiaoFeiMXViewHolder(parent, layout);
+                return new XiaoFeiMXViewHolder(parent, layout,type);
             }
 
         });
