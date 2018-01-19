@@ -87,7 +87,9 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     protected void initViews() {
         ((TextView) mInflate.findViewById(R.id.textViewTitle)).setText("优选推荐");
         imageBack.setVisibility(View.GONE);
-        viewBar.setPadding(0, ScreenUtils.getStatusBarHeight(getActivity()), 0, 0);
+        ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
+        layoutParams.height =ScreenUtils.getStatusBarHeight(getActivity())+(int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        viewBar.setLayoutParams(layoutParams);
         initRecycler();
     }
 

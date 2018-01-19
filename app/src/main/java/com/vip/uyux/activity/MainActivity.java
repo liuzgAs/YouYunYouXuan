@@ -13,6 +13,7 @@ import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.ShouYeFragment;
 import com.vip.uyux.fragment.TuiJianFragment;
+import com.vip.uyux.fragment.WoDeFragment;
 import com.vip.uyux.util.BackHandlerHelper;
 import com.vip.uyux.util.UpgradeUtils;
 
@@ -24,7 +25,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
             TuiJianFragment.class,
             ShouYeFragment.class,
             ShouYeFragment.class,
-            ShouYeFragment.class,
+            WoDeFragment.class,
     };
     private int[] imgRes = new int[]{
             R.drawable.selector_item01,

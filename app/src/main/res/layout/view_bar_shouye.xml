@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/viewBar"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/tranblack"
+    android:fitsSystemWindows="true"
+    android:gravity="bottom"
+    android:minHeight="?attr/actionBarSize"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/youyunyouxuan" />
+
+        <ImageView
+            android:id="@+id/imageSearch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/leftAndRight"
+            android:src="@mipmap/search_index" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/imageSearch"
+            android:paddingLeft="10dp"
+            android:src="@mipmap/xiaoxi_index" />
+    </RelativeLayout>
+    <TextView
+        android:background="@color/line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+</LinearLayout>

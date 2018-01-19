@@ -84,7 +84,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void initViews() {
-        viewBar.setPadding(0, ScreenUtils.getStatusBarHeight(getActivity()), 0, 0);
+        ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
+        layoutParams.height =ScreenUtils.getStatusBarHeight(getActivity())+(int)DpUtils.convertDpToPixel(50,getActivity());
+        viewBar.setLayoutParams(layoutParams);
         initRecycler();
     }
 
