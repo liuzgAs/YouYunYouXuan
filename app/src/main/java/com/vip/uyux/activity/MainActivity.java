@@ -12,6 +12,7 @@ import com.vip.uyux.application.MyApplication;
 import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.ShouYeFragment;
+import com.vip.uyux.fragment.TuiJianFragment;
 import com.vip.uyux.util.BackHandlerHelper;
 import com.vip.uyux.util.UpgradeUtils;
 
@@ -20,7 +21,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
     private String[] tabsItem = new String[5];
     private Class[] fragment = new Class[]{
             ShouYeFragment.class,
-            ShouYeFragment.class,
+            TuiJianFragment.class,
             ShouYeFragment.class,
             ShouYeFragment.class,
             ShouYeFragment.class,

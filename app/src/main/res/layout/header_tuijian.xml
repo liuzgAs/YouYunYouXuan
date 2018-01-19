@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/image0000"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/tuijiantouxiang" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/image0000"
+            android:maxLines="1"
+            android:text="周志成优选推荐"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/normal_textsize" />
+
+        <ImageView
+            android:id="@+id/image0001"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:src="@mipmap/right_red" />
+
+        <ImageView
+            android:id="@+id/image0002"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/image0001"
+            android:src="@mipmap/shengluehao" />
+
+        <ImageView
+            android:layout_marginRight="8dp"
+            android:id="@+id/image0003"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/image0002"
+            android:src="@mipmap/youxuantuijian_tuijian" />
+
+        <ImageView
+            android:layout_marginRight="5dp"
+            android:id="@+id/image0004"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/image0003"
+            android:src="@mipmap/youxuantuijian_tuijian" />
+
+        <ImageView
+            android:layout_marginRight="5dp"
+            android:id="@+id/image0005"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/image0004"
+            android:src="@mipmap/youxuantuijian_tuijian" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/viewViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/id_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:clipChildren="false" />
+
+        <com.rd.PageIndicatorView
+            app:piv_selectedColor="@color/basic_color"
+            app:piv_unselectedColor="@color/background"
+            app:piv_radius="3dp"
+            android:id="@+id/pageIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/haowutuijian"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/image0200"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp" />
+        <TextView
+            android:layout_toLeftOf="@+id/image0200"
+            android:background="@color/basic_color"
+            android:layout_width="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_height="1dp" />
+        <TextView
+            android:layout_toRightOf="@+id/image0200"
+            android:background="@color/basic_color"
+            android:layout_width="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_height="1dp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@mipmap/viewpagerindex"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:id="@+id/image0300"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+        <TextView
+            android:ellipsize="end"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/bigText"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:text="黑管双头口红刷黑管双头口红刷黑管双头口红刷黑管双头口红刷黑管双头口红刷"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_below="@+id/image0300"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textHaoWuTJTitle"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/image0400"
+            android:src="@mipmap/tuijiantouxiang"
+            android:layout_width="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_height="30dp" />
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/image0400"
+            android:textSize="@dimen/litterText"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/text_gray"
+            android:text="李晓媛"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="1dp"
+        android:layout_height="10dp" />
+</LinearLayout>

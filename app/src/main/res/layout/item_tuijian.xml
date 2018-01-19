@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/layout_selector_white_system_gray"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@mipmap/tuijianimg"
+        android:scaleType="centerCrop"
+        android:layout_width="160dp"
+        android:id="@+id/imageImg"
+        android:layout_height="100dp" />
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_toRightOf="@+id/imageImg"
+        android:textSize="@dimen/bigText"
+        android:layout_alignTop="@+id/imageImg"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/light_black"
+        android:layout_marginTop="2dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="@dimen/bigText"
+        android:layout_marginBottom="2dp"
+        android:text="¥69"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_alignBottom="@id/imageImg"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/textPrice"
+        android:textColor="@color/basic_color"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_alignBottom="@+id/imageImg"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="2dp"
+        android:src="@mipmap/dinazan"
+        android:layout_width="15dp"
+        android:id="@+id/imageDianZan"
+        android:layout_height="15dp" />
+    <TextView
+        android:id="@+id/textDianZan"
+        android:layout_width="wrap_content"
+        android:text="56"
+        android:layout_alignBottom="@+id/imageDianZan"
+        android:layout_toRightOf="@+id/imageDianZan"
+        android:layout_marginLeft="5dp"
+        android:textSize="@dimen/litterText"
+        android:textColor="@color/text_gray"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textName"
+        android:layout_alignBottom="@+id/imageImg"
+        android:layout_marginBottom="2dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:textSize="@dimen/litterText"
+        android:text="虫大大"
+        android:textColor="@color/text_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
