@@ -11,6 +11,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.application.MyApplication;
 import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.fragment.FenLeiFragment;
 import com.vip.uyux.fragment.ShouYeFragment;
 import com.vip.uyux.fragment.TuiJianFragment;
 import com.vip.uyux.fragment.WoDeFragment;
@@ -23,7 +24,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
     private Class[] fragment = new Class[]{
             ShouYeFragment.class,
             TuiJianFragment.class,
-            ShouYeFragment.class,
+            FenLeiFragment.class,
             ShouYeFragment.class,
             WoDeFragment.class,
     };

@@ -12,10 +12,11 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5a60607ef43e4844b800014a" />
-        <activity android:name=".activity.MainActivity"
+
+        <activity
+            android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppThemeNoTranslucent">
-        </activity>
+            android:theme="@style/AppThemeNoTranslucent"></activity>
         <activity
             android:name=".activity.DengLuActivity"
             android:launchMode="singleTask" />
@@ -37,6 +38,7 @@
         <activity
             android:name=".activity.YinDaoActivity"
             android:launchMode="singleTop" />
+        <activity android:name=".fragment.FenLeiFragment"></activity>
     </application>
 
 </manifest>
