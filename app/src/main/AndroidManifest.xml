@@ -16,7 +16,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppThemeNoTranslucent"></activity>
+            android:theme="@style/AppThemeNoTranslucent" />
         <activity
             android:name=".activity.DengLuActivity"
             android:launchMode="singleTask" />
@@ -38,7 +38,8 @@
         <activity
             android:name=".activity.YinDaoActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".fragment.FenLeiFragment"></activity>
+        <activity android:name=".fragment.FenLeiFragment" />
+        <activity android:name=".activity.WoDeYuEActivity"></activity>
     </application>
 
 </manifest>

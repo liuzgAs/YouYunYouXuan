@@ -1,6 +1,7 @@
 package com.vip.uyux.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vip.uyux.R;
+import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.util.ScreenUtils;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WoDeFragment extends ZjbBaseFragment {
+public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListener {
 
 
     private View mInflate;
@@ -65,11 +67,24 @@ public class WoDeFragment extends ZjbBaseFragment {
 
     @Override
     protected void setListeners() {
-
+        mInflate.findViewById(R.id.viewYuE).setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent =new Intent();
+        switch (view.getId()){
+            case R.id.viewYuE:
+                intent.setClass(getActivity(),WoDeYuEActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }
