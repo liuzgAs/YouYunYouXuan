@@ -12,6 +12,7 @@ import com.vip.uyux.application.MyApplication;
 import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.FenLeiFragment;
+import com.vip.uyux.fragment.GouWuCheFragment;
 import com.vip.uyux.fragment.ShouYeFragment;
 import com.vip.uyux.fragment.TuiJianFragment;
 import com.vip.uyux.fragment.WoDeFragment;
@@ -25,7 +26,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
             ShouYeFragment.class,
             TuiJianFragment.class,
             FenLeiFragment.class,
-            ShouYeFragment.class,
+            GouWuCheFragment.class,
             WoDeFragment.class,
     };
     private int[] imgRes = new int[]{

@@ -264,6 +264,8 @@ public class Constant {
         public static final String ZHI_FU_CG = "zhiFuCG";
         public static final String USERINFO = "userInfo";
         public static final String address = "address";
+        public static final String QUAN_XUAN = "quanXuan";
+        public static final String SHUA_XIN_CAR = "shuaXinCar";
     }
 
 

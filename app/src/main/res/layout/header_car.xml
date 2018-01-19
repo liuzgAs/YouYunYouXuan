@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="2个优选活动"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/text_gray"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right"
+            android:layout_width="wrap_content"
+            android:id="@+id/image0000"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/basic_color"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/image0000"
+            android:background="@drawable/shape_noright_top15dp"
+            android:layout_width="wrap_content"
+            android:text="全场满赠"
+            android:textSize="@dimen/moreLitterText"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>
