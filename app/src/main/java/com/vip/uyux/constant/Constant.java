@@ -5,8 +5,8 @@ package com.vip.uyux.constant;
  * Created by zjb on 2016/6/12.
  */
 public class Constant {
-    public static String HOST = "http://api.qizhibq.com";
-    public static String WEB_HOST = "http://www.qizhibq.com/api";
+    public static String HOST = "http://api.uyux.vip";
+    public static String WEB_HOST = "http://api.uyux.vip";
     /**
      * 判断数据是否有改变
      */

@@ -10,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5a60607ef43e4844b800014a" />
         <activity android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppThemeNoTranslucent">
