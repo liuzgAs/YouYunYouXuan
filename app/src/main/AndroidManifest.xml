@@ -39,7 +39,8 @@
             android:name=".activity.YinDaoActivity"
             android:launchMode="singleTop" />
         <activity android:name=".fragment.FenLeiFragment" />
-        <activity android:name=".activity.WoDeYuEActivity"></activity>
+        <activity android:name=".activity.WoDeYuEActivity" />
+        <activity android:name=".activity.ChanPinXQActivity"></activity>
     </application>
 
 </manifest>

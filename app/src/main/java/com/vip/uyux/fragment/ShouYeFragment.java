@@ -1,6 +1,7 @@
 package com.vip.uyux.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,7 @@ import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.adapter.BannerAdapter;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.provider.DataProvider;
@@ -85,7 +87,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     @Override
     protected void initViews() {
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
-        layoutParams.height =ScreenUtils.getStatusBarHeight(getActivity())+(int)DpUtils.convertDpToPixel(50,getActivity());
+        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) DpUtils.convertDpToPixel(50, getActivity());
         viewBar.setLayoutParams(layoutParams);
         initRecycler();
     }
@@ -143,7 +145,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 recyclerZiYinView = view.findViewById(R.id.recyclerView);
                 initZiYinRecycler();
                 id_viewpager = view.findViewById(R.id.id_viewpager);
-                new BannerSettingUtil(id_viewpager,(int)getActivity().getResources().getDimension(R.dimen.leftAndRight),false).set();
+                new BannerSettingUtil(id_viewpager, (int) getActivity().getResources().getDimension(R.dimen.leftAndRight), false).set();
                 mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
                 mPageIndicatorView.setAnimationType(AnimationType.WORM);
                 mPageIndicatorView.setCount(3);
@@ -190,10 +192,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 adapterZiYin.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-//                Intent intent = new Intent();
-//                intent.setClass(getContext(), CheLiangXQActivity.class);
-//                intent.putExtra(Constant.IntentKey.ID,data.getCar().get(position).getId());
-//                getContext().startActivity(intent);
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity(), ChanPinXQActivity.class);
+                        getContext().startActivity(intent);
                     }
                 });
             }
