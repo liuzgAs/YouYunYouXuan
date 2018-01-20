@@ -47,4 +47,5 @@ dependencies {
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.7'
     compile 'com.contrarywind:Android-PickerView:3.2.6'
     compile 'q.rorbin:VerticalTabLayout:1.2.4'
+    compile 'com.iarcuschin:simpleratingbar:0.1.2'
 }

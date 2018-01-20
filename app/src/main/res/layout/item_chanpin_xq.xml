@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/tuijiantouxiang"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:id="@+id/imageImg"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:layout_toRightOf="@+id/imageImg"
+            android:text="李园园"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:id="@+id/textName"
+            android:layout_height="wrap_content" />
+        <com.vip.uyux.customview.MyFontTextView
+            android:textSize="@dimen/moreLitterText"
+            android:paddingRight="5dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/textName"
+            android:textColor="@color/white"
+            android:text="LV2"
+            android:background="@drawable/shape_noright_top15dp_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/ratingbar_pingfeng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            app:srb_drawBorderEnabled="false"
+            app:srb_fillColor="@color/basic_yellow"
+            app:srb_isIndicator="true"
+            app:srb_numberOfStars="5"
+            app:srb_pressedFillColor="@color/basic_yellow"
+            app:srb_rating="4"
+            app:srb_starBackgroundColor="@color/text_gray"
+            app:srb_starSize="15dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:text="2018-1-20 12:00&#8194;&#8194;盒装：500毫升"
+        android:textSize="@dimen/moreLitterText"
+        android:textColor="@color/text_gray"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:text="很好用，我很喜欢。润奢光彩美肤。很好用，我很喜欢。润奢光彩美肤。很好用，我很喜欢。润奢光彩美肤。很好用，我很喜欢。润奢光彩美肤。"
+        android:textSize="@dimen/normal_textsize"
+        android:textColor="@color/light_black"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <com.vip.uyux.customview.HorizontalView
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.jude.easyrecyclerview.EasyRecyclerView
+            app:scrollbars="none"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_empty="@layout/view_empty"
+            app:layout_progress="@layout/view_progress"
+            app:scrollbarStyle="insideOverlay" />
+    </com.vip.uyux.customview.HorizontalView>
+</LinearLayout>

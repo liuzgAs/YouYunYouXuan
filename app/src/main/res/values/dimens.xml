@@ -16,4 +16,5 @@
     <dimen name="side_letter_bar_width">36dp</dimen>
     <dimen name="indexBannerHeight">170dp</dimen>
     <dimen name="itemIndexWidth">220dp</dimen>
+    <dimen name="chanPinXQBanner">200dp</dimen>
 </resources>
