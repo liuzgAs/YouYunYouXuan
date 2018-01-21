@@ -50,6 +50,18 @@
         <activity
             android:name=".activity.FenXiangZXActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.GeRenXXActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.GuanLiYHKActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.XinZengYHKActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.DiZhiGLActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
+import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.util.ScreenUtils;
@@ -70,6 +71,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     protected void setListeners() {
         mInflate.findViewById(R.id.viewYuE).setOnClickListener(this);
         mInflate.findViewById(R.id.imageFenXiangZX).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewGeRen).setOnClickListener(this);
     }
 
     @Override
@@ -81,6 +83,10 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent =new Intent();
         switch (view.getId()){
+            case R.id.viewGeRen:
+                intent.setClass(getActivity(), GeRenXXActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageFenXiangZX:
                 intent.setClass(getActivity(), FenXiangZXActivity.class);
                 startActivity(intent);

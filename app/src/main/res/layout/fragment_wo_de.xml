@@ -41,36 +41,42 @@
                             android:layout_height="match_parent"
                             android:layout_above="@+id/textChengZhangZhi"
                             android:layout_weight="1">
-
-                            <com.vip.uyux.customview.CircleImageView
-                                android:id="@+id/imageHead"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
+                            <RelativeLayout
+                                android:id="@+id/viewGeRen"
                                 android:layout_centerVertical="true"
-                                android:layout_marginLeft="15dp"
-                                android:src="@mipmap/touxiang_mine" />
-
-                            <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignTop="@+id/imageHead"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_toRightOf="@+id/imageHead"
-                                android:text="李达达"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/MoreBigText" />
+                                android:layout_height="wrap_content">
+                                <com.vip.uyux.customview.CircleImageView
+                                    android:id="@+id/imageHead"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="15dp"
+                                    android:src="@mipmap/touxiang_mine" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignBottom="@+id/imageHead"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_toRightOf="@+id/imageHead"
-                                android:text="ID:123465465"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/normal_textsize" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignTop="@+id/imageHead"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_toRightOf="@+id/imageHead"
+                                    android:text="李达达"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/MoreBigText" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBottom="@+id/imageHead"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@+id/imageHead"
+                                    android:text="ID:123465465"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/normal_textsize" />
+                            </RelativeLayout>
+
 
 
                         </RelativeLayout>
