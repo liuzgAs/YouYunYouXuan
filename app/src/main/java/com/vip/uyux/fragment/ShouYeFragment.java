@@ -57,6 +57,10 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private List<IndexHome.BannerBean> bannerList;
     private List<IndexHome.Banner2Bean> banner2BeanList;
     private String num1;
+    private String num2;
+    private String num3;
+    private String num4;
+    private List<IndexHome.RecomBean> recomBeanList;
 
     public ShouYeFragment() {
         // Required empty public constructor
@@ -117,9 +121,12 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+            private TextView textNum3;
+            private TextView textNum4;
+            private LinearLayout viewNum2;
             private LinearLayout viewNum;
             private View viewViewPager;
-            private RecyclerArrayAdapter<Integer> adapterZiYin;
+            private RecyclerArrayAdapter<IndexHome.RecomBean> adapterZiYin;
             private EasyRecyclerView recyclerZiYinView;
             private TextView textZhiShiQi;
             private ConvenientBanner banner;
@@ -174,6 +181,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 });
                 viewViewPager = view.findViewById(R.id.viewViewPager);
                 viewNum = view.findViewById(R.id.viewNum);
+                viewNum2 = view.findViewById(R.id.viewNum2);
+                textNum3 = view.findViewById(R.id.textNum3);
+                textNum4 = view.findViewById(R.id.textNum4);
                 return view;
             }
 
@@ -182,7 +192,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
              */
             private void initZiYinRecycler() {
                 recyclerZiYinView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                recyclerZiYinView.setAdapter(adapterZiYin = new RecyclerArrayAdapter<Integer>(getContext()) {
+                recyclerZiYinView.setAdapter(adapterZiYin = new RecyclerArrayAdapter<IndexHome.RecomBean>(getContext()) {
 
                     @Override
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
@@ -220,8 +230,12 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 } else {
                     textZhiShiQi.setText("0/0");
                 }
-                adapterZiYin.clear();
-                adapterZiYin.addAll(DataProvider.getPersonList(1));
+                if (recomBeanList!=null){
+                    adapterZiYin.clear();
+                    adapterZiYin.addAll(recomBeanList);
+                }else {
+
+                }
                 if (banner2BeanList != null) {
                     if (banner2BeanList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
@@ -231,16 +245,32 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                         viewViewPager.setVisibility(View.GONE);
                     }
                 }
-                LogUtil.LogShitou("ShouYeFragment--onBindView", ""+num1);
-                if (!TextUtils.isEmpty(num1)){
-                    num1 = num1+"1";
+                LogUtil.LogShitou("ShouYeFragment--onBindView", "" + num1);
+                if (!TextUtils.isEmpty(num1)) {
+                    viewNum.removeAllViews();
                     String[] split = num1.split("");
-                    for (int i = 0; i < split.length; i++) {
-                        LogUtil.LogShitou("ShouYeFragment--onBindView", ""+split[i]);
+                    for (int i = 1; i < split.length; i++) {
+                        LogUtil.LogShitou("ShouYeFragment--onBindView", "" + split[i]);
                         TextView viewNum1 = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.index_num, null);
                         viewNum1.setText(split[i]);
                         viewNum.addView(viewNum1);
                     }
+                }
+                if (!TextUtils.isEmpty(num2)) {
+                    viewNum2.removeAllViews();
+                    String[] split = num2.split("");
+                    for (int i = 1; i < split.length; i++) {
+                        LogUtil.LogShitou("ShouYeFragment--onBindView", "" + split[i]);
+                        TextView viewNum1 = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.index_num, null);
+                        viewNum1.setText(split[i]);
+                        viewNum2.addView(viewNum1);
+                    }
+                }
+                if (!TextUtils.isEmpty(num3)) {
+                    textNum3.setText("共" + num3 + "件上架新商品");
+                }
+                if (!TextUtils.isEmpty(num4)) {
+                    textNum4.setText("共" + num4 + "件爆款推荐");
                 }
             }
         });
@@ -272,7 +302,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
         return new OkObject(params, url);
     }
@@ -289,10 +319,14 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                         bannerList = indexHome.getBanner();
                         banner2BeanList = indexHome.getBanner2();
                         num1 = indexHome.getNum1();
+                        num2 = indexHome.getNum2();
+                        num3 = indexHome.getNum3();
+                        num4 = indexHome.getNum4();
+                        recomBeanList = indexHome.getRecom();
                         List<IndexHome.DataBean> dataBeanList = indexHome.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
-                    } else if (indexHome.getStatus()== 3) {
+                    } else if (indexHome.getStatus() == 3) {
                         MyDialog.showReLoginDialog(getActivity());
                     } else {
                         showError(indexHome.getInfo());
@@ -306,6 +340,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             public void onError() {
                 showError("网络出错");
             }
+
             /**
              * 错误显示
              * @param msg

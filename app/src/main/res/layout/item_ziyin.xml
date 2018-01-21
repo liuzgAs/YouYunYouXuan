@@ -21,6 +21,7 @@
             android:src="@mipmap/shangpin" />
 
         <TextView
+            android:id="@+id/textVipDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageImg"
@@ -45,6 +46,7 @@
             android:src="@mipmap/ziyin" />
 
         <TextView
+            android:id="@+id/textTitle"
             android:layout_marginRight="@dimen/leftAndRight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,13 +76,13 @@
             android:textSize="@dimen/litterText" />
 
         <TextView
-            android:layout_marginLeft="@dimen/leftAndRight"
             android:id="@+id/textPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textDes"
+            android:layout_alignStart="@+id/textDes"
             android:layout_below="@+id/textDes"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="9dp"
             android:text="¥69"
             android:textColor="@color/basic_color"
             android:textSize="18dp" />
@@ -97,6 +99,7 @@
             android:textSize="@dimen/moreLitterText" />
 
         <TextView
+            android:id="@+id/textSaleNum"
             android:layout_marginRight="@dimen/leftAndRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
