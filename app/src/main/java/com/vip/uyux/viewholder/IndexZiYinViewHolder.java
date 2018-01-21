@@ -1,0 +1,32 @@
+package com.vip.uyux.viewholder;
+
+import android.graphics.Paint;
+import android.support.annotation.LayoutRes;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.vip.uyux.R;
+
+/**
+ * Created by Administrator on 2017/3/28 0028.
+ */
+public class IndexZiYinViewHolder extends BaseViewHolder<Integer> {
+
+    private final TextView textCutPrice;
+    private final ImageView imageImg;
+
+    public IndexZiYinViewHolder(ViewGroup parent, @LayoutRes int res) {
+        super(parent, res);
+        textCutPrice = $(R.id.textCutPrice);
+        imageImg = $(R.id.imageImg);
+    }
+
+    @Override
+    public void setData(Integer data) {
+        super.setData(data);
+        textCutPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+    }
+
+}

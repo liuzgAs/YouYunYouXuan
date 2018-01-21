@@ -219,6 +219,10 @@ public class Constant {
          * 分类
          */
         public static final String INDEX_CATE = "/Index/cate";
+        /**
+         * 首页
+         */
+        public static final String INDEX_HOME = "/Index/home";
     }
 
     public static class IntentKey {

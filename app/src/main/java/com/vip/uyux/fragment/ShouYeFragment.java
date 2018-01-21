@@ -23,17 +23,24 @@ import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.adapter.BannerAdapter;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.IndexHome;
+import com.vip.uyux.model.OkObject;
 import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.BannerSettingUtil;
 import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.IndexBannerImgHolderView;
-import com.vip.uyux.viewholder.IndexItemViewHolder;
 import com.vip.uyux.viewholder.IndexViewHolder;
+import com.vip.uyux.viewholder.IndexZiYinViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,7 +52,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private View mInflate;
     private View viewBar;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Integer> adapter;
+    private RecyclerArrayAdapter<IndexHome.DataBean> adapter;
+    private List<IndexHome.BannerBean> bannerList;
+    private List<IndexHome.Banner2Bean> banner2BeanList;
 
     public ShouYeFragment() {
         // Required empty public constructor
@@ -98,7 +107,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private void initRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexHome.DataBean>(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_index;
@@ -111,17 +120,12 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             private EasyRecyclerView recyclerZiYinView;
             private TextView textZhiShiQi;
             private ConvenientBanner banner;
-            private List<Integer> bannerBeanList = new ArrayList<>();
             private ViewPager id_viewpager;
             private PageIndicatorView mPageIndicatorView;
-            private List<Integer> stringList = new ArrayList<>();
 
             @Override
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.header_index, null);
-                bannerBeanList.add(R.mipmap.shangpin);
-                bannerBeanList.add(R.mipmap.shangpin);
-                bannerBeanList.add(R.mipmap.shangpin);
                 banner = view.findViewById(R.id.banner);
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
@@ -134,7 +138,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
                     @Override
                     public void onPageSelected(int position) {
-                        textZhiShiQi.setText((position + 1) + "/" + bannerBeanList.size());
+                        textZhiShiQi.setText((position + 1) + "/" + bannerList.size());
                     }
 
                     @Override
@@ -165,10 +169,6 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
                     }
                 });
-                stringList.add(R.mipmap.viewpagerindex);
-                stringList.add(R.mipmap.viewpagerindex);
-                stringList.add(R.mipmap.viewpagerindex);
-                stringList.add(R.mipmap.viewpagerindex);
                 viewViewPager = view.findViewById(R.id.viewViewPager);
                 return view;
             }
@@ -183,7 +183,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     @Override
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                         int layout = R.layout.item_ziyin;
-                        return new IndexItemViewHolder(parent, layout);
+                        return new IndexZiYinViewHolder(parent, layout);
                     }
                 });
                 SpaceDecoration spaceDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(12, getContext()));
@@ -201,15 +201,15 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
             @Override
             public void onBindView(View headerView) {
-                if (bannerBeanList != null) {
-                    if (bannerBeanList.size() > 0) {
-                        LogUtil.LogShitou("CheLiangXQActivity--bannerBeanList", "" + bannerBeanList.size());
+                if (bannerList != null) {
+                    if (bannerList.size() > 0) {
+                        LogUtil.LogShitou("CheLiangXQActivity--bannerBeanList", "" + bannerList.size());
                         banner.setPages(new CBViewHolderCreator() {
                             @Override
                             public Object createHolder() {
-                                return new IndexBannerImgHolderView(bannerBeanList);
+                                return new IndexBannerImgHolderView(bannerList);
                             }
-                        }, bannerBeanList);
+                        }, bannerList);
                     } else {
                         textZhiShiQi.setText("0/0");
                     }
@@ -218,10 +218,10 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 }
                 adapterZiYin.clear();
                 adapterZiYin.addAll(DataProvider.getPersonList(1));
-                if (stringList != null) {
-                    if (stringList.size() > 0) {
+                if (banner2BeanList != null) {
+                    if (banner2BeanList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
-                        id_viewpager.setAdapter(new BannerAdapter(getActivity(), stringList));
+                        id_viewpager.setAdapter(new BannerAdapter(getActivity(), banner2BeanList));
                         id_viewpager.setCurrentItem(50);
                     } else {
                         viewViewPager.setVisibility(View.GONE);
@@ -245,14 +245,72 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     @Override
     protected void initData() {
         onRefresh();
-
     }
 
-    int page = 1;
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.INDEX_HOME;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        return new OkObject(params, url);
+    }
 
     @Override
     public void onRefresh() {
-        adapter.clear();
-        adapter.addAll(DataProvider.getPersonList(page));
+        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("首页", s);
+                try {
+                    IndexHome indexHome = GsonUtils.parseJSON(s, IndexHome.class);
+                    if (indexHome.getStatus() == 1) {
+                        bannerList = indexHome.getBanner();
+                        banner2BeanList = indexHome.getBanner2();
+                        List<IndexHome.DataBean> dataBeanList = indexHome.getData();
+                        adapter.clear();
+                        adapter.addAll(dataBeanList);
+                    } else if (indexHome.getStatus()== 3) {
+                        MyDialog.showReLoginDialog(getActivity());
+                    } else {
+                        showError(indexHome.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 }

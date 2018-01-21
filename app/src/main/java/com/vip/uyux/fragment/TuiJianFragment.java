@@ -24,7 +24,7 @@ import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
 import com.vip.uyux.activity.ChanPinXQActivity;
-import com.vip.uyux.adapter.BannerAdapter;
+import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.provider.DataProvider;
 import com.vip.uyux.util.BannerSettingUtil;
@@ -209,7 +209,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 if (stringList != null) {
                     if (stringList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
-                        id_viewpager.setAdapter(new BannerAdapter(getActivity(), stringList));
+                        id_viewpager.setAdapter(new BannerTuiJianAdapter(getActivity(), stringList));
                         id_viewpager.setCurrentItem(50);
                     } else {
                         viewViewPager.setVisibility(View.GONE);

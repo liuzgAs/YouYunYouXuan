@@ -6,15 +6,16 @@ import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.vip.uyux.R;
+import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.util.GlideApp;
 
 import java.util.List;
 
-public class IndexBannerImgHolderView implements Holder<Integer> {
+public class IndexBannerImgHolderView implements Holder<IndexHome.BannerBean> {
     private ImageView imageView;
-    private List<Integer> bannerBeanList;
+    private List<IndexHome.BannerBean> bannerBeanList;
 
-    public IndexBannerImgHolderView(List<Integer> bannerBeanList) {
+    public IndexBannerImgHolderView(List<IndexHome.BannerBean> bannerBeanList) {
         this.bannerBeanList = bannerBeanList;
     }
 
@@ -26,10 +27,10 @@ public class IndexBannerImgHolderView implements Holder<Integer> {
     }
 
     @Override
-    public void UpdateUI(final Context context, final int position, Integer data) {
+    public void UpdateUI(final Context context, final int position, IndexHome.BannerBean data) {
         GlideApp.with(context)
                 .asBitmap()
-                .load(data)
+                .load(data.getImg())
                 .placeholder(R.mipmap.ic_empty)
                 .into(imageView);
     }

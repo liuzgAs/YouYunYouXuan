@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.vip.uyux.R;
-import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.util.GlideApp;
 
 import java.util.List;
@@ -18,12 +17,12 @@ import java.util.List;
  *
  * @author ZhangJieBo
  */
-public class BannerAdapter extends PagerAdapter{
+public class BannerTuiJianAdapter extends PagerAdapter{
 
     private Context mContext;
-    private  List<IndexHome.Banner2Bean> imgList;
+    private  List<Integer> imgList;
 
-    public BannerAdapter(Context context, List<IndexHome.Banner2Bean> imgList) {
+    public BannerTuiJianAdapter(Context context, List<Integer> imgList) {
         this.mContext = context;
         this.imgList=imgList;
     }
@@ -51,7 +50,7 @@ public class BannerAdapter extends PagerAdapter{
             if (imgList.size()>0){
                 GlideApp.with(mContext)
                         .asBitmap()
-                        .load(imgList.get(position%imgList.size()).getImg())
+                        .load(imgList.get(position%imgList.size()))
                         .placeholder(R.mipmap.ic_empty)
                         .into(imageImg);
             }

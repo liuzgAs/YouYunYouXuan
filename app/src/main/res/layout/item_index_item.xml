@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <ImageView
+    <com.vip.uyux.customview.YuanJiaoImageView
         android:id="@+id/imageImg"
         android:layout_width="match_parent"
         android:layout_height="160dp"
@@ -12,6 +12,7 @@
         android:src="@mipmap/shangpin" />
 
     <TextView
+        android:id="@+id/textVipDes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageImg"
@@ -27,6 +28,7 @@
         android:textSize="@dimen/litterText" />
 
     <ImageView
+        android:layout_marginRight="5dp"
         android:id="@+id/imageZiYin"
         android:layout_width="30dp"
         android:layout_height="20dp"
@@ -35,10 +37,10 @@
         android:src="@mipmap/ziyin" />
 
     <TextView
+        android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageImg"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/imageZiYin"
         android:ellipsize="end"
@@ -83,6 +85,7 @@
         android:textSize="@dimen/moreLitterText" />
 
     <TextView
+        android:id="@+id/textSaleNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textCutPrice"
