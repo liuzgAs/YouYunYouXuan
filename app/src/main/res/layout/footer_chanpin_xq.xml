@@ -19,6 +19,7 @@
         app:tabTextColor="@color/light_black" />
 
     <com.jude.easyrecyclerview.EasyRecyclerView
+        android:layout_marginBottom="10dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
