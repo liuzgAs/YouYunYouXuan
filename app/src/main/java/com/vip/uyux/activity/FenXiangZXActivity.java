@@ -1,11 +1,13 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.vip.uyux.R;
 import com.vip.uyux.base.ZjbBaseActivity;
 
-public class FenXiangZXActivity extends ZjbBaseActivity {
+public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,28 @@ public class FenXiangZXActivity extends ZjbBaseActivity {
 
     @Override
     protected void setListeners() {
-
+        findViewById(R.id.viewFenHongZX).setOnClickListener(this);
+        findViewById(R.id.imageBack).setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.viewFenHongZX:
+                Intent intent = new Intent();
+                intent.setClass(this,FenHongZXActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageBack:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 }

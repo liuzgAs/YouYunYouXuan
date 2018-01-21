@@ -20,4 +20,16 @@
     <color name="zhiShiQi">#fd464e</color>
     <color name="lightWhite">#cfcfcf</color>
     <color name="basic_yellow">#febf00</color>
+    <!--波形图-->
+    <color name="hengxian">#ededee</color>
+    <color name="quXian01">#fd464e</color>
+    <color name="quXian0101">#f2afb2</color>
+    <color name="quXian02">#fabe51</color>
+    <color name="quXian0201">#f4ead5</color>
+    <color name="basicLight">#aaf5b5b8</color>
+    <color name="basic">#aafd464e</color>
+    <color name="textColor">#a5a5a6</color>
+    <color name="textColorBlack">#000000</color>
+    <color name="red">#f24747</color>
+    <!--波形图-->
 </resources>
