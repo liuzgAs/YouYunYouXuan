@@ -2,24 +2,32 @@ package com.vip.uyux.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
-import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.IndexCate;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GlideApp;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.AllViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import q.rorbin.verticaltablayout.VerticalTabLayout;
@@ -31,15 +39,16 @@ public class FenLeiFragment extends ZjbBaseFragment {
     private VerticalTabLayout verticalTabLayout;
     private List<String> tabString = new ArrayList<>();
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<List<Integer>> adapter;
+    private RecyclerArrayAdapter<IndexCate.DataBean.ListBean> adapter;
     private int id = 0;
-    private Integer advTop;
+    private String advTop;
     /**
      * 是否点击tablayout刷新
      */
     private boolean isSelect = false;
     private View mInflate;
     private View viewBar;
+    private List<IndexCate.DataBean> dataBeanList;
 
     @Nullable
     @Override
@@ -68,8 +77,8 @@ public class FenLeiFragment extends ZjbBaseFragment {
 
     @Override
     protected void findID() {
-        verticalTabLayout = (VerticalTabLayout) mInflate.findViewById(R.id.verticalTabLayout);
-        recyclerView = (EasyRecyclerView) mInflate.findViewById(R.id.recyclerView);
+        verticalTabLayout =  mInflate.findViewById(R.id.verticalTabLayout);
+        recyclerView =  mInflate.findViewById(R.id.recyclerView);
         viewBar = mInflate.findViewById(R.id.viewBar);
     }
 
@@ -148,10 +157,10 @@ public class FenLeiFragment extends ZjbBaseFragment {
         verticalTabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-                isSelect =true;
+                advTop = dataBeanList.get(position).getImg();
                 adapter.clear();
                 recyclerView.showProgress();
-                onRefresh();
+                adapter.addAll(dataBeanList.get(position).getList());
             }
 
             @Override
@@ -167,12 +176,14 @@ public class FenLeiFragment extends ZjbBaseFragment {
     }
 
     private void initRecycle() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<List<Integer>>(getActivity()) {
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+//        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.grid), 0, 0);
+//        itemDecoration.setDrawLastItem(false);
+//        recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexCate.DataBean.ListBean>(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_fenlei;
+                int layout = R.layout.item_grid_fenlei;
                 return new AllViewHolder(parent, layout);
             }
 
@@ -201,52 +212,109 @@ public class FenLeiFragment extends ZjbBaseFragment {
         });
     }
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.INDEX_CATE;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        return new OkObject(params, url);
+    }
 
     public void onRefresh() {
         recyclerView.showProgress();
-        if (!isSelect){
-            verticalTabLayout.setVisibility(View.VISIBLE);
-            verticalTabLayout.setTabAdapter(new TabAdapter() {
-                @Override
-                public int getCount() {
-                    return tabString.size();
-                }
+        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("分类", s);
+                try {
+                    IndexCate indexCate = GsonUtils.parseJSON(s, IndexCate.class);
+                    if (indexCate.getStatus() == 1) {
+                        dataBeanList = indexCate.getData();
+                        verticalTabLayout.setVisibility(View.VISIBLE);
+                        verticalTabLayout.setTabAdapter(new TabAdapter() {
+                            @Override
+                            public int getCount() {
+                                return dataBeanList.size();
+                            }
 
-                @Override
-                public ITabView.TabBadge getBadge(int position) {
-                    return null;
-                }
+                            @Override
+                            public ITabView.TabBadge getBadge(int position) {
+                                return null;
+                            }
 
-                @Override
-                public ITabView.TabIcon getIcon(int position) {
-                    return new TabView.TabIcon.Builder()
-                            .setIcon(R.drawable.divider_tablayout, R.drawable.divider_tablayout)
-                            .setIconGravity(Gravity.BOTTOM)
-                            .setIconMargin(dp2px(0))
-                            .setIconSize(dp2px(100), dp2px(1))
-                            .build();
-                }
+                            @Override
+                            public ITabView.TabIcon getIcon(int position) {
+                                return new TabView.TabIcon.Builder()
+                                        .setIcon(R.drawable.divider_tablayout, R.drawable.divider_tablayout)
+                                        .setIconGravity(Gravity.BOTTOM)
+                                        .setIconMargin(dp2px(0))
+                                        .setIconSize(dp2px(100), dp2px(1))
+                                        .build();
+                            }
 
-                @Override
-                public ITabView.TabTitle getTitle(int position) {
-                    return new TabView.TabTitle.Builder()
-                            .setContent(tabString.get(position))
-                            .setTextColor(getResources().getColor(R.color.basic_color), getResources().getColor(R.color.light_black))
-                            .setTextSize(13)
-                            .build();
-                }
+                            @Override
+                            public ITabView.TabTitle getTitle(int position) {
+                                return new TabView.TabTitle.Builder()
+                                        .setContent(dataBeanList.get(position).getName())
+                                        .setTextColor(getResources().getColor(R.color.basic_color), getResources().getColor(R.color.light_black))
+                                        .setTextSize(13)
+                                        .build();
+                            }
 
-                @Override
-                public int getBackground(int position) {
-                    return 0;
+                            @Override
+                            public int getBackground(int position) {
+                                return 0;
+                            }
+                        });
+                        if (dataBeanList.size()>0){
+                            adapter.clear();
+                            advTop = dataBeanList.get(0).getImg();
+                            List<IndexCate.DataBean.ListBean> listBeanList = dataBeanList.get(0).getList();
+                            adapter.addAll(listBeanList);
+                        }
+                    } else if (indexCate.getStatus()== 3) {
+                        MyDialog.showReLoginDialog(getActivity());
+                    } else {
+                        showError(indexCate.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
                 }
-            });
-        }
-        isSelect=true;
-        adapter.clear();
-        adapter.add(DataProvider.getPersonList(1));
-        adapter.add(DataProvider.getPersonList(1));
-        adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 
     protected int dp2px(float dp) {

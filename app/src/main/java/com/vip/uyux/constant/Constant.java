@@ -215,6 +215,10 @@ public class Constant {
          * 分享推荐
          */
         public static final String USER_SHARE = "/user/share";
+        /**
+         * 分类
+         */
+        public static final String INDEX_CATE = "/Index/cate";
     }
 
     public static class IntentKey {

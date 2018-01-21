@@ -13,12 +13,5 @@
         android:textColor="@color/light_black"
         android:textSize="@dimen/normal_textsize" />
 
-    <com.vip.uyux.customview.WrapHeightGridView
-        android:layout_marginLeft="@dimen/leftAndRight"
-        android:layout_marginRight="@dimen/leftAndRight"
-        android:numColumns="3"
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

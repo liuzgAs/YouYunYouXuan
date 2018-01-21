@@ -2,38 +2,38 @@ package com.vip.uyux.viewholder;
 
 import android.support.annotation.LayoutRes;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
-import com.vip.uyux.adapter.FenLeiAdapter;
-import com.vip.uyux.customview.WrapHeightGridView;
-
-import java.util.List;
+import com.vip.uyux.model.IndexCate;
+import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class AllViewHolder extends BaseViewHolder<List<Integer>> {
+public class AllViewHolder extends BaseViewHolder<IndexCate.DataBean.ListBean> {
 
 
-    private final WrapHeightGridView gridview;
+    private final ImageView imageImg;
     private final TextView textName;
 
     public AllViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
-        gridview = $(R.id.gridview);
+
         textName = $(R.id.textName);
+        imageImg = $(R.id.imageImg);
     }
 
     @Override
-    public void setData(List<Integer> data) {
+    public void setData(IndexCate.DataBean.ListBean data) {
         super.setData(data);
-        if (getDataPosition()==0){
-            textName.setText("常用分类");
-        }else {
-            textName.setText("专场推荐");
-        }
-        gridview.setAdapter(new FenLeiAdapter(getContext(), data));
+        textName.setText(data.getName());
+        GlideApp.with(getContext())
+                .asBitmap()
+                .load(data.getImg())
+                .placeholder(R.mipmap.ic_empty)
+                .into(imageImg);
     }
 }
