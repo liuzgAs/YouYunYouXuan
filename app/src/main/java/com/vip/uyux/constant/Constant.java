@@ -60,10 +60,6 @@ public class Constant {
          */
         public static final String GOODS_INDEX = "/Goods/index";
         /**
-         * 商品详情
-         */
-        public static final String GOODS_INFO = "/Goods/info";
-        /**
          * 确认订单页
          */
         public static final String ORDER_CREATEORDER = "/order/createOrder";
@@ -223,6 +219,10 @@ public class Constant {
          * 首页
          */
         public static final String INDEX_HOME = "/Index/home";
+        /**
+         * 产品详情
+         */
+        public static final String GOODS_INFO = "/Goods/info";
     }
 
     public static class IntentKey {

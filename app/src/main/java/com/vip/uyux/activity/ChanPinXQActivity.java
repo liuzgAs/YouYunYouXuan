@@ -18,14 +18,22 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
+import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.WrapHeightGridView;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.ChanPinFootViewHolder;
 import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
 import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -193,8 +201,68 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.GOODS_INFO;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        return new OkObject(params, url);
+    }
+
     @Override
     public void onRefresh() {
+        ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("产品详情", s);
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus() == 1) {
+                    } else if (simpleInfo.getStatus()== 3) {
+                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                    } else {
+                        showError(simpleInfo.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
+
+
         adapter.clear();
         adapter.addAll(DataProvider.getPersonList(1));
     }
