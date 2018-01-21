@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context="com.vip.uyux.activity.FenXiangZXActivity">
+
+    <LinearLayout
+        android:id="@+id/viewBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/jianbian_fenxiangzhongxin"
+        android:fitsSystemWindows="true"
+        android:gravity="bottom"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titleHeight">
+
+            <ImageView
+                android:id="@+id/imageBack"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/white_selector"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                android:src="@mipmap/left_white" />
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:maxLength="8"
+                android:text="分享中心"
+                android:textColor="@color/white"
+                android:textSize="@dimen/titleSize"
+                android:textStyle="bold"
+                tools:text="分享中心" />
+
+            <TextView
+                android:id="@+id/textViewRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/white_selector"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/basic_color"
+                android:textSize="@dimen/normal_textsize"
+                tools:text="右边" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/jianbian_fenxiangzhongxin">
+
+        <com.vip.uyux.customview.CircleImageView
+            android:id="@+id/imageImg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/tuijiantouxiang"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageImg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/imageImg"
+            android:text="李达达"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageImg"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/imageImg"
+            android:text="加入时间：2018-1-21 11:31"
+            android:textColor="@color/white"
+            android:textSize="@dimen/litterText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textName"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/textName"
+            android:background="@drawable/shape_noright_top15dp_zhaunjia"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:text="专家"
+            android:textColor="@color/white"
+            android:textSize="@dimen/litterText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textName"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="-2dp"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:background="@drawable/shape_light_red1dp_20dp"
+            android:paddingBottom="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="3dp"
+            android:text="立即升级"
+            android:textColor="@color/white"
+            android:textSize="@dimen/litterText" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/jianbian_fenxiangzhongxin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/shape_white_top15dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <com.vip.uyux.customview.MyFontTextView
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_black"
+                    android:text="0.00"
+                    android:textSize="30dp"
+                    android:id="@+id/textKeTiXian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/textKeTiXian"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:text="可提现佣金"
+                    android:textSize="@dimen/normal_textsize"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <TextView
+                android:background="@color/background"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="1dp"
+                android:layout_height="match_parent" />
+            
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <com.vip.uyux.customview.MyFontTextView
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_black"
+                    android:text="0.00"
+                    android:textSize="30dp"
+                    android:id="@+id/textBuKeTiXian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/textBuKeTiXian"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:text="不可提现佣金"
+                    android:textSize="@dimen/normal_textsize"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <TextView
+                android:background="@color/background"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="1dp"
+                android:layout_height="match_parent" />
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <com.vip.uyux.customview.MyFontTextView
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_black"
+                    android:text="0.00"
+                    android:textSize="30dp"
+                    android:id="@+id/textYuJi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_below="@+id/textYuJi"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:text="预计佣金"
+                    android:textSize="@dimen/normal_textsize"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <com.vip.uyux.customview.MyFontTextView
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="@color/light_black"
+                android:text="0.00"
+                android:textSize="30dp"
+                android:id="@+id/text0300"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/text0300"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:text="分销佣金"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <com.vip.uyux.customview.MyFontTextView
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="@color/light_black"
+                android:text="0"
+                android:textSize="30dp"
+                android:id="@+id/text0301"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/text0301"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:text="分销订单"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <com.vip.uyux.customview.MyFontTextView
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="@color/light_black"
+                android:text="0"
+                android:textSize="30dp"
+                android:id="@+id/text0400"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/text0400"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:text="我的团队"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <com.vip.uyux.customview.MyFontTextView
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="@color/light_black"
+                android:text="0"
+                android:textSize="30dp"
+                android:id="@+id/text0401"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/text0401"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:text="我的客户"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/tuandui"
+                android:layout_width="wrap_content"
+                android:id="@+id/image0400"
+                android:layout_height="25dp" />
+            <TextView
+                android:text="团队邀请"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image0400"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/vipyaoqing"
+                android:layout_width="wrap_content"
+                android:id="@+id/image0401"
+                android:layout_height="25dp" />
+            <TextView
+                android:text="VIP体验邀请"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image0401"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/fenhongzhongxin"
+                android:layout_width="wrap_content"
+                android:id="@+id/image0402"
+                android:layout_height="25dp" />
+            <TextView
+                android:text="分红中心"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image0402"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/xueyuan_fenxiang"
+                android:layout_width="wrap_content"
+                android:id="@+id/image0403"
+                android:layout_height="25dp" />
+            <TextView
+                android:text="优云商学院"
+                android:textSize="@dimen/normal_textsize"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image0403"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.vip.uyux.fragment;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,8 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.CePingXQActivity;
+import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.adapter.BannerAdapter;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.provider.DataProvider;
@@ -250,6 +253,15 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                if (adapter.getViewType(position)==1){
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChanPinXQActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), CePingXQActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         recyclerView.setRefreshListener(this);

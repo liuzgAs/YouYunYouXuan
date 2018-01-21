@@ -167,4 +167,5 @@ public class StringUtil {
         String substring02 = phone.substring(7, phone.length());
         return substring01 + "****" + substring02;
     }
+
 }

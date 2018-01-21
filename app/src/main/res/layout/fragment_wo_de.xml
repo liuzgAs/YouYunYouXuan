@@ -383,6 +383,7 @@
             </LinearLayout>
 
             <com.vip.uyux.customview.ResizableImageView
+                android:id="@+id/imageFenXiangZX"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
