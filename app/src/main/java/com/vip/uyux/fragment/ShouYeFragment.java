@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -39,7 +41,6 @@ import com.vip.uyux.viewholder.IndexBannerImgHolderView;
 import com.vip.uyux.viewholder.IndexViewHolder;
 import com.vip.uyux.viewholder.IndexZiYinViewHolder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private RecyclerArrayAdapter<IndexHome.DataBean> adapter;
     private List<IndexHome.BannerBean> bannerList;
     private List<IndexHome.Banner2Bean> banner2BeanList;
+    private String num1;
 
     public ShouYeFragment() {
         // Required empty public constructor
@@ -115,6 +117,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+            private LinearLayout viewNum;
             private View viewViewPager;
             private RecyclerArrayAdapter<Integer> adapterZiYin;
             private EasyRecyclerView recyclerZiYinView;
@@ -170,6 +173,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     }
                 });
                 viewViewPager = view.findViewById(R.id.viewViewPager);
+                viewNum = view.findViewById(R.id.viewNum);
                 return view;
             }
 
@@ -227,6 +231,17 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                         viewViewPager.setVisibility(View.GONE);
                     }
                 }
+                LogUtil.LogShitou("ShouYeFragment--onBindView", ""+num1);
+                if (!TextUtils.isEmpty(num1)){
+                    num1 = num1+"1";
+                    String[] split = num1.split("");
+                    for (int i = 0; i < split.length; i++) {
+                        LogUtil.LogShitou("ShouYeFragment--onBindView", ""+split[i]);
+                        TextView viewNum1 = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.index_num, null);
+                        viewNum1.setText(split[i]);
+                        viewNum.addView(viewNum1);
+                    }
+                }
             }
         });
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
@@ -273,6 +288,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     if (indexHome.getStatus() == 1) {
                         bannerList = indexHome.getBanner();
                         banner2BeanList = indexHome.getBanner2();
+                        num1 = indexHome.getNum1();
                         List<IndexHome.DataBean> dataBeanList = indexHome.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);

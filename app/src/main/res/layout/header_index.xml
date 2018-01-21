@@ -75,22 +75,13 @@
                 android:textSize="@dimen/moreLitterText" />
 
             <LinearLayout
+                android:id="@+id/viewNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:background="@color/background"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:text="6"
-                    android:textColor="@color/basic_color"
-                    android:textSize="@dimen/normal_textsize" />
             </LinearLayout>
 
             <TextView
