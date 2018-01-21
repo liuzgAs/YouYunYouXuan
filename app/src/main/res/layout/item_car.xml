@@ -24,7 +24,7 @@
         android:layout_toEndOf="@+id/imageXuanZhong"
         android:layout_toRightOf="@+id/imageXuanZhong"
         android:scaleType="centerCrop"
-        android:src="@mipmap/you" />
+        android:src="@mipmap/shangpin" />
 
     <TextView
         android:id="@+id/textName"
