@@ -38,11 +38,18 @@
         <activity
             android:name=".activity.YinDaoActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".fragment.FenLeiFragment" />
-        <activity android:name=".activity.WoDeYuEActivity" />
-        <activity android:name=".activity.ChanPinXQActivity" />
-        <activity android:name=".activity.CePingXQActivity" />
-        <activity android:name=".activity.FenXiangZXActivity"></activity>
+        <activity
+            android:name=".activity.WoDeYuEActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.ChanPinXQActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.CePingXQActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.FenXiangZXActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
