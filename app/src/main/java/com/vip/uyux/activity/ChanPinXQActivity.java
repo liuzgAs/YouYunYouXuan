@@ -7,6 +7,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,11 +20,15 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -32,10 +41,14 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.customview.OnTagSelectListener;
 import com.vip.uyux.customview.WrapHeightGridView;
+import com.vip.uyux.model.CartAddcart;
 import com.vip.uyux.model.GoodsInfo;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.StringUtil;
@@ -67,6 +80,11 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private List<GoodsInfo.SkuLvBean> skuLv;
     private List<List<GoodsInfo.SkuCateBean>> catelist = new ArrayList<>();
     private MyGuiGeAdapter myGuiGeAdapter;
+    private TextView textDialogPrice;
+    private TextView textGuiGe;
+    private int num = 1;
+    private int sku_id;
+    private int buy_now = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -334,9 +352,11 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.textLiJiGouMai:
+                buy_now = 1;
                 mai();
                 break;
             case R.id.textJiaRuGWC:
+                buy_now = 0;
                 mai();
                 break;
             case R.id.imageBack:
@@ -383,7 +403,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
                     catelist.clear();
                     catelist.addAll(listList);
-                    LogUtil.LogShitou("ChanPinXQActivity--onSuccess", ""+GsonUtils.parseObject(catelist));
+                    LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
                     adapter.clear();
                     adapter.addAll(DataProvider.getPersonList(1));
                 } else if (goodsInfo.getStatus() == 3) {
@@ -478,6 +498,95 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         ListView listView = dialog_chan_pin.findViewById(R.id.listView);
         myGuiGeAdapter = new MyGuiGeAdapter();
         listView.setAdapter(myGuiGeAdapter);
+        dialog_chan_pin.findViewById(R.id.imageCancle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialogGouWu.dismiss();
+            }
+        });
+        ImageView imageImg = dialog_chan_pin.findViewById(R.id.imageImg);
+        GlideApp.with(ChanPinXQActivity.this)
+                .asBitmap()
+                .centerCrop()
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, ChanPinXQActivity.this)))
+                .load(goodsInfoData.getThumb())
+                .into(imageImg);
+        textDialogPrice = dialog_chan_pin.findViewById(R.id.textDialogPrice);
+        textGuiGe = dialog_chan_pin.findViewById(R.id.textGuiGe);
+        ImageView imageAdd = dialog_chan_pin.findViewById(R.id.imageAdd);
+        final ImageView imageDelete = dialog_chan_pin.findViewById(R.id.imageDelete);
+        final EditText editNum = dialog_chan_pin.findViewById(R.id.editNum);
+        imageAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(editNum.getText().toString().trim())) {
+                    editNum.setText("1");
+                    editNum.setSelection(1);
+                } else {
+                    int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
+                    if (goodsNum < goodsInfoData.getStockNum()) {
+                        editNum.setText((goodsNum + 1) + "");
+                        editNum.setSelection(((goodsNum + 1) + "").length());
+                    } else {
+                        Toast.makeText(ChanPinXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+        imageDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(editNum.getText().toString().trim())) {
+
+                } else {
+                    int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
+                    if (goodsNum > 1) {
+                        editNum.setText((goodsNum - 1) + "");
+                        editNum.setSelection(((goodsNum - 1) + "").length());
+                    }
+                }
+            }
+        });
+        editNum.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if ((source.equals("0") && dest.toString().length() == 0)) {
+                    return "1";
+                }
+                return null;
+            }
+        }});
+        editNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (TextUtils.isEmpty(editable.toString())) {
+                    editNum.setText("1");
+                    editNum.setSelection(1);
+                }
+//                data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
+//                Double price = Arith.mul((double) data.getNum(), Double.parseDouble(data.getGoods_price()));
+//                ((QueRenDDActivity) getContext()).textSum.setText("¥" + price);
+            }
+        });
+        dialog_chan_pin.findViewById(R.id.buttonSure).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialogGouWu.dismiss();
+                addCar(editNum.getText().toString().trim());
+            }
+        });
+
+
         Window dialogWindow = alertDialogGouWu.getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
         dialogWindow.setWindowAnimations(R.style.dialogFenXiang);
@@ -485,6 +594,59 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         DisplayMetrics d = ChanPinXQActivity.this.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
         lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
         dialogWindow.setAttributes(lp);
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getCarOkObject(String num) {
+        ACache aCache = ACache.get(ChanPinXQActivity.this, Constant.Acache.LOCATION);
+        String did = aCache.getAsString(Constant.Acache.DID);
+        String url = Constant.HOST + Constant.Url.CART_ADDCART;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("goods_id",String.valueOf(id));
+        params.put("sku_id",String.valueOf(sku_id));
+        params.put("buy_now",String.valueOf(buy_now));
+        params.put("did",String.valueOf(did));
+        params.put("num",num);
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 添加到购物车
+     */
+    private void addCar(String num) {
+        showLoadingDialog();
+        ApiClient.post(ChanPinXQActivity.this, getCarOkObject(num), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQActivity--加入购物车",s+ "");
+                try {
+                    CartAddcart cartAddcart = GsonUtils.parseJSON(s, CartAddcart.class);
+                    if (cartAddcart.getStatus()==1){
+                    }else if (cartAddcart.getStatus()==3){
+                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                    }else {
+                        Toast.makeText(ChanPinXQActivity.this, cartAddcart.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ChanPinXQActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(ChanPinXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     class MyGuiGeAdapter extends BaseAdapter {
@@ -532,6 +694,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     break;
                 }
             }
+            shuaXinDialog();
             holder.flowTagLayout.setOnTagSelectListener(new OnTagSelectListener() {
                 @Override
                 public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
@@ -543,22 +706,47 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     skuCateBeans.get(integer).setSelect(true);
                     List<GoodsInfo.SkuCateBean> cateBeanList = skuCateBeans.get(integer).getValue();
                     List<List<GoodsInfo.SkuCateBean>> listList1 = new ArrayList<>();
-                    for (int i = 0; i < position+1; i++) {
+                    for (int i = 0; i < position + 1; i++) {
                         listList1.add(catelist.get(i));
                     }
                     listList.clear();
                     List<List<GoodsInfo.SkuCateBean>> listList = readTree(cateBeanList);
-                    if (listList.size()>0){
+                    if (listList.size() > 0) {
                         listList1.addAll(listList);
                     }
                     catelist.clear();
                     catelist.addAll(listList1);
                     myGuiGeAdapter.notifyDataSetChanged();
+                    shuaXinDialog();
                 }
+
+
             });
             return convertView;
         }
+
+        private void shuaXinDialog() {
+            List<GoodsInfo.SkuCateBean> skuCateBeans1 = catelist.get(catelist.size() - 1);
+            for (int i = 0; i < skuCateBeans1.size(); i++) {
+                GoodsInfo.SkuCateBean skuCateBean = skuCateBeans1.get(i);
+                if (skuCateBean.isSelect()) {
+                    textDialogPrice.setText("¥" + skuCateBean.getPrice());
+                    sku_id = skuCateBean.getSku_id();
+                }
+
+            }
+            String name = "";
+            for (int i = 0; i < catelist.size(); i++) {
+                for (int j = 0; j < catelist.get(i).size(); j++) {
+                    if (catelist.get(i).get(j).isSelect()) {
+                        name = name  + catelist.get(i).get(j).getName()+ " ";
+                    }
+                }
+            }
+            textGuiGe.setText(name);
+        }
     }
+
     List<List<GoodsInfo.SkuCateBean>> listList = new ArrayList<>();
 
     //递归方法

@@ -227,6 +227,10 @@ public class Constant {
          * 商品搜索
          */
         public static final String GOODS_SEARCH = "/Goods/search";
+        /**
+         * 添加到购物车
+         */
+        public static final String CART_ADDCART = "/Cart/addCart";
     }
 
     public static class IntentKey {

@@ -22,6 +22,7 @@
             android:src="@mipmap/shangpin" />
 
         <TextView
+            android:id="@+id/textDialogPrice"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,14 +37,14 @@
             android:layout_marginBottom="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/text0000"
+            android:layout_above="@+id/textGuiGe"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/imageImg"
             android:text="库存2323件"
             android:textSize="@dimen/normal_textsize" />
 
         <TextView
-            android:id="@+id/text0000"
+            android:id="@+id/textGuiGe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageImg"
@@ -52,6 +53,7 @@
             android:text="请选择规格 数量"
             android:textSize="@dimen/normal_textsize" />
         <ImageView
+            android:id="@+id/imageCancle"
             android:src="@drawable/cancle_selector"
             android:layout_width="28dp"
             android:layout_alignParentRight="true"
@@ -86,49 +88,36 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <TextView
-            android:background="@color/line_gray"
-            android:textSize="@dimen/bigLitterText"
-            android:gravity="center"
+        <ImageView
+            android:id="@+id/imageAdd"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:text="-"
-            android:id="@+id/textDelete"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/textNum"
-            android:layout_toStartOf="@+id/textNum"
-            android:layout_marginRight="2dp"
-            android:layout_marginEnd="2dp" />
-
-        <TextView
-            android:gravity="center"
-            android:textSize="@dimen/litterText"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:background="@color/line_gray"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="1"
-            android:id="@+id/textNum"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/textAdd"
-            android:layout_toStartOf="@+id/textAdd"
-            android:layout_marginRight="2dp"
-            android:layout_marginEnd="2dp" />
-
-        <TextView
-            android:background="@color/line_gray"
-            android:textSize="@dimen/bigLitterText"
-            android:gravity="center"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:text="+"
-            android:id="@+id/textAdd"
-            android:layout_marginRight="@dimen/leftAndRight"
-            android:layout_marginEnd="@dimen/leftAndRight"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:src="@mipmap/add" />
+
+        <EditText
+            android:id="@+id/editNum"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/imageAdd"
+            android:background="@drawable/shape_gray1dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="1"
+            android:textSize="@dimen/litterText" />
+
+        <ImageView
+            android:id="@+id/imageDelete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/editNum"
+            android:src="@mipmap/delete1" />
     </RelativeLayout>
 
     <RelativeLayout

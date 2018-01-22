@@ -106,8 +106,17 @@ public class GoodsInfo {
         private int stockNum;
         private String shareMoney;
         private String scoreDes;
+        private String thumb;
         private List<ImgsBean> imgs;
         private List<ImgsBean> imgs2;
+
+        public String getThumb() {
+            return thumb;
+        }
+
+        public void setThumb(String thumb) {
+            this.thumb = thumb;
+        }
 
         public int getId() {
             return id;
