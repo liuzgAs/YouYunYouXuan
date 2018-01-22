@@ -1,5 +1,6 @@
 package com.vip.uyux.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -14,6 +15,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
@@ -35,7 +37,7 @@ import q.rorbin.verticaltablayout.adapter.TabAdapter;
 import q.rorbin.verticaltablayout.widget.ITabView;
 import q.rorbin.verticaltablayout.widget.TabView;
 
-public class FenLeiFragment extends ZjbBaseFragment {
+public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListener {
     private VerticalTabLayout verticalTabLayout;
     private List<String> tabString = new ArrayList<>();
     private EasyRecyclerView recyclerView;
@@ -168,6 +170,7 @@ public class FenLeiFragment extends ZjbBaseFragment {
 
             }
         });
+        mInflate.findViewById(R.id.viewSearch).setOnClickListener(this);
     }
 
     @Override
@@ -320,5 +323,18 @@ public class FenLeiFragment extends ZjbBaseFragment {
     protected int dp2px(float dp) {
         final float scale = this.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.viewSearch:
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SouSuoActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

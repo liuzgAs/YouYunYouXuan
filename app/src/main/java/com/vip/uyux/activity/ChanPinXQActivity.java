@@ -30,6 +30,7 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
+import com.vip.uyux.customview.OnTagSelectListener;
 import com.vip.uyux.customview.WrapHeightGridView;
 import com.vip.uyux.model.GoodsInfo;
 import com.vip.uyux.model.OkObject;
@@ -63,6 +64,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private List<GoodsInfo.SkuCateBean> skuCate;
     private AlertDialog alertDialogGouWu;
     private TagAdapter01 tagAdapter;
+    private List<GoodsInfo.SkuLvBean> skuLv;
+    private List<List<GoodsInfo.SkuCateBean>> catelist = new ArrayList<>();
+    private MyGuiGeAdapter myGuiGeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -365,32 +369,31 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("产品详情", s);
-                try {
-                    GoodsInfo goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
-                    if (goodsInfo.getStatus() == 1) {
-                        goodsInfoBanner = goodsInfo.getBanner();
-                        goodsInfoData = goodsInfo.getData();
-                        countdown = goodsInfoData.getCountdown();
-                        imgs = goodsInfoData.getImgs();
-                        imgs2 = goodsInfoData.getImgs2();
-                        skuCate = goodsInfo.getSkuCate();
-                        for (int i = 0; i < skuCate.size(); i++) {
-                            List<GoodsInfo.SkuCateBean.ValueBean> valueBeanList = skuCate.get(i).getValue();
-                            for (int j = 0; j < valueBeanList.size(); j++) {
-                                valueBeanList.get(j).setSelect(false);
-                            }
-                            valueBeanList.get(0).setSelect(true);
-                        }
-                        adapter.clear();
-                        adapter.addAll(DataProvider.getPersonList(1));
-                    } else if (goodsInfo.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
-                    } else {
-                        showError(goodsInfo.getInfo());
-                    }
-                } catch (Exception e) {
-                    showError("数据出错");
+//                try {
+                GoodsInfo goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
+                if (goodsInfo.getStatus() == 1) {
+                    goodsInfoBanner = goodsInfo.getBanner();
+                    goodsInfoData = goodsInfo.getData();
+                    countdown = goodsInfoData.getCountdown();
+                    imgs = goodsInfoData.getImgs();
+                    imgs2 = goodsInfoData.getImgs2();
+                    skuCate = goodsInfo.getSkuCate();
+                    skuLv = goodsInfo.getSkuLv();
+                    listList.clear();
+                    List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
+                    catelist.clear();
+                    catelist.addAll(listList);
+                    LogUtil.LogShitou("ChanPinXQActivity--onSuccess", ""+GsonUtils.parseObject(catelist));
+                    adapter.clear();
+                    adapter.addAll(DataProvider.getPersonList(1));
+                } else if (goodsInfo.getStatus() == 3) {
+                    MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                } else {
+                    showError(goodsInfo.getInfo());
                 }
+//                } catch (Exception e) {
+//                    showError("数据出错");
+//                }
             }
 
             @Override
@@ -473,7 +476,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 .create();
         alertDialogGouWu.show();
         ListView listView = dialog_chan_pin.findViewById(R.id.listView);
-        listView.setAdapter(new MyGuiGeAdapter());
+        myGuiGeAdapter = new MyGuiGeAdapter();
+        listView.setAdapter(myGuiGeAdapter);
         Window dialogWindow = alertDialogGouWu.getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
         dialogWindow.setWindowAnimations(R.style.dialogFenXiang);
@@ -491,7 +495,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
         @Override
         public int getCount() {
-            return skuCate.size();
+            return catelist.size();
         }
 
         @Override
@@ -505,7 +509,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
@@ -516,21 +520,60 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            GoodsInfo.SkuCateBean skuCateBean = skuCate.get(position);
-            holder.title.setText(skuCateBean.getName());
-            holder.flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
+            final List<GoodsInfo.SkuCateBean> skuCateBeans = catelist.get(position);
+            holder.title.setText(skuLv.get(position).getName());
+            holder.flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE_FALSE);
             tagAdapter = new TagAdapter01(ChanPinXQActivity.this);
             holder.flowTagLayout.setAdapter(tagAdapter);
-            List<GoodsInfo.SkuCateBean.ValueBean> valueBeanList = skuCateBean.getValue();
-            tagAdapter.clearAndAddAll(valueBeanList);
-            for (int i = 0; i < valueBeanList.size(); i++) {
-                if (valueBeanList.get(i).isSelect()){
+            tagAdapter.clearAndAddAll(skuCateBeans);
+            for (int i = 0; i < skuCateBeans.size(); i++) {
+                if (skuCateBeans.get(i).isSelect()) {
                     holder.flowTagLayout.setSelect(i);
                     break;
                 }
             }
+            holder.flowTagLayout.setOnTagSelectListener(new OnTagSelectListener() {
+                @Override
+                public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
+                    Integer integer = selectedList.get(0);
+                    LogUtil.LogShitou("MyGuiGeAdapter--onItemSelect", "" + integer);
+                    for (int i = 0; i < skuCateBeans.size(); i++) {
+                        skuCateBeans.get(i).setSelect(false);
+                    }
+                    skuCateBeans.get(integer).setSelect(true);
+                    List<GoodsInfo.SkuCateBean> cateBeanList = skuCateBeans.get(integer).getValue();
+                    List<List<GoodsInfo.SkuCateBean>> listList1 = new ArrayList<>();
+                    for (int i = 0; i < position+1; i++) {
+                        listList1.add(catelist.get(i));
+                    }
+                    listList.clear();
+                    List<List<GoodsInfo.SkuCateBean>> listList = readTree(cateBeanList);
+                    if (listList.size()>0){
+                        listList1.addAll(listList);
+                    }
+                    catelist.clear();
+                    catelist.addAll(listList1);
+                    myGuiGeAdapter.notifyDataSetChanged();
+                }
+            });
             return convertView;
         }
+    }
+    List<List<GoodsInfo.SkuCateBean>> listList = new ArrayList<>();
+
+    //递归方法
+    List<List<GoodsInfo.SkuCateBean>> readTree(List<GoodsInfo.SkuCateBean> skuCate) {
+        if (skuCate.size() > 0) {
+            for (int i = 0; i < skuCate.size(); i++) {
+                skuCate.get(i).setSelect(false);
+            }
+            skuCate.get(0).setSelect(true);
+            listList.add(skuCate);
+            if (skuCate.get(0).getValue().size() > 0) {
+                readTree(skuCate.get(0).getValue());
+            }
+        }
+        return listList;
     }
 
     @Override

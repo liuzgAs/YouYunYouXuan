@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.vip.uyux.R;
 import com.vip.uyux.customview.OnInitSelectedPosition;
-import com.vip.uyux.model.GoodsInfo;
+import com.vip.uyux.model.GoodsSearch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +18,12 @@ import java.util.List;
 /**
  * Created by HanHailong on 15/10/19.
  */
-public class TagAdapter01 extends BaseAdapter implements OnInitSelectedPosition {
+public class TagHotAdapter extends BaseAdapter implements OnInitSelectedPosition {
 
     private final Context mContext;
-    private final List<GoodsInfo.SkuCateBean> mDataList;
+    private final List<GoodsSearch.HotBean> mDataList;
 
-    public TagAdapter01(Context context) {
+    public TagHotAdapter(Context context) {
         this.mContext = context;
         mDataList = new ArrayList<>();
     }
@@ -34,7 +34,7 @@ public class TagAdapter01 extends BaseAdapter implements OnInitSelectedPosition 
     }
 
     @Override
-    public GoodsInfo.SkuCateBean getItem(int position) {
+    public GoodsSearch.HotBean getItem(int position) {
         return mDataList.get(position);
     }
 
@@ -46,7 +46,7 @@ public class TagAdapter01 extends BaseAdapter implements OnInitSelectedPosition 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_guige01, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_hot, null);
 
         TextView textView = (TextView) view.findViewById(R.id.textDes);
         String t = mDataList.get(position).getName();
@@ -57,12 +57,12 @@ public class TagAdapter01 extends BaseAdapter implements OnInitSelectedPosition 
         return view;
     }
 
-    public void onlyAddAll(List<GoodsInfo.SkuCateBean> datas) {
+    public void onlyAddAll(List<GoodsSearch.HotBean> datas) {
         mDataList.addAll(datas);
         notifyDataSetChanged();
     }
 
-    public void clearAndAddAll(List<GoodsInfo.SkuCateBean> datas) {
+    public void clearAndAddAll(List<GoodsSearch.HotBean> datas) {
         mDataList.clear();
         onlyAddAll(datas);
     }

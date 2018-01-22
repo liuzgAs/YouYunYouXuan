@@ -62,8 +62,15 @@
         <activity
             android:name=".activity.DiZhiGLActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.ChanPinFenHongActivity" />
-        <activity android:name=".activity.FenHongZXActivity"></activity>
+        <activity
+            android:name=".activity.ChanPinFenHongActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.FenHongZXActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.SouSuoActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

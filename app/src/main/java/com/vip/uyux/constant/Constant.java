@@ -223,6 +223,10 @@ public class Constant {
          * 产品详情
          */
         public static final String GOODS_INFO = "/Goods/info";
+        /**
+         * 商品搜索
+         */
+        public static final String GOODS_SEARCH = "/Goods/search";
     }
 
     public static class IntentKey {

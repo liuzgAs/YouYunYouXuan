@@ -31,6 +31,7 @@ public class FlowTagLayout extends ViewGroup {
      * FlowLayout support single-select
      */
     public static final int FLOW_TAG_CHECKED_SINGLE = 1;
+    public static final int FLOW_TAG_CHECKED_SINGLE_FALSE = 3;
     /**
      * FlowLayout support multi-select
      */
@@ -254,6 +255,27 @@ public class FlowTagLayout extends ViewGroup {
                             }
                             return;
                         }
+
+                        for (int k = 0; k < mAdapter.getCount(); k++) {
+                            mCheckedTagArray.put(k, false);
+                            getChildAt(k).setSelected(false);
+                        }
+                        mCheckedTagArray.put(j, true);
+                        childView.setSelected(true);
+
+                        if (mOnTagSelectListener != null) {
+                            mOnTagSelectListener.onItemSelect(FlowTagLayout.this, Arrays.asList(j));
+                        }
+                    } else if (mTagCheckMode == FLOW_TAG_CHECKED_SINGLE_FALSE) {
+                        //判断状态
+//                        if (mCheckedTagArray.get(j)) {
+//                            mCheckedTagArray.put(j, false);
+//                            childView.setSelected(false);
+//                            if (mOnTagSelectListener != null) {
+//                                mOnTagSelectListener.onItemSelect(FlowTagLayout.this, new ArrayList<Integer>());
+//                            }
+//                            return;
+//                        }
 
                         for (int k = 0; k < mAdapter.getCount(); k++) {
                             mCheckedTagArray.put(k, false);
