@@ -239,6 +239,10 @@ public class Constant {
          * 更新购物车数量
          */
         public static final String CART_UPDATECART = "/Cart/updateCart";
+        /**
+         * 删除购物车
+         */
+        public static final String CART_DELCART = "/Cart/delCart";
     }
 
     public static class IntentKey {

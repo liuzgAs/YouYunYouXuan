@@ -55,7 +55,7 @@ public class IndexViewHolder extends BaseViewHolder<IndexHome.DataBean> {
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), ChanPinXQActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,data.getId());
+                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
                 getContext().startActivity(intent);
             }
         });

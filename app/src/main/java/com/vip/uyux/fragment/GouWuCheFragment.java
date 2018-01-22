@@ -194,8 +194,6 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
 
 
     public void onRefresh() {
-
-
         ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
@@ -266,18 +264,18 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.viewQuanXuan:
-//                isQuan = !isQuan;
-//                List<Cart.CartBean> allData = adapter.getAllData();
-//                for (int i = 0; i < allData.size(); i++) {
-//                    if (isQuan) {
-//                        allData.get(i).setSelect(true);
-//                        imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
-//                    } else {
-//                        imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
-//                        allData.get(i).setSelect(false);
-//                    }
-//                }
-//                adapter.notifyDataSetChanged();
+                isQuan = !isQuan;
+                List<CartIndex.CartBean> allData = adapter.getAllData();
+                for (int i = 0; i < allData.size(); i++) {
+                    if (isQuan) {
+                        allData.get(i).setSelect(true);
+                        imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
+                    } else {
+                        imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
+                        allData.get(i).setSelect(false);
+                    }
+                }
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.buttonJieSuan:
 //                String id = "";
@@ -302,31 +300,25 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     }
 
     public void checkQuanXuan() {
-//        isQuan = true;
-//        List<Cart.CartBean> allData = adapter.getAllData();
-//        double sum = 0;
-//        if (allData.size() > 0) {
-//            for (int i = 0; i < allData.size(); i++) {
-//                if (!allData.get(i).getSelect()) {
-//                    isQuan = false;
-//                    break;
-//                }
-//            }
-//            for (int i = 0; i < allData.size(); i++) {
-//                if (allData.get(i).getSelect()) {
-//                    sum = sum + allData.get(i).getSum();
-//                }
-//            }
-//            textHeJi.setText("¥" + sum);
-//            if (isQuan) {
-//                imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
-//            } else {
-//                imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
-//            }
-//            viewJieSuan.setVisibility(View.VISIBLE);
-//        } else {
-//            viewJieSuan.setVisibility(View.GONE);
-//        }
+        isQuan = true;
+        List<CartIndex.CartBean> allData = adapter.getAllData();
+        if (allData.size() > 0) {
+            for (int i = 0; i < allData.size(); i++) {
+                if (!allData.get(i).isSelect()) {
+                    isQuan = false;
+                    break;
+                }
+            }
+            shuaXinSum();
+            if (isQuan) {
+                imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
+            } else {
+                imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
+            }
+            viewJieSuan.setVisibility(View.VISIBLE);
+        } else {
+            viewJieSuan.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -22,6 +22,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.activity.MainActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.customview.TwoBtnDialog;
 import com.vip.uyux.model.CartIndex;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.SimpleInfo;
@@ -122,26 +123,95 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
                     editNum.setSelection(1);
                 }
                 data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
-                if (!isFrist){
+                if (!isFrist) {
                     gengXinCarNum();
                 }
             }
         });
-//        imageXuanZhong.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (data.getSelect()) {
-//                    data.setSelect(false);
-//                    imageXuanZhong.setImageResource(R.mipmap.weixuanzhong);
-//                } else {
-//                    data.setSelect(true);
-//                    imageXuanZhong.setImageResource(R.mipmap.xuanzhong);
-//                }
-//                Intent intent = new Intent();
-//                intent.setAction(Constant.BroadcastCode.QUAN_XUAN);
-//                getContext().sendBroadcast(intent);
-//            }
-//        });
+        imageXuanZhong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.isSelect()) {
+                    data.setSelect(false);
+                    imageXuanZhong.setImageResource(R.mipmap.weixuanzhong);
+                } else {
+                    data.setSelect(true);
+                    imageXuanZhong.setImageResource(R.mipmap.xuanzhong);
+                }
+                Intent intent = new Intent();
+                intent.setAction(Constant.BroadcastCode.QUAN_XUAN);
+                getContext().sendBroadcast(intent);
+            }
+        });
+        $(R.id.imageDelete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final TwoBtnDialog twoBtnDialog = new TwoBtnDialog(getContext(), "确定要移除该商品吗？", "是", "否");
+                twoBtnDialog.show();
+                twoBtnDialog.setClicklistener(new TwoBtnDialog.ClickListenerInterface() {
+                    @Override
+                    public void doConfirm() {
+                        shanChu();
+                        twoBtnDialog.dismiss();
+                    }
+
+                    @Override
+                    public void doCancel() {
+                        twoBtnDialog.dismiss();
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getDelOkObject() {
+        String url = Constant.HOST + Constant.Url.CART_DELCART;
+        HashMap<String, String> params = new HashMap<>();
+        if (((MainActivity) getContext()).isLogin) {
+            params.put("uid", ((MainActivity) getContext()).userInfo.getUid());
+            params.put("tokenTime", ((MainActivity) getContext()).tokenTime);
+        }
+        params.put("id", String.valueOf(data.getId()));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 删除购物车
+     */
+    private void shanChu() {
+        ((MainActivity) getContext()).showLoadingDialog();
+        ApiClient.post(getContext(), getDelOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                ((MainActivity) getContext()).cancelLoadingDialog();
+                LogUtil.LogShitou("CarViewHolder--onSuccess", s + "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+                        getContext().sendBroadcast(intent);
+                    } else if (simpleInfo.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(getContext());
+                    } else {
+                        Toast.makeText(getContext(), simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                ((MainActivity) getContext()).cancelLoadingDialog();
+                Toast.makeText(getContext(), "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -154,13 +224,13 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
         String did = aCache.getAsString(Constant.Acache.DID);
         String url = Constant.HOST + Constant.Url.CART_UPDATECART;
         HashMap<String, String> params = new HashMap<>();
-        if (((MainActivity)getContext()).isLogin) {
-            params.put("uid", ((MainActivity)getContext()).userInfo.getUid());
-            params.put("tokenTime",((MainActivity)getContext()).tokenTime);
+        if (((MainActivity) getContext()).isLogin) {
+            params.put("uid", ((MainActivity) getContext()).userInfo.getUid());
+            params.put("tokenTime", ((MainActivity) getContext()).tokenTime);
         }
-        params.put("did",did);
-        params.put("num",String.valueOf(data.getNum()));
-        params.put("id",String.valueOf(data.getId()));
+        params.put("did", did);
+        params.put("num", String.valueOf(data.getNum()));
+        params.put("id", String.valueOf(data.getId()));
         return new OkObject(params, url);
     }
 
@@ -168,31 +238,31 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
      * 更新购物车数量
      */
     private void gengXinCarNum() {
-        ((MainActivity)getContext()).showLoadingDialog();
+        ((MainActivity) getContext()).showLoadingDialog();
         ApiClient.post(getContext(), getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                ((MainActivity)getContext()).cancelLoadingDialog();
-                LogUtil.LogShitou("CarViewHolder--onSuccess",s+ "");
+                ((MainActivity) getContext()).cancelLoadingDialog();
+                LogUtil.LogShitou("CarViewHolder--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                    if (simpleInfo.getStatus()==1){
+                    if (simpleInfo.getStatus() == 1) {
                         Intent intent = new Intent();
                         intent.setAction(Constant.BroadcastCode.NUM_CHANGE);
                         getContext().sendBroadcast(intent);
-                    }else if (simpleInfo.getStatus()==3){
+                    } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(getContext());
-                    }else {
+                    } else {
                         Toast.makeText(getContext(), simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getContext(),"数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onError() {
-                ((MainActivity)getContext()).cancelLoadingDialog();
+                ((MainActivity) getContext()).cancelLoadingDialog();
                 Toast.makeText(getContext(), "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
@@ -222,7 +292,7 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
             textDes.setText(data.getSpe_name());
             editNum.setText(String.valueOf(data.getNum()));
             editNum.setSelection(String.valueOf(data.getNum()).length());
-            isFrist=false;
+            isFrist = false;
         }
     }
 

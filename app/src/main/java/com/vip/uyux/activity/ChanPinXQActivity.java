@@ -608,13 +608,13 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("goods_id",String.valueOf(id));
-        params.put("sku_id",String.valueOf(sku_id));
-        params.put("buy_now",String.valueOf(buy_now));
-        params.put("did",String.valueOf(did));
-        params.put("num",num);
+        params.put("goods_id", String.valueOf(id));
+        params.put("sku_id", String.valueOf(sku_id));
+        params.put("buy_now", String.valueOf(buy_now));
+        params.put("did", String.valueOf(did));
+        params.put("num", num);
         return new OkObject(params, url);
     }
 
@@ -627,17 +627,20 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
-                LogUtil.LogShitou("ChanPinXQActivity--加入购物车",s+ "");
+                LogUtil.LogShitou("ChanPinXQActivity--加入购物车", s + "");
                 try {
                     CartAddcart cartAddcart = GsonUtils.parseJSON(s, CartAddcart.class);
-                    if (cartAddcart.getStatus()==1){
-                    }else if (cartAddcart.getStatus()==3){
+                    if (cartAddcart.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+                        sendBroadcast(intent);
+                    } else if (cartAddcart.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
-                    }else {
+                    } else {
                         Toast.makeText(ChanPinXQActivity.this, cartAddcart.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(ChanPinXQActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -739,7 +742,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             for (int i = 0; i < catelist.size(); i++) {
                 for (int j = 0; j < catelist.get(i).size(); j++) {
                     if (catelist.get(i).get(j).isSelect()) {
-                        name = name  + catelist.get(i).get(j).getName()+ " ";
+                        name = name + catelist.get(i).get(j).getName() + " ";
                     }
                 }
             }
