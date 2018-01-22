@@ -30,7 +30,6 @@ import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.model.OkObject;
-import com.vip.uyux.provider.DataProvider;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.BannerSettingUtil;
 import com.vip.uyux.util.DpUtils;
@@ -208,6 +207,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     public void onItemClick(int position) {
                         Intent intent = new Intent();
                         intent.setClass(getActivity(), ChanPinXQActivity.class);
+                        intent.putExtra(Constant.IntentKey.ID,adapterZiYin.getItem(position).getId());
                         getContext().startActivity(intent);
                     }
                 });
@@ -217,7 +217,6 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             public void onBindView(View headerView) {
                 if (bannerList != null) {
                     if (bannerList.size() > 0) {
-                        LogUtil.LogShitou("CheLiangXQActivity--bannerBeanList", "" + bannerList.size());
                         banner.setPages(new CBViewHolderCreator() {
                             @Override
                             public Object createHolder() {
@@ -250,7 +249,6 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     viewNum.removeAllViews();
                     String[] split = num1.split("");
                     for (int i = 1; i < split.length; i++) {
-                        LogUtil.LogShitou("ShouYeFragment--onBindView", "" + split[i]);
                         TextView viewNum1 = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.index_num, null);
                         viewNum1.setText(split[i]);
                         viewNum.addView(viewNum1);
@@ -260,7 +258,6 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     viewNum2.removeAllViews();
                     String[] split = num2.split("");
                     for (int i = 1; i < split.length; i++) {
-                        LogUtil.LogShitou("ShouYeFragment--onBindView", "" + split[i]);
                         TextView viewNum1 = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.index_num, null);
                         viewNum1.setText(split[i]);
                         viewNum2.addView(viewNum1);

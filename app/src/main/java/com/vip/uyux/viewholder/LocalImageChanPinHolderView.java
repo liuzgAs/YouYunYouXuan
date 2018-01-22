@@ -13,7 +13,7 @@ import com.vip.uyux.util.GlideApp;
  * author： ZhangJieBo
  * date： 2017/7/7 0007 上午 9:46
  */
-public class LocalImageChanPinHolderView implements Holder<Integer> {
+public class LocalImageChanPinHolderView implements Holder<String> {
     private ImageView imageView;
     @Override
     public View createView(Context context) {
@@ -23,7 +23,7 @@ public class LocalImageChanPinHolderView implements Holder<Integer> {
     }
 
     @Override
-    public void UpdateUI(final Context context, int position, final Integer data) {
+    public void UpdateUI(final Context context, int position, final String data) {
         GlideApp.with(context)
                 .asBitmap()
                 .load(data)

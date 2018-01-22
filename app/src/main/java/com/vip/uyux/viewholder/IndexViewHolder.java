@@ -12,6 +12,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.util.DpUtils;
 
@@ -54,14 +55,16 @@ public class IndexViewHolder extends BaseViewHolder<IndexHome.DataBean> {
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), ChanPinXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,data.getId());
                 getContext().startActivity(intent);
             }
         });
     }
-
+    IndexHome.DataBean data;
     @Override
     public void setData(IndexHome.DataBean data) {
         super.setData(data);
+        this.data=data;
         textTitle.setText(data.getName());
         List<IndexHome.DataBean.GoodsBean> goodsBeanList = data.getGoods();
         adapter.clear();

@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -22,8 +23,8 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.WrapHeightGridView;
+import com.vip.uyux.model.GoodsInfo;
 import com.vip.uyux.model.OkObject;
-import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.provider.DataProvider;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
@@ -41,6 +42,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<Integer> adapter;
     private List<String> stringList = new ArrayList<>();
+    private List<String> goodsInfoBanner;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
     @Override
     protected void initIntent() {
-
+        Intent intent = getIntent();
+        id = intent.getIntExtra(Constant.IntentKey.ID, 0);
     }
 
     @Override
@@ -90,7 +94,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
             private WrapHeightGridView gridview;
             private ConvenientBanner banner;
-            private List<Integer> imageList = new ArrayList<>();
 
             @Override
             public View onCreateView(ViewGroup parent) {
@@ -104,21 +107,18 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 stringList.add("满88元免邮费");
                 stringList.add("优云优选自营品牌");
                 gridview.setAdapter(new MyAdapter());
-                imageList.add(R.mipmap.shangpin);
-                imageList.add(R.mipmap.shangpin);
-                imageList.add(R.mipmap.shangpin);
                 return view;
             }
 
             @Override
             public void onBindView(View headerView) {
-                if (imageList != null) {
+                if (goodsInfoBanner != null) {
                     banner.setPages(new CBViewHolderCreator() {
                         @Override
                         public Object createHolder() {
                             return new LocalImageChanPinHolderView();
                         }
-                    }, imageList);
+                    }, goodsInfoBanner);
                     banner.setPageIndicator(new int[]{R.drawable.shape_indicator_normal, R.drawable.shape_indicator_selected});
                 }
             }
@@ -213,6 +213,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             params.put("uid", userInfo.getUid());
             params.put("tokenTime",tokenTime);
         }
+        params.put("id",String.valueOf(id));
         return new OkObject(params, url);
     }
 
@@ -223,12 +224,16 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             public void onSuccess(String s) {
                 LogUtil.LogShitou("产品详情", s);
                 try {
-                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                    if (simpleInfo.getStatus() == 1) {
-                    } else if (simpleInfo.getStatus()== 3) {
+                    GoodsInfo goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
+                    if (goodsInfo.getStatus() == 1) {
+                        goodsInfoBanner = goodsInfo.getBanner();
+                        GoodsInfo.DataBean goodsInfoData = goodsInfo.getData();
+                        adapter.clear();
+                        adapter.addAll(DataProvider.getPersonList(1));
+                    } else if (goodsInfo.getStatus()== 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
                     } else {
-                        showError(simpleInfo.getInfo());
+                        showError(goodsInfo.getInfo());
                     }
                 } catch (Exception e) {
                     showError("数据出错");
@@ -262,9 +267,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             }
         });
 
-
-        adapter.clear();
-        adapter.addAll(DataProvider.getPersonList(1));
     }
 
     class MyAdapter extends BaseAdapter {

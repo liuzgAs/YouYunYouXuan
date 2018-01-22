@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/itemIndexWidth"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@drawable/layout_selector_white_system_gray">
 
     <com.vip.uyux.customview.YuanJiaoImageView
         android:id="@+id/imageImg"

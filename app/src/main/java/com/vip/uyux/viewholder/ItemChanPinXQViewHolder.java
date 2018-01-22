@@ -1,6 +1,5 @@
 package com.vip.uyux.viewholder;
 
-import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
-import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.provider.DataProvider;
 import com.vip.uyux.util.DpUtils;
 
@@ -55,9 +53,6 @@ public class ItemChanPinXQViewHolder extends BaseViewHolder<Integer> {
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent();
-                intent.setClass(getContext(), ChanPinXQActivity.class);
-                getContext().startActivity(intent);
             }
         });
     }
