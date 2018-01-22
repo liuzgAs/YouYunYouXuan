@@ -36,6 +36,14 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
     private RecyclerArrayAdapter<OrderConfirmbefore.CartBean> adapter;
     private JieSuan jieSuan;
     private OrderConfirmbefore.AdBean orderConfirmbeforeAd;
+    private TextView textSum;
+    private double sum;
+    private int is_address;
+    private int vipLv;
+    private String vipKey;
+    private String vipDes;
+    private String shipKey;
+    private String shipDes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+        textSum = (TextView) findViewById(R.id.textSum);
     }
 
     @Override
@@ -129,6 +138,37 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                     viewAddress.setVisibility(View.GONE);
                     viewNoAddress.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+
+            private TextView textVipKey;
+            private TextView textShipKey;
+            private TextView textShipDes;
+            private TextView textVipDes;
+            private TextView textVip;
+            private TextView textSum1;
+
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                View view = LayoutInflater.from(QueRenDDActivity.this).inflate(R.layout.foot_queren_dd, null);
+                textSum1 = view.findViewById(R.id.textSum);
+                textVip = view.findViewById(R.id.textVip);
+                textVipDes = view.findViewById(R.id.textVipDes);
+                textShipKey = view.findViewById(R.id.textShipKey);
+                textShipDes = view.findViewById(R.id.textShipDes);
+                textVipKey = view.findViewById(R.id.textVipKey);
+                return view;
+            }
+
+            @Override
+            public void onBindView(View headerView) {
+//                textSum1.setText("¥"+ sum);
+                textVip.setText("LV"+vipLv);
+                textVipDes.setText(vipDes);
+                textVipKey.setText(vipKey);
+                textShipKey.setText(shipKey);
+                textShipDes.setText(shipDes);
             }
         });
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
@@ -203,7 +243,15 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                 try {
                     OrderConfirmbefore orderConfirmbefore = GsonUtils.parseJSON(s, OrderConfirmbefore.class);
                     if (orderConfirmbefore.getStatus() == 1) {
+                        is_address = orderConfirmbefore.getIs_address();
                         orderConfirmbeforeAd = orderConfirmbefore.getAd();
+                        sum = orderConfirmbefore.getSum();
+                        textSum.setText("¥"+ sum);
+                        vipLv = orderConfirmbefore.getVipLv();
+                        vipKey = orderConfirmbefore.getVipKey();
+                        vipDes = orderConfirmbefore.getVipDes();
+                        shipKey = orderConfirmbefore.getShipKey();
+                        shipDes = orderConfirmbefore.getShipDes();
                         List<OrderConfirmbefore.CartBean> cartBeanList = orderConfirmbefore.getCart();
                         adapter.clear();
                         adapter.addAll(cartBeanList);
