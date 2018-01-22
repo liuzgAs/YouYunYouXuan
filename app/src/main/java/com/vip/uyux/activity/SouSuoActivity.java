@@ -36,7 +36,6 @@ import com.vip.uyux.viewholder.MyBaseViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
 
 public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
@@ -44,21 +43,14 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private FlowTagLayout flowTagLayout02;
     private TagHotAdapter tagHotAdapter01;
     private TagHotAdapter tagHotAdapter02;
-    private String mCity;
-    private String lat;
-    private String lng;
-    private String cityId;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<Integer> adapter;
     private int page = 0;
-    private Timer timer;
-    private TextView textNum;
     private String keywords;
     private EditText editSouSuo;
     private ImageView imageSouSuo;
     private ScrollView scrollHot;
     private View include3;
-    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +72,6 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         include3 = findViewById(R.id.include3);
         flowTagLayout01 = (FlowTagLayout) findViewById(R.id.flowTagLayout01);
         flowTagLayout02 = (FlowTagLayout) findViewById(R.id.flowTagLayout02);
-        textNum = (TextView) findViewById(R.id.textNum);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         editSouSuo = (EditText) findViewById(R.id.editSouSuo);
         imageSouSuo = (ImageView) findViewById(R.id.imageSouSuo);
@@ -262,8 +253,6 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         params.put("uid", userInfo.getUid());
         params.put("tokenTime", tokenTime);
         params.put("p", page + "");
-        params.put("lat", lat);
-        params.put("lng", lng);
         params.put("keywords", keywords);
         return new OkObject(params, url);
     }

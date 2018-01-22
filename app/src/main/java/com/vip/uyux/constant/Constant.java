@@ -231,6 +231,14 @@ public class Constant {
          * 添加到购物车
          */
         public static final String CART_ADDCART = "/Cart/addCart";
+        /**
+         * 购物车列表
+         */
+        public static final String CART_INDEX = "/Cart/index";
+        /**
+         * 更新购物车数量
+         */
+        public static final String CART_UPDATECART = "/Cart/updateCart";
     }
 
     public static class IntentKey {
@@ -282,6 +290,7 @@ public class Constant {
         public static final String address = "address";
         public static final String QUAN_XUAN = "quanXuan";
         public static final String SHUA_XIN_CAR = "shuaXinCar";
+        public static final String NUM_CHANGE = "num_change";
     }
 
 

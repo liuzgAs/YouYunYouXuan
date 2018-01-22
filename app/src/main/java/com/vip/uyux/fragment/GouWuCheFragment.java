@@ -23,13 +23,20 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.model.CartIndex;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.util.ACache;
+import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.Arith;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.CarViewHolder;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -40,7 +47,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     private View mInflate;
     private View mRelaTitleStatue;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Integer> adapter;
+    private RecyclerArrayAdapter<CartIndex.CartBean> adapter;
     private TextView textHeJi;
     private ImageView imageQuanXuan;
     private boolean isQuan = true;
@@ -49,6 +56,9 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             switch (action) {
+                case Constant.BroadcastCode.NUM_CHANGE:
+                    shuaXinSum();
+                    break;
                 case Constant.BroadcastCode.SHUA_XIN_CAR:
                     onRefresh();
                     break;
@@ -61,6 +71,23 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
             }
         }
     };
+
+    /**
+     * 刷新car总价
+     */
+    private void shuaXinSum() {
+        double sum= 0;
+        for (int i = 0; i < adapter.getAllData().size(); i++) {
+            if (adapter.getItem(i).isSelect()){
+                Double mul = Arith.mul((double) adapter.getItem(i).getNum(), adapter.getItem(i).getGoods_price());
+                sum = Arith.add(sum, mul);
+            }
+        }
+        SpannableString span = new SpannableString("¥"+sum);
+        span.setSpan(new RelativeSizeSpan(0.65f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textHeJi.setText(span);
+    }
+
     private View viewJieSuan;
 
     public GouWuCheFragment() {
@@ -107,9 +134,9 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     protected void initViews() {
         mInflate.findViewById(R.id.imageBack).setVisibility(View.GONE);
         ViewGroup.LayoutParams layoutParams = mRelaTitleStatue.getLayoutParams();
-        layoutParams.height =ScreenUtils.getStatusBarHeight(getActivity())+(int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) getActivity().getResources().getDimension(R.dimen.titleHeight);
         mRelaTitleStatue.setLayoutParams(layoutParams);
-        ((TextView)mInflate.findViewById(R.id.textViewTitle)).setText("购物车");
+        ((TextView) mInflate.findViewById(R.id.textViewTitle)).setText("购物车");
         initRecycle();
     }
 
@@ -132,7 +159,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
         recyclerView.addItemDecoration(itemDecoration);
         int red = getResources().getColor(R.color.basic_color);
         recyclerView.setRefreshingColor(red);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CartIndex.CartBean>(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_car;
@@ -145,40 +172,94 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                 return carViewHolder;
             }
         });
-        adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.header_car, null);
-                return view;
-            }
+    }
 
-            @Override
-            public void onBindView(View headerView) {
-
-            }
-        });
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        ACache aCache = ACache.get(getActivity(), Constant.Acache.LOCATION);
+        String did = aCache.getAsString(Constant.Acache.DID);
+        String url = Constant.HOST + Constant.Url.CART_INDEX;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("did", did);
+        return new OkObject(params, url);
     }
 
 
     public void onRefresh() {
-        List<Integer> cartBeanList = new ArrayList<>();
-        cartBeanList.addAll(DataProvider.getPersonList(1));
-        if (cartBeanList.size() > 0) {
-            viewJieSuan.setVisibility(View.VISIBLE);
-//            double sum = 0;
-//            for (int i = 0; i < cartBeanList.size(); i++) {
-//                cartBeanList.get(i).setSelect(true);
-//                sum = Arith.add(sum, cartBeanList.get(i).getSum());
-//            }
-            SpannableString span = new SpannableString("¥888");
-            span.setSpan(new RelativeSizeSpan(0.65f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            textHeJi.setText(span);
-            imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
-        } else {
-            viewJieSuan.setVisibility(View.GONE);
-        }
-        adapter.clear();
-        adapter.addAll(cartBeanList);
+
+
+        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("购物车", s);
+                try {
+                    CartIndex cartIndex = GsonUtils.parseJSON(s, CartIndex.class);
+                    if (cartIndex.getStatus() == 1) {
+                        List<CartIndex.CartBean> cartBeanList = cartIndex.getCart();
+                        if (cartBeanList.size() > 0) {
+                            viewJieSuan.setVisibility(View.VISIBLE);
+                            double sum = 0;
+                            for (int i = 0; i < cartBeanList.size(); i++) {
+                                cartBeanList.get(i).setSelect(true);
+                                Double mul = Arith.mul((double) cartBeanList.get(i).getNum(), cartBeanList.get(i).getGoods_price());
+                                sum = Arith.add(sum, mul);
+                            }
+                            SpannableString span = new SpannableString("¥"+sum);
+                            span.setSpan(new RelativeSizeSpan(0.65f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            textHeJi.setText(span);
+                            imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
+                        } else {
+                            viewJieSuan.setVisibility(View.GONE);
+                        }
+                        adapter.clear();
+                        adapter.addAll(cartBeanList);
+
+                    } else if (cartIndex.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(getActivity());
+                    } else {
+                        showError(cartIndex.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
+
     }
 
     @Override
@@ -254,6 +335,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.QUAN_XUAN);
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+        filter.addAction(Constant.BroadcastCode.NUM_CHANGE);
         getActivity().registerReceiver(reciver, filter);
     }
 
