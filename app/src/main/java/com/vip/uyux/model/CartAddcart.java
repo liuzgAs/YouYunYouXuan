@@ -13,15 +13,15 @@ public class CartAddcart {
      * info : 返回成功！
      */
 
-    private String cartId;
+    private int cartId;
     private int status;
     private String info;
 
-    public String getCartId() {
+    public int getCartId() {
         return cartId;
     }
 
-    public void setCartId(String cartId) {
+    public void setCartId(int cartId) {
         this.cartId = cartId;
     }
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
@@ -18,8 +19,10 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.CartNeworder;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OrderConfirmbefore;
+import com.vip.uyux.model.OrderTiJiao;
 import com.vip.uyux.model.QueRenDD;
 import com.vip.uyux.model.UserAddress;
 import com.vip.uyux.util.ACache;
@@ -37,7 +40,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
     private JieSuan jieSuan;
     private OrderConfirmbefore.AdBean orderConfirmbeforeAd;
     private TextView textSum;
-    private double sum;
+    private String sum;
     private int is_address;
     private int vipLv;
     private String vipKey;
@@ -164,7 +167,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
             @Override
             public void onBindView(View headerView) {
 //                textSum1.setText("¥"+ sum);
-                textVip.setText("LV"+vipLv);
+                textVip.setText("LV" + vipLv);
                 textVipDes.setText(vipDes);
                 textVipKey.setText(vipKey);
                 textShipKey.setText(shipKey);
@@ -181,6 +184,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.buttonTiJiao).setOnClickListener(this);
     }
 
     @Override
@@ -208,12 +212,71 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.buttonTiJiao:
+                if (orderConfirmbeforeAd == null) {
+                    Toast.makeText(QueRenDDActivity.this, "请选择收货地址", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                tiJiaoDD();
+                break;
             case R.id.imageBack:
                 finish();
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private String getOkQueRenObject() {
+        ACache aCache = ACache.get(this, Constant.Acache.LOCATION);
+        String did = aCache.getAsString(Constant.Acache.DID);
+        OrderTiJiao orderTiJiao;
+        if (isLogin) {
+            orderTiJiao = new OrderTiJiao(1, "android", userInfo.getUid(), tokenTime, jieSuan.getIntegerList(), String.valueOf(sum), did, orderConfirmbeforeAd.getId());
+        } else {
+            orderTiJiao = new OrderTiJiao(1, "android", jieSuan.getIntegerList(), sum, did, orderConfirmbeforeAd.getId());
+        }
+        return GsonUtils.parseObject(orderTiJiao);
+    }
+
+    /**
+     * 提交订单
+     */
+    private void tiJiaoDD() {
+        String url = Constant.HOST + Constant.Url.ORDER_NEWORDER;
+        showLoadingDialog();
+        ApiClient.postJson(QueRenDDActivity.this, url, getOkQueRenObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("QueRenDDActivity--onSuccess", s + "");
+                try {
+                    CartNeworder cartNeworder = GsonUtils.parseJSON(s, CartNeworder.class);
+                    if (cartNeworder.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+                        sendBroadcast(intent);
+                    } else if (cartNeworder.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(QueRenDDActivity.this);
+                    } else {
+                        Toast.makeText(QueRenDDActivity.this, cartNeworder.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(QueRenDDActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(QueRenDDActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -246,7 +309,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                         is_address = orderConfirmbefore.getIs_address();
                         orderConfirmbeforeAd = orderConfirmbefore.getAd();
                         sum = orderConfirmbefore.getSum();
-                        textSum.setText("¥"+ sum);
+                        textSum.setText("¥" + sum);
                         vipLv = orderConfirmbefore.getVipLv();
                         vipKey = orderConfirmbefore.getVipKey();
                         vipDes = orderConfirmbefore.getVipDes();

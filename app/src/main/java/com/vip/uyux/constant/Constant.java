@@ -247,6 +247,10 @@ public class Constant {
          * 确认订单请求
          */
         public static final String ORDER_CONFIRMBEFORE = "/Order/confirmBefore";
+        /**
+         * 确认订单提交
+         */
+        public static final String ORDER_NEWORDER = "/Order/newOrder";
     }
 
     public static class IntentKey {

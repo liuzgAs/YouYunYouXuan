@@ -76,6 +76,7 @@
             android:textSize="@dimen/litterText" />
 
         <TextView
+            android:layout_marginBottom="5dp"
             android:id="@+id/textPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

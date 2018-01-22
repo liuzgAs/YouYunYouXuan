@@ -24,7 +24,7 @@ public class OrderConfirmbefore {
      */
 
     private int is_address;
-    private double sum;
+    private String sum;
     private AdBean ad;
     private String vipKey;
     private String vipDes;
@@ -43,11 +43,11 @@ public class OrderConfirmbefore {
         this.is_address = is_address;
     }
 
-    public double getSum() {
+    public String getSum() {
         return sum;
     }
 
-    public void setSum(double sum) {
+    public void setSum(String sum) {
         this.sum = sum;
     }
 

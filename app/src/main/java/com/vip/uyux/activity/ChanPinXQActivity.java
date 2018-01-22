@@ -43,6 +43,7 @@ import com.vip.uyux.customview.OnTagSelectListener;
 import com.vip.uyux.customview.WrapHeightGridView;
 import com.vip.uyux.model.CartAddcart;
 import com.vip.uyux.model.GoodsInfo;
+import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.provider.DataProvider;
 import com.vip.uyux.util.ACache;
@@ -389,31 +390,31 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("产品详情", s);
-//                try {
-                GoodsInfo goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
-                if (goodsInfo.getStatus() == 1) {
-                    goodsInfoBanner = goodsInfo.getBanner();
-                    goodsInfoData = goodsInfo.getData();
-                    countdown = goodsInfoData.getCountdown();
-                    imgs = goodsInfoData.getImgs();
-                    imgs2 = goodsInfoData.getImgs2();
-                    skuCate = goodsInfo.getSkuCate();
-                    skuLv = goodsInfo.getSkuLv();
-                    listList.clear();
-                    List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
-                    catelist.clear();
-                    catelist.addAll(listList);
-                    LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
-                    adapter.clear();
-                    adapter.addAll(DataProvider.getPersonList(1));
-                } else if (goodsInfo.getStatus() == 3) {
-                    MyDialog.showReLoginDialog(ChanPinXQActivity.this);
-                } else {
-                    showError(goodsInfo.getInfo());
+                try {
+                    GoodsInfo goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
+                    if (goodsInfo.getStatus() == 1) {
+                        goodsInfoBanner = goodsInfo.getBanner();
+                        goodsInfoData = goodsInfo.getData();
+                        countdown = goodsInfoData.getCountdown();
+                        imgs = goodsInfoData.getImgs();
+                        imgs2 = goodsInfoData.getImgs2();
+                        skuCate = goodsInfo.getSkuCate();
+                        skuLv = goodsInfo.getSkuLv();
+                        listList.clear();
+                        List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
+                        catelist.clear();
+                        catelist.addAll(listList);
+                        LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
+                        adapter.clear();
+                        adapter.addAll(DataProvider.getPersonList(1));
+                    } else if (goodsInfo.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                    } else {
+                        showError(goodsInfo.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
                 }
-//                } catch (Exception e) {
-//                    showError("数据出错");
-//                }
             }
 
             @Override
@@ -631,9 +632,18 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 try {
                     CartAddcart cartAddcart = GsonUtils.parseJSON(s, CartAddcart.class);
                     if (cartAddcart.getStatus() == 1) {
-                        Intent intent = new Intent();
-                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
-                        sendBroadcast(intent);
+                        if (buy_now==1){
+                            List<Integer> integerList = new ArrayList<>();
+                            integerList.add(cartAddcart.getCartId());
+                            Intent intent = new Intent();
+                            intent.putExtra(Constant.IntentKey.BEAN, new JieSuan(integerList));
+                            intent.setClass(ChanPinXQActivity.this, QueRenDDActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Intent intent = new Intent();
+                            intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+                            sendBroadcast(intent);
+                        }
                     } else if (cartAddcart.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
                     } else {
