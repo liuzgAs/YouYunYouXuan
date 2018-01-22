@@ -11,16 +11,18 @@ import java.util.List;
 public class GoodsInfo {
 
     /**
-     * banner : ["http://www.uyux.vip/attachment/images/1604/2018/01/BaKAlOoxZAlXK4aXx4zgJXALl24jjJ.jpg","http://www.uyux.vip/attachment/images/1604/2018/01/Eee7RQ88eC97g9897Cs7y89gqJyyUj.jpg"]
-     * data : {"id":1697,"title":"猴子系列茶宠","des":"优质紫砂泥料 造型精致","price":"205.00","vipPrice":197,"oldPrice":"0.00","vipDes":"V1会员价","countdown":0,"countdownDes":"距离抢购还剩","saleNum":"5588","stockNum":198,"shareMoney":"分享赚￥76.8","scoreDes":"最高可获得20积分","imgs":[{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/y3e5407Hva12Y242E245117VpaZ0E9.jpg","w":563,"h":260},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/qKvBkNEGeZaKQ93gZKV01eg9UGae98.jpg","w":784,"h":6211},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/MAqnvNhvPVp9NJpMC9QLSsmPacva53.jpg","w":804,"h":6644},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/U42U40uENII1NtpLUleVipIp2duhnE.jpg","w":804,"h":7762},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/gG1e1eiJESIj1qE8rkk118818r18Ir.jpg","w":804,"h":6023},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/YV4884R448Uku6OKFGR4Kg44964r4W.jpg","w":900,"h":470}],"imgs2":[{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/y3e5407Hva12Y242E245117VpaZ0E9.jpg","w":563,"h":260},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/qKvBkNEGeZaKQ93gZKV01eg9UGae98.jpg","w":784,"h":6211},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/MAqnvNhvPVp9NJpMC9QLSsmPacva53.jpg","w":804,"h":6644},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/U42U40uENII1NtpLUleVipIp2duhnE.jpg","w":804,"h":7762},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/gG1e1eiJESIj1qE8rkk118818r18Ir.jpg","w":804,"h":6023},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/YV4884R448Uku6OKFGR4Kg44964r4W.jpg","w":900,"h":470}]}
-     * status : 1
+     * banner : ["http://www.uyux.vip/attachment/images/1604/2017/12/ZuWjCyEEMEjsc7syEwMSsLsPv2Vw6c.jpg"]
+     * data : {"countdown":0,"countdownDes":"距离抢购还剩","des":"前凸后凹 碎粒少","id":1123,"imgs":[{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/I6eh7fb7hWeJxh7Ff2BaA6K3xwj4a7.jpg"},{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/Y198of3RfTfo0FOHKxo3oRZu03UfGo.jpg"},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/e2ZnFwpA9naoF2AoMvyyNt9nNoVN8h.jpg"}],"imgs2":[{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/I6eh7fb7hWeJxh7Ff2BaA6K3xwj4a7.jpg"},{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/Y198of3RfTfo0FOHKxo3oRZu03UfGo.jpg"},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/e2ZnFwpA9naoF2AoMvyyNt9nNoVN8h.jpg"}],"oldPrice":"28.80","price":"22.60","saleNum":"5588","scoreDes":"最高可获得20积分","shareMoney":"分享赚￥76.8","stockNum":49,"title":"有机小薏米","vipDes":"V1会员价","vipPrice":14.6}
      * info : 返回成功！
+     * skuCate : [{"key":8,"lv":0,"name":"咖啡色","price":0,"value":[{"key":2,"lv":1,"name":"M","price":"88.00","value":6},{"key":3,"lv":1,"name":"S","price":"88.00","value":7},{"key":4,"lv":1,"name":"L","price":"88.00","value":8},{"key":5,"lv":1,"name":"XL","price":"88.00","value":9},{"key":6,"lv":1,"name":"XXL","price":"88.00","value":10}]},{"key":9,"lv":0,"name":"腮红色","price":0,"value":[{"key":2,"lv":1,"name":"M","price":"88.00","value":6},{"key":3,"lv":1,"name":"S","price":"88.00","value":7},{"key":4,"lv":1,"name":"L","price":"88.00","value":8},{"key":5,"lv":1,"name":"XL","price":"88.00","value":9},{"key":6,"lv":1,"name":"XXL","price":"88.00","value":10}]}]
+     * status : 1
      */
 
     private DataBean data;
-    private int status;
     private String info;
+    private int status;
     private List<String> banner;
+    private List<SkuCateBean> skuCate;
 
     public DataBean getData() {
         return data;
@@ -28,14 +30,6 @@ public class GoodsInfo {
 
     public void setData(DataBean data) {
         this.data = data;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getInfo() {
@@ -46,6 +40,14 @@ public class GoodsInfo {
         this.info = info;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public List<String> getBanner() {
         return banner;
     }
@@ -54,96 +56,48 @@ public class GoodsInfo {
         this.banner = banner;
     }
 
+    public List<SkuCateBean> getSkuCate() {
+        return skuCate;
+    }
+
+    public void setSkuCate(List<SkuCateBean> skuCate) {
+        this.skuCate = skuCate;
+    }
+
     public static class DataBean {
         /**
-         * id : 1697
-         * title : 猴子系列茶宠
-         * des : 优质紫砂泥料 造型精致
-         * price : 205.00
-         * vipPrice : 197
-         * oldPrice : 0.00
-         * vipDes : V1会员价
          * countdown : 0
          * countdownDes : 距离抢购还剩
+         * des : 前凸后凹 碎粒少
+         * id : 1123
+         * imgs : [{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/I6eh7fb7hWeJxh7Ff2BaA6K3xwj4a7.jpg"},{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/Y198of3RfTfo0FOHKxo3oRZu03UfGo.jpg"},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/e2ZnFwpA9naoF2AoMvyyNt9nNoVN8h.jpg"}]
+         * imgs2 : [{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/I6eh7fb7hWeJxh7Ff2BaA6K3xwj4a7.jpg"},{"img":"http://www.wanhuaxin.com/attachment/images/1604/2017/12/Y198of3RfTfo0FOHKxo3oRZu03UfGo.jpg"},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/e2ZnFwpA9naoF2AoMvyyNt9nNoVN8h.jpg"}]
+         * oldPrice : 28.80
+         * price : 22.60
          * saleNum : 5588
-         * stockNum : 198
-         * shareMoney : 分享赚￥76.8
          * scoreDes : 最高可获得20积分
-         * imgs : [{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/y3e5407Hva12Y242E245117VpaZ0E9.jpg","w":563,"h":260},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/qKvBkNEGeZaKQ93gZKV01eg9UGae98.jpg","w":784,"h":6211},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/MAqnvNhvPVp9NJpMC9QLSsmPacva53.jpg","w":804,"h":6644},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/U42U40uENII1NtpLUleVipIp2duhnE.jpg","w":804,"h":7762},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/gG1e1eiJESIj1qE8rkk118818r18Ir.jpg","w":804,"h":6023},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/YV4884R448Uku6OKFGR4Kg44964r4W.jpg","w":900,"h":470}]
-         * imgs2 : [{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/y3e5407Hva12Y242E245117VpaZ0E9.jpg","w":563,"h":260},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/qKvBkNEGeZaKQ93gZKV01eg9UGae98.jpg","w":784,"h":6211},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/MAqnvNhvPVp9NJpMC9QLSsmPacva53.jpg","w":804,"h":6644},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/U42U40uENII1NtpLUleVipIp2duhnE.jpg","w":804,"h":7762},{"img":"http://www.uyux.vip/attachment/images/1604/2018/01/gG1e1eiJESIj1qE8rkk118818r18Ir.jpg","w":804,"h":6023},{"img":"http://www.uyux.vip/attachment/images/1604/2017/12/YV4884R448Uku6OKFGR4Kg44964r4W.jpg","w":900,"h":470}]
+         * shareMoney : 分享赚￥76.8
+         * stockNum : 49
+         * title : 有机小薏米
+         * vipDes : V1会员价
+         * vipPrice : 14.6
          */
 
-        private int id;
-        private String title;
-        private String des;
-        private String price;
-        private int vipPrice;
-        private String oldPrice;
-        private String vipDes;
         private int countdown;
         private String countdownDes;
+        private String des;
+        private int id;
+        private String oldPrice;
+        private String price;
         private String saleNum;
-        private int stockNum;
-        private String shareMoney;
         private String scoreDes;
+        private String shareMoney;
+        private int stockNum;
+        private String title;
+        private String vipDes;
+        private String vipPrice;
         private List<ImgsBean> imgs;
-        private List<Imgs2Bean> imgs2;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getDes() {
-            return des;
-        }
-
-        public void setDes(String des) {
-            this.des = des;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public int getVipPrice() {
-            return vipPrice;
-        }
-
-        public void setVipPrice(int vipPrice) {
-            this.vipPrice = vipPrice;
-        }
-
-        public String getOldPrice() {
-            return oldPrice;
-        }
-
-        public void setOldPrice(String oldPrice) {
-            this.oldPrice = oldPrice;
-        }
-
-        public String getVipDes() {
-            return vipDes;
-        }
-
-        public void setVipDes(String vipDes) {
-            this.vipDes = vipDes;
-        }
+        private List<ImgsBean> imgs2;
 
         public int getCountdown() {
             return countdown;
@@ -161,28 +115,44 @@ public class GoodsInfo {
             this.countdownDes = countdownDes;
         }
 
+        public String getDes() {
+            return des;
+        }
+
+        public void setDes(String des) {
+            this.des = des;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getOldPrice() {
+            return oldPrice;
+        }
+
+        public void setOldPrice(String oldPrice) {
+            this.oldPrice = oldPrice;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
         public String getSaleNum() {
             return saleNum;
         }
 
         public void setSaleNum(String saleNum) {
             this.saleNum = saleNum;
-        }
-
-        public int getStockNum() {
-            return stockNum;
-        }
-
-        public void setStockNum(int stockNum) {
-            this.stockNum = stockNum;
-        }
-
-        public String getShareMoney() {
-            return shareMoney;
-        }
-
-        public void setShareMoney(String shareMoney) {
-            this.shareMoney = shareMoney;
         }
 
         public String getScoreDes() {
@@ -193,6 +163,46 @@ public class GoodsInfo {
             this.scoreDes = scoreDes;
         }
 
+        public String getShareMoney() {
+            return shareMoney;
+        }
+
+        public void setShareMoney(String shareMoney) {
+            this.shareMoney = shareMoney;
+        }
+
+        public int getStockNum() {
+            return stockNum;
+        }
+
+        public void setStockNum(int stockNum) {
+            this.stockNum = stockNum;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getVipDes() {
+            return vipDes;
+        }
+
+        public void setVipDes(String vipDes) {
+            this.vipDes = vipDes;
+        }
+
+        public String getVipPrice() {
+            return vipPrice;
+        }
+
+        public void setVipPrice(String vipPrice) {
+            this.vipPrice = vipPrice;
+        }
+
         public List<ImgsBean> getImgs() {
             return imgs;
         }
@@ -201,24 +211,20 @@ public class GoodsInfo {
             this.imgs = imgs;
         }
 
-        public List<Imgs2Bean> getImgs2() {
+        public List<ImgsBean> getImgs2() {
             return imgs2;
         }
 
-        public void setImgs2(List<Imgs2Bean> imgs2) {
+        public void setImgs2(List<ImgsBean> imgs2) {
             this.imgs2 = imgs2;
         }
 
         public static class ImgsBean {
             /**
-             * img : http://www.uyux.vip/attachment/images/1604/2017/12/y3e5407Hva12Y242E245117VpaZ0E9.jpg
-             * w : 563
-             * h : 260
+             * img : http://www.wanhuaxin.com/attachment/images/1604/2017/12/I6eh7fb7hWeJxh7Ff2BaA6K3xwj4a7.jpg
              */
 
             private String img;
-            private int w;
-            private int h;
 
             public String getImg() {
                 return img;
@@ -226,58 +232,128 @@ public class GoodsInfo {
 
             public void setImg(String img) {
                 this.img = img;
-            }
-
-            public int getW() {
-                return w;
-            }
-
-            public void setW(int w) {
-                this.w = w;
-            }
-
-            public int getH() {
-                return h;
-            }
-
-            public void setH(int h) {
-                this.h = h;
             }
         }
 
-        public static class Imgs2Bean {
+    }
+
+    public static class SkuCateBean {
+        /**
+         * key : 8
+         * lv : 0
+         * name : 咖啡色
+         * price : 0
+         * value : [{"key":2,"lv":1,"name":"M","price":"88.00","value":6},{"key":3,"lv":1,"name":"S","price":"88.00","value":7},{"key":4,"lv":1,"name":"L","price":"88.00","value":8},{"key":5,"lv":1,"name":"XL","price":"88.00","value":9},{"key":6,"lv":1,"name":"XXL","price":"88.00","value":10}]
+         */
+
+        private int key;
+        private int lv;
+        private String name;
+        private int price;
+        private List<ValueBean> value;
+
+        public int getKey() {
+            return key;
+        }
+
+        public void setKey(int key) {
+            this.key = key;
+        }
+
+        public int getLv() {
+            return lv;
+        }
+
+        public void setLv(int lv) {
+            this.lv = lv;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
+        public void setPrice(int price) {
+            this.price = price;
+        }
+
+        public List<ValueBean> getValue() {
+            return value;
+        }
+
+        public void setValue(List<ValueBean> value) {
+            this.value = value;
+        }
+
+        public static class ValueBean {
             /**
-             * img : http://www.uyux.vip/attachment/images/1604/2017/12/y3e5407Hva12Y242E245117VpaZ0E9.jpg
-             * w : 563
-             * h : 260
+             * key : 2
+             * lv : 1
+             * name : M
+             * price : 88.00
+             * value : 6
              */
 
-            private String img;
-            private int w;
-            private int h;
+            private int key;
+            private int lv;
+            private String name;
+            private String price;
+            private int value;
+            private boolean isSelect;
 
-            public String getImg() {
-                return img;
+            public boolean isSelect() {
+                return isSelect;
             }
 
-            public void setImg(String img) {
-                this.img = img;
+            public void setSelect(boolean select) {
+                isSelect = select;
             }
 
-            public int getW() {
-                return w;
+            public int getKey() {
+                return key;
             }
 
-            public void setW(int w) {
-                this.w = w;
+            public void setKey(int key) {
+                this.key = key;
             }
 
-            public int getH() {
-                return h;
+            public int getLv() {
+                return lv;
             }
 
-            public void setH(int h) {
-                this.h = h;
+            public void setLv(int lv) {
+                this.lv = lv;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public int getValue() {
+                return value;
+            }
+
+            public void setValue(int value) {
+                this.value = value;
             }
         }
     }

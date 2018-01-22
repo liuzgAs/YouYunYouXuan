@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageImg"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/shangpin" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageImg"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/imageImg"
+            android:text="¥78.00"
+            android:textColor="@color/basic_color"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_marginBottom="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/text0000"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/imageImg"
+            android:text="库存2323件"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/text0000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageImg"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/imageImg"
+            android:text="请选择规格 数量"
+            android:textSize="@dimen/normal_textsize" />
+        <ImageView
+            android:src="@drawable/cancle_selector"
+            android:layout_width="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_height="28dp" />
+    </RelativeLayout>
+    <TextView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <com.vip.uyux.customview.ListView4ScrollView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:textColor="@color/light_black"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="购买数量"
+            android:id="@+id/textView152"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:background="@color/line_gray"
+            android:textSize="@dimen/bigLitterText"
+            android:gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="-"
+            android:id="@+id/textDelete"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/textNum"
+            android:layout_toStartOf="@+id/textNum"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp" />
+
+        <TextView
+            android:gravity="center"
+            android:textSize="@dimen/litterText"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:background="@color/line_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="1"
+            android:id="@+id/textNum"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/textAdd"
+            android:layout_toStartOf="@+id/textAdd"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp" />
+
+        <TextView
+            android:background="@color/line_gray"
+            android:textSize="@dimen/bigLitterText"
+            android:gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="+"
+            android:id="@+id/textAdd"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_marginEnd="@dimen/leftAndRight"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <Button
+        android:textSize="@dimen/MoreBigText"
+        android:textColor="@color/white"
+        android:background="@color/basic_color"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="确定"
+        android:id="@+id/buttonSure" />
+</LinearLayout>

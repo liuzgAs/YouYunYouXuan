@@ -84,6 +84,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textDes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textTitle"
@@ -119,6 +120,7 @@
             android:textSize="@dimen/moreLitterText" />
 
         <TextView
+            android:id="@+id/textVipDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textYuanJia"
@@ -134,6 +136,7 @@
             android:textSize="@dimen/moreLitterText" />
 
         <TextView
+            android:id="@+id/textSaleNumStockNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -144,6 +147,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textOldPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
@@ -173,6 +177,7 @@
             android:src="@mipmap/qiandai" />
 
         <TextView
+            android:id="@+id/textShareMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -251,7 +256,7 @@
             android:src="@mipmap/right" />
 
         <TextView
-            android:id="@+id/text0500"
+            android:id="@+id/textScoreDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -261,25 +266,25 @@
             android:textColor="@color/text_gray"
             android:textSize="@dimen/normal_textsize" />
 
-        <TextView
-            android:id="@+id/text0501"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/text0500"
-            android:text="239"
-            android:textColor="@color/basic_color"
-            android:textSize="@dimen/normal_textsize" />
+        <!--<TextView-->
+            <!--android:id="@+id/text0501"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toLeftOf="@+id/text0500"-->
+            <!--android:text="239"-->
+            <!--android:textColor="@color/basic_color"-->
+            <!--android:textSize="@dimen/normal_textsize" />-->
 
-        <TextView
-            android:id="@+id/text0502"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/text0501"
-            android:text="购买最高可获"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/normal_textsize" />
+        <!--<TextView-->
+            <!--android:id="@+id/text0502"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toLeftOf="@+id/text0501"-->
+            <!--android:text="购买最高可获"-->
+            <!--android:textColor="@color/text_gray"-->
+            <!--android:textSize="@dimen/normal_textsize" />-->
     </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
