@@ -71,6 +71,15 @@
         <activity
             android:name=".activity.SouSuoActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.QueRenDDActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.XuanZeSHDZActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.XinZengDZActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

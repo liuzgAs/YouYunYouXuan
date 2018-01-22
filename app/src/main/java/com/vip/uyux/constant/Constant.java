@@ -243,6 +243,10 @@ public class Constant {
          * 删除购物车
          */
         public static final String CART_DELCART = "/Cart/delCart";
+        /**
+         * 确认订单请求
+         */
+        public static final String ORDER_CONFIRMBEFORE = "/Order/confirmBefore";
     }
 
     public static class IntentKey {
