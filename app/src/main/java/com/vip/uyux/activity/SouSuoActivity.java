@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,13 +27,14 @@ import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.customview.OnTagClickListener;
+import com.vip.uyux.model.GoodsIndex;
 import com.vip.uyux.model.GoodsSearch;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
-import com.vip.uyux.viewholder.MyBaseViewHolder;
+import com.vip.uyux.viewholder.ChanPinLBViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +46,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private TagHotAdapter tagHotAdapter01;
     private TagHotAdapter tagHotAdapter02;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Integer> adapter;
+    private RecyclerArrayAdapter<GoodsIndex.DataBean> adapter;
     private int page = 0;
     private String keywords;
     private EditText editSouSuo;
@@ -92,16 +94,42 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         recyclerView.addItemDecoration(itemDecoration);
         int red = getResources().getColor(R.color.basic_color);
         recyclerView.setRefreshingColor(red);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(SouSuoActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsIndex.DataBean>(SouSuoActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_chanpin;
-                return new MyBaseViewHolder(parent, layout);
+                return new ChanPinLBViewHolder(parent, layout);
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
+                ApiClient.post(SouSuoActivity.this, getOkObject(), new ApiClient.CallBack() {
+                    @Override
+                    public void onSuccess(String s) {
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
+                        try {
+                            page++;
+                            GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
+                            int status = goodsIndex.getStatus();
+                            if (status == 1) {
+                                List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
+                                adapter.addAll(dataBeanList);
+                            } else if (status == 3) {
+                                MyDialog.showReLoginDialog(SouSuoActivity.this);
+                            } else {
+                                adapter.pauseMore();
+                            }
+                        } catch (Exception e) {
+                            adapter.pauseMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        adapter.pauseMore();
+                    }
+                });
             }
 
             @Override
@@ -134,11 +162,11 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                    Intent intent = new Intent();
-//                    intent.putExtra(Constant.INTENT_KEY.id, adapter.getItem(position).getId());
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                    intent.setClass(SouSuoActivity.this, ChanPinXQActivity.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent();
+                    intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.setClass(SouSuoActivity.this, ChanPinXQActivity.class);
+                    startActivity(intent);
             }
         });
     }
@@ -162,6 +190,9 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                     recyclerView.setVisibility(View.GONE);
                     scrollHot.setVisibility(View.VISIBLE);
                 } else {
+                    keywords = s.toString().trim();
+                    ApiClient.cancleAll();
+                    SouSuo();
                     recyclerView.setVisibility(View.VISIBLE);
                     scrollHot.setVisibility(View.GONE);
                 }
@@ -179,7 +210,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private OkObject getOkObject() {
         String url = Constant.HOST + Constant.Url.GOODS_SEARCH;
         HashMap<String, String> params = new HashMap<>();
-        if (isLogin){
+        if (isLogin) {
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
@@ -207,7 +238,8 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                             @Override
                             public void onItemClick(FlowTagLayout parent, View view, int position) {
                                 keywords = indexSearchData01.get(position).getName();
-                                SouSuo();
+                                editSouSuo.setText(keywords);
+                                editSouSuo.setSelection(keywords.length());
                             }
                         });
                         flowTagLayout02.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_NONE);
@@ -218,7 +250,8 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                             @Override
                             public void onItemClick(FlowTagLayout parent, View view, int position) {
                                 keywords = indexSearchData2.get(position).getName();
-                                SouSuo();
+                                editSouSuo.setText(keywords);
+                                editSouSuo.setSelection(keywords.length());
                             }
                         });
                     } else if (goodsSearch.getStatus() == 3) {
@@ -252,7 +285,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private OkObject getOkObjectSouSuo() {
         String url = Constant.HOST + Constant.Url.GOODS_INDEX;
         HashMap<String, String> params = new HashMap<>();
-        if (isLogin){
+        if (isLogin) {
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
@@ -262,8 +295,8 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     }
 
     private void SouSuo() {
-        editSouSuo.setText(keywords);
-        editSouSuo.setSelection(keywords.length());
+//        editSouSuo.setText(keywords);
+//        editSouSuo.setSelection(keywords.length());
         page = 1;
         ApiClient.post(this, getOkObjectSouSuo(), new ApiClient.CallBack() {
             @Override
@@ -271,16 +304,16 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                 LogUtil.LogShitou("限时购", s);
                 try {
                     page++;
-//                    IndexGoods indexGoods = GsonUtils.parseJSON(s, IndexGoods.class);
-//                    if (indexGoods.getStatus() == 1) {
-//                        List<IndexDataBean> indexGoodsData = indexGoods.getData();
-//                        adapter.clear();
-//                        adapter.addAll(indexGoodsData);
-//                    } else if (indexGoods.getStatus() == 3) {
-//                        MyDialog.showReLoginDialog(SouSuoActivity.this);
-//                    } else {
-//                        showError(indexGoods.getInfo());
-//                    }
+                    GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
+                    if (goodsIndex.getStatus() == 1) {
+                        List<GoodsIndex.DataBean> indexGoodsData = goodsIndex.getData();
+                        adapter.clear();
+                        adapter.addAll(indexGoodsData);
+                    } else if (goodsIndex.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(SouSuoActivity.this);
+                    } else {
+                        showError(goodsIndex.getInfo());
+                    }
                 } catch (Exception e) {
                     showError("数据出错");
                 }
@@ -313,7 +346,8 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         switch (v.getId()) {
             case R.id.imageSouSuo:
                 keywords = editSouSuo.getText().toString().trim();
-                SouSuo();
+                editSouSuo.setText(keywords);
+                editSouSuo.setSelection(keywords.length());
                 break;
             case R.id.imageBack:
                 finish();

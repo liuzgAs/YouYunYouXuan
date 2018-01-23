@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.vip.uyux.R;
-import com.vip.uyux.activity.DengLuActivity;
+import com.vip.uyux.activity.MainActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.util.ACache;
@@ -96,9 +96,11 @@ public class GuideFragment extends ZjbBaseFragment {
             public void onClick(View v) {
                 ACache aCache = ACache.get(getActivity(), Constant.Acache.FRIST);
                 aCache.put(Constant.Acache.FRIST, "0");
-                Intent intent = new Intent(getActivity(), DengLuActivity.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
             }
         });
         mGuide_img.setImageResource(img);

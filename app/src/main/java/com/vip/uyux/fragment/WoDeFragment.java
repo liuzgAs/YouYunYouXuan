@@ -14,6 +14,7 @@ import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
+import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.util.ScreenUtils;
 
@@ -88,24 +89,44 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.viewWoDeCP:
-                intent.setClass(getActivity(), WoDeCPActivity.class);
-                startActivity(intent);
+                if (isLogin){
+                    intent.setClass(getActivity(), WoDeCPActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(getActivity());
+                }
                 break;
             case R.id.viewYouHuiQuan:
-                intent.setClass(getActivity(), YouHuiQuanActivity.class);
-                startActivity(intent);
+                if (isLogin){
+                    intent.setClass(getActivity(), YouHuiQuanActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(getActivity());
+                }
                 break;
             case R.id.viewGeRen:
-                intent.setClass(getActivity(), GeRenXXActivity.class);
-                startActivity(intent);
+                if (isLogin){
+                    intent.setClass(getActivity(), GeRenXXActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(getActivity());
+                }
                 break;
             case R.id.imageFenXiangZX:
-                intent.setClass(getActivity(), FenXiangZXActivity.class);
-                startActivity(intent);
+                if (isLogin){
+                    intent.setClass(getActivity(), FenXiangZXActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(getActivity());
+                }
                 break;
             case R.id.viewYuE:
-                intent.setClass(getActivity(), WoDeYuEActivity.class);
-                startActivity(intent);
+                if (isLogin){
+                    intent.setClass(getActivity(), WoDeYuEActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(getActivity());
+                }
                 break;
             default:
                 break;

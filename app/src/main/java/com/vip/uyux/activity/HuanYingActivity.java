@@ -154,15 +154,15 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
 
     private void toMainActivity() {
         Intent intent = new Intent();
-        if (isLogin) {
+//        if (isLogin) {
             intent.setClass(HuanYingActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            intent.setClass(HuanYingActivity.this, DengLuActivity.class);
-            startActivity(intent);
-            finish();
-        }
+//        } else {
+//            intent.setClass(HuanYingActivity.this, DengLuActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
     }
 
 }

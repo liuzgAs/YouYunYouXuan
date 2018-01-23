@@ -61,7 +61,7 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginTop="8dp"
                                     android:layout_toRightOf="@+id/imageHead"
-                                    android:text="李达达"
+                                    android:text="登录"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/MoreBigText" />
 
@@ -72,7 +72,6 @@
                                     android:layout_marginBottom="8dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_toRightOf="@+id/imageHead"
-                                    android:text="ID:123465465"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/normal_textsize" />
                             </RelativeLayout>
@@ -88,11 +87,12 @@
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="12dp"
                             android:layout_marginLeft="15dp"
-                            android:text="成长值：300"
+                            android:text="成长值：0"
                             android:textColor="#efdda4"
                             android:textSize="@dimen/normal_textsize" />
 
                         <ImageView
+                            android:visibility="gone"
                             android:id="@+id/imageLv"
                             android:layout_width="wrap_content"
                             android:layout_height="115dp"
@@ -102,6 +102,7 @@
                             android:src="@mipmap/lv5" />
 
                         <ImageView
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
                             android:layout_alignParentBottom="true"
@@ -130,6 +131,7 @@
                             android:gravity="center_vertical|right">
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/image0103"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
@@ -137,6 +139,7 @@
                                 android:src="@mipmap/mine_shandian" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/text0102"
                                 android:layout_width="1dp"
                                 android:layout_height="10dp"
@@ -144,6 +147,7 @@
                                 android:background="#656055" />
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/image0101"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
@@ -151,6 +155,7 @@
                                 android:src="@mipmap/mine_che" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/text0100"
                                 android:layout_width="1dp"
                                 android:layout_height="10dp"
@@ -158,6 +163,7 @@
                                 android:background="#656055" />
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/image0102"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
@@ -165,6 +171,7 @@
                                 android:src="@mipmap/mine_baobao" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/text0101"
                                 android:layout_width="1dp"
                                 android:layout_height="10dp"
@@ -172,6 +179,7 @@
                                 android:background="#656055" />
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/image0100"
                                 android:layout_width="13dp"
                                 android:layout_height="wrap_content"
@@ -185,7 +193,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
                             android:layout_toLeftOf="@+id/viewFuWu"
-                            android:text="已享3项服务"
+                            android:text="已享0项服务"
                             android:textColor="#efdda4"
                             android:textSize="@dimen/normal_textsize" />
                     </RelativeLayout>
@@ -210,7 +218,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:text="2567.17"
+                        android:text="0.00"
                         android:textColor="@color/light_black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -241,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:text="1883"
+                        android:text="0"
                         android:textColor="@color/light_black"
                         android:textSize="18dp"
                         android:textStyle="bold" />

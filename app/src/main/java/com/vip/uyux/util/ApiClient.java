@@ -187,4 +187,8 @@ public class ApiClient {
                 });
     }
 
+    public static void cancleAll(){
+        OkGo.getInstance().cancelAll();
+    }
+
 }
