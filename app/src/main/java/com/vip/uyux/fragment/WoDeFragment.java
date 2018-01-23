@@ -112,32 +112,34 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
 
     @Override
     protected void initData() {
-        showLoadingDialog();
-        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
-            @Override
-            public void onSuccess(String s) {
-                cancelLoadingDialog();
-                LogUtil.LogShitou("WoDeFragment--onSuccess",s+ "");
-                try {
-                    UserMy userMy = GsonUtils.parseJSON(s, UserMy.class);
-                    if (userMy.getStatus()==1){
+        if (isLogin){
+            showLoadingDialog();
+            ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+                @Override
+                public void onSuccess(String s) {
+                    cancelLoadingDialog();
+                    LogUtil.LogShitou("WoDeFragment--onSuccess",s+ "");
+                    try {
+                        UserMy userMy = GsonUtils.parseJSON(s, UserMy.class);
+                        if (userMy.getStatus()==1){
 
-                    }else if (userMy.getStatus()==3){
-                        MyDialog.showReLoginDialog(getActivity());
-                    }else {
-                        Toast.makeText(getActivity(), userMy.getInfo(), Toast.LENGTH_SHORT).show();
+                        }else if (userMy.getStatus()==3){
+                            MyDialog.showReLoginDialog(getActivity());
+                        }else {
+                            Toast.makeText(getActivity(), userMy.getInfo(), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(),"数据出错", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(),"数据出错", Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public void onError() {
-                cancelLoadingDialog();
-                Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onError() {
+                    cancelLoadingDialog();
+                    Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
