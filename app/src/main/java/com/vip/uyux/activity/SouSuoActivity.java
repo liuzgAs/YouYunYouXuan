@@ -95,7 +95,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(SouSuoActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_ziyin;
+                int layout = R.layout.item_chanpin;
                 return new MyBaseViewHolder(parent, layout);
             }
         });
@@ -179,8 +179,10 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private OkObject getOkObject() {
         String url = Constant.HOST + Constant.Url.GOODS_SEARCH;
         HashMap<String, String> params = new HashMap<>();
-        params.put("uid", userInfo.getUid());
-        params.put("tokenTime", tokenTime);
+        if (isLogin){
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
         return new OkObject(params, url);
     }
 
@@ -250,8 +252,10 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private OkObject getOkObjectSouSuo() {
         String url = Constant.HOST + Constant.Url.GOODS_INDEX;
         HashMap<String, String> params = new HashMap<>();
-        params.put("uid", userInfo.getUid());
-        params.put("tokenTime", tokenTime);
+        if (isLogin){
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
         params.put("p", page + "");
         params.put("keywords", keywords);
         return new OkObject(params, url);

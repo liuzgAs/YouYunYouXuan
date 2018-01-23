@@ -399,6 +399,7 @@
                 android:src="@mipmap/fenxiangzhongxin" />
 
             <RelativeLayout
+                android:id="@+id/viewWoDeCP"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
                 android:background="@drawable/layout_selector_white_system_gray">

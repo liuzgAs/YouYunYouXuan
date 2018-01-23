@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
+import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -64,7 +65,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     @Override
     protected void initViews() {
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
-        layoutParams.height =ScreenUtils.getStatusBarHeight(getActivity())+(int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) getActivity().getResources().getDimension(R.dimen.titleHeight);
         viewBar.setLayoutParams(layoutParams);
     }
 
@@ -74,6 +75,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.imageFenXiangZX).setOnClickListener(this);
         mInflate.findViewById(R.id.viewGeRen).setOnClickListener(this);
         mInflate.findViewById(R.id.viewYouHuiQuan).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewWoDeCP).setOnClickListener(this);
     }
 
     @Override
@@ -83,8 +85,12 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        Intent intent =new Intent();
-        switch (view.getId()){
+        Intent intent = new Intent();
+        switch (view.getId()) {
+            case R.id.viewWoDeCP:
+                intent.setClass(getActivity(), WoDeCPActivity.class);
+                startActivity(intent);
+                break;
             case R.id.viewYouHuiQuan:
                 intent.setClass(getActivity(), YouHuiQuanActivity.class);
                 startActivity(intent);
@@ -98,7 +104,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 startActivity(intent);
                 break;
             case R.id.viewYuE:
-                intent.setClass(getActivity(),WoDeYuEActivity.class);
+                intent.setClass(getActivity(), WoDeYuEActivity.class);
                 startActivity(intent);
                 break;
             default:
