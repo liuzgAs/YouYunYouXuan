@@ -7,7 +7,7 @@
     <com.vip.uyux.customview.YuanJiaoImageView
         android:id="@+id/imageImg"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="@dimen/itemIndexWidth"
         android:scaleType="centerCrop"
         android:src="@mipmap/shangpin" />
 

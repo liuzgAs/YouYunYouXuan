@@ -273,6 +273,7 @@ public class Constant {
         public static final String NICKNAME = "nickName";
         public static final String BEAN = "bean";
         public static final String CATE = "cate";
+        public static final String PCATE = "pcate";
     }
 
     public static class RequestResultCode {

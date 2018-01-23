@@ -39,7 +39,7 @@ public class IndexItemViewHolder extends BaseViewHolder<IndexHome.DataBean.Goods
         textPrice = $(R.id.textPrice);
         textSaleNum = $(R.id.textSaleNum);
         float dp12 = DpUtils.convertDpToPixel(12, getContext());
-        imageImg.setRids(new float[]{dp12,dp12,dp12,dp12,0,0,0,0});
+        imageImg.setRids(new float[]{dp12, dp12, dp12, dp12, 0, 0, 0, 0});
         textCutPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
     }
 
@@ -47,21 +47,21 @@ public class IndexItemViewHolder extends BaseViewHolder<IndexHome.DataBean.Goods
     public void setData(IndexHome.DataBean.GoodsBean data) {
         super.setData(data);
         GlideApp.with(getContext())
-                .asBitmap()
                 .load(data.getImg())
+                .centerCrop()
                 .placeholder(R.mipmap.ic_empty)
                 .into(imageImg);
         textCutPrice.setText(data.getOldPrice());
         textVipDes.setText(data.getVipDes());
-        if (data.getType()==1){
+        if (data.getType() == 1) {
             imageZiYin.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             imageZiYin.setVisibility(View.GONE);
         }
         textTitle.setText(data.getTitle());
         textDes.setText(data.getDes());
         textPrice.setText(data.getPrice());
-        textSaleNum.setText("已售"+data.getSaleNum());
+        textSaleNum.setText("已售" + data.getSaleNum());
     }
 
 }

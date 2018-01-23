@@ -34,6 +34,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     private RecyclerArrayAdapter<GoodsIndex.DataBean> adapter;
     private int cate;
     private String title;
+    private int pcate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     protected void initIntent() {
         Intent intent = getIntent();
         cate = intent.getIntExtra(Constant.IntentKey.CATE, 0);
+        pcate = intent.getIntExtra(Constant.IntentKey.PCATE, 0);
         title = intent.getStringExtra(Constant.IntentKey.TITLE);
     }
 
@@ -167,6 +169,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         }
         params.put("p",String.valueOf(page));
         params.put("cate",String.valueOf(cate));
+        params.put("pcate",String.valueOf(pcate));
         return new OkObject(params, url);
     }
 
