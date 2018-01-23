@@ -56,10 +56,6 @@ public class Constant {
          */
         public static final String INDEX_STARTAD = "/Index/start";
         /**
-         * 商品列表
-         */
-        public static final String GOODS_INDEX = "/Goods/index";
-        /**
          * 确认订单页
          */
         public static final String ORDER_CREATEORDER = "/order/createOrder";
@@ -259,6 +255,10 @@ public class Constant {
          * 推荐
          */
         public static final String INDEX_RECOM = "/Index/recom";
+        /**
+         * 商品列表
+         */
+        public static final String GOODS_INDEX = "/Goods/index";
     }
 
     public static class IntentKey {
@@ -272,6 +272,7 @@ public class Constant {
         public static final String TITLE = "title";
         public static final String NICKNAME = "nickName";
         public static final String BEAN = "bean";
+        public static final String CATE = "cate";
     }
 
     public static class RequestResultCode {

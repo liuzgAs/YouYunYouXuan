@@ -15,6 +15,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.ChanPinLBActivity;
 import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -210,6 +211,16 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
                             .load(R.mipmap.fenlei_head)
                             .into(imageImg);
                 }
+            }
+        });
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ChanPinLBActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE,adapter.getItem(position).getName());
+                intent.putExtra(Constant.IntentKey.CATE,adapter.getItem(position).getId());
+                startActivity(intent);
             }
         });
     }

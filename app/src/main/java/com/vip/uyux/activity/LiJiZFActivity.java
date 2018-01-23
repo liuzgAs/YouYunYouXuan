@@ -182,7 +182,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
 //                intent1.setClass(LiJiZFActivity.this,DingDanXQActivity.class);
 //                intent1.putExtra(Constant.IntentKey.VALUE,order);
 //                startActivity(intent1);
-//                finish();
+                finish();
             }
         });
         singleBtnDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
