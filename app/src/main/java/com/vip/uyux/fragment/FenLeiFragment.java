@@ -306,6 +306,8 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
                         if (dataBeanList.size() > 0) {
                             adapter.clear();
                             advTop = dataBeanList.get(0).getImg();
+                            id=dataBeanList.get(0).getId();
+                            name=dataBeanList.get(0).getName();
                             List<IndexCate.DataBean.ListBean> listBeanList = dataBeanList.get(0).getList();
                             adapter.addAll(listBeanList);
                         }

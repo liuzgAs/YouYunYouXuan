@@ -482,12 +482,13 @@
                     android:textSize="@dimen/normal_textsize" />
 
                 <TextView
+                    android:id="@+id/textCouponNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/image0601"
-                    android:text="3张"
+                    android:text="0张"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/normal_textsize" />
 

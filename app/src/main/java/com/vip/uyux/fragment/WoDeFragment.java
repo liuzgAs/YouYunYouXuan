@@ -2,8 +2,10 @@ package com.vip.uyux.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,9 @@ import com.vip.uyux.util.ScreenUtils;
 
 import java.util.HashMap;
 
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -49,6 +54,9 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     private ImageView imageLv;
     private TextView textYuE;
     private TextView textJiFen;
+    private Badge badge;
+    private ImageView imageXiaoXi;
+    private TextView textCouponNum;
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -94,6 +102,15 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         imageLv = mInflate.findViewById(R.id.imageLv);
         textYuE = mInflate.findViewById(R.id.textYuE);
         textJiFen = mInflate.findViewById(R.id.textJiFen);
+        badge = new QBadgeView(getActivity())
+                .setBadgeTextColor(Color.WHITE)
+                .setBadgeTextSize(10f, true)
+                .setBadgeBackgroundColor(getResources().getColor(R.color.basic_color))
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setBadgePadding(2f, true)
+                .setGravityOffset(5f, 5f, true);
+        imageXiaoXi = mInflate.findViewById(R.id.imageXiaoXi);
+        textCouponNum = mInflate.findViewById(R.id.textCouponNum);
     }
 
     @Override
@@ -187,11 +204,13 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                                 imageLv.setVisibility(View.VISIBLE);
                                 textYuE.setText(userMy.getMoney());
                                 textJiFen.setText(String.valueOf(userMy.getScore()));
+                                textCouponNum.setText(userMy.getCouponNum()+"张");
                             } else {
                                 textLv0.setVisibility(View.VISIBLE);
                                 imageShengJi.setVisibility(View.VISIBLE);
                                 imageLvB.setVisibility(View.GONE);
                                 imageLv.setVisibility(View.GONE);
+                                badge.setBadgeNumber(userMy.getTipsNum()).bindTarget(imageXiaoXi);
                             }
                         } else if (userMy.getStatus() == 3) {
                             MyDialog.showReLoginDialog(getActivity());
