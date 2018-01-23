@@ -69,6 +69,7 @@
                                     android:textSize="@dimen/MoreBigText" />
 
                                 <com.vip.uyux.customview.MyFontTextView
+                                    android:id="@+id/textLv0"
                                     android:paddingBottom="2dp"
                                     android:paddingTop="2dp"
                                     android:paddingLeft="5dp"
@@ -100,6 +101,7 @@
 
                         </RelativeLayout>
                         <ImageView
+                            android:id="@+id/imageShengJi"
                             android:layout_marginTop="-1dp"
                             android:layout_alignParentRight="true"
                             android:src="@mipmap/shengji"
@@ -126,6 +128,7 @@
                             android:src="@mipmap/lv5" />
 
                         <ImageView
+                            android:id="@+id/imageLvB"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
                             android:layout_alignParentBottom="true"

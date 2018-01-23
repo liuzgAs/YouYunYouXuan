@@ -24,6 +24,7 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.UserMy;
 import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
@@ -40,6 +41,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     private View viewBar;
     private ImageView imageHead;
     private TextView textName;
+    private TextView textLv0;
+    private TextView textId;
+    private TextView textGrowthDes;
+    private ImageView imageShengJi;
+    private ImageView imageLvB;
+    private ImageView imageLv;
+    private TextView textYuE;
+    private TextView textJiFen;
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -77,6 +86,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         viewBar = mInflate.findViewById(R.id.viewBar);
         imageHead = mInflate.findViewById(R.id.imageHead);
         textName = mInflate.findViewById(R.id.textName);
+        textLv0 = mInflate.findViewById(R.id.textLv0);
+        textId = mInflate.findViewById(R.id.textId);
+        textGrowthDes = mInflate.findViewById(R.id.textGrowthDes);
+        imageShengJi = mInflate.findViewById(R.id.imageShengJi);
+        imageLvB = mInflate.findViewById(R.id.imageLvB);
+        imageLv = mInflate.findViewById(R.id.imageLv);
+        textYuE = mInflate.findViewById(R.id.textYuE);
+        textJiFen = mInflate.findViewById(R.id.textJiFen);
     }
 
     @Override
@@ -105,31 +122,84 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
         return new OkObject(params, url);
     }
 
     @Override
     protected void initData() {
-        if (isLogin){
+        if (isLogin) {
+            GlideApp.with(WoDeFragment.this)
+                    .load(userInfo.getHeadImg())
+                    .centerCrop()
+                    .dontAnimate()
+                    .placeholder(R.mipmap.ic_empty)
+                    .into(imageHead);
+            textName.setText(userInfo.getUserName());
+            textLv0.setVisibility(View.GONE);
+            textId.setText("");
+            textGrowthDes.setText("成长值：0");
+            imageShengJi.setVisibility(View.VISIBLE);
+            imageLvB.setVisibility(View.GONE);
+            imageLv.setVisibility(View.GONE);
             showLoadingDialog();
             ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
                 @Override
                 public void onSuccess(String s) {
                     cancelLoadingDialog();
-                    LogUtil.LogShitou("WoDeFragment--onSuccess",s+ "");
+                    LogUtil.LogShitou("WoDeFragment--onSuccess", s + "");
                     try {
                         UserMy userMy = GsonUtils.parseJSON(s, UserMy.class);
-                        if (userMy.getStatus()==1){
-
-                        }else if (userMy.getStatus()==3){
+                        if (userMy.getStatus() == 1) {
+                            GlideApp.with(WoDeFragment.this)
+                                    .load(userInfo.getHeadImg())
+                                    .centerCrop()
+                                    .dontAnimate()
+                                    .placeholder(R.mipmap.ic_empty)
+                                    .into(imageHead);
+                            textName.setText(userMy.getNickname());
+                            textId.setText(userMy.getId());
+                            textGrowthDes.setText(userMy.getGrowthDes());
+                            if (userMy.getLv() > 0) {
+                                textLv0.setVisibility(View.GONE);
+                                imageShengJi.setVisibility(View.GONE);
+                                imageLvB.setVisibility(View.VISIBLE);
+                                switch (userMy.getLv()) {
+                                    case 1:
+                                        imageLv.setImageResource(R.mipmap.lv1);
+                                        break;
+                                    case 2:
+                                        imageLv.setImageResource(R.mipmap.lv2);
+                                        break;
+                                    case 3:
+                                        imageLv.setImageResource(R.mipmap.lv3);
+                                        break;
+                                    case 4:
+                                        imageLv.setImageResource(R.mipmap.lv4);
+                                        break;
+                                    case 5:
+                                        imageLv.setImageResource(R.mipmap.lv5);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                imageLv.setVisibility(View.VISIBLE);
+                                textYuE.setText(userMy.getMoney());
+                                textJiFen.setText(String.valueOf(userMy.getScore()));
+                            } else {
+                                textLv0.setVisibility(View.VISIBLE);
+                                imageShengJi.setVisibility(View.VISIBLE);
+                                imageLvB.setVisibility(View.GONE);
+                                imageLv.setVisibility(View.GONE);
+                            }
+                        } else if (userMy.getStatus() == 3) {
                             MyDialog.showReLoginDialog(getActivity());
-                        }else {
+                        } else {
                             Toast.makeText(getActivity(), userMy.getInfo(), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(),"数据出错", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "数据出错", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -139,6 +209,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                     Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_SHORT).show();
                 }
             });
+        } else {
+            textName.setText("登录");
+            textLv0.setVisibility(View.VISIBLE);
+            textId.setText("");
+            textGrowthDes.setText("成长值：0");
+            imageShengJi.setVisibility(View.VISIBLE);
+            imageLvB.setVisibility(View.GONE);
+            imageLv.setVisibility(View.GONE);
         }
     }
 
@@ -147,42 +225,42 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.viewWoDeCP:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(getActivity(), WoDeCPActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(getActivity());
                 }
                 break;
             case R.id.viewYouHuiQuan:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(getActivity(), YouHuiQuanActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(getActivity());
                 }
                 break;
             case R.id.viewGeRen:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(getActivity(), GeRenXXActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(getActivity());
                 }
                 break;
             case R.id.imageFenXiangZX:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(getActivity(), FenXiangZXActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(getActivity());
                 }
                 break;
             case R.id.viewYuE:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(getActivity(), WoDeYuEActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(getActivity());
                 }
                 break;

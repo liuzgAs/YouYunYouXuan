@@ -26,7 +26,7 @@ public class UserMy {
     private String nickname;
     private String headimg;
     private int lv;
-    private int money;
+    private String money;
     private String growthDes;
     private int tipsNum;
     private int couponNum;
@@ -67,11 +67,11 @@ public class UserMy {
         this.lv = lv;
     }
 
-    public int getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 
