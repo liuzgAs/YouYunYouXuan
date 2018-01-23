@@ -259,6 +259,10 @@ public class Constant {
          * 商品列表
          */
         public static final String GOODS_INDEX = "/Goods/index";
+        /**
+         * 我的
+         */
+        public static final String USER_MY = "/User/my";
     }
 
     public static class IntentKey {

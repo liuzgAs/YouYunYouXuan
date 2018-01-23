@@ -39,13 +39,15 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_above="@+id/textChengZhangZhi"
+                            android:layout_above="@+id/textGrowthDes"
                             android:layout_weight="1">
+
                             <RelativeLayout
                                 android:id="@+id/viewGeRen"
-                                android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true">
+
                                 <com.vip.uyux.customview.CircleImageView
                                     android:id="@+id/imageHead"
                                     android:layout_width="60dp"
@@ -55,6 +57,7 @@
                                     android:src="@mipmap/touxiang_mine" />
 
                                 <TextView
+                                    android:id="@+id/textName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignTop="@+id/imageHead"
@@ -65,7 +68,24 @@
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/MoreBigText" />
 
+                                <com.vip.uyux.customview.MyFontTextView
+                                    android:paddingBottom="2dp"
+                                    android:paddingTop="2dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:background="@drawable/shape_noright_top15dp_gray"
+                                    android:layout_toRightOf="@+id/textName"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginBottom="3dp"
+                                    android:layout_alignBottom="@+id/textName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="LV0"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/moreLitterText" />
+
                                 <TextView
+                                    android:id="@+id/textId"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignBottom="@+id/imageHead"
@@ -73,15 +93,20 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_toRightOf="@+id/imageHead"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/normal_textsize" />
+                                    android:textSize="@dimen/normal_textsize"
+                                    tools:text="ID:465464654" />
                             </RelativeLayout>
 
 
-
                         </RelativeLayout>
-
+                        <ImageView
+                            android:layout_marginTop="-1dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@mipmap/shengji"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
                         <TextView
-                            android:id="@+id/textChengZhangZhi"
+                            android:id="@+id/textGrowthDes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -92,7 +117,6 @@
                             android:textSize="@dimen/normal_textsize" />
 
                         <ImageView
-                            android:visibility="gone"
                             android:id="@+id/imageLv"
                             android:layout_width="wrap_content"
                             android:layout_height="115dp"
@@ -102,7 +126,6 @@
                             android:src="@mipmap/lv5" />
 
                         <ImageView
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
                             android:layout_alignParentBottom="true"
@@ -131,7 +154,6 @@
                             android:gravity="center_vertical|right">
 
                             <ImageView
-                                android:visibility="gone"
                                 android:id="@+id/image0103"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
@@ -139,7 +161,6 @@
                                 android:src="@mipmap/mine_shandian" />
 
                             <TextView
-                                android:visibility="gone"
                                 android:id="@+id/text0102"
                                 android:layout_width="1dp"
                                 android:layout_height="10dp"
@@ -147,7 +168,6 @@
                                 android:background="#656055" />
 
                             <ImageView
-                                android:visibility="gone"
                                 android:id="@+id/image0101"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
@@ -155,7 +175,6 @@
                                 android:src="@mipmap/mine_che" />
 
                             <TextView
-                                android:visibility="gone"
                                 android:id="@+id/text0100"
                                 android:layout_width="1dp"
                                 android:layout_height="10dp"
@@ -163,7 +182,6 @@
                                 android:background="#656055" />
 
                             <ImageView
-                                android:visibility="gone"
                                 android:id="@+id/image0102"
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
@@ -171,7 +189,6 @@
                                 android:src="@mipmap/mine_baobao" />
 
                             <TextView
-                                android:visibility="gone"
                                 android:id="@+id/text0101"
                                 android:layout_width="1dp"
                                 android:layout_height="10dp"
@@ -179,7 +196,6 @@
                                 android:background="#656055" />
 
                             <ImageView
-                                android:visibility="gone"
                                 android:id="@+id/image0100"
                                 android:layout_width="13dp"
                                 android:layout_height="wrap_content"
@@ -193,7 +209,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
                             android:layout_toLeftOf="@+id/viewFuWu"
-                            android:text="已享0项服务"
+                            android:text="已享3项服务"
                             android:textColor="#efdda4"
                             android:textSize="@dimen/normal_textsize" />
                     </RelativeLayout>
@@ -463,12 +479,12 @@
                     android:textSize="@dimen/normal_textsize" />
 
                 <TextView
-                    android:text="3张"
-                    android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/image0601"
+                    android:text="3张"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/normal_textsize" />
 

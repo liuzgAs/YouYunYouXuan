@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
@@ -14,9 +17,18 @@ import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.UserMy;
+import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +38,8 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
 
     private View mInflate;
     private View viewBar;
+    private ImageView imageHead;
+    private TextView textName;
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -61,6 +75,8 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     @Override
     protected void findID() {
         viewBar = mInflate.findViewById(R.id.viewBar);
+        imageHead = mInflate.findViewById(R.id.imageHead);
+        textName = mInflate.findViewById(R.id.textName);
     }
 
     @Override
@@ -79,9 +95,49 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewWoDeCP).setOnClickListener(this);
     }
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.USER_MY;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        return new OkObject(params, url);
+    }
+
     @Override
     protected void initData() {
+        showLoadingDialog();
+        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("WoDeFragment--onSuccess",s+ "");
+                try {
+                    UserMy userMy = GsonUtils.parseJSON(s, UserMy.class);
+                    if (userMy.getStatus()==1){
 
+                    }else if (userMy.getStatus()==3){
+                        MyDialog.showReLoginDialog(getActivity());
+                    }else {
+                        Toast.makeText(getActivity(), userMy.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(),"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
