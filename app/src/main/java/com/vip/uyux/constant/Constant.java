@@ -251,6 +251,10 @@ public class Constant {
          * 确认订单提交
          */
         public static final String ORDER_NEWORDER = "/Order/newOrder";
+        /**
+         * 支付界面
+         */
+        public static final String ORDER_PAY = "/Order/pay";
     }
 
     public static class IntentKey {

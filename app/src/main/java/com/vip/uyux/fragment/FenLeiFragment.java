@@ -161,7 +161,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
             public void onTabSelected(TabView tab, int position) {
                 advTop = dataBeanList.get(position).getImg();
                 adapter.clear();
-                recyclerView.showProgress();
+//                recyclerView.showProgress();
                 adapter.addAll(dataBeanList.get(position).getList());
             }
 
@@ -208,7 +208,6 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
                     GlideApp.with(getActivity())
                             .asBitmap()
                             .load(R.mipmap.fenlei_head)
-                            .placeholder(R.mipmap.ic_empty)
                             .into(imageImg);
                 }
             }
@@ -231,7 +230,6 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
     }
 
     public void onRefresh() {
-        recyclerView.showProgress();
         ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
