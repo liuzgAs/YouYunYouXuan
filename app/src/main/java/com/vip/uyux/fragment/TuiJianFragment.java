@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -30,12 +31,13 @@ import com.vip.uyux.model.IndexRecom;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.BannerSettingUtil;
+import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.TuiJianViewHolder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,6 +53,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<IndexRecom.DataBean> adapter;
     private List<IndexRecom.BannerBean> bannerBeanList;
+    private List<IndexRecom.Banner2Bean> banner2BeanList;
 
     public TuiJianFragment() {
         // Required empty public constructor
@@ -123,12 +126,12 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
-//            private ImageView image0000;
+            //            private ImageView image0000;
 //            private ImageView image0003;
 //            private ImageView image0004;
 //            private ImageView image0005;
-//            private ImageView image0300;
-//            private ImageView image0400;
+            private ImageView image0300;
+            //            private ImageView image0400;
             private ViewPager id_viewpager;
             private PageIndicatorView mPageIndicatorView;
             private View viewViewPager;
@@ -140,10 +143,10 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 //                image0003 = view.findViewById(R.id.image0003);
 //                image0004 = view.findViewById(R.id.image0004);
 //                image0005 = view.findViewById(R.id.image0005);
-//                image0300 = view.findViewById(R.id.image0300);
+                image0300 = view.findViewById(R.id.image0300);
 //                image0400 = view.findViewById(R.id.image0400);
                 id_viewpager = view.findViewById(R.id.id_viewpager);
-                new BannerSettingUtil(id_viewpager, (int) getActivity().getResources().getDimension(R.dimen.leftAndRight), false).set();
+                new BannerSettingUtil(id_viewpager, (int) getActivity().getResources().getDimension(R.dimen.leftAndRight), true).set();
                 mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
                 mPageIndicatorView.setAnimationType(AnimationType.WORM);
                 mPageIndicatorView.setCount(3);
@@ -175,18 +178,19 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 //                        .load(R.mipmap.tuijiantouxiang)
 //                        .placeholder(R.mipmap.ic_empty)
 //                        .into(image0000);
-//                GlideApp.with(getActivity())
-//                        .asBitmap()
-//                        .circleCrop()
-//                        .load(R.mipmap.tuijiantouxiang)
-//                        .placeholder(R.mipmap.ic_empty)
-//                        .into(image0400);
 //                GlideApp.with(getContext())
 //                        .asBitmap()
 //                        .centerCrop()
 //                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
 //                        .load(R.mipmap.youxuantuijian_tuijian)
 //                        .into(image0003);
+//                GlideApp.with(getActivity())
+//                        .asBitmap()
+//                        .circleCrop()
+//                        .load(R.mipmap.tuijiantouxiang)
+//                        .placeholder(R.mipmap.ic_empty)
+//                        .into(image0400);
+
 //                GlideApp.with(getContext())
 //                        .asBitmap()
 //                        .centerCrop()
@@ -199,12 +203,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 //                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
 //                        .load(R.mipmap.youxuantuijian_tuijian)
 //                        .into(image0005);
-//                GlideApp.with(getContext())
-//                        .asBitmap()
-//                        .centerCrop()
-//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
-//                        .load(R.mipmap.viewpagerindex)
-//                        .into(image0300);
+
                 if (bannerBeanList != null) {
                     if (bannerBeanList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
@@ -214,11 +213,47 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                         viewViewPager.setVisibility(View.GONE);
                     }
                 }
+                if (banner2BeanList != null) {
+                    if (banner2BeanList.size() > 0) {
+                        GlideApp.with(getContext())
+                                .asBitmap()
+                                .centerCrop()
+                                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
+                                .load(R.mipmap.viewpagerindex)
+                                .into(image0300);
+                    }
+                }
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
+                ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+                    @Override
+                    public void onSuccess(String s) {
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
+                        try {
+                            page++;
+                            IndexRecom indexRecom = GsonUtils.parseJSON(s, IndexRecom.class);
+                            int status = indexRecom.getStatus();
+                            if (status == 1) {
+                                List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
+                                adapter.addAll(dataBeanList);
+                            } else if (status == 3) {
+                                MyDialog.showReLoginDialog(getActivity());
+                            } else {
+                                adapter.pauseMore();
+                            }
+                        } catch (Exception e) {
+                            adapter.pauseMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        adapter.pauseMore();
+                    }
+                });
             }
 
             @Override
@@ -286,9 +321,9 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
+        params.put("p", String.valueOf(page));
         return new OkObject(params, url);
     }
 
@@ -304,6 +339,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     IndexRecom indexRecom = GsonUtils.parseJSON(s, IndexRecom.class);
                     if (indexRecom.getStatus() == 1) {
                         bannerBeanList = indexRecom.getBanner();
+                        banner2BeanList = indexRecom.getBanner2();
                         List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);

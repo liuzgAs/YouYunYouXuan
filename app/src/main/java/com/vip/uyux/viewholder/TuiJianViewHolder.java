@@ -27,16 +27,30 @@ public class TuiJianViewHolder extends BaseViewHolder<IndexRecom.DataBean> {
     private final TextView textPrice;
     private final TextView textDianZan;
     private final TextView textName;
+    int viewType;
 
     public TuiJianViewHolder(ViewGroup parent, @LayoutRes int res, int viewType) {
         super(parent, res);
+        this.viewType=viewType;
         imageImg = $(R.id.imageImg);
         imageDianZan = $(R.id.imageDianZan);
         textTitle = $(R.id.textTitle);
         textPrice = $(R.id.textPrice);
         textDianZan = $(R.id.textDianZan);
         textName = $(R.id.textName);
-        SpannableString span = new SpannableString("i " + "黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美");
+
+    }
+
+    @Override
+    public void setData(IndexRecom.DataBean data) {
+        super.setData(data);
+        GlideApp.with(getContext())
+                .asBitmap()
+                .centerCrop()
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10,getContext())))
+                .load(data.getImg())
+                .into(imageImg);
+        SpannableString span = new SpannableString("i " + data.getTitle());
         MyIm imgspan;
         switch (viewType) {
             case 1:
@@ -55,17 +69,8 @@ public class TuiJianViewHolder extends BaseViewHolder<IndexRecom.DataBean> {
         }
         span.setSpan(imgspan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         textTitle.setText(span);
-        GlideApp.with(getContext())
-                .asBitmap()
-                .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10,getContext())))
-                .load(R.mipmap.tuijianimg)
-                .into(imageImg);
-    }
-
-    @Override
-    public void setData(IndexRecom.DataBean data) {
-        super.setData(data);
+        textPrice.setText("¥"+data.getPrice());
+        textName.setVisibility(View.GONE);
     }
 
 }
