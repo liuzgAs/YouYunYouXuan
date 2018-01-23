@@ -15,9 +15,8 @@
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/indexBannerHeight"
-            app:canLoop="true">
+            app:canLoop="true"/>
 
-        </com.bigkoo.convenientbanner.ConvenientBanner>
 
         <TextView
             android:id="@+id/textZhiShiQi"

@@ -255,6 +255,10 @@ public class Constant {
          * 支付界面
          */
         public static final String ORDER_PAY = "/Order/pay";
+        /**
+         * 推荐
+         */
+        public static final String INDEX_RECOM = "/Index/recom";
     }
 
     public static class IntentKey {

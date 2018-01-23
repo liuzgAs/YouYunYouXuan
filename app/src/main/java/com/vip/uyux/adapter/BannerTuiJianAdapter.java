@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.vip.uyux.R;
+import com.vip.uyux.model.IndexRecom;
 import com.vip.uyux.util.GlideApp;
 
 import java.util.List;
@@ -20,9 +21,9 @@ import java.util.List;
 public class BannerTuiJianAdapter extends PagerAdapter{
 
     private Context mContext;
-    private  List<Integer> imgList;
+    private  List<IndexRecom.BannerBean> imgList;
 
-    public BannerTuiJianAdapter(Context context, List<Integer> imgList) {
+    public BannerTuiJianAdapter(Context context, List<IndexRecom.BannerBean> imgList) {
         this.mContext = context;
         this.imgList=imgList;
     }
@@ -50,7 +51,7 @@ public class BannerTuiJianAdapter extends PagerAdapter{
             if (imgList.size()>0){
                 GlideApp.with(mContext)
                         .asBitmap()
-                        .load(imgList.get(position%imgList.size()))
+                        .load(imgList.get(position%imgList.size()).getImg())
                         .placeholder(R.mipmap.ic_empty)
                         .into(imageImg);
             }

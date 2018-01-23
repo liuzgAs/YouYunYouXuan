@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -24,15 +23,20 @@ import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
 import com.vip.uyux.adapter.BannerTuiJianAdapter;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
-import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.IndexRecom;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.BannerSettingUtil;
-import com.vip.uyux.util.DpUtils;
-import com.vip.uyux.util.GlideApp;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.TuiJianViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,7 +49,8 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private ImageView imageBack;
     private View viewBar;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Integer> adapter;
+    private RecyclerArrayAdapter<IndexRecom.DataBean> adapter;
+    private List<IndexRecom.BannerBean> bannerBeanList;
 
     public TuiJianFragment() {
         // Required empty public constructor
@@ -90,7 +95,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         ((TextView) mInflate.findViewById(R.id.textViewTitle)).setText("优选推荐");
         imageBack.setVisibility(View.GONE);
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
-        layoutParams.height =ScreenUtils.getStatusBarHeight(getActivity())+(int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) getActivity().getResources().getDimension(R.dimen.titleHeight);
         viewBar.setLayoutParams(layoutParams);
         initRecycler();
     }
@@ -104,7 +109,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexRecom.DataBean>(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_tuijian;
@@ -113,31 +118,30 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 
             @Override
             public int getViewType(int position) {
-                return getItem(position);
+                return 1;
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
-            private ImageView image0000;
-            private ImageView image0003;
-            private ImageView image0004;
-            private ImageView image0005;
-            private ImageView image0300;
-            private ImageView image0400;
+//            private ImageView image0000;
+//            private ImageView image0003;
+//            private ImageView image0004;
+//            private ImageView image0005;
+//            private ImageView image0300;
+//            private ImageView image0400;
             private ViewPager id_viewpager;
             private PageIndicatorView mPageIndicatorView;
-            private List<Integer> stringList = new ArrayList<>();
             private View viewViewPager;
 
             @Override
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.header_tuijian, null);
-                image0000 = view.findViewById(R.id.image0000);
-                image0003 = view.findViewById(R.id.image0003);
-                image0004 = view.findViewById(R.id.image0004);
-                image0005 = view.findViewById(R.id.image0005);
-                image0300 = view.findViewById(R.id.image0300);
-                image0400 = view.findViewById(R.id.image0400);
+//                image0000 = view.findViewById(R.id.image0000);
+//                image0003 = view.findViewById(R.id.image0003);
+//                image0004 = view.findViewById(R.id.image0004);
+//                image0005 = view.findViewById(R.id.image0005);
+//                image0300 = view.findViewById(R.id.image0300);
+//                image0400 = view.findViewById(R.id.image0400);
                 id_viewpager = view.findViewById(R.id.id_viewpager);
                 new BannerSettingUtil(id_viewpager, (int) getActivity().getResources().getDimension(R.dimen.leftAndRight), false).set();
                 mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
@@ -160,55 +164,51 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     }
                 });
                 viewViewPager = view.findViewById(R.id.viewViewPager);
-                stringList.add(R.mipmap.viewpagerindex);
-                stringList.add(R.mipmap.viewpagerindex);
-                stringList.add(R.mipmap.viewpagerindex);
-                stringList.add(R.mipmap.viewpagerindex);
                 return view;
             }
 
             @Override
             public void onBindView(View headerView) {
-                GlideApp.with(getActivity())
-                        .asBitmap()
-                        .circleCrop()
-                        .load(R.mipmap.tuijiantouxiang)
-                        .placeholder(R.mipmap.ic_empty)
-                        .into(image0000);
-                GlideApp.with(getActivity())
-                        .asBitmap()
-                        .circleCrop()
-                        .load(R.mipmap.tuijiantouxiang)
-                        .placeholder(R.mipmap.ic_empty)
-                        .into(image0400);
-                GlideApp.with(getContext())
-                        .asBitmap()
-                        .centerCrop()
-                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
-                        .load(R.mipmap.youxuantuijian_tuijian)
-                        .into(image0003);
-                GlideApp.with(getContext())
-                        .asBitmap()
-                        .centerCrop()
-                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
-                        .load(R.mipmap.youxuantuijian_tuijian)
-                        .into(image0004);
-                GlideApp.with(getContext())
-                        .asBitmap()
-                        .centerCrop()
-                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
-                        .load(R.mipmap.youxuantuijian_tuijian)
-                        .into(image0005);
-                GlideApp.with(getContext())
-                        .asBitmap()
-                        .centerCrop()
-                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
-                        .load(R.mipmap.viewpagerindex)
-                        .into(image0300);
-                if (stringList != null) {
-                    if (stringList.size() > 0) {
+//                GlideApp.with(getActivity())
+//                        .asBitmap()
+//                        .circleCrop()
+//                        .load(R.mipmap.tuijiantouxiang)
+//                        .placeholder(R.mipmap.ic_empty)
+//                        .into(image0000);
+//                GlideApp.with(getActivity())
+//                        .asBitmap()
+//                        .circleCrop()
+//                        .load(R.mipmap.tuijiantouxiang)
+//                        .placeholder(R.mipmap.ic_empty)
+//                        .into(image0400);
+//                GlideApp.with(getContext())
+//                        .asBitmap()
+//                        .centerCrop()
+//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
+//                        .load(R.mipmap.youxuantuijian_tuijian)
+//                        .into(image0003);
+//                GlideApp.with(getContext())
+//                        .asBitmap()
+//                        .centerCrop()
+//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
+//                        .load(R.mipmap.youxuantuijian_tuijian)
+//                        .into(image0004);
+//                GlideApp.with(getContext())
+//                        .asBitmap()
+//                        .centerCrop()
+//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
+//                        .load(R.mipmap.youxuantuijian_tuijian)
+//                        .into(image0005);
+//                GlideApp.with(getContext())
+//                        .asBitmap()
+//                        .centerCrop()
+//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
+//                        .load(R.mipmap.viewpagerindex)
+//                        .into(image0300);
+                if (bannerBeanList != null) {
+                    if (bannerBeanList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
-                        id_viewpager.setAdapter(new BannerTuiJianAdapter(getActivity(), stringList));
+                        id_viewpager.setAdapter(new BannerTuiJianAdapter(getActivity(), bannerBeanList));
                         id_viewpager.setCurrentItem(50);
                     } else {
                         viewViewPager.setVisibility(View.GONE);
@@ -219,8 +219,6 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                page++;
-                adapter.addAll(DataProvider.getPersonList(page));
             }
 
             @Override
@@ -252,11 +250,11 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                if (adapter.getViewType(position)==1){
+                if (adapter.getViewType(position) == 1) {
 //                    Intent intent = new Intent();
 //                    intent.setClass(getActivity(), ChanPinXQActivity.class);
 //                    startActivity(intent);
-                }else {
+                } else {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), CePingXQActivity.class);
                     startActivity(intent);
@@ -278,10 +276,73 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 
     int page = 1;
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.INDEX_RECOM;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("p",String.valueOf(page));
+        return new OkObject(params, url);
+    }
+
     @Override
     public void onRefresh() {
         page = 1;
-        adapter.clear();
-        adapter.addAll(DataProvider.getPersonList(page));
+        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("推荐", s);
+                try {
+                    page++;
+                    IndexRecom indexRecom = GsonUtils.parseJSON(s, IndexRecom.class);
+                    if (indexRecom.getStatus() == 1) {
+                        bannerBeanList = indexRecom.getBanner();
+                        List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
+                        adapter.clear();
+                        adapter.addAll(dataBeanList);
+                    } else if (indexRecom.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(getActivity());
+                    } else {
+                        showError(indexRecom.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 }

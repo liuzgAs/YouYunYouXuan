@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -78,7 +79,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/viewViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -140,15 +141,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:src="@mipmap/viewpagerindex"
-            android:scaleType="centerCrop"
+        <com.bigkoo.convenientbanner.ConvenientBanner
             android:layout_marginLeft="@dimen/leftAndRight"
             android:layout_marginRight="@dimen/leftAndRight"
-            android:id="@+id/image0300"
+            android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="180dp" />
+            android:layout_height="180dp"
+            app:canLoop="true"/>
         <TextView
+            android:visibility="gone"
             android:ellipsize="end"
             android:textColor="@color/light_black"
             android:textSize="@dimen/bigText"
@@ -165,6 +166,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="wrap_content">
@@ -190,5 +192,5 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_marginBottom="1dp"
-        android:layout_height="10dp" />
+        android:layout_height="15dp" />
 </LinearLayout>
