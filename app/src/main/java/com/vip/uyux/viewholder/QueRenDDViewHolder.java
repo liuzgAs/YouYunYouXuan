@@ -44,6 +44,7 @@ public class QueRenDDViewHolder extends BaseViewHolder<OrderConfirmbefore.CartBe
         textTitle.setText(data.getGoods_title());
         textDes.setText(data.getSpe_name());
         textNum.setText("×"+data.getNum());
+        textPrice.setText("¥"+data.getGoods_price());
     }
 
 }

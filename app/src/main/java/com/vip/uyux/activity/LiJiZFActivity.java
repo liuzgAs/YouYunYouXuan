@@ -278,6 +278,10 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    if (aliPayBean == null) {
+                                        MyDialog.showTipDialog(LiJiZFActivity.this, "支付失败");
+                                        return;
+                                    }
                                     switch (aliPayBean.getAlipay_trade_app_pay_response().getCode()) {
                                         case 10000:
                                             paySuccess();
@@ -308,6 +312,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
                             });
 
                         } catch (Exception e) {
+
                         }
                     }
                 };
