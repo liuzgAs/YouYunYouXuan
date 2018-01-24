@@ -14,12 +14,11 @@
             android:authorities="${applicationId}.myprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider_paths"/>
-
+                android:resource="@xml/file_provider_paths" />
         </provider>
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5a682ad0f43e484fb5000055" />
@@ -127,7 +126,8 @@
             android:launchMode="singleTop" />
         <activity android:name=".activity.ChanPinLBActivity" />
         <activity android:name=".activity.WoDeCPActivity" />
-        <activity android:name=".activity.ZuJiActivity"></activity>
+        <activity android:name=".activity.ZuJiActivity" />
+        <activity android:name=".activity.WoDeSCActivity"></activity>
     </application>
 
 </manifest>

@@ -17,6 +17,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
+import com.vip.uyux.activity.WoDeSCActivity;
 import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
 import com.vip.uyux.activity.ZuJiActivity;
@@ -129,6 +130,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewYouHuiQuan).setOnClickListener(this);
         mInflate.findViewById(R.id.viewWoDeCP).setOnClickListener(this);
         mInflate.findViewById(R.id.viewZuJi).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewShouCang).setOnClickListener(this);
     }
 
     /**
@@ -245,6 +247,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewShouCang:
+                if (isLogin) {
+                    intent.setClass(mContext, WoDeSCActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
+                break;
             case R.id.viewZuJi:
                 if (isLogin) {
                     intent.setClass(mContext, ZuJiActivity.class);

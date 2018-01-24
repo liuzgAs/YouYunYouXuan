@@ -279,6 +279,14 @@ public class Constant {
          * 取消收藏
          */
         public static final String GOODS_CANCLECOLLECT = "/Goods/cancleCollect";
+        /**
+         * 我的收藏
+         */
+        public static final String USER_COLLECT = "/User/Collect";
+        /**
+         * 我的收藏删除
+         */
+        public static final String USER_COLLECTDEL = "/User/collectDel";
     }
 
     public static class IntentKey {
