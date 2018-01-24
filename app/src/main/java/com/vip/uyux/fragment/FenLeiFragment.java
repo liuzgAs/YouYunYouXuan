@@ -185,8 +185,8 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
     }
 
     private void initRecycle() {
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        SpaceDecoration itemDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(12f, getActivity()));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        SpaceDecoration itemDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, getActivity()));
 //        itemDecoration.setPaddingEdgeSide(true);
 //        itemDecoration.setPaddingStart(false);
 //        itemDecoration.setPaddingHeaderFooter(false);
