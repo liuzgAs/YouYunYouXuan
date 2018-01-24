@@ -113,6 +113,24 @@ public class GoodsViewlog {
         private String title;
         private String img;
         private int type;
+        private int position;
+        private boolean isBianJi;
+
+        public boolean isBianJi() {
+            return isBianJi;
+        }
+
+        public void setBianJi(boolean bianJi) {
+            isBianJi = bianJi;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
 
         public int getId() {
             return id;

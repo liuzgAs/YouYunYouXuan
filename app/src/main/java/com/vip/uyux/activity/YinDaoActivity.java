@@ -1,28 +1,28 @@
 package com.vip.uyux.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
+import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.fragment.GuideFragment;
 
 
-public class YinDaoActivity extends FragmentActivity {
+public class YinDaoActivity extends ZjbBaseNotLeftActivity {
 
     private ViewPager mMyPager;
     private PageIndicatorView mPageIndicatorView;
     private int[] imgs = new int[]{
-            R.mipmap.welcome,
-            R.mipmap.welcome,
-            R.mipmap.welcome,
-            R.mipmap.welcome,
+            R.mipmap.welcome1,
+            R.mipmap.welcome2,
+            R.mipmap.welcome3,
+            R.mipmap.welcome4,
     };
 
     @Override
@@ -31,12 +31,42 @@ public class YinDaoActivity extends FragmentActivity {
         setContentView(R.layout.activity_yin_dao);
         mMyPager = (ViewPager) findViewById(R.id.myPager);
         mPageIndicatorView = (PageIndicatorView) findViewById(R.id.pageIndicatorView);
-        int blue = getResources().getColor(R.color.basic_color);
+        int blue = ContextCompat.getColor(this,R.color.white);
         mPageIndicatorView.setSelectedColor(blue);
-        mPageIndicatorView.setUnselectedColor(Color.WHITE);
+        mPageIndicatorView.setUnselectedColor(ContextCompat.getColor(this,R.color.gray_white));
         mPageIndicatorView.setAnimationType(AnimationType.WORM);
         mPageIndicatorView.setCount(imgs.length);
         mMyPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+    }
+
+    @Override
+    protected void initSP() {
+
+    }
+
+    @Override
+    protected void initIntent() {
+
+    }
+
+    @Override
+    protected void findID() {
+
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void setListeners() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     /**

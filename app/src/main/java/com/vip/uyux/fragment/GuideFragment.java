@@ -98,7 +98,7 @@ public class GuideFragment extends ZjbBaseFragment {
                 aCache.put(Constant.Acache.FRIST, "0");
                 Intent intent = new Intent(mContext, MainActivity.class);
                 startActivity(intent);
-                mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+//                mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 mContext.finish();
                 mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
             }

@@ -335,17 +335,22 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
         if (!checkIsSupportedWeachatPay()) {
             Toast.makeText(LiJiZFActivity.this, "您暂未安装微信或您的微信版本暂不支持支付功能\n请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
         } else {
-            OrderPay.PayBean.ConfigBean config = orderPay.getPay().getConfig();
-            api.registerApp(config.getAppid());
-            PayReq mPayReq = new PayReq();
-            mPayReq.appId = config.getAppid();
-            mPayReq.partnerId = config.getPartnerid();
-            mPayReq.prepayId = config.getPrepayid();
-            mPayReq.packageValue = config.getPackagevalue();
-            mPayReq.nonceStr = config.getNoncestr();
-            mPayReq.timeStamp = config.getTimestamp() + "";
-            mPayReq.sign = config.getSign().toUpperCase();
-            api.sendReq(mPayReq);
+            if (orderPay.getPay()==null){
+                MyDialog.showTipDialog(LiJiZFActivity.this,"微信支付暂未开通");
+            }else {
+                OrderPay.PayBean.ConfigBean config = orderPay.getPay().getConfig();
+                api.registerApp(config.getAppid());
+                PayReq mPayReq = new PayReq();
+                mPayReq.appId = config.getAppid();
+                mPayReq.partnerId = config.getPartnerid();
+                mPayReq.prepayId = config.getPrepayid();
+                mPayReq.packageValue = config.getPackagevalue();
+                mPayReq.nonceStr = config.getNoncestr();
+                mPayReq.timeStamp = config.getTimestamp() + "";
+                mPayReq.sign = config.getSign().toUpperCase();
+                api.sendReq(mPayReq);
+            }
+
         }
     }
 
