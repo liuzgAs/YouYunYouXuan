@@ -16,7 +16,6 @@
         android:textSize="@dimen/litterText" />
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/viewYuE"
         android:layout_width="match_parent"
         android:layout_height="@dimen/normalItemHeight"
@@ -95,7 +94,7 @@
             android:textColor="@color/light_black"
             android:textSize="@dimen/normal_textsize" />
         <ImageView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/imageZhiFuBao"
             android:layout_width="25dp"
             android:layout_height="wrap_content"

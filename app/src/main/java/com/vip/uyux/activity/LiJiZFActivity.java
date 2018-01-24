@@ -24,6 +24,7 @@ import com.vip.uyux.customview.SingleBtnDialog;
 import com.vip.uyux.model.AliPayBean;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.OrderPay;
+import com.vip.uyux.model.UserMy;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -36,7 +37,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
     private String order;
     private String price;
     private TextView textBlance;
-    private int payMode = 1;
+    private int payMode = 0;
     private View[] paySelectView = new View[3];
     private View[] payView = new View[3];
     final IWXAPI api = WXAPIFactory.createWXAPI(this, null);
@@ -125,7 +126,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.USER_GETBALANCE;
+        String url = Constant.HOST + Constant.Url.USER_MY;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
@@ -136,32 +137,33 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
 
     @Override
     protected void initData() {
-//        showLoadingDialog();
-//        ApiClient.post(LiJiZFActivity.this, getOkObject(), new ApiClient.CallBack() {
-//            @Override
-//            public void onSuccess(String s) {
-//                cancelLoadingDialog();
-//                LogUtil.LogShitou("LiJiZFActivity--onSuccess", s + "");
-//                try {
-//                    UserGetbalance userGetbalance = GsonUtils.parseJSON(s, UserGetbalance.class);
-//                    if (userGetbalance.getStatus() == 1) {
-//                        textBlance.setText("\u3000|\u3000余额：¥" + userGetbalance.getBalance());
-//                    } else if (userGetbalance.getStatus() == 3) {
-//                        MyDialog.showReLoginDialog(LiJiZFActivity.this);
-//                    } else {
-//                        Toast.makeText(LiJiZFActivity.this, userGetbalance.getInfo(), Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (Exception e) {
-//                    Toast.makeText(LiJiZFActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onError() {
-//                cancelLoadingDialog();
-//                Toast.makeText(LiJiZFActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        showLoadingDialog();
+        ApiClient.post(LiJiZFActivity.this, getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("LiJiZFActivity--onSuccess", s + "");
+                try {
+
+                    UserMy userMy = GsonUtils.parseJSON(s, UserMy.class);
+                    if (userMy.getStatus() == 1) {
+                        textBlance.setText("\u3000|\u3000余额：¥" + userMy.getMoney());
+                    } else if (userMy.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(LiJiZFActivity.this);
+                    } else {
+                        Toast.makeText(LiJiZFActivity.this, userMy.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(LiJiZFActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(LiJiZFActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -202,7 +204,12 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLiJiZF:
-                zhiFu();
+                if (payMode == 0) {
+                    MyDialog.showTipDialog(this,"余额支付暂未开通");
+//                    yuEZhiFu();
+                } else {
+                    zhiFu();
+                }
                 break;
             case R.id.imageBack:
                 finish();
@@ -211,6 +218,53 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
                 break;
         }
     }
+
+//    /**
+//     * des： 网络请求参数
+//     * author： ZhangJieBo
+//     * date： 2017/8/28 0028 上午 9:55
+//     */
+//    private OkObject getOkYEObject() {
+//        String url = Constant.HOST + Constant.Url.;
+//        HashMap<String, String> params = new HashMap<>();
+//        if (isLogin) {
+//            params.put("uid", userInfo.getUid());
+//            params.put("tokenTime",tokenTime);
+//        }
+//        params.put("p",String.valueOf(page));
+//        return new OkObject(params, url);
+//    }
+//
+//    /**
+//     * 余额支付
+//     */
+//    private void yuEZhiFu() {
+//        showLoadingDialog();
+//        ApiClient.post(LiJiZFActivity.this, getOkYEObject(), new ApiClient.CallBack() {
+//            @Override
+//            public void onSuccess(String s) {
+//                cancelLoadingDialog();
+//                LogUtil.LogShitou("LiJiZFActivity--onSuccess",s+ "");
+//                try {
+//                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+//                    if (simpleInfo.getStatus()==1){
+//                    }else if (simpleInfo.getStatus()==3){
+//                        MyDialog.showReLoginDialog(LiJiZFActivity.this);
+//                    }else {
+//                        Toast.makeText(LiJiZFActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (Exception e) {
+//                    Toast.makeText(LiJiZFActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onError() {
+//                cancelLoadingDialog();
+//                Toast.makeText(LiJiZFActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     /**
      * des： 网络请求参数
@@ -335,9 +389,9 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
         if (!checkIsSupportedWeachatPay()) {
             Toast.makeText(LiJiZFActivity.this, "您暂未安装微信或您的微信版本暂不支持支付功能\n请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
         } else {
-            if (orderPay.getPay()==null){
-                MyDialog.showTipDialog(LiJiZFActivity.this,"微信支付暂未开通");
-            }else {
+            if (orderPay.getPay() == null) {
+                MyDialog.showTipDialog(LiJiZFActivity.this, "微信支付暂未开通");
+            } else {
                 OrderPay.PayBean.ConfigBean config = orderPay.getPay().getConfig();
                 api.registerApp(config.getAppid());
                 PayReq mPayReq = new PayReq();
