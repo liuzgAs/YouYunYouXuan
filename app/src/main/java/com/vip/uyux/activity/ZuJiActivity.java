@@ -1,6 +1,7 @@
 package com.vip.uyux.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
@@ -22,12 +25,15 @@ import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.GoodsViewlog;
 import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.SimpleInfo;
+import com.vip.uyux.model.ZuJiShanChu;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.ZuJiEmptyViewHolder;
 import com.vip.uyux.viewholder.ZuJiViewHolder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +42,11 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<GoodsViewlog.DataBean> adapter;
     private TextView textViewRight;
+    private boolean isBianJi = false;
+    private boolean isQuanXuan = false;
+    private View viewDiBu;
+    private View viewQuanXuan;
+    private ImageView imageQuanXuan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +69,16 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         textViewRight = (TextView) findViewById(R.id.textViewRight);
+        viewDiBu = findViewById(R.id.viewDiBu);
+        viewQuanXuan = findViewById(R.id.viewQuanXuan);
+        imageQuanXuan = (ImageView) findViewById(R.id.imageQuanXuan);
     }
 
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("我的足迹");
         textViewRight.setText("编辑");
+        viewDiBu.setVisibility(View.GONE);
         initRecycler();
     }
 
@@ -113,7 +128,8 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                                 List<GoodsViewlog.DataBean> dataBeanList = goodsViewlog.getData();
                                 int position = 0;
                                 for (int i = 0; i < dataBeanList.size(); i++) {
-
+                                    dataBeanList.get(i).setBianJi(false);
+                                    dataBeanList.get(i).setSelect(false);
                                     if (dataBeanList.get(i).getType() == 0) {
                                         position = i;
                                         dataBeanList.get(i).setPosition(i);
@@ -168,30 +184,145 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                if (isBianJi) {
+                    if (adapter.getItem(position).isSelect()) {
+                        adapter.getItem(position).setSelect(false);
+                    } else {
+                        adapter.getItem(position).setSelect(true);
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Intent intent = new Intent();
+                    intent.setClass(ZuJiActivity.this, ChanPinXQActivity.class);
+                    intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getGoods_id());
+                    startActivity(intent);
+                }
             }
         });
+        /*StickyHeader*/
+        StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(ZuJiActivity.this));
+        decoration.setIncludeHeader(false);
+        recyclerView.addItemDecoration(decoration);
         recyclerView.setRefreshListener(this);
     }
 
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.textShanCHu).setOnClickListener(this);
+        textViewRight.setOnClickListener(this);
+        viewQuanXuan.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         onRefresh();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.textShanCHu:
+                shanChu();
+                break;
+            case R.id.viewQuanXuan:
+                isQuanXuan = !isQuanXuan;
+                if (isQuanXuan) {
+                    imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        adapter.getItem(i).setSelect(true);
+                        adapter.getItem(i).setBianJi(true);
+                    }
+                } else {
+                    imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        adapter.getItem(i).setSelect(false);
+                        adapter.getItem(i).setBianJi(true);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                break;
+            case R.id.textViewRight:
+                isQuanXuan = false;
+                isBianJi = !isBianJi;
+                if (isBianJi) {
+                    viewDiBu.setVisibility(View.VISIBLE);
+                    imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
+                    textViewRight.setText("取消");
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        adapter.getItem(i).setSelect(false);
+                        adapter.getItem(i).setBianJi(true);
+                    }
+                } else {
+                    viewDiBu.setVisibility(View.GONE);
+                    imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
+                    textViewRight.setText("编辑");
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        adapter.getItem(i).setSelect(false);
+                        adapter.getItem(i).setBianJi(false);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                break;
             case R.id.imageBack:
                 finish();
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 删除足迹
+     */
+    private void shanChu() {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < adapter.getAllData().size(); i++) {
+            if (adapter.getItem(i).isSelect()) {
+                list.add(adapter.getItem(i).getId());
+            }
+        }
+        if (list.size() == 0) {
+            MyDialog.showTipDialog(this,"请选择要删除的足迹");
+            return;
+        }
+        showLoadingDialog();
+        ZuJiShanChu zuJiShanChu = new ZuJiShanChu(1, "android", userInfo.getUid(), tokenTime, list);
+        String url = Constant.HOST + Constant.Url.GOODS_VIEWLOGDEL;
+        ApiClient.postJson(ZuJiActivity.this, url, GsonUtils.parseObject(zuJiShanChu), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ZuJiActivity--onSuccess", s + "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus() == 1) {
+                        viewDiBu.setVisibility(View.GONE);
+                        imageQuanXuan.setImageResource(R.mipmap.weixuanzhong);
+                        textViewRight.setText("编辑");
+                        onRefresh();
+                    } else if (simpleInfo.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(ZuJiActivity.this);
+                    } else {
+                        Toast.makeText(ZuJiActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ZuJiActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(ZuJiActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     int page = 1;
@@ -226,6 +357,8 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                         List<GoodsViewlog.DataBean> dataBeanList = goodsViewlog.getData();
                         int position = 0;
                         for (int i = 0; i < dataBeanList.size(); i++) {
+                            dataBeanList.get(i).setBianJi(false);
+                            dataBeanList.get(i).setSelect(false);
                             if (dataBeanList.get(i).getType() == 0) {
                                 position = i;
                                 dataBeanList.get(i).setPosition(i);
@@ -235,10 +368,6 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                         }
                         adapter.clear();
                         adapter.addAll(dataBeanList);
-                              /*StickyHeader*/
-                        StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(ZuJiActivity.this));
-                        decoration.setIncludeHeader(false);
-                        recyclerView.addItemDecoration(decoration);
                     } else if (goodsViewlog.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ZuJiActivity.this);
                     } else {
@@ -308,7 +437,7 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
 
         @Override
         public void onBindHeaderViewHolder(HeaderHolder viewholder, final int position) {
-            if (position<adapter.getAllData().size()){
+            if (position < adapter.getAllData().size()) {
                 viewholder.textTitle.setText(adapter.getItem(position).getTitle());
             }
         }

@@ -115,6 +115,15 @@ public class GoodsViewlog {
         private int type;
         private int position;
         private boolean isBianJi;
+        private boolean isSelect;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         public boolean isBianJi() {
             return isBianJi;

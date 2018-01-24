@@ -19,6 +19,9 @@ import com.vip.uyux.util.VersionUtils;
 
 import java.util.HashMap;
 
+/**
+ * web网页        app_i主页      app_goods_info商品详情页（配item_id）       app_user_msg用户消息页
+ */
 public class HuanYingActivity extends ZjbBaseNotLeftActivity {
     private static final int LOCATION = 1991;
     private String isFirst = "1";

@@ -267,6 +267,10 @@ public class Constant {
          * 足迹
          */
         public static final String GOODS_VIEWLOG = "/Goods/viewLog";
+        /**
+         * 足迹删除
+         */
+        public static final String GOODS_VIEWLOGDEL = "/Goods/viewLogDel";
     }
 
     public static class IntentKey {
