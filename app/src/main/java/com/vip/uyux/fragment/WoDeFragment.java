@@ -1,7 +1,10 @@
 package com.vip.uyux.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -59,6 +62,19 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     private Badge badge;
     private ImageView imageXiaoXi;
     private TextView textCouponNum;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.USERINFO:
+                    initData();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -174,7 +190,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                         UserMy userMy = GsonUtils.parseJSON(s, UserMy.class);
                         if (userMy.getStatus() == 1) {
                             GlideApp.with(WoDeFragment.this)
-                                    .load(userInfo.getHeadImg())
+                                    .load(userMy.getHeadimg())
                                     .centerCrop()
                                     .dontAnimate()
                                     .placeholder(R.mipmap.ic_empty)
@@ -306,5 +322,19 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.USERINFO);
+        getActivity().registerReceiver(reciver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(reciver);
     }
 }

@@ -18,7 +18,7 @@ public class UserProfile {
      * info : 返回成功！
      */
 
-    private String headImg;
+    private String headimg;
     private String nickname;
     private String real_name;
     private int sex;
@@ -27,11 +27,11 @@ public class UserProfile {
     private String info;
 
     public String getHeadImg() {
-        return headImg;
+        return headimg;
     }
 
-    public void setHeadImg(String headImg) {
-        this.headImg = headImg;
+    public void setHeadImg(String headimg) {
+        this.headimg = headimg;
     }
 
     public String getNickname() {

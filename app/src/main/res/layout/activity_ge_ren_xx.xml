@@ -86,6 +86,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/viewRealName"
             android:background="@drawable/layout_selector_white_system_gray"
             android:layout_width="match_parent"
