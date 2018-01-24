@@ -116,9 +116,17 @@ public class GoodsInfo {
         private String shareMoney;
         private String scoreDes;
         private String thumb;
+        private ShareBean share;
         private List<ImgsBean> imgs;
         private List<ImgsBean> imgs2;
 
+        public ShareBean getShare() {
+            return share;
+        }
+
+        public void setShare(ShareBean share) {
+            this.share = share;
+        }
 
         public String getThumb() {
             return thumb;

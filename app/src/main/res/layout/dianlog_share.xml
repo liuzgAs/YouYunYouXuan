@@ -1,82 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-            android:background="@color/white"
-            android:textSize="16dp"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:background="@color/white"
+            android:gravity="center"
             android:text="选择分享平台"
-            />
+            android:textSize="16dp" />
 
         <LinearLayout
-            android:background="@color/white"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="100dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:id="@+id/weixin"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <ImageView
-                    android:src="@mipmap/umeng_socialize_wechat"
+                    android:id="@+id/image0000"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/umeng_socialize_wechat" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_below="@+id/image0000"
+                    android:layout_centerHorizontal="true"
+                    android:text="微信"
+                    android:textSize="@dimen/normal_textsize" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/pengyouquan"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <ImageView
-                    android:src="@mipmap/umeng_socialize_wxcircle"
+                    android:id="@+id/image0001"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/umeng_socialize_wxcircle" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_below="@+id/image0001"
+                    android:layout_centerHorizontal="true"
+                    android:text="朋友圈"
+                    android:textSize="@dimen/normal_textsize" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/relaShouCang"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <ImageView
-                    android:src="@mipmap/umeng_socialize_fav"
+                    android:id="@+id/image0002"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:padding="7dp"
+                    android:src="@mipmap/duotu" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_below="@+id/image0002"
+                    android:layout_centerHorizontal="true"
+                    android:text="多图"
+                    android:textSize="@dimen/normal_textsize" />
             </RelativeLayout>
 
         </LinearLayout>
 
 
         <TextView
-            android:textSize="@dimen/normal_textsize"
-            android:background="@color/gray_white"
-            android:gravity="center"
+            android:id="@+id/textViewCancle"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="@color/gray_white"
+            android:gravity="center"
             android:text="取消分享"
-            android:id="@+id/textViewCancle"/>
+            android:textSize="@dimen/normal_textsize" />
     </LinearLayout>
 
 </LinearLayout>

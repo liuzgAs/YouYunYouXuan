@@ -33,6 +33,8 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
 import com.vip.uyux.adapter.TagAdapter01;
 import com.vip.uyux.base.MyDialog;
@@ -92,11 +94,13 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private ImageView imageShouCang;
     private View viewDiBu;
     private GoodsInfo goodsInfo;
+    private IWXAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chan_pin_xq);
+        api = WXAPIFactory.createWXAPI(ChanPinXQActivity.this, Constant.WXAPPID, true);
         init();
     }
 
@@ -352,6 +356,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         findViewById(R.id.imageBack).setOnClickListener(this);
         findViewById(R.id.textLiJiGouMai).setOnClickListener(this);
         findViewById(R.id.textJiaRuGWC).setOnClickListener(this);
+        findViewById(R.id.imageFenXiang).setOnClickListener(this);
         imageShouCang.setOnClickListener(this);
     }
 
@@ -363,6 +368,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.imageFenXiang:
+                MyDialog.share(this,"ChanPinXQActivity",api,String.valueOf(id),goodsInfo.getData().getShare());
+                break;
             case R.id.imageShouCang:
                 if (goodsInfo.getIsc() == 0) {
                     shouCang();

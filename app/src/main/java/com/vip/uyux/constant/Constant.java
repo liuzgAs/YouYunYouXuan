@@ -18,7 +18,7 @@ public class Constant {
     /**
      * 微信scrent
      */
-    public static String WXSCRENT = "02d7e0ca570f95630b552bd055fdd14a";
+    public static String WXSCRENT = "618262d37389118c85c2ff1f1f8bb783";
     /**
      * qq
      */

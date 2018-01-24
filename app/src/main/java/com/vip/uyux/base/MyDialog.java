@@ -7,6 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -25,6 +29,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.vip.uyux.R;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.SingleBtnDialog;
+import com.vip.uyux.model.ShareBean;
 import com.vip.uyux.util.GlideApp;
 
 import java.io.IOException;
@@ -176,46 +181,69 @@ public class MyDialog {
         dialogWindow.setAttributes(lp);
     }
 
-    public static void share01(final Context context, final IWXAPI api, final String url, final String title) {
+
+    private static String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+    /**
+     * 检查微信版本是否支付支付或是否安装可支付的微信版本
+     */
+    public static boolean checkIsSupportedWeachatPay(IWXAPI api) {
+        boolean isPaySupported = api.getWXAppSupportAPI() >= com.tencent.mm.opensdk.constants.Build.PAY_SUPPORTED_SDK_INT;
+        return isPaySupported;
+    }
+
+    /**
+     * des： 分享
+     * author： ZhangJieBo
+     * date： 2017/9/25 0025 上午 11:54
+     */
+    public static void share(final Context context, final String activity, final IWXAPI api, final String id, final ShareBean share) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View dialog_shengji = inflater.inflate(R.layout.dianlog_share, null);
+        View dialog_shengji = inflater.inflate(R.layout.dianlog_index_share, null);
+        TextView textDes1 = (TextView) dialog_shengji.findViewById(R.id.textDes1);
+        TextView textDes2 = (TextView) dialog_shengji.findViewById(R.id.textDes2);
+        textDes1.setText(share.getTitle());
+        SpannableString span = new SpannableString(share.getDes1() + share.getDesMoney() + share.getDes2());
+        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.basic_color)), share.getDes1().length(), share.getDes1().length() + share.getDesMoney().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textDes2.setText(span);
         final AlertDialog alertDialog1 = new AlertDialog.Builder(context, R.style.dialog)
                 .setView(dialog_shengji)
                 .create();
         alertDialog1.show();
-        dialog_shengji.findViewById(R.id.textViewCancle).setOnClickListener(new View.OnClickListener() {
+        dialog_shengji.findViewById(R.id.imageCancle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog1.dismiss();
             }
         });
-        dialog_shengji.findViewById(R.id.weixin).setOnClickListener(new View.OnClickListener() {
+        dialog_shengji.findViewById(R.id.viewWeiXin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!checkIsSupportedWeachatPay(api)) {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                wxShare(context, api, 0, url, title);
+                wxShare(api, 0, share.getShareUrl(), share.getShareTitle(), share.getShareDes(), share.getShareImg());
                 alertDialog1.dismiss();
             }
         });
-        dialog_shengji.findViewById(R.id.pengyouquan).setOnClickListener(new View.OnClickListener() {
+        dialog_shengji.findViewById(R.id.viewPengYouQuan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!checkIsSupportedWeachatPay(api)) {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                wxShare(context, api, 1, url, title);
+                wxShare(api, 1, share.getShareUrl(), share.getShareTitle(), share.getShareDes(), share.getShareImg());
                 alertDialog1.dismiss();
             }
         });
-        dialog_shengji.findViewById(R.id.relaShouCang).setOnClickListener(new View.OnClickListener() {
+        dialog_shengji.findViewById(R.id.viewErWeiMa).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wxShare(context, api, 2, url, title);
-                alertDialog1.dismiss();
+//                MyDialog.erWeiMa(context, api, id, type, activity);
                 alertDialog1.dismiss();
             }
         });
@@ -228,16 +256,35 @@ public class MyDialog {
         dialogWindow.setAttributes(lp);
     }
 
-    private static String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
-    }
-
-    /**
-     * 检查微信版本是否支付支付或是否安装可支付的微信版本
-     */
-    public static boolean checkIsSupportedWeachatPay(IWXAPI api) {
-        boolean isPaySupported = api.getWXAppSupportAPI() >= com.tencent.mm.opensdk.constants.Build.PAY_SUPPORTED_SDK_INT;
-        return isPaySupported;
+    private static void wxShare(final IWXAPI api, final int flag, String url, String title, String des, final String img) {
+        api.registerApp(Constant.WXAPPID);
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = url;
+        final WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = title;
+        msg.description = des;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = netPicToBmp(img);
+                msg.setThumbImage(bitmap);
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = buildTransaction("webpage");
+                req.message = msg;
+                switch (flag) {
+                    case 0:
+                        req.scene = SendMessageToWX.Req.WXSceneSession;
+                        break;
+                    case 1:
+                        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+                        break;
+                    case 2:
+                        req.scene = SendMessageToWX.Req.WXSceneFavorite;
+                        break;
+                }
+                api.sendReq(req);
+            }
+        }).start();
     }
 
     public static Bitmap netPicToBmp(String src) {
@@ -271,35 +318,6 @@ public class MyDialog {
             // Log exception
             return null;
         }
-    }
-
-    private static void wxShare(Context context, final IWXAPI api, final int flag, String url, String title) {
-        api.registerApp(Constant.WXAPPID);
-        WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = url;
-        final WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = title;
-        msg.description = title;
-
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
-        msg.setThumbImage(bitmap);
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction("webpage");
-        req.message = msg;
-        switch (flag) {
-            case 0:
-                req.scene = SendMessageToWX.Req.WXSceneSession;
-                break;
-            case 1:
-                req.scene = SendMessageToWX.Req.WXSceneTimeline;
-                break;
-            case 2:
-                req.scene = SendMessageToWX.Req.WXSceneFavorite;
-                break;
-            default:
-                break;
-        }
-        api.sendReq(req);
     }
 }
 
