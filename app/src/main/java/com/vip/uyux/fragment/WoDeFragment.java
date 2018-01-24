@@ -19,6 +19,7 @@ import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
+import com.vip.uyux.activity.ZuJiActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -127,6 +128,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewGeRen).setOnClickListener(this);
         mInflate.findViewById(R.id.viewYouHuiQuan).setOnClickListener(this);
         mInflate.findViewById(R.id.viewWoDeCP).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewZuJi).setOnClickListener(this);
     }
 
     /**
@@ -204,7 +206,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                                 imageLv.setVisibility(View.VISIBLE);
                                 textYuE.setText(userMy.getMoney());
                                 textJiFen.setText(String.valueOf(userMy.getScore()));
-                                textCouponNum.setText(userMy.getCouponNum()+"张");
+                                textCouponNum.setText(userMy.getCouponNum() + "张");
                             } else {
                                 textLv0.setVisibility(View.VISIBLE);
                                 imageShengJi.setVisibility(View.VISIBLE);
@@ -243,6 +245,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewZuJi:
+                if (isLogin) {
+                    intent.setClass(mContext, ZuJiActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
+                break;
             case R.id.viewWoDeCP:
                 if (isLogin) {
                     intent.setClass(mContext, WoDeCPActivity.class);

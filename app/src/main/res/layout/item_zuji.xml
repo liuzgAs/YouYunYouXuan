@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/layout_selector_white_system_gray"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/xuanzhong"
+        android:layout_width="20dp"
+        android:id="@+id/imageXuanZhong"
+        android:layout_height="20dp" />
+    <ImageView
+        android:src="@mipmap/shangpin"
+        android:layout_toRightOf="@+id/imageXuanZhong"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/imageImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+    <TextView
+        android:id="@+id/textTitle"
+        android:textSize="@dimen/bigText"
+        android:textColor="@color/light_black"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_alignTop="@+id/imageImg"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:text="一品轩黄金有机食用油"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

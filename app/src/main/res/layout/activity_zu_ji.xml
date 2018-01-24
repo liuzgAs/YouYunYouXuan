@@ -7,9 +7,12 @@
     android:background="@color/background"
     tools:context="com.vip.uyux.activity.ZuJiActivity">
 
-    <include layout="@layout/view_bar_white" />
+    <include
+        android:id="@+id/includeBar"
+        layout="@layout/view_bar_white" />
 
     <com.jude.easyrecyclerview.EasyRecyclerView
+        android:layout_below="@+id/includeBar"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
