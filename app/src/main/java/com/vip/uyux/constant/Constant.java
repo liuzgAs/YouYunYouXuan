@@ -271,6 +271,14 @@ public class Constant {
          * 足迹删除
          */
         public static final String GOODS_VIEWLOGDEL = "/Goods/viewLogDel";
+        /**
+         * 收藏商品
+         */
+        public static final String GOODS_COLLECT = "/Goods/collect";
+        /**
+         * 取消收藏
+         */
+        public static final String GOODS_CANCLECOLLECT = "/Goods/cancleCollect";
     }
 
     public static class IntentKey {

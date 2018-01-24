@@ -25,6 +25,15 @@ public class GoodsInfo {
     private List<String> banner;
     private List<SkuLvBean> skuLv;
     private List<SkuCateBean> skuCate;
+    private int isc;
+
+    public int getIsc() {
+        return isc;
+    }
+
+    public void setIsc(int isc) {
+        this.isc = isc;
+    }
 
     public DataBean getData() {
         return data;
@@ -109,6 +118,7 @@ public class GoodsInfo {
         private String thumb;
         private List<ImgsBean> imgs;
         private List<ImgsBean> imgs2;
+
 
         public String getThumb() {
             return thumb;

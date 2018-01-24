@@ -50,6 +50,7 @@
             android:layout_width="33dp"
             android:layout_height="match_parent" />
         <ImageView
+            android:id="@+id/imageShouCang"
             android:layout_toLeftOf="@+id/imageFenXiang"
             android:src="@mipmap/shoucang_xq"
             android:layout_centerVertical="true"
