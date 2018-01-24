@@ -102,7 +102,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         imageLv = mInflate.findViewById(R.id.imageLv);
         textYuE = mInflate.findViewById(R.id.textYuE);
         textJiFen = mInflate.findViewById(R.id.textJiFen);
-        badge = new QBadgeView(getActivity())
+        badge = new QBadgeView(mContext)
                 .setBadgeTextColor(Color.WHITE)
                 .setBadgeTextSize(10f, true)
                 .setBadgeBackgroundColor(getResources().getColor(R.color.basic_color))
@@ -116,7 +116,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     @Override
     protected void initViews() {
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
-        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
         viewBar.setLayoutParams(layoutParams);
     }
 
@@ -161,7 +161,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             imageLvB.setVisibility(View.GONE);
             imageLv.setVisibility(View.GONE);
             showLoadingDialog();
-            ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+            ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
                 @Override
                 public void onSuccess(String s) {
                     cancelLoadingDialog();
@@ -213,19 +213,19 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                                 badge.setBadgeNumber(userMy.getTipsNum()).bindTarget(imageXiaoXi);
                             }
                         } else if (userMy.getStatus() == 3) {
-                            MyDialog.showReLoginDialog(getActivity());
+                            MyDialog.showReLoginDialog(mContext);
                         } else {
-                            Toast.makeText(getActivity(), userMy.getInfo(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, userMy.getInfo(), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(), "数据出错", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "数据出错", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onError() {
                     cancelLoadingDialog();
-                    Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -245,42 +245,42 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.viewWoDeCP:
                 if (isLogin) {
-                    intent.setClass(getActivity(), WoDeCPActivity.class);
+                    intent.setClass(mContext, WoDeCPActivity.class);
                     startActivity(intent);
                 } else {
-                    ToLoginActivity.toLoginActivity(getActivity());
+                    ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;
             case R.id.viewYouHuiQuan:
                 if (isLogin) {
-                    intent.setClass(getActivity(), YouHuiQuanActivity.class);
+                    intent.setClass(mContext, YouHuiQuanActivity.class);
                     startActivity(intent);
                 } else {
-                    ToLoginActivity.toLoginActivity(getActivity());
+                    ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;
             case R.id.viewGeRen:
                 if (isLogin) {
-                    intent.setClass(getActivity(), GeRenXXActivity.class);
+                    intent.setClass(mContext, GeRenXXActivity.class);
                     startActivity(intent);
                 } else {
-                    ToLoginActivity.toLoginActivity(getActivity());
+                    ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;
             case R.id.imageFenXiangZX:
                 if (isLogin) {
-                    intent.setClass(getActivity(), FenXiangZXActivity.class);
+                    intent.setClass(mContext, FenXiangZXActivity.class);
                     startActivity(intent);
                 } else {
-                    ToLoginActivity.toLoginActivity(getActivity());
+                    ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;
             case R.id.viewYuE:
                 if (isLogin) {
-                    intent.setClass(getActivity(), WoDeYuEActivity.class);
+                    intent.setClass(mContext, WoDeYuEActivity.class);
                     startActivity(intent);
                 } else {
-                    ToLoginActivity.toLoginActivity(getActivity());
+                    ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;
             default:

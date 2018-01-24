@@ -91,7 +91,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
     @Override
     protected void initViews() {
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
-        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
         viewBar.setLayoutParams(layoutParams);
         verticalTabLayout.setVisibility(View.GONE);
         tabString.add("推荐分类");
@@ -186,12 +186,12 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
 
     private void initRecycle() {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-        SpaceDecoration itemDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, getActivity()));
+        SpaceDecoration itemDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, mContext));
 //        itemDecoration.setPaddingEdgeSide(true);
 //        itemDecoration.setPaddingStart(false);
 //        itemDecoration.setPaddingHeaderFooter(false);
         recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexCate.DataBean.ListBean>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexCate.DataBean.ListBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_grid_fenlei;
@@ -205,13 +205,13 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
 
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.head_fenlei, null);
+                View view = LayoutInflater.from(mContext).inflate(R.layout.head_fenlei, null);
                 imageImg = view.findViewById(R.id.imageImg);
                 imageImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(getActivity(), ChanPinLBActivity.class);
+                        intent.setClass(mContext, ChanPinLBActivity.class);
                         intent.putExtra(Constant.IntentKey.TITLE, name);
                         intent.putExtra(Constant.IntentKey.PCATE, id);
                         startActivity(intent);
@@ -235,7 +235,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), ChanPinLBActivity.class);
+                intent.setClass(mContext, ChanPinLBActivity.class);
                 intent.putExtra(Constant.IntentKey.TITLE, adapter.getItem(position).getName());
                 intent.putExtra(Constant.IntentKey.CATE, adapter.getItem(position).getId());
                 startActivity(intent);
@@ -259,7 +259,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
     }
 
     public void onRefresh() {
-        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("分类", s);
@@ -312,7 +312,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
                             adapter.addAll(listBeanList);
                         }
                     } else if (indexCate.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(getActivity());
+                        MyDialog.showReLoginDialog(mContext);
                     } else {
                         showError(indexCate.getInfo());
                     }
@@ -332,7 +332,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
@@ -360,7 +360,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
         switch (view.getId()) {
             case R.id.viewSearch:
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), SouSuoActivity.class);
+                intent.setClass(mContext, SouSuoActivity.class);
                 startActivity(intent);
                 break;
             default:

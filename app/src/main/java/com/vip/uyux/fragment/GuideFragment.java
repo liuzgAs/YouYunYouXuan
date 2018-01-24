@@ -94,13 +94,13 @@ public class GuideFragment extends ZjbBaseFragment {
         mEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ACache aCache = ACache.get(getActivity(), Constant.Acache.FRIST);
+                ACache aCache = ACache.get(mContext, Constant.Acache.FRIST);
                 aCache.put(Constant.Acache.FRIST, "0");
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(mContext, MainActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-                getActivity().finish();
-                getActivity().overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                mContext.finish();
+                mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
             }
         });
         mGuide_img.setImageResource(img);

@@ -138,7 +138,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     protected void initViews() {
         mInflate.findViewById(R.id.imageBack).setVisibility(View.GONE);
         ViewGroup.LayoutParams layoutParams = mRelaTitleStatue.getLayoutParams();
-        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
         mRelaTitleStatue.setLayoutParams(layoutParams);
         ((TextView) mInflate.findViewById(R.id.textViewTitle)).setText("购物车");
         initRecycle();
@@ -156,14 +156,14 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     }
 
     private void initRecycle() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
         DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         int red = getResources().getColor(R.color.basic_color);
         recyclerView.setRefreshingColor(red);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CartIndex.CartBean>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CartIndex.CartBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_car;
@@ -184,7 +184,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        ACache aCache = ACache.get(getActivity(), Constant.Acache.LOCATION);
+        ACache aCache = ACache.get(mContext, Constant.Acache.LOCATION);
         String did = aCache.getAsString(Constant.Acache.DID);
         String url = Constant.HOST + Constant.Url.CART_INDEX;
         HashMap<String, String> params = new HashMap<>();
@@ -198,7 +198,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
 
 
     public void onRefresh() {
-        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("购物车", s);
@@ -225,7 +225,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                         adapter.addAll(cartBeanList);
 
                     } else if (cartIndex.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(getActivity());
+                        MyDialog.showReLoginDialog(mContext);
                     } else {
                         showError(cartIndex.getInfo());
                     }
@@ -245,7 +245,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
@@ -289,12 +289,12 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                     }
                 }
                 if (integerList.size()==0) {
-                    Toast.makeText(getActivity(), "请选择要结算的商品", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请选择要结算的商品", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent intent = new Intent();
                 intent.putExtra(Constant.IntentKey.BEAN, new JieSuan(integerList));
-                intent.setClass(getActivity(), QueRenDDActivity.class);
+                intent.setClass(mContext, QueRenDDActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -332,12 +332,12 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
         filter.addAction(Constant.BroadcastCode.QUAN_XUAN);
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_CAR);
         filter.addAction(Constant.BroadcastCode.NUM_CHANGE);
-        getActivity().registerReceiver(reciver, filter);
+        mContext.registerReceiver(reciver, filter);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(reciver);
+        mContext.unregisterReceiver(reciver);
     }
 }

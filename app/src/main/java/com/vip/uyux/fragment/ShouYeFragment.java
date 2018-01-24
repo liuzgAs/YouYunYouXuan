@@ -101,7 +101,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     @Override
     protected void initViews() {
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
-        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) DpUtils.convertDpToPixel(50, getActivity());
+        layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) DpUtils.convertDpToPixel(50, mContext);
         viewBar.setLayoutParams(layoutParams);
         initRecycler();
     }
@@ -110,9 +110,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
      * 初始化recyclerview
      */
     private void initRecycler() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexHome.DataBean>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexHome.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_index;
@@ -134,7 +134,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.header_index, null);
+                View view = LayoutInflater.from(mContext).inflate(R.layout.header_index, null);
                 banner = view.findViewById(R.id.banner);
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
@@ -158,7 +158,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 recyclerZiYinView = view.findViewById(R.id.recyclerView);
                 initZiYinRecycler();
                 id_viewpager = view.findViewById(R.id.id_viewpager);
-                new BannerSettingUtil(id_viewpager, (int) getActivity().getResources().getDimension(R.dimen.leftAndRight), false).set();
+                new BannerSettingUtil(id_viewpager, (int) mContext.getResources().getDimension(R.dimen.leftAndRight), false).set();
                 mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
                 mPageIndicatorView.setAnimationType(AnimationType.WORM);
                 mPageIndicatorView.setCount(3);
@@ -206,7 +206,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     @Override
                     public void onItemClick(int position) {
                         Intent intent = new Intent();
-                        intent.setClass(getActivity(), ChanPinXQActivity.class);
+                        intent.setClass(mContext, ChanPinXQActivity.class);
                         intent.putExtra(Constant.IntentKey.ID,adapterZiYin.getItem(position).getId());
                         getContext().startActivity(intent);
                     }
@@ -238,7 +238,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 if (banner2BeanList != null) {
                     if (banner2BeanList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
-                        id_viewpager.setAdapter(new BannerAdapter(getActivity(), banner2BeanList));
+                        id_viewpager.setAdapter(new BannerAdapter(mContext, banner2BeanList));
                         id_viewpager.setCurrentItem(50);
                     } else {
                         viewViewPager.setVisibility(View.GONE);
@@ -249,7 +249,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     viewNum.removeAllViews();
                     String[] split = num1.split("");
                     for (int i = 1; i < split.length; i++) {
-                        TextView viewNum1 = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.index_num, null);
+                        TextView viewNum1 = (TextView) LayoutInflater.from(mContext).inflate(R.layout.index_num, null);
                         viewNum1.setText(split[i]);
                         viewNum.addView(viewNum1);
                     }
@@ -258,7 +258,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     viewNum2.removeAllViews();
                     String[] split = num2.split("");
                     for (int i = 1; i < split.length; i++) {
-                        TextView viewNum1 = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.index_num, null);
+                        TextView viewNum1 = (TextView) LayoutInflater.from(mContext).inflate(R.layout.index_num, null);
                         viewNum1.setText(split[i]);
                         viewNum2.addView(viewNum1);
                     }
@@ -306,7 +306,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("首页", s);
@@ -324,7 +324,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (indexHome.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(getActivity());
+                        MyDialog.showReLoginDialog(mContext);
                     } else {
                         showError(indexHome.getInfo());
                     }
@@ -344,7 +344,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {

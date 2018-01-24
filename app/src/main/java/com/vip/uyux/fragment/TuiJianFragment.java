@@ -98,7 +98,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         ((TextView) mInflate.findViewById(R.id.textViewTitle)).setText("优选推荐");
         imageBack.setVisibility(View.GONE);
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
-        layoutParams.height = ScreenUtils.getStatusBarHeight(getActivity()) + (int) getActivity().getResources().getDimension(R.dimen.titleHeight);
+        layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
         viewBar.setLayoutParams(layoutParams);
         initRecycler();
     }
@@ -107,12 +107,12 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
      * 初始化recyclerview
      */
     private void initRecycler() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexRecom.DataBean>(getActivity()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexRecom.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_tuijian;
@@ -138,7 +138,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.header_tuijian, null);
+                View view = LayoutInflater.from(mContext).inflate(R.layout.header_tuijian, null);
 //                image0000 = view.findViewById(R.id.image0000);
 //                image0003 = view.findViewById(R.id.image0003);
 //                image0004 = view.findViewById(R.id.image0004);
@@ -146,7 +146,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 image0300 = view.findViewById(R.id.image0300);
 //                image0400 = view.findViewById(R.id.image0400);
                 id_viewpager = view.findViewById(R.id.id_viewpager);
-                new BannerSettingUtil(id_viewpager, (int) getActivity().getResources().getDimension(R.dimen.leftAndRight), true).set();
+                new BannerSettingUtil(id_viewpager, (int) mContext.getResources().getDimension(R.dimen.leftAndRight), true).set();
                 mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
                 mPageIndicatorView.setAnimationType(AnimationType.WORM);
                 mPageIndicatorView.setCount(3);
@@ -172,7 +172,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 
             @Override
             public void onBindView(View headerView) {
-//                GlideApp.with(getActivity())
+//                GlideApp.with(mContext)
 //                        .asBitmap()
 //                        .circleCrop()
 //                        .load(R.mipmap.tuijiantouxiang)
@@ -184,7 +184,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 //                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
 //                        .load(R.mipmap.youxuantuijian_tuijian)
 //                        .into(image0003);
-//                GlideApp.with(getActivity())
+//                GlideApp.with(mContext)
 //                        .asBitmap()
 //                        .circleCrop()
 //                        .load(R.mipmap.tuijiantouxiang)
@@ -207,7 +207,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 if (bannerBeanList != null) {
                     if (bannerBeanList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
-                        id_viewpager.setAdapter(new BannerTuiJianAdapter(getActivity(), bannerBeanList));
+                        id_viewpager.setAdapter(new BannerTuiJianAdapter(mContext, bannerBeanList));
                         id_viewpager.setCurrentItem(50);
                     } else {
                         viewViewPager.setVisibility(View.GONE);
@@ -228,7 +228,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+                ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
                         LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
@@ -240,7 +240,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                                 List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
-                                MyDialog.showReLoginDialog(getActivity());
+                                MyDialog.showReLoginDialog(mContext);
                             } else {
                                 adapter.pauseMore();
                             }
@@ -287,11 +287,11 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             public void onItemClick(int position) {
                 if (adapter.getViewType(position) == 1) {
 //                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(), ChanPinXQActivity.class);
+//                    intent.setClass(mContext, ChanPinXQActivity.class);
 //                    startActivity(intent);
                 } else {
                     Intent intent = new Intent();
-                    intent.setClass(getActivity(), CePingXQActivity.class);
+                    intent.setClass(mContext, CePingXQActivity.class);
                     startActivity(intent);
                 }
             }
@@ -330,7 +330,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         page = 1;
-        ApiClient.post(getActivity(), getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("推荐", s);
@@ -344,7 +344,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (indexRecom.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(getActivity());
+                        MyDialog.showReLoginDialog(mContext);
                     } else {
                         showError(indexRecom.getInfo());
                     }
@@ -364,7 +364,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(getActivity()).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {

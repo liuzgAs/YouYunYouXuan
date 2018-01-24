@@ -263,6 +263,10 @@ public class Constant {
          * 我的
          */
         public static final String USER_MY = "/User/my";
+        /**
+         * 足迹
+         */
+        public static final String GOODS_VIEWLOG = "/Goods/viewLog";
     }
 
     public static class IntentKey {

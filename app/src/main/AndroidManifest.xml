@@ -115,7 +115,8 @@
             android:name=".activity.LiJiZFActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activity.ChanPinLBActivity" />
-        <activity android:name=".activity.WoDeCPActivity"></activity>
+        <activity android:name=".activity.WoDeCPActivity" />
+        <activity android:name=".activity.ZuJiActivity"></activity>
     </application>
 
 </manifest>
