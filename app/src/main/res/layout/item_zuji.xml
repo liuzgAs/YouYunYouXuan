@@ -11,6 +11,7 @@
         android:id="@+id/imageXuanZhong"
         android:layout_height="20dp" />
     <ImageView
+        android:scaleType="centerCrop"
         android:src="@mipmap/shangpin"
         android:layout_toRightOf="@+id/imageXuanZhong"
         android:layout_marginLeft="@dimen/leftAndRight"

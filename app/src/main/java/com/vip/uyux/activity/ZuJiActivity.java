@@ -1,9 +1,11 @@
 package com.vip.uyux.activity;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.jude.easyrecyclerview.decoration.StickyHeaderDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
@@ -203,6 +206,186 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("足迹", s);
+                s= "{\n" +
+                        "\t\"data\":[\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":0,\n" +
+                        "\t\t\t\"id\":0,\n" +
+                        "\t\t\t\"img\":\"\",\n" +
+                        "\t\t\t\"title\":\"今日浏览\",\n" +
+                        "\t\t\t\"type\":0\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1226,\n" +
+                        "\t\t\t\"id\":2016,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/kB87BH7H73DHD8H0Bs5HBDhH0X5863.jpg\",\n" +
+                        "\t\t\t\"title\":\"网红简约透明健身摇摇杯\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1286,\n" +
+                        "\t\t\t\"id\":2015,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/zeaileDPEZld8iPgoLvpq7eOQ81c1P.jpg\",\n" +
+                        "\t\t\t\"title\":\"便捷吹气旅行枕\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1353,\n" +
+                        "\t\t\t\"id\":2014,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/I3G434jXcj0Xz00m934XxxZeuiy4QU.jpg\",\n" +
+                        "\t\t\t\"title\":\"美国原装进口桂格燕麦\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":0,\n" +
+                        "\t\t\t\"id\":0,\n" +
+                        "\t\t\t\"img\":\"\",\n" +
+                        "\t\t\t\"title\":\"2018.01.23\",\n" +
+                        "\t\t\t\"type\":0\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":0,\n" +
+                        "\t\t\t\"id\":0,\n" +
+                        "\t\t\t\"img\":\"\",\n" +
+                        "\t\t\t\"title\":\"2018.01.23\",\n" +
+                        "\t\t\t\"type\":0\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":0,\n" +
+                        "\t\t\t\"id\":0,\n" +
+                        "\t\t\t\"img\":\"\",\n" +
+                        "\t\t\t\"title\":\"2018.01.23\",\n" +
+                        "\t\t\t\"type\":0\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":0,\n" +
+                        "\t\t\t\"id\":0,\n" +
+                        "\t\t\t\"img\":\"\",\n" +
+                        "\t\t\t\"title\":\"2018.01.23\",\n" +
+                        "\t\t\t\"type\":0\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":0,\n" +
+                        "\t\t\t\"id\":0,\n" +
+                        "\t\t\t\"img\":\"\",\n" +
+                        "\t\t\t\"title\":\"2018.01.23\",\n" +
+                        "\t\t\t\"type\":0\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t},\n" +
+                        "\t\t{\n" +
+                        "\t\t\t\"goods_id\":1123,\n" +
+                        "\t\t\t\"id\":1791,\n" +
+                        "\t\t\t\"img\":\"http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg\",\n" +
+                        "\t\t\t\"title\":\"有机小薏米\",\n" +
+                        "\t\t\t\"type\":1\n" +
+                        "\t\t}\n" +
+                        "\t],\n" +
+                        "\t\"info\":\"返回成功！\",\n" +
+                        "\t\"page\":{\n" +
+                        "\t\t\"dataTotal\":4,\n" +
+                        "\t\t\"page\":1,\n" +
+                        "\t\t\"pageSize\":10,\n" +
+                        "\t\t\"pageTotal\":1\n" +
+                        "\t},\n" +
+                        "\t\"status\":1\n" +
+                        "}";
                 try {
                     page++;
                     GoodsViewlog goodsViewlog = GsonUtils.parseJSON(s, GoodsViewlog.class);
@@ -210,6 +393,10 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                         List<GoodsViewlog.DataBean> dataBeanList = goodsViewlog.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
+                              /*StickyHeader*/
+                        StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(ZuJiActivity.this));
+                        decoration.setIncludeHeader(false);
+                        recyclerView.addItemDecoration(decoration);
                     } else if (goodsViewlog.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ZuJiActivity.this);
                     } else {
@@ -247,5 +434,46 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                 }
             }
         });
+    }
+
+    /**
+     * 磁贴adapter
+     */
+    public class StickyHeaderAdapter implements StickyHeaderDecoration.IStickyHeaderAdapter<StickyHeaderAdapter.HeaderHolder> {
+
+        private LayoutInflater mInflater;
+        private Context context;
+
+        private StickyHeaderAdapter(Context context) {
+            mInflater = LayoutInflater.from(context);
+            this.context = context;
+        }
+
+        @Override
+        public long getHeaderId(int position) {
+            return position;
+        }
+
+        @Override
+        public HeaderHolder onCreateHeaderViewHolder(ViewGroup parent) {
+            final View view = mInflater.inflate(R.layout.sticky_header_pin_pai, parent, false);
+            return new HeaderHolder(view);
+        }
+
+        @Override
+        public void onBindHeaderViewHolder(HeaderHolder viewholder, final int position) {
+            if (position < 26) {
+                viewholder.textTitle.setText(adapter.getItem(position).getTitle());
+            }
+        }
+
+        class HeaderHolder extends RecyclerView.ViewHolder {
+            public TextView textTitle;
+
+            private HeaderHolder(View itemView) {
+                super(itemView);
+                textTitle = itemView.findViewById(R.id.textTitle);
+            }
+        }
     }
 }

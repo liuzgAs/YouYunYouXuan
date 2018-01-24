@@ -22,7 +22,7 @@
         </provider>
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5a60607ef43e4844b800014a" />
+            android:value="5a682ad0f43e484fb5000055" />
         <!-- 支付宝h5 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
