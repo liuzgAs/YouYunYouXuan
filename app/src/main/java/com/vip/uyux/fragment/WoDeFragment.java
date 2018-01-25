@@ -59,6 +59,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     private ImageView imageLv;
     private TextView textYuE;
     private TextView textJiFen;
+    private Badge[] badgeDD = new Badge[5];
     private Badge badge;
     private ImageView imageXiaoXi;
     private TextView textCouponNum;
@@ -74,6 +75,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                     break;
             }
         }
+    };
+    private ImageView[] imageDD = new ImageView[5];
+    private int[] imageDDID = new int[]{
+            R.id.image0300,
+            R.id.image0301,
+            R.id.image0302,
+            R.id.image0303,
+            R.id.image0304,
     };
 
     public WoDeFragment() {
@@ -129,6 +138,15 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 .setGravityOffset(5f, 5f, true);
         imageXiaoXi = mInflate.findViewById(R.id.imageXiaoXi);
         textCouponNum = mInflate.findViewById(R.id.textCouponNum);
+        for (int i = 0; i < imageDD.length; i++) {
+            imageDD[i] = mInflate.findViewById(imageDDID[i]);
+            badgeDD[i] = new QBadgeView(getContext())
+                    .setBadgeTextColor(Color.WHITE)
+                    .setBadgeTextSize(8f, true)
+                    .setBadgeBackgroundColor(getContext().getResources().getColor(R.color.red))
+                    .setBadgeGravity(Gravity.END | Gravity.TOP)
+                    .setGravityOffset(0f, 0f, true);
+        }
     }
 
     @Override
@@ -166,6 +184,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
 
     @Override
     protected void initData() {
+        LogUtil.LogShitou("WoDeFragment--initData", "11111" + isLogin);
         if (isLogin) {
             GlideApp.with(WoDeFragment.this)
                     .load(userInfo.getHeadImg())
@@ -198,6 +217,9 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                             textName.setText(userMy.getNickname());
                             textId.setText(userMy.getId());
                             textGrowthDes.setText(userMy.getGrowthDes());
+                            for (int i = 0; i < imageDD.length; i++) {
+                                badgeDD[i].setBadgeNumber(userMy.getOrderNum().get(i)).bindTarget(imageDD[i]);
+                            }
                             if (userMy.getLv() > 0) {
                                 textLv0.setVisibility(View.GONE);
                                 imageShengJi.setVisibility(View.GONE);

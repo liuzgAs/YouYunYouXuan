@@ -82,11 +82,11 @@ public class GuideFragment extends ZjbBaseFragment {
 
     @Override
     protected void initViews() {
-        if (position == guideImg_length) {
-            mEnter.setVisibility(View.VISIBLE);
-        } else {
+//        if (position == guideImg_length) {
+//            mEnter.setVisibility(View.VISIBLE);
+//        } else {
             mEnter.setVisibility(View.GONE);
-        }
+//        }
     }
 
     @Override

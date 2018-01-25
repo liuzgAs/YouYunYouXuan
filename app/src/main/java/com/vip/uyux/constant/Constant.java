@@ -14,7 +14,8 @@ public class Constant {
     /**
      * 微信appid
      */
-    public static String WXAPPID = "wxe3ff03935adae0a6";
+//    public static String WXAPPID = "wxe3ff03935adae0a6";
+    public static String WXAPPID = "wx51d4b5b33bc07fa7";
     /**
      * 微信scrent
      */
@@ -56,62 +57,6 @@ public class Constant {
          */
         public static final String INDEX_STARTAD = "/Index/start";
         /**
-         * 确认订单页
-         */
-        public static final String ORDER_CREATEORDER = "/order/createOrder";
-        /**
-         * 提交订单
-         */
-        public static final String ORDER_SUBMITORDER = "/order/submitOrder";
-        /**
-         * 余额获取
-         */
-        public static final String USER_GETBALANCE = "/user/getbalance";
-        /**
-         * 余额支付
-         */
-        public static final String PAY_BALANCEPAY = "/pay/balancePay";
-        /**
-         * 我的
-         */
-        public static final String USER_BUYERINDEX = "/User/buyerIndex";
-        /**
-         * 支付宝支付
-         */
-        public static final String PAY_ALIPAY = "/pay/alipay";
-        /**
-         * 测试数据上传
-         */
-        public static final String BUYER_SAVEDATA = "/buyer/saveData";
-        /**
-         * 宝宝信息填写
-         */
-        public static final String BUYER_ADDINFO = "/buyer/addInfo";
-        /**
-         * 发现
-         */
-        public static final String INDEX_FINDINDEX = "/Index/findIndex";
-        /**
-         * 测试历史
-         */
-        public static final String PRODUCT_QUERYHISTORY = "/product/queryHistory";
-        /**
-         * 常见问题
-         */
-        public static final String FAQ = "/Faq";
-        /**
-         * 修改密码
-         */
-        public static final String USER_PWDSAVE = "/User/pwdSave";
-        /**
-         * 意见反馈
-         */
-        public static final String USER_FEEDBACK = "/User/feedback";
-        /**
-         * 我的订单列表
-         */
-        public static final String ORDER = "/order";
-        /**
          * 个人信息
          */
         public static final String USER_PROFILE = "/User/profile";
@@ -124,49 +69,9 @@ public class Constant {
          */
         public static final String USER_SVAEINFO = "/User/svaeInfo";
         /**
-         * 申请合伙人前请求
-         */
-        public static final String USER_APPLYBEFORE = "/User/applyBefore";
-        /**
-         * 城市列表
-         */
-        public static final String INDEX_CITYLIST = "/Index/cityList";
-        /**
-         * 申请合伙人提交
-         */
-        public static final String USER_APPLY = "/User/apply";
-        /**
-         * 升级事业合伙人
-         */
-        public static final String USER_UPGRADE = "/User/upGrade";
-        /**
-         * 收益明细
-         */
-        public static final String USER_PROFITDETAILED = "/user/profitDetailed";
-        /**
-         * 提现请求
-         */
-        public static final String WITHDRAW_ADDBEFORE = "/Withdraw/addBefore";
-        /**
-         * 体现提交
-         */
-        public static final String WITHDRAW_ADDDONE = "/Withdraw/addDone";
-        /**
          * 银行卡列表
          */
         public static final String BANK_CARDLIST = "/Bank/cardList";
-        /**
-         * 文章列表
-         */
-        public static final String ARTICLE = "/Article";
-        /**
-         * 用户中心
-         */
-        public static final String USER_MSG = "/User/msg";
-        /**
-         * 我的共享
-         */
-        public static final String USER_GETMYSHARE = "/user/getMyShare";
         /**
          * 地址列表
          */
@@ -199,14 +104,6 @@ public class Constant {
          * 银行卡删除
          */
         public static final String BANK_CARDDEL = "/Bank/cardDel";
-        /**
-         *  转让报告
-         */
-        public static final String USER_TRANSFER = "/user/transfer";
-        /**
-         * 分享推荐
-         */
-        public static final String USER_SHARE = "/user/share";
         /**
          * 分类
          */

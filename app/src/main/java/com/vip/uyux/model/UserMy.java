@@ -1,5 +1,7 @@
 package com.vip.uyux.model;
 
+import java.util.List;
+
 /**
  * Created by zhangjiebo on 2018/1/23/023.
  *
@@ -34,6 +36,15 @@ public class UserMy {
     private int grade;
     private int status;
     private String info;
+    private List<Integer> orderNum ;
+
+    public List<Integer> getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(List<Integer> orderNum) {
+        this.orderNum = orderNum;
+    }
 
     public String getId() {
         return id;

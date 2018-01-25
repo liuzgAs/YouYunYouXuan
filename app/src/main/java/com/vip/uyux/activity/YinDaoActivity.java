@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,11 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
+import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.base.ZjbBaseNotLeftActivity;
+import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.GuideFragment;
+import com.vip.uyux.util.ACache;
+import com.vip.uyux.util.LogUtil;
 
 
 public class YinDaoActivity extends ZjbBaseNotLeftActivity {
@@ -31,12 +36,13 @@ public class YinDaoActivity extends ZjbBaseNotLeftActivity {
         setContentView(R.layout.activity_yin_dao);
         mMyPager = (ViewPager) findViewById(R.id.myPager);
         mPageIndicatorView = (PageIndicatorView) findViewById(R.id.pageIndicatorView);
-        int blue = ContextCompat.getColor(this,R.color.white);
+        int blue = ContextCompat.getColor(this, R.color.white);
         mPageIndicatorView.setSelectedColor(blue);
-        mPageIndicatorView.setUnselectedColor(ContextCompat.getColor(this,R.color.gray_white));
+        mPageIndicatorView.setUnselectedColor(ContextCompat.getColor(this, R.color.gray_white));
         mPageIndicatorView.setAnimationType(AnimationType.WORM);
         mPageIndicatorView.setCount(imgs.length);
         mMyPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        init();
     }
 
     @Override
@@ -61,7 +67,50 @@ public class YinDaoActivity extends ZjbBaseNotLeftActivity {
 
     @Override
     protected void setListeners() {
+        mMyPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                LogUtil.LogShitou("YinDaoActivity--onPageSelected", "" + position);
+                if (position == imgs.length - 1) {
+                    ThreadPoolHelp.Builder
+                            .cached()
+                            .builder()
+                            .execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ACache aCache = ACache.get(YinDaoActivity.this, Constant.Acache.FRIST);
+                                            aCache.put(Constant.Acache.FRIST, "0");
+                                            Intent intent = new Intent(YinDaoActivity.this, MainActivity.class);
+                                            startActivity(intent);
+//                mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                            finish();
+                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                        }
+                                    });
+                                }
+                            });
+
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

@@ -297,12 +297,14 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp"
                         android:id="@+id/image0300"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
                         android:src="@mipmap/mine_qianbao" />
 
                     <TextView
@@ -311,7 +313,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image0300"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
                         android:text="待付款"
                         android:textSize="@dimen/litterText" />
                 </RelativeLayout>
@@ -323,9 +324,10 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:padding="5dp"
                         android:id="@+id/image0301"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:src="@mipmap/mine_daifahuo" />
 
@@ -334,7 +336,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image0301"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
                         android:text="待发货"
                         android:textSize="@dimen/litterText" />
                 </RelativeLayout>
@@ -346,12 +347,14 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:id="@+id/image0302"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
-                        android:paddingBottom="4dp"
-                        android:paddingTop="4dp"
+                        android:paddingBottom="9dp"
+                        android:paddingTop="9dp"
                         android:src="@mipmap/mine_daishouhuo" />
 
                     <TextView
@@ -359,7 +362,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image0302"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
                         android:text="待收货"
                         android:textSize="@dimen/litterText" />
                 </RelativeLayout>
@@ -371,12 +373,14 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:id="@+id/image0303"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
-                        android:paddingBottom="2dp"
-                        android:paddingTop="2dp"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
                         android:src="@mipmap/mine_daipingjia" />
 
                     <TextView
@@ -384,7 +388,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image0303"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
                         android:text="待评价"
                         android:textSize="@dimen/litterText" />
                 </RelativeLayout>
@@ -396,12 +399,14 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp"
                         android:id="@+id/image0304"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
-                        android:paddingBottom="2dp"
-                        android:paddingTop="2dp"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
                         android:src="@mipmap/mine_tuihuanhuo" />
 
                     <TextView
@@ -409,7 +414,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image0304"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
                         android:text="退/换货"
                         android:textSize="@dimen/litterText" />
                 </RelativeLayout>
