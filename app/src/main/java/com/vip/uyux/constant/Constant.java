@@ -287,6 +287,10 @@ public class Constant {
          * 我的收藏删除
          */
         public static final String USER_COLLECTDEL = "/User/collectDel";
+        /**
+         * 优惠券
+         */
+        public static final String COUPON_INDEX = "/Coupon/index";
     }
 
     public static class IntentKey {

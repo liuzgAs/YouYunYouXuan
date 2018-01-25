@@ -6,13 +6,13 @@ package com.vip.uyux.model;
 public class CartNeworder {
     private String info;
     private int status;
-    private int oid;
+    private String oid;
 
-    public int getOid() {
+    public String getOid() {
         return oid;
     }
 
-    public void setOid(int oid) {
+    public void setOid(String oid) {
         this.oid = oid;
     }
 

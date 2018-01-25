@@ -62,7 +62,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
             }
         }
     };
-    private int oid;
+    private String oid;
     private OrderPay orderPay;
 
     @Override
@@ -80,7 +80,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     protected void initIntent() {
         Intent intent = getIntent();
-        oid = intent.getIntExtra(Constant.IntentKey.ID, 0);
+        oid = intent.getStringExtra(Constant.IntentKey.ID);
         price = intent.getStringExtra(Constant.IntentKey.VALUE);
     }
 
