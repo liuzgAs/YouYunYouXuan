@@ -1,6 +1,7 @@
 package com.vip.uyux.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,9 +39,15 @@ public class KeHuFragment extends ZjbBaseFragment implements SwipeRefreshLayout.
     private View mInflate;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<Customer.DataBean> adapter;
+    private int type;
 
     public KeHuFragment() {
         // Required empty public constructor
+    }
+
+    @SuppressLint("ValidFragment")
+    public KeHuFragment(int type) {
+        this.type = type;
     }
 
 
@@ -102,7 +109,7 @@ public class KeHuFragment extends ZjbBaseFragment implements SwipeRefreshLayout.
                 ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             Customer customer = GsonUtils.parseJSON(s, Customer.class);
@@ -181,17 +188,18 @@ public class KeHuFragment extends ZjbBaseFragment implements SwipeRefreshLayout.
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
+        params.put("p", String.valueOf(page));
+        params.put("type_id", String.valueOf(type));
         return new OkObject(params, url);
     }
 
-    int page=1;
+    int page = 1;
 
     @Override
     public void onRefresh() {
-        page =1;
+        page = 1;
         ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
@@ -203,7 +211,7 @@ public class KeHuFragment extends ZjbBaseFragment implements SwipeRefreshLayout.
                         List<Customer.DataBean> dataBeanList = customer.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
-                    } else if (customer.getStatus()== 3) {
+                    } else if (customer.getStatus() == 3) {
                         MyDialog.showReLoginDialog(mContext);
                     } else {
                         showError(customer.getInfo());
@@ -217,6 +225,7 @@ public class KeHuFragment extends ZjbBaseFragment implements SwipeRefreshLayout.
             public void onError() {
                 showError("网络出错");
             }
+
             /**
              * 错误显示
              * @param msg

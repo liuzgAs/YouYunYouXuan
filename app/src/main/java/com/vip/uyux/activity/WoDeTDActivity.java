@@ -12,19 +12,20 @@ import android.widget.TextView;
 
 import com.vip.uyux.R;
 import com.vip.uyux.base.ZjbBaseActivity;
-import com.vip.uyux.fragment.KeHuFragment;
+import com.vip.uyux.fragment.TuanDuiFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WoDeKeHuActivity extends ZjbBaseActivity implements View.OnClickListener {
+public class WoDeTDActivity extends ZjbBaseActivity implements View.OnClickListener {
     private TabLayout tablayout;
     public ViewPager viewPager;
     List<String> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wo_de_ke_hu);
+        setContentView(R.layout.activity_wo_de_td);
         init();
     }
 
@@ -45,11 +46,19 @@ public class WoDeKeHuActivity extends ZjbBaseActivity implements View.OnClickLis
 
     @Override
     protected void initViews() {
-        ((TextView) findViewById(R.id.textViewTitle)).setText("我的客户");
-        list.add("普通客户");
-        list.add("年费会员");
+        ((TextView) findViewById(R.id.textViewTitle)).setText("我的团队");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         tablayout.setupWithViewPager(viewPager);
+        List<String> list1 = new ArrayList<>();
+        list1.add("亲友");
+        list1.add("好友");
+        list1.add("朋友");
+        setTab(list1);
+    }
+
+    private void setTab(List<String> list1) {
+        list.clear();
+        list.addAll(list1);
         tablayout.removeAllTabs();
         for (int i = 0; i < list.size(); i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.item_tablayout, null);
@@ -100,12 +109,14 @@ public class WoDeKeHuActivity extends ZjbBaseActivity implements View.OnClickLis
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new KeHuFragment(1);
+                    return new TuanDuiFragment(1);
                 case 1:
-                    return new KeHuFragment(2);
+                    return new TuanDuiFragment(2);
+                case 2:
+                    return new TuanDuiFragment(3);
 
                 default:
-                    return new KeHuFragment(1);
+                    return new TuanDuiFragment(1);
             }
 
         }

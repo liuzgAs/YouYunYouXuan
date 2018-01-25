@@ -131,7 +131,8 @@
         <activity android:name=".activity.WoDeCPActivity" />
         <activity android:name=".activity.ZuJiActivity" />
         <activity android:name=".activity.WoDeSCActivity" />
-        <activity android:name=".activity.WoDeKeHuActivity"></activity>
+        <activity android:name=".activity.WoDeKeHuActivity" />
+        <activity android:name=".activity.WoDeTDActivity"></activity>
     </application>
 
 </manifest>
