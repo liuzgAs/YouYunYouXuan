@@ -16,8 +16,17 @@ public class IndexCate {
      */
 
     private String info;
+    private String bgDes;
     private int status;
     private List<DataBean> data;
+
+    public String getBgDes() {
+        return bgDes;
+    }
+
+    public void setBgDes(String bgDes) {
+        this.bgDes = bgDes;
+    }
 
     public String getInfo() {
         return info;

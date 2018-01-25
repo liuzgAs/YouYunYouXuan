@@ -55,6 +55,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
     private View viewBar;
     private List<IndexCate.DataBean> dataBeanList;
     private String name;
+    private TextView textBgDes;
 
     @Nullable
     @Override
@@ -86,6 +87,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
         verticalTabLayout = mInflate.findViewById(R.id.verticalTabLayout);
         recyclerView = mInflate.findViewById(R.id.recyclerView);
         viewBar = mInflate.findViewById(R.id.viewBar);
+        textBgDes = mInflate.findViewById(R.id.textBgDes);
     }
 
     @Override
@@ -311,6 +313,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
                             List<IndexCate.DataBean.ListBean> listBeanList = dataBeanList.get(0).getList();
                             adapter.addAll(listBeanList);
                         }
+                        textBgDes.setText(indexCate.getBgDes());
                     } else if (indexCate.getStatus() == 3) {
                         MyDialog.showReLoginDialog(mContext);
                     } else {

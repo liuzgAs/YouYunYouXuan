@@ -21,6 +21,8 @@ import java.util.HashMap;
 
 /**
  * web网页        app_i主页      app_goods_info商品详情页（配item_id）       app_user_msg用户消息页
+ * app_goods_pcate商品列表页（配item_id  当pcate传）
+ app_goods_cate商品列表页（配item_id  当cate传）
  */
 public class HuanYingActivity extends ZjbBaseNotLeftActivity {
     private static final int LOCATION = 1991;
