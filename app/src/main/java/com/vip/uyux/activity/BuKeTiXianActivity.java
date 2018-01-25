@@ -20,7 +20,7 @@ import com.vip.uyux.fragment.YongJinFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WoDeYuEActivity extends ZjbBaseActivity implements View.OnClickListener {
+public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickListener {
     private TabLayout tablayout;
     private ViewPager viewPager;
     List<String> list = new ArrayList<>();
@@ -82,6 +82,12 @@ public class WoDeYuEActivity extends ZjbBaseActivity implements View.OnClickList
         textShouYi.setText(span);
     }
 
+    public void setMoney(String money){
+        SpannableString span = new SpannableString("¥"+money);
+        span.setSpan(new RelativeSizeSpan(0.4f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textShouYi.setText(span);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -91,11 +97,6 @@ public class WoDeYuEActivity extends ZjbBaseActivity implements View.OnClickList
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 
     class MyPageAdapter extends FragmentPagerAdapter {
@@ -108,11 +109,11 @@ public class WoDeYuEActivity extends ZjbBaseActivity implements View.OnClickList
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new YongJinFragment(0);
+                    return new YongJinFragment(1);
                 case 1:
-                    return new YongJinFragment(1);
+                    return new YongJinFragment(2);
                 default:
-                    return new YongJinFragment(1);
+                    return new YongJinFragment(2);
             }
 
         }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".activity.WoDeYuEActivity">
+    tools:context=".activity.BuKeTiXianActivity">
     <include layout="@layout/view_bar_white"/>
     <RelativeLayout
         android:layout_marginTop="5dp"

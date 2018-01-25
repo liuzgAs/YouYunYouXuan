@@ -5,8 +5,8 @@ package com.vip.uyux.constant;
  * Created by zjb on 2016/6/12.
  */
 public class Constant {
-    public static String HOST = "http://api.uyux.vip";
-    public static String WEB_HOST = "http://api.uyux.vip";
+    public static String HOST = "http://app.uyux.vip/api/";
+    public static String WEB_HOST = "http://app.uyux.vip/api/";
     /**
      * 判断数据是否有改变
      */
@@ -192,6 +192,10 @@ public class Constant {
          * 多图分享
          */
         public static final String GOODS_SHAREIMGS = "/Goods/shareImgs";
+        /**
+         * 不可提现佣金
+         */
+        public static final String WITHDRAW_NOTWITHDRAW = "/Withdraw/notWithdraw";
     }
 
     public static class IntentKey {

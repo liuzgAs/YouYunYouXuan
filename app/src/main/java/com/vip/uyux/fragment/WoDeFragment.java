@@ -21,7 +21,6 @@ import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeSCActivity;
-import com.vip.uyux.activity.WoDeYuEActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
 import com.vip.uyux.activity.ZuJiActivity;
 import com.vip.uyux.base.MyDialog;
@@ -334,12 +333,12 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 }
                 break;
             case R.id.viewYuE:
-                if (isLogin) {
-                    intent.setClass(mContext, WoDeYuEActivity.class);
-                    startActivity(intent);
-                } else {
-                    ToLoginActivity.toLoginActivity(mContext);
-                }
+//                if (isLogin) {
+//                    intent.setClass(mContext, BuKeTiXianActivity.class);
+//                    startActivity(intent);
+//                } else {
+//                    ToLoginActivity.toLoginActivity(mContext);
+//                }
                 break;
             default:
                 break;
