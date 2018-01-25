@@ -2,6 +2,8 @@ package com.vip.uyux.application;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
@@ -28,6 +30,10 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         context = this.getApplicationContext();
         super.onCreate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+        }
         initCloudChannel(this);
     }
 

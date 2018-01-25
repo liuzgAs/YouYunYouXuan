@@ -1,11 +1,14 @@
 package com.vip.uyux.base;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -22,20 +25,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.SingleBtnDialog;
+import com.vip.uyux.model.GoodsShareimgs;
+import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShareBean;
+import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GlideApp;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.util.Tools;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -81,10 +96,11 @@ public class MyDialog {
     }
 
     public static void dialogFinish(final Activity activity, String msg) {
-        SingleBtnDialog singleBtnDialog = new SingleBtnDialog(activity, msg, "确认");
+        final SingleBtnDialog singleBtnDialog = new SingleBtnDialog(activity, msg, "确认");
         singleBtnDialog.setClicklistener(new SingleBtnDialog.ClickListenerInterface() {
             @Override
             public void doWhat() {
+                singleBtnDialog.dismiss();
                 activity.finish();
             }
         });
@@ -243,7 +259,11 @@ public class MyDialog {
         dialog_shengji.findViewById(R.id.viewErWeiMa).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                MyDialog.erWeiMa(context, api, id, type, activity);
+                if (!checkIsSupportedWeachatPay(api)) {
+                    Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                duoTuPengYouQuan(context, activity, id,1);
                 alertDialog1.dismiss();
             }
         });
@@ -254,6 +274,103 @@ public class MyDialog {
         DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
         lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
         dialogWindow.setAttributes(lp);
+    }
+
+    private static List<File> files = new ArrayList<>();
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private static OkObject getOkObject(Context mContext, String id) {
+        String url = Constant.HOST + Constant.Url.GOODS_SHAREIMGS;
+        HashMap<String, String> params = new HashMap<>();
+        if (((ChanPinXQActivity) mContext).isLogin) {
+            params.put("uid", ((ChanPinXQActivity) mContext).userInfo.getUid());
+            params.put("tokenTime", ((ChanPinXQActivity) mContext).tokenTime);
+        }
+        params.put("id", id);
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 多图分享朋友圈
+     */
+    private static void duoTuPengYouQuan(final Context mContext, String activity, String id, final int flag) {
+        switch (activity) {
+            case "ChanPinXQActivity":
+                ((ChanPinXQActivity) mContext).showLoadingDialog();
+                ApiClient.post(mContext, getOkObject(mContext, id), new ApiClient.CallBack() {
+                    @Override
+                    public void onSuccess(String s) {
+                        LogUtil.LogShitou("MyDialog--onSuccess", s + "");
+                        try {
+                            final GoodsShareimgs goodsShareimgs = GsonUtils.parseJSON(s, GoodsShareimgs.class);
+                            if (goodsShareimgs.getStatus() == 1) {
+                                final List<String> goodsShareimgsImgs = goodsShareimgs.getImgs();
+                                ThreadPoolHelp.Builder
+                                        .cached()
+                                        .builder()
+                                        .execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                //这一步一定要clear,不然分享了朋友圈马上分享好友图片就会翻倍
+                                                files.clear();
+                                                try {
+                                                    for (int i = 0; i < goodsShareimgsImgs.size(); i++) {
+                                                        File file = Tools.saveImageToSdCard(mContext, goodsShareimgsImgs.get(i));
+                                                        files.add(file);
+                                                    }
+                                                    Intent intent = new Intent();
+                                                    ComponentName comp;
+                                                    if (flag == 0) {
+                                                        comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
+                                                    } else {
+                                                        comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+                                                        intent.putExtra("Kdescription", goodsShareimgs.getShareTitle()+"\n"+goodsShareimgs.getShareDes());
+                                                    }
+                                                    intent.setComponent(comp);
+                                                    intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                                                    intent.setType("image/*");
+                                                    ArrayList<Uri> imageUris = new ArrayList<Uri>();
+                                                    for (File f : files) {
+                                                        imageUris.add(Uri.fromFile(f));
+                                                    }
+                                                    intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+                                                    mContext.startActivity(intent);
+                                                    ((ChanPinXQActivity) mContext).runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            ((ChanPinXQActivity) mContext).cancelLoadingDialog();
+                                                        }
+                                                    });
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                            } else if (goodsShareimgs.getStatus() == 3) {
+                                MyDialog.showReLoginDialog(mContext);
+                            } else {
+                                Toast.makeText(mContext, goodsShareimgs.getInfo(), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(mContext, "数据出错", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        ((ChanPinXQActivity) mContext).cancelLoadingDialog();
+                        Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+
     }
 
     private static void wxShare(final IWXAPI api, final int flag, String url, String title, String des, final String img) {

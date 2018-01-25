@@ -109,7 +109,7 @@
                     android:textSize="@dimen/litterText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="二维码"
+                    android:text="多图"
                     android:layout_below="@+id/imageView125"
                     android:layout_centerHorizontal="true" />
             </RelativeLayout>

@@ -279,7 +279,7 @@
                         android:layout_below="@+id/textJiFen"
                         android:layout_marginLeft="25dp"
                         android:layout_marginTop="2dp"
-                        android:text="我的积分"
+                        android:text="U币"
                         android:textSize="@dimen/litterText" />
                 </RelativeLayout>
             </LinearLayout>
@@ -526,7 +526,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/image0700"
-                    android:text="积分商城"
+                    android:text="U币商城"
                     android:textSize="@dimen/normal_textsize" />
 
                 <ImageView

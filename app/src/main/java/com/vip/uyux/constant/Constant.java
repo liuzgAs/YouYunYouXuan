@@ -188,6 +188,10 @@ public class Constant {
          * 优惠券
          */
         public static final String COUPON_INDEX = "/Coupon/index";
+        /**
+         * 多图分享
+         */
+        public static final String GOODS_SHAREIMGS = "/Goods/shareImgs";
     }
 
     public static class IntentKey {
