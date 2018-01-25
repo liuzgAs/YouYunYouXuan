@@ -42,6 +42,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.imageBack).setOnClickListener(this);
         findViewById(R.id.viewBuKeTiXian).setOnClickListener(this);
         findViewById(R.id.viewWoDeKeHu).setOnClickListener(this);
+        findViewById(R.id.viewWoDeTD).setOnClickListener(this);
     }
 
     @Override
@@ -53,6 +54,10 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewWoDeTD:
+                intent.setClass(this, WoDeTDActivity.class);
+                startActivity(intent);
+                break;
             case R.id.viewWoDeKeHu:
                 intent.setClass(this, WoDeKeHuActivity.class);
                 startActivity(intent);

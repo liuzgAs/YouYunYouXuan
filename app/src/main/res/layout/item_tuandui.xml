@@ -33,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
+        android:id="@+id/textDate"
         android:layout_below="@+id/textDes"
         android:layout_toRightOf="@+id/imageImg"
         android:layout_marginLeft="10dp"

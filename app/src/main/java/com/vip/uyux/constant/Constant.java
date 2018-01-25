@@ -200,6 +200,10 @@ public class Constant {
          * 我的客户
          */
         public static final String CUSTOMER = "/Customer";
+        /**
+         * 我的团队
+         */
+        public static final String CUSTOMER_MYTEAM = "/Customer/myTeam";
     }
 
     public static class IntentKey {

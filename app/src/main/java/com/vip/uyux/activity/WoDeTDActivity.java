@@ -47,16 +47,25 @@ public class WoDeTDActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("我的团队");
+        list.add("亲友");
+        list.add("好友");
+        list.add("朋友");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         tablayout.setupWithViewPager(viewPager);
-        List<String> list1 = new ArrayList<>();
-        list1.add("亲友");
-        list1.add("好友");
-        list1.add("朋友");
-        setTab(list1);
+        tablayout.removeAllTabs();
+        for (int i = 0; i < list.size(); i++) {
+            View view = LayoutInflater.from(this).inflate(R.layout.item_tablayout, null);
+            TextView textTitle = view.findViewById(R.id.textTitle);
+            textTitle.setText(list.get(i));
+            if (i == 0) {
+                tablayout.addTab(tablayout.newTab().setCustomView(view), true);
+            } else {
+                tablayout.addTab(tablayout.newTab().setCustomView(view), false);
+            }
+        }
     }
 
-    private void setTab(List<String> list1) {
+    public void setTab(List<String> list1) {
         list.clear();
         list.addAll(list1);
         tablayout.removeAllTabs();
