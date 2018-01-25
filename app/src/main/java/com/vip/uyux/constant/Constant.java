@@ -196,6 +196,10 @@ public class Constant {
          * 不可提现佣金
          */
         public static final String WITHDRAW_NOTWITHDRAW = "/Withdraw/notWithdraw";
+        /**
+         * 我的客户
+         */
+        public static final String CUSTOMER = "/Customer";
     }
 
     public static class IntentKey {

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vip.uyux">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -128,7 +130,8 @@
         <activity android:name=".activity.ChanPinLBActivity" />
         <activity android:name=".activity.WoDeCPActivity" />
         <activity android:name=".activity.ZuJiActivity" />
-        <activity android:name=".activity.WoDeSCActivity"></activity>
+        <activity android:name=".activity.WoDeSCActivity" />
+        <activity android:name=".activity.WoDeKeHuActivity"></activity>
     </application>
 
 </manifest>
