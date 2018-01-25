@@ -30,6 +30,9 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         context = this.getApplicationContext();
         super.onCreate();
+        /**
+         * 多图分享
+         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());

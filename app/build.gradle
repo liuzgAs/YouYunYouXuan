@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-//        applicationId "com.vip.uyux"
-        applicationId "com.haoche666.buyer"
+        applicationId "com.vip.uyux"
+//        applicationId "com.haoche666.buyer"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 18012301

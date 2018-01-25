@@ -14,8 +14,8 @@ public class Constant {
     /**
      * 微信appid
      */
-//    public static String WXAPPID = "wxe3ff03935adae0a6";
-    public static String WXAPPID = "wx51d4b5b33bc07fa7";
+    public static String WXAPPID = "wxe3ff03935adae0a6";
+//    public static String WXAPPID = "wx51d4b5b33bc07fa7";
     /**
      * 微信scrent
      */
