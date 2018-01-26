@@ -204,6 +204,10 @@ public class Constant {
          * 我的团队
          */
         public static final String CUSTOMER_MYTEAM = "/Customer/myTeam";
+        /**
+         * 分红中心
+         */
+        public static final String BONUS = "/Bonus";
     }
 
     public static class IntentKey {

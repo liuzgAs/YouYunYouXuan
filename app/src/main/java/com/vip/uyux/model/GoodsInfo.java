@@ -313,10 +313,19 @@ public class GoodsInfo {
         private int key;
         private String name;
         private int sku_id;
-        private int price;
+        private double price;
+        private int stock_num;
         private int lv;
         private boolean isSelect ;
         private List<SkuCateBean> value;
+
+        public int getStock_num() {
+            return stock_num;
+        }
+
+        public void setStock_num(int stock_num) {
+            this.stock_num = stock_num;
+        }
 
         public boolean isSelect() {
             return isSelect;
@@ -358,11 +367,11 @@ public class GoodsInfo {
             this.sku_id = sku_id;
         }
 
-        public int getPrice() {
+        public double getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(double price) {
             this.price = price;
         }
 

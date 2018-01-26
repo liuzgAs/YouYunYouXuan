@@ -95,6 +95,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private View viewDiBu;
     private GoodsInfo goodsInfo;
     private IWXAPI api;
+    private TextView textStock_numD;
+    private int stock_num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -634,6 +636,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 .into(imageImg);
         textDialogPrice = dialog_chan_pin.findViewById(R.id.textDialogPrice);
         textGuiGe = dialog_chan_pin.findViewById(R.id.textGuiGe);
+        textStock_numD = dialog_chan_pin.findViewById(R.id.textStock_numD);
         ImageView imageAdd = dialog_chan_pin.findViewById(R.id.imageAdd);
         final ImageView imageDelete = dialog_chan_pin.findViewById(R.id.imageDelete);
         final EditText editNum = dialog_chan_pin.findViewById(R.id.editNum);
@@ -645,7 +648,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     editNum.setSelection(1);
                 } else {
                     int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
-                    if (goodsNum < goodsInfoData.getStockNum()) {
+                    if (goodsNum < stock_num) {
                         editNum.setText((goodsNum + 1) + "");
                         editNum.setSelection(((goodsNum + 1) + "").length());
                     } else {
@@ -873,10 +876,12 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 for (int j = 0; j < catelist.get(i).size(); j++) {
                     if (catelist.get(i).get(j).isSelect()) {
                         name = name + catelist.get(i).get(j).getName() + " ";
+                        stock_num = catelist.get(i).get(j).getStock_num();
                     }
                 }
             }
             textGuiGe.setText(name);
+            textStock_numD.setText("库存"+stock_num+"件");
         }
     }
 
