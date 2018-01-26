@@ -36,15 +36,14 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
-import com.vip.uyux.adapter.TagAdapter01;
+import com.vip.uyux.adapter.TagAdapter02;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.customview.OnTagSelectListener;
-import com.vip.uyux.customview.WrapHeightGridView;
 import com.vip.uyux.model.CartAddcart;
-import com.vip.uyux.model.GoodsInfo;
+import com.vip.uyux.model.CustomerIntegragoodsinfo;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShouCangShanChu;
@@ -56,7 +55,6 @@ import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
-import com.vip.uyux.util.StringUtil;
 import com.vip.uyux.viewholder.ChanPinFootViewHolder;
 import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
 import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
@@ -64,26 +62,21 @@ import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<Integer> adapter;
-    private List<String> stringList = new ArrayList<>();
     private List<String> goodsInfoBanner;
     private int id;
-    private GoodsInfo.DataBean goodsInfoData;
-    private int countdown;
-    private Timer timer;
-    private List<GoodsInfo.DataBean.ImgsBean> imgs;
-    private List<GoodsInfo.DataBean.ImgsBean> imgs2;
-    private List<GoodsInfo.SkuCateBean> skuCate;
+    private CustomerIntegragoodsinfo.DataBean goodsInfoData;
+    private List<CustomerIntegragoodsinfo.DataBean.ImgsBean> imgs;
+    private List<CustomerIntegragoodsinfo.DataBean.ImgsBean> imgs2;
+    private List<CustomerIntegragoodsinfo.SkuCateBean> skuCate;
     private AlertDialog alertDialogGouWu;
-    private TagAdapter01 tagAdapter;
-    private List<GoodsInfo.SkuLvBean> skuLv;
-    private List<List<GoodsInfo.SkuCateBean>> catelist = new ArrayList<>();
+    private TagAdapter02 tagAdapter;
+    private List<CustomerIntegragoodsinfo.SkuLvBean> skuLv;
+    private List<List<CustomerIntegragoodsinfo.SkuCateBean>> catelist = new ArrayList<>();
     private MyGuiGeAdapter myGuiGeAdapter;
     private TextView textDialogPrice;
     private TextView textGuiGe;
@@ -93,7 +86,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private ImageView imageFenXiang;
     private ImageView imageShouCang;
     private View viewDiBu;
-    private GoodsInfo goodsInfo;
+    private CustomerIntegragoodsinfo goodsInfo;
     private IWXAPI api;
     private TextView textStock_numD;
     private int stock_num;
@@ -102,7 +95,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chan_pin_xq);
-        api = WXAPIFactory.createWXAPI(ChanPinXQActivity.this, Constant.WXAPPID, true);
+        api = WXAPIFactory.createWXAPI(ChanPinJFXQActivity.this, Constant.WXAPPID, true);
         init();
     }
 
@@ -141,7 +134,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(ChanPinXQActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(ChanPinJFXQActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_chanpin_xq;
@@ -150,43 +143,28 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
+            private TextView textYongYouJF;
+            private TextView textHas_des;
             private TextView textOldPrice;
-            private TextView textVipDes;
             private TextView textTitle;
-            private TextView textScoreDes;
-            private TextView textShareMoney;
             private TextView textSaleNumStockNum;
-            private TextView textPrice;
             private TextView textDes;
             private TextView textYuanJia;
-            private TextView textCountdownDes;
-            private TextView textCountdown;
-            private WrapHeightGridView gridview;
             private ConvenientBanner banner;
 
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.header_chenpin, null);
+                View view = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.header_chenpin_jf, null);
                 banner = (ConvenientBanner) view.findViewById(R.id.banner);
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
-                gridview = view.findViewById(R.id.gridview);
-                stringList.add("30天无忧退换货");
-                stringList.add("48小时快速退款");
-                stringList.add("满88元免邮费");
-                stringList.add("优云优选自营品牌");
-                gridview.setAdapter(new MyAdapter());
-                textCountdown = view.findViewById(R.id.textCountdown);
-                textCountdownDes = view.findViewById(R.id.textCountdownDes);
                 textDes = view.findViewById(R.id.textDes);
                 textYuanJia = view.findViewById(R.id.textYuanJia);
-                textPrice = view.findViewById(R.id.textPrice);
                 textSaleNumStockNum = view.findViewById(R.id.textSaleNumStockNum);
-                textScoreDes = view.findViewById(R.id.textScoreDes);
-                textShareMoney = view.findViewById(R.id.textShareMoney);
                 textTitle = view.findViewById(R.id.textTitle);
-                textVipDes = view.findViewById(R.id.textVipDes);
                 textOldPrice = view.findViewById(R.id.textOldPrice);
+                textHas_des = view.findViewById(R.id.textHas_des);
+                textYongYouJF = view.findViewById(R.id.textYongYouJF);
                 return view;
             }
 
@@ -202,63 +180,29 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     banner.setPageIndicator(new int[]{R.drawable.shape_indicator_normal, R.drawable.shape_indicator_selected});
                 }
                 if (goodsInfoData != null) {
-                    if (timer != null) {
-                        timer.cancel();
-                    }
-                    timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (countdown >= 1) {
-                                        countdown--;
-                                        textCountdown.setText(StringUtil.TimeFormat(countdown));
-//                                        if (textDaoJiShi != null && viewKeGouMai != null) {
-//                                            textDaoJiShi.setText("倒计时 " + StringUtil.TimeFormat(countdown));
-//                                            if (countdown > 0) {
-//                                                textDaoJiShi.setVisibility(View.VISIBLE);
-//                                                viewKeGouMai.setVisibility(View.GONE);
-//                                            } else {
-//                                                textDaoJiShi.setVisibility(View.GONE);
-//                                                viewKeGouMai.setVisibility(View.VISIBLE);
-//                                            }
-//                                        }
-                                    } else {
-                                        textCountdown.setText("00:00:00");
-                                        timer.cancel();
-                                    }
-                                }
-                            });
-                        }
-                    }, 0, 1000);
-                    textCountdownDes.setText(goodsInfoData.getCountdownDes());
                     textDes.setText(goodsInfoData.getDes());
-                    textYuanJia.setText("¥" + goodsInfoData.getVipPrice());
-                    textPrice.setText("¥" + goodsInfoData.getPrice());
+                    textYuanJia.setText(String.valueOf(goodsInfoData.getIntegra_price()));
                     textSaleNumStockNum.setText("已售" + goodsInfoData.getSaleNum() + "|剩" + goodsInfoData.getStockNum() + "件");
-                    textScoreDes.setText(goodsInfoData.getScoreDes());
-                    textShareMoney.setText(goodsInfoData.getShareMoney());
                     textTitle.setText(goodsInfoData.getTitle());
-                    textVipDes.setText(goodsInfoData.getVipDes());
                     textOldPrice.setText("天猫价¥" + goodsInfoData.getOldPrice());
+                    textHas_des.setText(goodsInfoData.getHas_des());
+                    textYongYouJF.setText(String.valueOf(goodsInfoData.getHas_integra()));
                 }
             }
         });
         adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            private RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean> adapterFoot;
+            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot;
             private EasyRecyclerView recyclerViewFoot;
-            private RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean> adapterFoot1;
+            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot1;
             private EasyRecyclerView recyclerViewFoot1;
             private TabLayout tablayout;
 
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.footer_chanpin_xq, null);
+                View view = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.footer_chanpin_xq, null);
                 tablayout = (TabLayout) view.findViewById(R.id.tablayout);
                 for (int i = 0; i < 2; i++) {
-                    View item_tablayout = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.item_tablayout, null);
+                    View item_tablayout = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.item_tablayout, null);
                     TextView textTitle = (TextView) item_tablayout.findViewById(R.id.textTitle);
                     if (i == 0) {
                         textTitle.setText("宝贝详情");
@@ -302,8 +246,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
              * 初始化recyclerview
              */
             private void initFootRecycler() {
-                recyclerViewFoot.setLayoutManager(new LinearLayoutManager(ChanPinXQActivity.this));
-                recyclerViewFoot.setAdapterWithProgress(adapterFoot = new RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean>(ChanPinXQActivity.this) {
+                recyclerViewFoot.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
+                recyclerViewFoot.setAdapterWithProgress(adapterFoot = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
                     @Override
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                         int layout = R.layout.item_image;
@@ -321,8 +265,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
              * 初始化recyclerview
              */
             private void initFootRecycler1() {
-                recyclerViewFoot1.setLayoutManager(new LinearLayoutManager(ChanPinXQActivity.this));
-                recyclerViewFoot1.setAdapterWithProgress(adapterFoot1 = new RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean>(ChanPinXQActivity.this) {
+                recyclerViewFoot1.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
+                recyclerViewFoot1.setAdapterWithProgress(adapterFoot1 = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
                     @Override
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                         int layout = R.layout.item_image;
@@ -404,7 +348,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         String url = Constant.HOST + Constant.Url.GOODS_CANCLECOLLECT;
         ShouCangShanChu shouCangShanChu = new ShouCangShanChu(1, "android", userInfo.getUid(), tokenTime, id, 1);
         showLoadingDialog();
-        ApiClient.postJson(ChanPinXQActivity.this, url, GsonUtils.parseObject(shouCangShanChu), new ApiClient.CallBack() {
+        ApiClient.postJson(ChanPinJFXQActivity.this, url, GsonUtils.parseObject(shouCangShanChu), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
@@ -412,23 +356,23 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
                     if (simpleInfo.getStatus() == 1) {
-                        Toast.makeText(ChanPinXQActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChanPinJFXQActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
                         goodsInfo.setIsc(0);
                         imageShouCang.setImageResource(R.mipmap.shoucang_xq);
                     } else if (simpleInfo.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                        MyDialog.showReLoginDialog(ChanPinJFXQActivity.this);
                     } else {
-                        Toast.makeText(ChanPinXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChanPinJFXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(ChanPinXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinJFXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onError() {
                 cancelLoadingDialog();
-                Toast.makeText(ChanPinXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChanPinJFXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -455,31 +399,31 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
      */
     private void shouCang() {
         showLoadingDialog();
-        ApiClient.post(ChanPinXQActivity.this, getSCOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(ChanPinJFXQActivity.this, getSCOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
                 LogUtil.LogShitou("ChanPinXQActivity--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                    Toast.makeText(ChanPinXQActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinJFXQActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                     goodsInfo.setIsc(1);
                     imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
                     if (simpleInfo.getStatus() == 1) {
                     } else if (simpleInfo.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                        MyDialog.showReLoginDialog(ChanPinJFXQActivity.this);
                     } else {
-                        Toast.makeText(ChanPinXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChanPinJFXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(ChanPinXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinJFXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onError() {
                 cancelLoadingDialog();
-                Toast.makeText(ChanPinXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChanPinJFXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -490,7 +434,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.GOODS_INFO;
+        String url = Constant.HOST + Constant.Url.CUSTOMER_INTEGRAGOODSINFO;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
@@ -505,19 +449,18 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                LogUtil.LogShitou("产品详情", s);
+                LogUtil.LogShitou("积分产品详情", s);
                 try {
-                    goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
+                    goodsInfo = GsonUtils.parseJSON(s, CustomerIntegragoodsinfo.class);
                     if (goodsInfo.getStatus() == 1) {
                         goodsInfoBanner = goodsInfo.getBanner();
                         goodsInfoData = goodsInfo.getData();
-                        countdown = goodsInfoData.getCountdown();
                         imgs = goodsInfoData.getImgs();
                         imgs2 = goodsInfoData.getImgs2();
                         skuCate = goodsInfo.getSkuCate();
                         skuLv = goodsInfo.getSkuLv();
                         listList.clear();
-                        List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
+                        List<List<CustomerIntegragoodsinfo.SkuCateBean>> listList = readTree(skuCate);
                         catelist.clear();
                         catelist.addAll(listList);
                         LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
@@ -530,7 +473,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                             imageShouCang.setImageResource(R.mipmap.shoucang_xq);
                         }
                     } else if (goodsInfo.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                        MyDialog.showReLoginDialog(ChanPinJFXQActivity.this);
                     } else {
                         showError(goodsInfo.getInfo());
                     }
@@ -550,7 +493,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
@@ -569,41 +512,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
     }
 
-    class MyAdapter extends BaseAdapter {
-        class ViewHolder {
-            public TextView title;
-        }
-
-        @Override
-        public int getCount() {
-            return stringList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.item_fuwu, null);
-                holder.title = (TextView) convertView.findViewById(R.id.textFuWu);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.title.setText(stringList.get(position));
-            return convertView;
-        }
-    }
 
     /**
      * des： 加入购物车弹窗
@@ -612,9 +520,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
      */
 
     private void mai() {
-        LayoutInflater inflater = LayoutInflater.from(ChanPinXQActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(ChanPinJFXQActivity.this);
         View dialog_chan_pin = inflater.inflate(R.layout.dialog_chan_pin, null);
-        alertDialogGouWu = new AlertDialog.Builder(ChanPinXQActivity.this, R.style.dialog)
+        alertDialogGouWu = new AlertDialog.Builder(ChanPinJFXQActivity.this, R.style.dialog)
                 .setView(dialog_chan_pin)
                 .create();
         alertDialogGouWu.show();
@@ -628,10 +536,10 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             }
         });
         ImageView imageImg = dialog_chan_pin.findViewById(R.id.imageImg);
-        GlideApp.with(ChanPinXQActivity.this)
+        GlideApp.with(ChanPinJFXQActivity.this)
                 .asBitmap()
                 .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, ChanPinXQActivity.this)))
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, ChanPinJFXQActivity.this)))
                 .load(goodsInfoData.getThumb())
                 .into(imageImg);
         textDialogPrice = dialog_chan_pin.findViewById(R.id.textDialogPrice);
@@ -652,7 +560,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         editNum.setText((goodsNum + 1) + "");
                         editNum.setSelection(((goodsNum + 1) + "").length());
                     } else {
-                        Toast.makeText(ChanPinXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChanPinJFXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -708,7 +616,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
                 if (goodsNum < stock_num) {
                 } else {
-                    Toast.makeText(ChanPinXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinJFXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 alertDialogGouWu.dismiss();
@@ -721,7 +629,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         dialogWindow.setGravity(Gravity.BOTTOM);
         dialogWindow.setWindowAnimations(R.style.dialogFenXiang);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        DisplayMetrics d = ChanPinXQActivity.this.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+        DisplayMetrics d = ChanPinJFXQActivity.this.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
         lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
         dialogWindow.setAttributes(lp);
     }
@@ -732,7 +640,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getCarOkObject(String num) {
-        ACache aCache = ACache.get(ChanPinXQActivity.this, Constant.Acache.LOCATION);
+        ACache aCache = ACache.get(ChanPinJFXQActivity.this, Constant.Acache.LOCATION);
         String did = aCache.getAsString(Constant.Acache.DID);
         String url = Constant.HOST + Constant.Url.CART_ADDCART;
         HashMap<String, String> params = new HashMap<>();
@@ -753,7 +661,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
      */
     private void addCar(String num) {
         showLoadingDialog();
-        ApiClient.post(ChanPinXQActivity.this, getCarOkObject(num), new ApiClient.CallBack() {
+        ApiClient.post(ChanPinJFXQActivity.this, getCarOkObject(num), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
@@ -766,7 +674,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                             integerList.add(cartAddcart.getCartId());
                             Intent intent = new Intent();
                             intent.putExtra(Constant.IntentKey.BEAN, new JieSuan(integerList));
-                            intent.setClass(ChanPinXQActivity.this, QueRenDDActivity.class);
+                            intent.setClass(ChanPinJFXQActivity.this, QueRenDDActivity.class);
                             startActivity(intent);
                         } else {
                             Intent intent = new Intent();
@@ -774,19 +682,19 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                             sendBroadcast(intent);
                         }
                     } else if (cartAddcart.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                        MyDialog.showReLoginDialog(ChanPinJFXQActivity.this);
                     } else {
-                        Toast.makeText(ChanPinXQActivity.this, cartAddcart.getInfo(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChanPinJFXQActivity.this, cartAddcart.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(ChanPinXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinJFXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onError() {
                 cancelLoadingDialog();
-                Toast.makeText(ChanPinXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChanPinJFXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -817,17 +725,17 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.item_guige, null);
+                convertView = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.item_guige, null);
                 holder.title = (TextView) convertView.findViewById(R.id.textTitle);
                 holder.flowTagLayout = convertView.findViewById(R.id.flowTagLayout);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            final List<GoodsInfo.SkuCateBean> skuCateBeans = catelist.get(position);
+            final List<CustomerIntegragoodsinfo.SkuCateBean> skuCateBeans = catelist.get(position);
             holder.title.setText(skuLv.get(position).getName());
             holder.flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE_FALSE);
-            tagAdapter = new TagAdapter01(ChanPinXQActivity.this);
+            tagAdapter = new TagAdapter02(ChanPinJFXQActivity.this);
             holder.flowTagLayout.setAdapter(tagAdapter);
             tagAdapter.clearAndAddAll(skuCateBeans);
             for (int i = 0; i < skuCateBeans.size(); i++) {
@@ -846,13 +754,13 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         skuCateBeans.get(i).setSelect(false);
                     }
                     skuCateBeans.get(integer).setSelect(true);
-                    List<GoodsInfo.SkuCateBean> cateBeanList = skuCateBeans.get(integer).getValue();
-                    List<List<GoodsInfo.SkuCateBean>> listList1 = new ArrayList<>();
+                    List<CustomerIntegragoodsinfo.SkuCateBean> cateBeanList = skuCateBeans.get(integer).getValue();
+                    List<List<CustomerIntegragoodsinfo.SkuCateBean>> listList1 = new ArrayList<>();
                     for (int i = 0; i < position + 1; i++) {
                         listList1.add(catelist.get(i));
                     }
                     listList.clear();
-                    List<List<GoodsInfo.SkuCateBean>> listList = readTree(cateBeanList);
+                    List<List<CustomerIntegragoodsinfo.SkuCateBean>> listList = readTree(cateBeanList);
                     if (listList.size() > 0) {
                         listList1.addAll(listList);
                     }
@@ -868,9 +776,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         }
 
         private void shuaXinDialog() {
-            List<GoodsInfo.SkuCateBean> skuCateBeans1 = catelist.get(catelist.size() - 1);
+            List<CustomerIntegragoodsinfo.SkuCateBean> skuCateBeans1 = catelist.get(catelist.size() - 1);
             for (int i = 0; i < skuCateBeans1.size(); i++) {
-                GoodsInfo.SkuCateBean skuCateBean = skuCateBeans1.get(i);
+                CustomerIntegragoodsinfo.SkuCateBean skuCateBean = skuCateBeans1.get(i);
                 if (skuCateBean.isSelect()) {
                     textDialogPrice.setText("¥" + skuCateBean.getPrice());
                     sku_id = skuCateBean.getSku_id();
@@ -891,10 +799,10 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         }
     }
 
-    List<List<GoodsInfo.SkuCateBean>> listList = new ArrayList<>();
+    List<List<CustomerIntegragoodsinfo.SkuCateBean>> listList = new ArrayList<>();
 
     //递归方法
-    List<List<GoodsInfo.SkuCateBean>> readTree(List<GoodsInfo.SkuCateBean> skuCate) {
+    List<List<CustomerIntegragoodsinfo.SkuCateBean>> readTree(List<CustomerIntegragoodsinfo.SkuCateBean> skuCate) {
         if (skuCate.size() > 0) {
             for (int i = 0; i < skuCate.size(); i++) {
                 skuCate.get(i).setSelect(false);
@@ -911,8 +819,5 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (timer != null) {
-            timer.cancel();
-        }
     }
 }

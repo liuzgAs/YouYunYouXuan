@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -169,6 +170,10 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(JiFenSCActivity.this,ChanPinJFXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
+                startActivity(intent);
             }
         });
         recyclerView.setRefreshListener(this);

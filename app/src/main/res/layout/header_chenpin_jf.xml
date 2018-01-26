@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/chanPinXQBanner"
+        android:background="@color/white"
+        app:canLoop="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/imageZiYin"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:src="@mipmap/ziyin" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/imageZiYin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="润奢光彩美肤润奢光彩美肤润奢光彩美肤"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/bigText"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textDes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textTitle"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_marginTop="10dp"
+        android:text="奢润光彩美肌奢润光彩美肌奢润光彩美肌奢润光彩美肌奢润光彩美肌奢润光彩美肌奢润光彩美肌奢润光彩美肌"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/litterText" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/textPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:text="全积分价："
+            android:textSize="@dimen/litterText" />
+
+        <TextView
+            android:id="@+id/textYuanJia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textPrice"
+            android:layout_toRightOf="@+id/textPrice"
+            android:text="2999"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/MoreBigText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textYuanJia"
+            android:layout_toRightOf="@+id/textYuanJia"
+            android:text="分"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/moreLitterText" />
+
+        <TextView
+            android:id="@+id/textSaleNumStockNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="已售3556|剩5件"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/normal_textsize" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textOldPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_tianmao_5dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:text="原价¥3200"
+        android:textColor="#fe7b81"
+        android:textSize="@dimen/moreLitterText" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff3f3">
+
+        <TextView
+            android:id="@+id/textShareMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="12dp"
+            android:text="您目前拥有"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textYongYouJF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/textShareMoney"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@+id/textShareMoney"
+            android:text="2344"
+            android:textColor="@color/basic_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textYongYouJF"
+            android:layout_toRightOf="@+id/textYongYouJF"
+            android:text="积分"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textHas_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="积分不足"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/litterText" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/background" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:text="用户点评（888+）"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/normal_textsize" />
+
+        <ImageView
+            android:id="@+id/image0900"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:src="@mipmap/right" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/image0900"
+            android:text="98.3%好评"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/normal_textsize" />
+    </RelativeLayout>
+</LinearLayout>

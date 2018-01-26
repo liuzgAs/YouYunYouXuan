@@ -220,6 +220,10 @@ public class Constant {
          * 积分商城
          */
         public static final String CUSTOMER_GETINTEGRALSHOP = "/Customer/getIntegralShop";
+        /**
+         * 积分产品详情
+         */
+        public static final String CUSTOMER_INTEGRAGOODSINFO = "/Customer/integraGoodsInfo";
     }
 
     public static class IntentKey {

@@ -86,6 +86,9 @@
             android:name=".activity.ChanPinXQActivity"
             android:launchMode="singleTop" />
         <activity
+            android:name=".activity.ChanPinJFXQActivity"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".activity.CePingXQActivity"
             android:launchMode="singleTop" />
         <activity
