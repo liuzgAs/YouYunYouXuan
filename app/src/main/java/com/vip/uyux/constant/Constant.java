@@ -216,6 +216,10 @@ public class Constant {
          * 我的积分
          */
         public static final String CUSTOMER_GETINTEGRAL = "/Customer/getIntegral";
+        /**
+         * 积分商城
+         */
+        public static final String CUSTOMER_GETINTEGRALSHOP = "/Customer/getIntegralShop";
     }
 
     public static class IntentKey {
