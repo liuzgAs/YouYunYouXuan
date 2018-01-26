@@ -3,26 +3,57 @@ package com.vip.uyux.viewholder;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.model.Order;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class DDViewHolder extends BaseViewHolder<Integer> {
+public class DDViewHolder extends BaseViewHolder<Order.DataBean> {
 
     private final EasyRecyclerView recyclerView;
     private final EasyRecyclerView recyclerViewDes;
-    private RecyclerArrayAdapter<Integer> adapter;
-    private RecyclerArrayAdapter<Integer> adapterDes;
+    private RecyclerArrayAdapter<Order.DataBean.ListBeanX> adapter;
+    private RecyclerArrayAdapter<String> adapterDes;
+    private final TextView textOrderSn;
+    private final TextView textOrderSnDes;
+    private final TextView textSumDes;
+    private final TextView textSum;
+    private final TextView textCancle;
+    private final Button btnPingJia;
+    Order.DataBean data;
 
     public DDViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
+        textOrderSn = $(R.id.textOrderSn);
+        textOrderSnDes = $(R.id.textOrderSnDes);
+        textSumDes = $(R.id.textSumDes);
+        textSum = $(R.id.textSum);
+        textCancle = $(R.id.textCancle);
+        btnPingJia = $(R.id.btnPingJia);
+        btnPingJia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        textCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         recyclerView = $(R.id.recyclerView);
         recyclerViewDes = $(R.id.recyclerViewDes);
         initRecycler();
@@ -37,7 +68,7 @@ public class DDViewHolder extends BaseViewHolder<Integer> {
         DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getContext().getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(getContext()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Order.DataBean.ListBeanX>(getContext()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_ding_dan_cangku;
@@ -51,26 +82,39 @@ public class DDViewHolder extends BaseViewHolder<Integer> {
      */
     private void initDesRecycler() {
         recyclerViewDes.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewDes.setAdapterWithProgress(adapterDes = new RecyclerArrayAdapter<Integer>(getContext()) {
+        recyclerViewDes.setAdapterWithProgress(adapterDes = new RecyclerArrayAdapter<String>(getContext()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_dd_des;
-                return new MyBaseViewHolder(parent, layout);
+                return new DDDesViewHolder(parent, layout);
             }
         });
     }
 
     @Override
-    public void setData(Integer data) {
+    public void setData(Order.DataBean data) {
         super.setData(data);
+        this.data = data;
+        textOrderSn.setText(data.getOrderSn());
+        textOrderSnDes.setText(data.getOrderSnDes());
+        textSumDes.setText(data.getSumDes());
+        textSum.setText(data.getSum());
+        if (data.getGoPay() == 1) {
+            btnPingJia.setVisibility(View.VISIBLE);
+        } else {
+            btnPingJia.setVisibility(View.GONE);
+        }
+        if (data.getIsCancel() == 1) {
+            textCancle.setVisibility(View.VISIBLE);
+        } else {
+            btnPingJia.setVisibility(View.GONE);
+        }
+        List<Order.DataBean.ListBeanX> listBeanXList = data.getList();
         adapter.clear();
-        adapter.add(1);
-        adapter.add(1);
-        adapter.notifyDataSetChanged();
+        adapter.addAll(listBeanXList);
+        List<String> desList = data.getDesList();
         adapterDes.clear();
-        adapterDes.add(1);
-        adapterDes.add(1);
-        adapterDes.notifyDataSetChanged();
+        adapterDes.addAll(desList);
     }
 
 }

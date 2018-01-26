@@ -224,6 +224,10 @@ public class Constant {
          * 积分产品详情
          */
         public static final String CUSTOMER_INTEGRAGOODSINFO = "/Customer/integraGoodsInfo";
+        /**
+         * 订单列表
+         */
+        public static final String ORDER = "/User/myOrder";
     }
 
     public static class IntentKey {

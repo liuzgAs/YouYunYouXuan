@@ -13,6 +13,7 @@
         android:background="#f9f0f1">
 
         <TextView
+            android:id="@+id/textSupplier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -23,6 +24,7 @@
             android:textSize="@dimen/normal_textsize" />
 
         <TextView
+            android:id="@+id/textText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -42,7 +44,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_empty="@layout/view_empty"
         app:layout_progress="@layout/view_progress"
         app:scrollbarStyle="insideOverlay" />
 </LinearLayout>

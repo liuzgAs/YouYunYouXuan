@@ -5,13 +5,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
+import com.vip.uyux.model.Order;
+import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class DDItemViewHolder extends BaseViewHolder<Integer> {
+public class DDItemViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX.ListBean> {
 
     private final ImageView imageImg;
     private final TextView textTitle;
@@ -29,18 +33,18 @@ public class DDItemViewHolder extends BaseViewHolder<Integer> {
     }
 
     @Override
-    public void setData(Integer data) {
+    public void setData(Order.DataBean.ListBeanX.ListBean data) {
         super.setData(data);
-//        GlideApp.with(getContext())
-//                .asBitmap()
-//                .centerCrop()
-//                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
-//                .load(data.getGoods_img())
-//                .into(imageImg);
-//        textTitle.setText(data.getGoods_title());
-//        textDes.setText(data.getSpe_name());
-//        textNum.setText("×"+data.getNum());
-//        textPrice.setText("¥"+data.getGoods_price());
+        GlideApp.with(getContext())
+                .asBitmap()
+                .centerCrop()
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
+                .load(data.getGoods_img())
+                .into(imageImg);
+        textTitle.setText(data.getGoods_name());
+        textDes.setText(data.getGoods_sku());
+        textNum.setText("×"+data.getQuantity());
+        textPrice.setText("¥"+data.getGoods_price());
     }
 
 }
