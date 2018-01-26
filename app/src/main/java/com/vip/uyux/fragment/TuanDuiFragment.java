@@ -218,7 +218,9 @@ public class TuanDuiFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                         for (int i = 0; i < title.size(); i++) {
                             list.add(title.get(i).getTitle());
                         }
-                        ((WoDeTDActivity)mContext).setTab(list);
+                        if(type==1){
+                            ((WoDeTDActivity)mContext).setTab(list);
+                        }
                     } else if (customerMyteam.getStatus()== 3) {
                         MyDialog.showReLoginDialog(mContext);
                     } else {
