@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -78,6 +79,8 @@ public class FenHongZXActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.viewChanPinFH).setOnClickListener(this);
+        findViewById(R.id.viewZhiTuiFH).setOnClickListener(this);
     }
 
     /**
@@ -119,14 +122,14 @@ public class FenHongZXActivity extends ZjbBaseActivity implements View.OnClickLi
                         textY_money.setText(bonus.getProduct_bonus().getY_money());
                         textL_money.setText(bonus.getDirect_bonus().getL_money());
                         textZ_money.setText(bonus.getDirect_bonus().getZ_money());
-                        if (bonus.getProduct_bonus().getIs_up()==1){
+                        if (bonus.getProduct_bonus().getIs_up() == 1) {
                             viewFenHong01.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             viewFenHong01.setVisibility(View.GONE);
                         }
-                        if (bonus.getDirect_bonus().getIs_up()==1){
+                        if (bonus.getDirect_bonus().getIs_up() == 1) {
                             viewFenHong02.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             viewFenHong01.setVisibility(View.GONE);
                         }
                     } else if (bonus.getStatus() == 3) {
@@ -150,6 +153,14 @@ public class FenHongZXActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.viewZhiTuiFH:
+
+                break;
+            case R.id.viewChanPinFH:
+                Intent intent = new Intent();
+                intent.setClass(FenHongZXActivity.this,ChanPinFenHongActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageBack:
                 finish();
                 break;

@@ -103,11 +103,7 @@ public class BoXingTu extends View {
         paintQuXian01.setPathEffect(pathEffect);
         paintQuXian01.setStyle(Paint.Style.STROKE);
         paintQuXian01.setStrokeCap(Paint.Cap.ROUND);
-        paintQuXian01.setShadowLayer(
-                DpUtils.convertDpToPixel(quXian, context),
-                DpUtils.convertDpToPixel(ShadowXY, context),
-                DpUtils.convertDpToPixel(ShadowXY, context),
-                getResources().getColor(R.color.quXian0101));
+
         paintQuXian01.setStrokeWidth(quXianPx);
 
         paintQuXian02 = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -168,6 +164,18 @@ public class BoXingTu extends View {
             }
             canvas.drawText(text[i], (widthJianGe - rect.width()) / 2 + widthJianGe * i, height - (bianJuPx - rect.height()) / 2, paintText);
         }
+
+        paintQuXian01.setShadowLayer(
+                DpUtils.convertDpToPixel(quXian, getContext()),
+                DpUtils.convertDpToPixel(ShadowXY, getContext()),
+                DpUtils.convertDpToPixel(ShadowXY, getContext()),
+                getResources().getColor(R.color.quXian0101));
+
+        paintQuXian02.setShadowLayer(
+                DpUtils.convertDpToPixel(quXian, getContext()),
+                DpUtils.convertDpToPixel(ShadowXY, getContext()),
+                DpUtils.convertDpToPixel(ShadowXY, getContext()),
+                getResources().getColor(R.color.quXian0201));
 
         canvas.save();
         paintQuXian01.setColor(getResources().getColor(R.color.quXian01));

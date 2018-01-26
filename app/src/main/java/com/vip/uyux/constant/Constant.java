@@ -208,6 +208,10 @@ public class Constant {
          * 分红中心
          */
         public static final String BONUS = "/Bonus";
+        /**
+         * 产品分红
+         */
+        public static final String BONUS_GETPROBONUS = "/Bonus/getProBonus";
     }
 
     public static class IntentKey {
