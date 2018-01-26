@@ -212,6 +212,10 @@ public class Constant {
          * 产品分红
          */
         public static final String BONUS_GETPROBONUS = "/Bonus/getProBonus";
+        /**
+         * 我的积分
+         */
+        public static final String CUSTOMER_GETINTEGRAL = "/Customer/getIntegral";
     }
 
     public static class IntentKey {
