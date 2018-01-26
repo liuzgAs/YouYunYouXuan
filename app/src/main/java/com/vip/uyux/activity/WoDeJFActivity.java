@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -149,6 +150,7 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.viewUbiSC).setOnClickListener(this);
     }
 
     @Override
@@ -159,6 +161,11 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.viewUbiSC:
+                Intent intent = new Intent();
+                intent.setClass(this,JiFenSCActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageBack:
                 finish();
                 break;

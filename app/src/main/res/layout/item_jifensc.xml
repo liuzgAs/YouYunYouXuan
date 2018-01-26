@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/layout_selector_white_system_gray"
+    android:layout_height="wrap_content">
+    <com.luck.picture.lib.widget.SquareRelativeLayout
+        android:id="@+id/view0000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.luck.picture.lib.widget.SquareRelativeLayout>
+    <TextView
+        android:textSize="@dimen/bigText"
+        android:text="清风抽纸原木精装180抽组合装上市盒装"
+        android:textColor="@color/light_black"
+        android:lines="2"
+        android:layout_below="@+id/view0000"
+        android:layout_width="match_parent"
+        android:id="@+id/textTitle"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="2999"
+        android:textSize="20dp"
+        android:layout_below="@+id/textTitle"
+        android:textColor="@color/basic_color"
+        android:id="@+id/textScore"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="分"
+        android:textSize="@dimen/litterText"
+        android:layout_alignBaseline="@+id/textScore"
+        android:textColor="@color/basic_color"
+        android:layout_toRightOf="@+id/textScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -126,10 +126,10 @@
             android:layout_marginRight="6dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#e96363"
             app:cardCornerRadius="12dp">
 
             <RelativeLayout
+                android:background="@drawable/jianbian_benshoushangxin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
@@ -142,6 +142,10 @@
                     android:src="@mipmap/benzhoushangxin" />
 
                 <TextView
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="3"
+                    android:shadowColor="#ff454e"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/imageBenZhou"
@@ -175,10 +179,10 @@
             android:layout_marginRight="@dimen/leftAndRight"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#ff9036"
             app:cardCornerRadius="12dp">
 
             <RelativeLayout
+                android:background="@drawable/jianbian_remaituijian"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
@@ -191,6 +195,10 @@
                     android:src="@mipmap/remaituijian" />
 
                 <TextView
+                    android:shadowColor="#ff9806"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/imageReMai"
