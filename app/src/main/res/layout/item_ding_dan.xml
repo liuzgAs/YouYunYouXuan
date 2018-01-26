@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_selector_white_system_gray">
+
+    <ImageView
+        android:id="@+id/imageImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/shangpin" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imageImg"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_toRightOf="@+id/imageImg"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="一品轩皇家调和油"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/bigText"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textDes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textTitle"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/imageImg"
+        android:text="分类：无糖"
+        android:textSize="@dimen/normal_textsize" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageImg"
+        android:textSize="@dimen/normal_textsize"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/imageImg"
+        android:id="@+id/textPrice"
+        android:text="¥78.00"
+        android:textColor="@color/light_black" />
+    <TextView
+        android:id="@+id/textNum"
+        android:text="×2"
+        android:layout_alignBaseline="@+id/textPrice"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/normal_textsize"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

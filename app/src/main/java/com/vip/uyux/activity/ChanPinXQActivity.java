@@ -56,6 +56,7 @@ import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.util.StringUtil;
 import com.vip.uyux.viewholder.ChanPinFootViewHolder;
 import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
@@ -168,6 +169,12 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.header_chenpin, null);
                 banner = (ConvenientBanner) view.findViewById(R.id.banner);
+                int screenWidth = ScreenUtils.getScreenWidth(ChanPinXQActivity.this);
+                ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
+                layoutParams.width = screenWidth;
+                layoutParams.height = screenWidth;
+                banner.setLayoutParams(layoutParams);
+
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
                 gridview = view.findViewById(R.id.gridview);
@@ -706,7 +713,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
-                if (goodsNum < stock_num) {
+                if (goodsNum <= stock_num) {
                 } else {
                     Toast.makeText(ChanPinXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
                     return;

@@ -55,6 +55,7 @@ import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.ChanPinFootViewHolder;
 import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
 import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
@@ -94,7 +95,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chan_pin_xq);
+        setContentView(R.layout.activity_chan_pin_xq_jf);
         api = WXAPIFactory.createWXAPI(ChanPinJFXQActivity.this, Constant.WXAPPID, true);
         init();
     }
@@ -156,6 +157,11 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.header_chenpin_jf, null);
                 banner = (ConvenientBanner) view.findViewById(R.id.banner);
+                int screenWidth = ScreenUtils.getScreenWidth(ChanPinJFXQActivity.this);
+                ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
+                layoutParams.width = screenWidth;
+                layoutParams.height = screenWidth;
+                banner.setLayoutParams(layoutParams);
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
                 textDes = view.findViewById(R.id.textDes);
@@ -300,7 +306,6 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
-        findViewById(R.id.textLiJiGouMai).setOnClickListener(this);
         findViewById(R.id.textJiaRuGWC).setOnClickListener(this);
         findViewById(R.id.imageFenXiang).setOnClickListener(this);
         imageShouCang.setOnClickListener(this);
@@ -324,13 +329,10 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                     quXiaoSC();
                 }
                 break;
-            case R.id.textLiJiGouMai:
-                buy_now = 1;
-                mai();
-                break;
             case R.id.textJiaRuGWC:
-                buy_now = 0;
-                mai();
+                Toast.makeText(ChanPinJFXQActivity.this, "暂未开放兑换", Toast.LENGTH_SHORT).show();
+//                buy_now = 0;
+//                mai();
                 break;
             case R.id.imageBack:
                 finish();
@@ -614,7 +616,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
-                if (goodsNum < stock_num) {
+                if (goodsNum <=stock_num) {
                 } else {
                     Toast.makeText(ChanPinJFXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
                     return;

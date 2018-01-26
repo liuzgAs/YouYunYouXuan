@@ -292,6 +292,8 @@
                 android:background="@color/white">
 
                 <RelativeLayout
+                    android:id="@+id/viewDaiFuKuan"
+                    android:background="@drawable/layout_selector_white_system_gray"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -319,6 +321,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:background="@drawable/layout_selector_white_system_gray"
+                    android:id="@+id/viewDaiFaHuo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -342,6 +346,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:background="@drawable/layout_selector_white_system_gray"
+                    android:id="@+id/viewDaiShouHuo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -368,6 +374,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:background="@drawable/layout_selector_white_system_gray"
+                    android:id="@+id/viewDaiPingJia"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -394,6 +402,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:background="@drawable/layout_selector_white_system_gray"
+                    android:id="@+id/viewTuiHuanHuo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

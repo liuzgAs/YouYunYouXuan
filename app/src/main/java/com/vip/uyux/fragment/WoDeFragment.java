@@ -20,6 +20,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
+import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.activity.WoDeJFActivity;
 import com.vip.uyux.activity.WoDeSCActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
@@ -166,6 +167,10 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewZuJi).setOnClickListener(this);
         mInflate.findViewById(R.id.viewShouCang).setOnClickListener(this);
         mInflate.findViewById(R.id.viewWoDeJF).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewDaiFuKuan).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewDaiFaHuo).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewDaiShouHuo).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewDaiPingJia).setOnClickListener(this);
     }
 
     /**
@@ -286,6 +291,26 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewDaiFuKuan:
+                intent.setClass(mContext, WoDeDDActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 1);
+                startActivity(intent);
+                break;
+            case R.id.viewDaiFaHuo:
+                intent.setClass(mContext, WoDeDDActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 2);
+                startActivity(intent);
+                break;
+            case R.id.viewDaiShouHuo:
+                intent.setClass(mContext, WoDeDDActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 3);
+                startActivity(intent);
+                break;
+            case R.id.viewDaiPingJia:
+                intent.setClass(mContext, WoDeDDActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 4);
+                startActivity(intent);
+                break;
             case R.id.viewWoDeJF:
                 if (isLogin) {
                     intent.setClass(mContext, WoDeJFActivity.class);

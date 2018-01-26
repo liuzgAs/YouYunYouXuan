@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    tools:context="com.vip.uyux.activity.ChanPinXQActivity">
+
+    <include
+        android:id="@+id/includeBar"
+        layout="@layout/view_bar_chanpin_xq" />
+
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/viewDiBu"
+        android:layout_below="@+id/includeBar"
+        app:layout_empty="@layout/view_empty"
+        app:layout_progress="@layout/view_progress"
+        app:scrollbarStyle="insideOverlay" />
+
+
+    <LinearLayout
+        android:id="@+id/viewDiBu"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normalItemHeight"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textJiaRuGWC"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/basic_color"
+            android:gravity="center"
+            android:text="立即兑换"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bigText"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>

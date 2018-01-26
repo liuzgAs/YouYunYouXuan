@@ -137,6 +137,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     @Override
     protected void initViews() {
         mInflate.findViewById(R.id.imageBack).setVisibility(View.GONE);
+        viewJieSuan.setVisibility(View.GONE);
         ViewGroup.LayoutParams layoutParams = mRelaTitleStatue.getLayoutParams();
         layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
         mRelaTitleStatue.setLayoutParams(layoutParams);
