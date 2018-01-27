@@ -304,28 +304,48 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 startActivity(intent);
                 break;
             case R.id.viewUBiSC:
-                intent.setClass(mContext, JiFenSCActivity.class);
-                startActivity(intent);
+                if (isLogin) {
+                    intent.setClass(mContext, JiFenSCActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.viewDaiFuKuan:
-                intent.setClass(mContext, WoDeDDActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 1);
-                startActivity(intent);
+                if (isLogin) {
+                    intent.setClass(mContext, WoDeDDActivity.class);
+                    intent.putExtra(Constant.IntentKey.TYPE, 1);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.viewDaiFaHuo:
-                intent.setClass(mContext, WoDeDDActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 2);
-                startActivity(intent);
+                if (isLogin) {
+                    intent.setClass(mContext, WoDeDDActivity.class);
+                    intent.putExtra(Constant.IntentKey.TYPE, 2);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.viewDaiShouHuo:
-                intent.setClass(mContext, WoDeDDActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 3);
-                startActivity(intent);
+                if (isLogin) {
+                    intent.setClass(mContext, WoDeDDActivity.class);
+                    intent.putExtra(Constant.IntentKey.TYPE, 3);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.viewDaiPingJia:
-                intent.setClass(mContext, WoDeDDActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 4);
-                startActivity(intent);
+                if (isLogin) {
+                    intent.setClass(mContext, WoDeDDActivity.class);
+                    intent.putExtra(Constant.IntentKey.TYPE, 4);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.viewWoDeJF:
                 if (isLogin) {

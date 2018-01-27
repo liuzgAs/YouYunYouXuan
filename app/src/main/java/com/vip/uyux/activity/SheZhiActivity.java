@@ -29,6 +29,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
     private TextView textHuanCun;
     private TextView textBanben;
     private ImageView imageLogo;
+    private View btnExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,11 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(16,SheZhiActivity.this)))
                 .load(R.mipmap.logo)
                 .into(imageLogo);
+        if (isLogin){
+            btnExit.setVisibility(View.VISIBLE);
+        }else {
+            btnExit.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -76,7 +82,8 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
         findViewById(R.id.viewXiuGaiMM).setOnClickListener(this);
         findViewById(R.id.viewHuanCun).setOnClickListener(this);
         findViewById(R.id.viewAbout).setOnClickListener(this);
-        findViewById(R.id.btnExit).setOnClickListener(this);
+        btnExit = findViewById(R.id.btnExit);
+        btnExit.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +100,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
                 twoBtnDialog.setClicklistener(new TwoBtnDialog.ClickListenerInterface() {
                             @Override
                             public void doConfirm() {
+                                btnExit.setVisibility(View.GONE);
                                 twoBtnDialog.dismiss();
                                 ToLoginActivity.toLoginActivity(SheZhiActivity.this);
                             }

@@ -24,6 +24,7 @@ import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.adapter.BannerAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -46,7 +47,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
 
     private View mInflate;
@@ -281,7 +282,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void setListeners() {
-
+        mInflate.findViewById(R.id.imageSearch).setOnClickListener(this);
     }
 
     @Override
@@ -360,5 +361,18 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imageSearch:
+                Intent intent = new Intent();
+                intent.setClass(mContext, SouSuoActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }
