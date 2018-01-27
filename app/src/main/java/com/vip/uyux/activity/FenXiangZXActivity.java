@@ -41,6 +41,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     private IWXAPI api;
     private ShareIndex.TeamShareBean teamShare;
     private ShareIndex.VipShareBean vipShare;
+    private String college_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +152,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                         textKeHu.setText(String.valueOf((int) d3));
                         teamShare = shareIndex.getTeamShare();
                         vipShare = shareIndex.getVipShare();
+                        college_url = shareIndex.getCollege_url();
                     } else if (shareIndex.getStatus() == 3) {
                         MyDialog.showReLoginDialog(FenXiangZXActivity.this);
                     } else {
@@ -186,9 +188,13 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.viewYouYunSXY:
-                intent.setClass(this, ChangJianWenTiActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 2);
+                intent.setClass(FenXiangZXActivity.this, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, "优云商学院");
+                intent.putExtra(Constant.IntentKey.URL, college_url);
                 startActivity(intent);
+//                intent.setClass(this, ChangJianWenTiActivity.class);
+//                intent.putExtra(Constant.IntentKey.TYPE, 2);
+//                startActivity(intent);
                 break;
             case R.id.viewFenXiaoDD:
                 intent.setClass(this, FenXiaoDDActivity.class);

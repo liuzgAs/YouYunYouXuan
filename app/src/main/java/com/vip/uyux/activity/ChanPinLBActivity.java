@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,27 +80,31 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
      * 初始化recyclerview
      */
     private void initRecycler() {
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         itemDecoration1 = new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, ChanPinLBActivity.this));
 //        recyclerView.addItemDecoration(itemDecoration1);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-//        if (itemDecoration!=null){
-//            recyclerView.removeItemDecoration(itemDecoration);
-//        }
-        recyclerView.addItemDecoration(itemDecoration1);
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsIndex.DataBean>(ChanPinLBActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout ;
-                if (isDuoLie){
+                if (viewType==1){
                     layout = R.layout.item_lb_duolie;
+                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", ""+viewType);
                 }else {
+                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", ""+viewType);
                     layout = R.layout.item_chanpin;
                 }
-                return new ChanPinLBViewHolder(parent, layout);
+                return new ChanPinLBViewHolder(parent, layout,viewType);
+            }
+
+            @Override
+            public int getViewType(int position) {
+                return getItem(position).getViewType();
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
@@ -116,6 +120,15 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                             int status = goodsIndex.getStatus();
                             if (status == 1) {
                                 List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
+                                if (isDuoLie){
+                                    for (int i = 0; i < dataBeanList.size(); i++) {
+                                        dataBeanList.get(i).setViewType(1);
+                                    }
+                                }else {
+                                    for (int i = 0; i < dataBeanList.size(); i++) {
+                                        dataBeanList.get(i).setViewType(0);
+                                    }
+                                }
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(ChanPinLBActivity.this);
@@ -209,18 +222,27 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
             case R.id.imgeRight:
                 isDuoLie = !isDuoLie;
                 if (isDuoLie) {
-                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        adapter.getItem(i).setViewType(1);
+                    }
+                    recyclerView.setLayoutManager(new GridLayoutManager(this,2 ));
                     if (itemDecoration!=null){
                         recyclerView.removeItemDecoration(itemDecoration);
                     }
+                    imgeRight.setImageResource(R.mipmap.liebiao2);
                     recyclerView.addItemDecoration(itemDecoration1);
                 } else {
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        adapter.getItem(i).setViewType(0);
+                    }
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     if (itemDecoration1!=null){
                         recyclerView.removeItemDecoration(itemDecoration1);
                     }
+                    imgeRight.setImageResource(R.mipmap.liebiao);
                     recyclerView.addItemDecoration(itemDecoration);
                 }
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.imageBack:
                 finish();
@@ -242,6 +264,15 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                     GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
                     if (goodsIndex.getStatus() == 1) {
                         List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
+                        if (isDuoLie){
+                            for (int i = 0; i < dataBeanList.size(); i++) {
+                                dataBeanList.get(i).setViewType(1);
+                            }
+                        }else {
+                            for (int i = 0; i < dataBeanList.size(); i++) {
+                                dataBeanList.get(i).setViewType(0);
+                            }
+                        }
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (goodsIndex.getStatus() == 3) {

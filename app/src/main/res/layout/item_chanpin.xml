@@ -3,7 +3,7 @@
     android:background="@drawable/layout_selector_white_system_gray"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ImageView
+    <com.vip.uyux.customview.YuanJiaoImageView
         android:layout_marginLeft="@dimen/leftAndRight"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"

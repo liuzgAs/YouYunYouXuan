@@ -65,6 +65,15 @@ public class GoodsIndex {
         private String vipDes;
         private int type;
         private int saleNum;
+        private int viewType;
+
+        public int getViewType() {
+            return viewType;
+        }
+
+        public void setViewType(int viewType) {
+            this.viewType = viewType;
+        }
 
         public int getId() {
             return id;

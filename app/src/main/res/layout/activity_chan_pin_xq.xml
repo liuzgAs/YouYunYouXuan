@@ -19,7 +19,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/viewDiBu"
         android:layout_below="@+id/includeBar"
-        app:layout_empty="@layout/view_empty"
         app:layout_progress="@layout/view_progress"
         app:scrollbarStyle="insideOverlay" />
 

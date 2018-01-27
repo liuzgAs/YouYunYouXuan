@@ -42,6 +42,9 @@
             android:textColor="@color/light_black"
             android:textSize="@dimen/titleSize"/>
         <ImageView
+            android:paddingLeft="10dp"
+            android:paddingRight="@dimen/leftAndRight"
+            android:src="@mipmap/liebiao"
             android:id="@+id/imgeRight"
             android:layout_width="40dp"
             android:layout_height="match_parent"

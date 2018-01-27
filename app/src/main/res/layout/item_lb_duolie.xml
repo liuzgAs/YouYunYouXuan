@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.vip.uyux.customview.YuanJiaoImageView
                 android:id="@+id/imageImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -49,7 +49,7 @@
             android:layout_height="20dp"
             android:layout_below="@+id/viewSquare"
             android:layout_marginLeft="@dimen/leftAndRight"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:src="@mipmap/ziyin" />
 
         <TextView
@@ -59,7 +59,7 @@
             android:layout_below="@+id/viewSquare"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="@dimen/leftAndRight"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/ziyin"
             android:ellipsize="end"
             android:maxLines="1"
@@ -75,7 +75,7 @@
             android:layout_below="@+id/ziyin"
             android:layout_marginLeft="@dimen/leftAndRight"
             android:layout_marginRight="@dimen/leftAndRight"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="定制黑管双头口红刷头定制黑管双头口红刷头定制黑管双头口红刷头"
@@ -88,9 +88,9 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textDes"
             android:layout_alignStart="@+id/textDes"
-            android:layout_below="@+id/textDes"
+            android:layout_below="@+id/textSale"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="2dp"
             android:text="¥69"
             android:textColor="@color/basic_color"
             android:textSize="18dp" />
@@ -107,11 +107,12 @@
             android:textSize="@dimen/moreLitterText" />
 
         <TextView
+            android:layout_marginTop="2dp"
+            android:layout_below="@+id/textDes"
+            android:layout_marginLeft="@dimen/leftAndRight"
             android:id="@+id/textSale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textOld"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/leftAndRight"
             android:text="已售4535"
             android:textColor="@color/text_gray"

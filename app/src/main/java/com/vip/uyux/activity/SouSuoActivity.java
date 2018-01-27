@@ -98,7 +98,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_chanpin;
-                return new ChanPinLBViewHolder(parent, layout);
+                return new ChanPinLBViewHolder(parent, layout,0);
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {

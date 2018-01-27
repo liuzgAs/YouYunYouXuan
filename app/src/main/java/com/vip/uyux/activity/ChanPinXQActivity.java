@@ -49,7 +49,6 @@ import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShouCangShanChu;
 import com.vip.uyux.model.SimpleInfo;
-import com.vip.uyux.provider.DataProvider;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
@@ -180,7 +179,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 gridview = view.findViewById(R.id.gridview);
                 stringList.add("30天无忧退换货");
                 stringList.add("48小时快速退款");
-                stringList.add("满88元免邮费");
+                stringList.add("单笔满99元免邮费");
                 stringList.add("优云优选自营品牌");
                 gridview.setAdapter(new MyAdapter());
                 textCountdown = view.findViewById(R.id.textCountdown);
@@ -525,11 +524,11 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         skuLv = goodsInfo.getSkuLv();
                         listList.clear();
                         List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
-                        catelist.clear();
+                        listList.clear();
                         catelist.addAll(listList);
                         LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
                         adapter.clear();
-                        adapter.addAll(DataProvider.getPersonList(1));
+                        adapter.addAll(new ArrayList<Integer>());
                         viewDiBu.setVisibility(View.VISIBLE);
                         if (goodsInfo.getIsc() == 1) {
                             imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
