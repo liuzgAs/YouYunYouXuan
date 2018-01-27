@@ -44,11 +44,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:maxLength="8"
-                android:text="分享中心"
+                android:text="产品分红"
                 android:textColor="@color/white"
                 android:textSize="@dimen/titleSize"
                 android:textStyle="bold"
-                tools:text="分享中心" />
+                />
 
             <TextView
                 android:id="@+id/textViewRight"

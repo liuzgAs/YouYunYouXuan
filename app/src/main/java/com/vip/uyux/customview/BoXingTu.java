@@ -286,7 +286,6 @@ public class BoXingTu extends View {
                     //点击后，获取坐标代表的单词的含义
                     xuanZhong = 1;
                     invalidate();//更新视图
-                    return true;
                 } else if (x > widthJianGe && x < widthJianGe * 2) {
                     //点击后，获取坐标代表的单词的含义
                     xuanZhong = 2;
@@ -312,6 +311,9 @@ public class BoXingTu extends View {
                     xuanZhong = 7;
                     invalidate();//更新视图
                 }
+                onSelectListener.select((int)xuanZhong-1);
+                return true;
+            default:
                 break;
         }
         //这句话不要修改
@@ -346,5 +348,15 @@ public class BoXingTu extends View {
     public void setTextArr(String[] value) {
         text = value;
         invalidate();
+    }
+
+    public OnSelectListener onSelectListener;
+
+    public void setOnSelectListener(OnSelectListener onSelectListener){
+        this.onSelectListener = onSelectListener;
+    }
+
+    public interface OnSelectListener{
+        void select(int position);
     }
 }

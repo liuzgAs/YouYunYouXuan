@@ -15,16 +15,14 @@ public class BonusGetprobonus {
      * y_money : 8365
      * status : 1
      * info : 获取成功
-     * goods_list : [{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件"},{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件"},{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件"}]
-     * statistics : {"sale":125,"s_money":1236,"visit":25,"visit1":256}
+     * goods_list : [{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件","profit":[{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]},{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件","profit":[{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]},{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件","profit":[{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]}]
      */
 
     private String title;
-    private int k_money;
-    private int y_money;
+    private double k_money;
+    private double y_money;
     private int status;
     private String info;
-    private StatisticsBean statistics;
     private List<GoodsListBean> goods_list;
 
     public String getTitle() {
@@ -35,19 +33,19 @@ public class BonusGetprobonus {
         this.title = title;
     }
 
-    public int getK_money() {
+    public double getK_money() {
         return k_money;
     }
 
-    public void setK_money(int k_money) {
+    public void setK_money(double k_money) {
         this.k_money = k_money;
     }
 
-    public int getY_money() {
+    public double getY_money() {
         return y_money;
     }
 
-    public void setY_money(int y_money) {
+    public void setY_money(double y_money) {
         this.y_money = y_money;
     }
 
@@ -67,66 +65,12 @@ public class BonusGetprobonus {
         this.info = info;
     }
 
-    public StatisticsBean getStatistics() {
-        return statistics;
-    }
-
-    public void setStatistics(StatisticsBean statistics) {
-        this.statistics = statistics;
-    }
-
     public List<GoodsListBean> getGoods_list() {
         return goods_list;
     }
 
     public void setGoods_list(List<GoodsListBean> goods_list) {
         this.goods_list = goods_list;
-    }
-
-    public static class StatisticsBean {
-        /**
-         * sale : 125
-         * s_money : 1236
-         * visit : 25
-         * visit1 : 256
-         */
-
-        private int sale;
-        private int s_money;
-        private int visit;
-        private int visit1;
-
-        public int getSale() {
-            return sale;
-        }
-
-        public void setSale(int sale) {
-            this.sale = sale;
-        }
-
-        public int getS_money() {
-            return s_money;
-        }
-
-        public void setS_money(int s_money) {
-            this.s_money = s_money;
-        }
-
-        public int getVisit() {
-            return visit;
-        }
-
-        public void setVisit(int visit) {
-            this.visit = visit;
-        }
-
-        public int getVisit1() {
-            return visit1;
-        }
-
-        public void setVisit1(int visit1) {
-            this.visit1 = visit1;
-        }
     }
 
     public static class GoodsListBean {
@@ -138,6 +82,7 @@ public class BonusGetprobonus {
          * total_money : 9632
          * des1 : 近7日收益¥562
          * des2 : 近7日销量100件
+         * profit : [{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]
          */
 
         private int id;
@@ -147,6 +92,34 @@ public class BonusGetprobonus {
         private String total_money;
         private String des1;
         private String des2;
+        private String img;
+        private int max;
+        private boolean isZhanKai;
+        private List<ProfitBean> profit;
+
+        public int getMax() {
+            return max;
+        }
+
+        public void setMax(int max) {
+            this.max = max;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public boolean isZhanKai() {
+            return isZhanKai;
+        }
+
+        public void setZhanKai(boolean zhanKai) {
+            isZhanKai = zhanKai;
+        }
 
         public int getId() {
             return id;
@@ -202,6 +175,50 @@ public class BonusGetprobonus {
 
         public void setDes2(String des2) {
             this.des2 = des2;
+        }
+
+        public List<ProfitBean> getProfit() {
+            return profit;
+        }
+
+        public void setProfit(List<ProfitBean> profit) {
+            this.profit = profit;
+        }
+
+        public static class ProfitBean {
+            /**
+             * title : 12-28
+             * v1 : 125
+             * v2 : 236
+             */
+
+            private String title;
+            private int v1;
+            private int v2;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public int getV1() {
+                return v1;
+            }
+
+            public void setV1(int v1) {
+                this.v1 = v1;
+            }
+
+            public int getV2() {
+                return v2;
+            }
+
+            public void setV2(int v2) {
+                this.v2 = v2;
+            }
         }
     }
 }

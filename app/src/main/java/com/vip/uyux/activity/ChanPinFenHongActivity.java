@@ -30,7 +30,9 @@ import java.util.List;
 public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<BonusGetprobonus.GoodsListBean> adapter;
+    public RecyclerArrayAdapter<BonusGetprobonus.GoodsListBean> adapter;
+    private double k_money;
+    private double y_money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +78,22 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+
+            private TextView textYuJiFH;
+            private TextView textKeTiXian;
+
             @Override
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(ChanPinFenHongActivity.this).inflate(R.layout.header_chanpin_fenhong, null);
+                textKeTiXian = view.findViewById(R.id.textKeTiXian);
+                textYuJiFH = view.findViewById(R.id.textYuJiFH);
                 return view;
             }
 
             @Override
             public void onBindView(View headerView) {
-
+                textKeTiXian.setText(String.valueOf(k_money));
+                textYuJiFH.setText(String.valueOf(y_money));
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
@@ -100,6 +109,9 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
                             int status = bonusGetprobonus.getStatus();
                             if (status == 1) {
                                 List<BonusGetprobonus.GoodsListBean> goods_list = bonusGetprobonus.getGoods_list();
+                                for (int i = 0; i < goods_list.size(); i++) {
+                                    goods_list.get(i).setZhanKai(false);
+                                }
                                 adapter.addAll(goods_list);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(ChanPinFenHongActivity.this);
@@ -202,7 +214,12 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
                     page++;
                     BonusGetprobonus bonusGetprobonus = GsonUtils.parseJSON(s, BonusGetprobonus.class);
                     if (bonusGetprobonus.getStatus() == 1) {
+                        k_money = bonusGetprobonus.getK_money();
+                        y_money = bonusGetprobonus.getY_money();
                         List<BonusGetprobonus.GoodsListBean> goods_list = bonusGetprobonus.getGoods_list();
+                        for (int i = 0; i < goods_list.size(); i++) {
+                            goods_list.get(i).setZhanKai(false);
+                        }
                         adapter.clear();
                         adapter.addAll(goods_list);
                     } else if (bonusGetprobonus.getStatus() == 3) {
