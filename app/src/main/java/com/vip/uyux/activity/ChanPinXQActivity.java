@@ -524,7 +524,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         skuLv = goodsInfo.getSkuLv();
                         listList.clear();
                         List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
-                        listList.clear();
                         catelist.addAll(listList);
                         LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
                         adapter.clear();

@@ -3,9 +3,11 @@ package com.vip.uyux.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -56,6 +58,10 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
     private List<IndexCate.DataBean> dataBeanList;
     private String name;
     private TextView textBgDes;
+    private int positionX = 0;
+    private float downY;
+    private int newState;
+    private float upY;
 
     @Nullable
     @Override
@@ -160,11 +166,14 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
         initRecycle();
     }
 
+    private boolean isScroll = false;
+
     @Override
     protected void setListeners() {
         verticalTabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
+                positionX = position;
                 advTop = dataBeanList.get(position).getImg();
                 id = dataBeanList.get(position).getId();
                 name = dataBeanList.get(position).getName();
@@ -179,7 +188,69 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
             }
         });
         mInflate.findViewById(R.id.viewSearch).setOnClickListener(this);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                isScroll = true;
+            }
+        });
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        isScroll = false;
+                        //获取屏幕上点击的坐标
+                        downY = motionEvent.getY();
+                        LogUtil.LogShitou("FenLeiFragment--onTouch downY", "" + downY);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        upY = motionEvent.getY();
+                        LogUtil.LogShitou("FenLeiFragment--onTouch upY", "" + upY);
+                        if (upY - downY > 200) {
+
+                            LogUtil.LogShitou("FenLeiFragment--onTouch", "下拉" + (positionX + 1) + "   " + (dataBeanList.size() - 1));
+                            if ((positionX) > 0) {
+                                LogUtil.LogShitou("FenLeiFragment--onTouch", "2222" + isScroll);
+                                verticalTabLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+//                                            verticalTabLayout.getTabAt(positionX + 1).setSelected(true);
+                                        verticalTabLayout.setTabSelected(positionX - 1);
+                                    }
+                                });
+                            } else {
+                                LogUtil.LogShitou("FenLeiFragment--onTouch", "4444");
+                            }
+                        }
+                        if (downY - upY > 200) {
+                            LogUtil.LogShitou("FenLeiFragment--onTouch", "上拉" + (positionX + 1) + "   " + (dataBeanList.size() - 1));
+                            if ((positionX + 1) < (dataBeanList.size())) {
+                                LogUtil.LogShitou("FenLeiFragment--onTouch", "111" + isScroll);
+                                if (!isScroll) {
+                                    LogUtil.LogShitou("FenLeiFragment--onTouch", "下一个");
+                                    verticalTabLayout.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+//                                            verticalTabLayout.getTabAt(positionX + 1).setSelected(true);
+                                            verticalTabLayout.setTabSelected(positionX + 1);
+                                        }
+                                    });
+                                }
+                            } else {
+                                LogUtil.LogShitou("FenLeiFragment--onTouch", "333");
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
+
 
     @Override
     protected void initData() {
@@ -308,8 +379,8 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
                         if (dataBeanList.size() > 0) {
                             adapter.clear();
                             advTop = dataBeanList.get(0).getImg();
-                            id=dataBeanList.get(0).getId();
-                            name=dataBeanList.get(0).getName();
+                            id = dataBeanList.get(0).getId();
+                            name = dataBeanList.get(0).getName();
                             List<IndexCate.DataBean.ListBean> listBeanList = dataBeanList.get(0).getList();
                             adapter.addAll(listBeanList);
                         }
