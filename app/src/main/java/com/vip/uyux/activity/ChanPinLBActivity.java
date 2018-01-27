@@ -143,6 +143,10 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(ChanPinLBActivity.this, ChanPinXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
+                startActivity(intent);
             }
         });
         recyclerView.setRefreshListener(this);

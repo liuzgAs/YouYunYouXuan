@@ -69,7 +69,7 @@ public class TuiJianViewHolder extends BaseViewHolder<IndexRecom.DataBean> {
         }
         span.setSpan(imgspan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         textTitle.setText(span);
-        textPrice.setText("¥"+data.getPrice());
+        textPrice.setText(data.getPrice());
         textName.setVisibility(View.GONE);
     }
 

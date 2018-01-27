@@ -13,6 +13,7 @@
         android:id="@+id/imageImg"
         android:layout_height="100dp" />
     <TextView
+        android:id="@+id/textHuiYuan"
         android:textColor="@color/white"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -24,34 +25,73 @@
         android:layout_alignBottom="@+id/imageImg"
         android:background="@drawable/shape_tranblack_5dp"
         android:text="五星会员"
-        android:textSize="@dimen/moreLitterText"
+        android:textSize="10dp"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:src="@mipmap/ziyin"
+        android:layout_width="30dp"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_alignTop="@+id/imageImg"
+        android:id="@+id/imageZiYin"
+        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/textTitle"
         android:layout_marginRight="@dimen/leftAndRight"
-        android:layout_toRightOf="@+id/imageImg"
+        android:layout_toRightOf="@+id/imageZiYin"
         android:textSize="@dimen/bigText"
         android:layout_alignTop="@+id/imageImg"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:textStyle="bold"
         android:textColor="@color/light_black"
         android:layout_marginTop="2dp"
-        android:maxLines="2"
+        android:maxLines="1"
         android:ellipsize="end"
         android:text="黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:textSize="@dimen/bigText"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/normal_textsize"
+        android:text="营养俱全营养俱全"
+        android:id="@+id/textDes"
+        android:layout_below="@+id/textTitle"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/MoreBigText"
         android:layout_marginBottom="2dp"
         android:text="¥69"
         android:layout_toRightOf="@+id/imageImg"
-        android:layout_alignBottom="@id/imageImg"
+        android:layout_below="@+id/textDes"
         android:layout_marginLeft="10dp"
         android:id="@+id/textPrice"
         android:textColor="@color/basic_color"
         android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textOld"
+        android:layout_toRightOf="@+id/textPrice"
+        android:layout_alignBaseline="@+id/textPrice"
+        android:layout_marginLeft="5dp"
+        android:text="¥545"
+        android:textSize="@dimen/moreLitterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginBottom="2dp"
+        android:id="@+id/textSale"
+        android:text="已售54564件"
+        android:textSize="@dimen/moreLitterText"
+        android:layout_alignBottom="@+id/imageImg"
+        android:layout_toRightOf="@id/imageImg"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>
