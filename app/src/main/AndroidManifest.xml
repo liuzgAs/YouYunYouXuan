@@ -181,7 +181,8 @@
         <activity
             android:name=".activity.TiXianJLActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.YuEActivity"></activity>
+        <activity android:name=".activity.YuEActivity" />
+        <activity android:name=".activity.FenXiaoDDActivity"></activity>
     </application>
 
 </manifest>

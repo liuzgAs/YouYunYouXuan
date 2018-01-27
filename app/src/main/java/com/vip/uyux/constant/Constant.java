@@ -292,6 +292,10 @@ public class Constant {
          * 余额明细
          */
         public static final String WITHDRAW_BALANCE = "/Withdraw/balance";
+        /**
+         * 分销订单
+         */
+        public static final String BONUS_DISTRIBUTIONORDER = "/bonus/distributionOrder";
 
     }
 

@@ -35,6 +35,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     private TextView textTuanDui;
     private TextView textKeHu;
     private String up_url;
+    private Double yuji;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,11 +131,15 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                         up_url = shareIndex.getUp_url();
                         textKeTiXian.setText(String.valueOf(shareIndex.getMoney().get(0)));
                         textBuKeTiXian.setText(String.valueOf(shareIndex.getMoney().get(1)));
-                        textYuJi.setText(String.valueOf(shareIndex.getMoney().get(1)));
+                        yuji = shareIndex.getMoney().get(2);
+                        textYuJi.setText(String.valueOf(yuji));
+                        double d1 = shareIndex.getNum().get(1);
+                        double d2 = shareIndex.getNum().get(2);
+                        double d3 = shareIndex.getNum().get(3);
                         textFenXiaoYJ.setText(String.valueOf(shareIndex.getNum().get(0)));
-                        textFengXiaoDD.setText(String.valueOf(shareIndex.getNum().get(1)));
-                        textTuanDui.setText(String.valueOf(shareIndex.getNum().get(2)));
-                        textKeHu.setText(String.valueOf(shareIndex.getNum().get(3)));
+                        textFengXiaoDD.setText(String.valueOf((int)d1));
+                        textTuanDui.setText(String.valueOf((int)d2));
+                        textKeHu.setText(String.valueOf((int)d3));
                     } else if (shareIndex.getStatus() == 3) {
                         MyDialog.showReLoginDialog(FenXiangZXActivity.this);
                     } else {
@@ -169,8 +174,8 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.viewYuJiYJ:
-                intent.setClass(this, BuKeTiXianActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 4);
+                intent.setClass(this, FenXiaoDDActivity.class);
+                intent.putExtra(Constant.IntentKey.VALUE, String.valueOf(yuji));
                 startActivity(intent);
                 break;
             case R.id.viewFenXiaoYJ:

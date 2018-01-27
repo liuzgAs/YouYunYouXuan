@@ -367,9 +367,9 @@
             android:gravity="center">
 
             <com.vip.uyux.customview.MyFontTextView
+                android:id="@+id/textKeHu"
                 android:lines="1"
                 android:ellipsize="end"
-                android:id="@+id/text0401"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -379,10 +379,9 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textKeHu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text0401"
+                android:layout_below="@+id/textKeHu"
                 android:layout_centerHorizontal="true"
                 android:text="我的客户"
                 android:textSize="@dimen/normal_textsize" />
