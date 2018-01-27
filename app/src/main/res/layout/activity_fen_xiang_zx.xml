@@ -79,7 +79,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="@dimen/leftAndRight"
             android:layout_marginTop="30dp"
-            android:src="@mipmap/tuijiantouxiang"
+            android:src="@mipmap/touxiang_mine"
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp" />
 
@@ -91,11 +91,12 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="3dp"
             android:layout_toRightOf="@+id/imageImg"
-            android:text="李达达"
+            android:text="优云优选"
             android:textColor="@color/white"
             android:textSize="18dp" />
 
         <TextView
+            android:id="@+id/textDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imageImg"
@@ -107,6 +108,7 @@
             android:textSize="@dimen/litterText" />
 
         <TextView
+            android:id="@+id/textGrade_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/textName"
@@ -123,6 +125,7 @@
             android:textSize="@dimen/litterText" />
 
         <TextView
+            android:id="@+id/textLiJiSJ"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textName"
@@ -158,6 +161,8 @@
                 android:gravity="center">
 
                 <com.vip.uyux.customview.MyFontTextView
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:id="@+id/textKeTiXian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -191,6 +196,8 @@
                 android:gravity="center">
 
                 <com.vip.uyux.customview.MyFontTextView
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:id="@+id/textBuKeTiXian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -223,6 +230,8 @@
                 android:gravity="center">
 
                 <com.vip.uyux.customview.MyFontTextView
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:id="@+id/textYuJi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -256,7 +265,9 @@
             android:gravity="center">
 
             <com.vip.uyux.customview.MyFontTextView
-                android:id="@+id/text0300"
+                android:lines="1"
+                android:ellipsize="end"
+                android:id="@+id/textFenXiaoYJ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -268,7 +279,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text0300"
+                android:layout_below="@+id/textFenXiaoYJ"
                 android:layout_centerHorizontal="true"
                 android:text="分销佣金"
                 android:textSize="@dimen/normal_textsize" />
@@ -286,7 +297,9 @@
             android:gravity="center">
 
             <com.vip.uyux.customview.MyFontTextView
-                android:id="@+id/text0301"
+                android:lines="1"
+                android:ellipsize="end"
+                android:id="@+id/textFengXiaoDD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -298,7 +311,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text0301"
+                android:layout_below="@+id/textFengXiaoDD"
                 android:layout_centerHorizontal="true"
                 android:text="分销订单"
                 android:textSize="@dimen/normal_textsize" />
@@ -319,7 +332,9 @@
             android:gravity="center">
 
             <com.vip.uyux.customview.MyFontTextView
-                android:id="@+id/text0400"
+                android:lines="1"
+                android:ellipsize="end"
+                android:id="@+id/textTuanDui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -331,7 +346,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text0400"
+                android:layout_below="@+id/textTuanDui"
                 android:layout_centerHorizontal="true"
                 android:text="我的团队"
                 android:textSize="@dimen/normal_textsize" />
@@ -350,6 +365,8 @@
             android:gravity="center">
 
             <com.vip.uyux.customview.MyFontTextView
+                android:lines="1"
+                android:ellipsize="end"
                 android:id="@+id/text0401"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -360,6 +377,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textKeHu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text0401"

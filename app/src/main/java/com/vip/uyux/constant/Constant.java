@@ -260,6 +260,10 @@ public class Constant {
          * 验证码登录
          */
         public static final String LOGIN_SMS = "/Login/sms";
+        /**
+         * 分享中心
+         */
+        public static final String SHARE_INDEX = "/Share/index";
     }
 
     public static class IntentKey {
