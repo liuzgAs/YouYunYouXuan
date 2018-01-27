@@ -36,7 +36,7 @@ public class JiFenSCViewHolder extends BaseViewHolder<CustomerGetintegralshop.Da
         GlideApp.with(getContext())
                 .asBitmap()
                 .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
                 .load(data.getThumb())
                 .into(imageImg);
         textTitle.setText(data.getTitle());

@@ -82,7 +82,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                 GlideApp.with(CePingXQActivity.this)
                         .asBitmap()
                         .centerCrop()
-                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(3,CePingXQActivity.this)))
+                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10,CePingXQActivity.this)))
                         .load(R.mipmap.tuijianimg)
                         .into(imageImg);
             }

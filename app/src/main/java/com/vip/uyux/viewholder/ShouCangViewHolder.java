@@ -45,7 +45,7 @@ public class ShouCangViewHolder extends BaseViewHolder<UserCollect.DataBean> {
         GlideApp.with(getContext())
                 .asBitmap()
                 .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
                 .load(data.getImg())
                 .into(imageImg);
         textTitle.setText(data.getTitle());

@@ -638,7 +638,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         GlideApp.with(ChanPinXQActivity.this)
                 .asBitmap()
                 .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, ChanPinXQActivity.this)))
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, ChanPinXQActivity.this)))
                 .load(goodsInfoData.getThumb())
                 .into(imageImg);
         textDialogPrice = dialog_chan_pin.findViewById(R.id.textDialogPrice);

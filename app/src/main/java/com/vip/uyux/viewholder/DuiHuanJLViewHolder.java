@@ -8,43 +8,43 @@ import android.widget.TextView;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
-import com.vip.uyux.model.OrderConfirmbefore;
+import com.vip.uyux.model.BonusExchangerecode;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class QueRenDDViewHolder extends BaseViewHolder<OrderConfirmbefore.CartBean> {
+public class DuiHuanJLViewHolder extends BaseViewHolder<BonusExchangerecode.ProductIntegralBean> {
 
     private final ImageView imageImg;
     private final TextView textTitle;
-    private final TextView textDes;
-    private final TextView textPrice;
+    private final TextView textJiFen;
+    private final TextView textDate;
     private final TextView textNum;
 
-    public QueRenDDViewHolder(ViewGroup parent, @LayoutRes int res) {
+    public DuiHuanJLViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
         imageImg = $(R.id.imageImg);
         textTitle = $(R.id.textTitle);
-        textDes = $(R.id.textDes);
-        textPrice = $(R.id.textPrice);
+        textJiFen = $(R.id.textJiFen);
+        textDate = $(R.id.textDate);
         textNum = $(R.id.textNum);
     }
 
     @Override
-    public void setData(OrderConfirmbefore.CartBean data) {
+    public void setData(BonusExchangerecode.ProductIntegralBean data) {
         super.setData(data);
         GlideApp.with(getContext())
                 .asBitmap()
                 .centerCrop()
                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
-                .load(data.getGoods_img())
+                .load(data.getImg())
                 .into(imageImg);
         textTitle.setText(data.getGoods_title());
-        textDes.setText(data.getSpe_name());
+        textJiFen.setText(data.getIntegral()+"积分");
+        textDate.setText(data.getCreate_time());
         textNum.setText("×"+data.getNum());
-        textPrice.setText("¥"+data.getGoods_price());
     }
 
 }

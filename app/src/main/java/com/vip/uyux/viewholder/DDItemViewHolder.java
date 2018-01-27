@@ -38,7 +38,7 @@ public class DDItemViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX.Li
         GlideApp.with(getContext())
                 .asBitmap()
                 .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
                 .load(data.getGoods_img())
                 .into(imageImg);
         textTitle.setText(data.getGoods_name());

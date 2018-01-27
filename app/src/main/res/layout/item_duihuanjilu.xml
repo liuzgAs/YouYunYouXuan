@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/layout_selector_white_system_gray"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/shangpin" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageImg"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_toRightOf="@+id/imageImg"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="标题"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/bigText" />
+
+    <TextView
+        android:id="@+id/textJiFen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textTitle"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_toRightOf="@+id/imageImg"
+        android:text="88积分"
+        android:textColor="@color/basic_color"
+        android:textSize="@dimen/bigText" />
+
+    <TextView
+        android:id="@+id/textNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textJiFen"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:text="×2"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/normal_textsize" />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageImg"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_toRightOf="@+id/imageImg"
+        android:text="2018-1-27 11:41" />
+</RelativeLayout>

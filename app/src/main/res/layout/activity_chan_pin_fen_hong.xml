@@ -47,8 +47,7 @@
                 android:text="产品分红"
                 android:textColor="@color/white"
                 android:textSize="@dimen/titleSize"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textViewRight"
@@ -68,12 +67,16 @@
     </LinearLayout>
 
 
-
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         app:layout_empty="@layout/view_empty"
         app:layout_progress="@layout/view_progress"
         app:scrollbarStyle="insideOverlay" />
+
+    <Button
+        style="@style/bottomBtn"
+        android:text="推荐商品" />
 </LinearLayout>

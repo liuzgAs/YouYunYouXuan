@@ -232,6 +232,22 @@ public class Constant {
          * 确认收货
          */
         public static final String USER_CONFIRMSHIP = "/User/confirmShip";
+        /**
+         * 兑换记录
+         */
+        public static final String BONUS_EXCHANGERECODE = "/Bonus/exchangeRecode";
+        /**
+         * 修改密码
+         */
+        public static final String USER_PWDSAVE = "/User/pwdSave";
+        /**
+         * 意见反馈
+         */
+        public static final String USER_FEEDBACK = "/User/feedback";
+        /**
+         * 常见问题
+         */
+        public static final String FAQ_INDEX = "/Faq/index";
     }
 
     public static class IntentKey {

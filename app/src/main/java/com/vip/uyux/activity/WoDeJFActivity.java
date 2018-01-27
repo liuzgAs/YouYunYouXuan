@@ -88,7 +88,7 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
                 ApiClient.post(WoDeJFActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             CustomerGetintegral customerGetintegral = GsonUtils.parseJSON(s, CustomerGetintegral.class);
@@ -151,6 +151,7 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
         findViewById(R.id.viewUbiSC).setOnClickListener(this);
+        findViewById(R.id.viewDuiHuanJL).setOnClickListener(this);
     }
 
     @Override
@@ -160,10 +161,14 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewDuiHuanJL:
+                intent.setClass(this, DuiHuanJLActivity.class);
+                startActivity(intent);
+                break;
             case R.id.viewUbiSC:
-                Intent intent = new Intent();
-                intent.setClass(this,JiFenSCActivity.class);
+                intent.setClass(this, JiFenSCActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageBack:
