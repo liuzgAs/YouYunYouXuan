@@ -87,6 +87,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.viewFenXiaoYJ).setOnClickListener(this);
         findViewById(R.id.viewYouYunSXY).setOnClickListener(this);
         findViewById(R.id.viewYuJiYJ).setOnClickListener(this);
+        findViewById(R.id.viewFenXiaoDD).setOnClickListener(this);
     }
 
     /**
@@ -137,9 +138,9 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                         double d2 = shareIndex.getNum().get(2);
                         double d3 = shareIndex.getNum().get(3);
                         textFenXiaoYJ.setText(String.valueOf(shareIndex.getNum().get(0)));
-                        textFengXiaoDD.setText(String.valueOf((int)d1));
-                        textTuanDui.setText(String.valueOf((int)d2));
-                        textKeHu.setText(String.valueOf((int)d3));
+                        textFengXiaoDD.setText(String.valueOf((int) d1));
+                        textTuanDui.setText(String.valueOf((int) d2));
+                        textKeHu.setText(String.valueOf((int) d3));
                     } else if (shareIndex.getStatus() == 3) {
                         MyDialog.showReLoginDialog(FenXiangZXActivity.this);
                     } else {
@@ -171,6 +172,11 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
             case R.id.viewYouYunSXY:
                 intent.setClass(this, ChangJianWenTiActivity.class);
                 intent.putExtra(Constant.IntentKey.TYPE, 2);
+                startActivity(intent);
+                break;
+            case R.id.viewFenXiaoDD:
+                intent.setClass(this, FenXiaoDDActivity.class);
+                intent.putExtra(Constant.IntentKey.VALUE, String.valueOf(yuji));
                 startActivity(intent);
                 break;
             case R.id.viewYuJiYJ:

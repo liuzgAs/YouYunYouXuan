@@ -161,6 +161,7 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
             case R.id.btnLiJiTX:
                 Intent intent = new Intent();
                 intent.setClass(this,TiXianActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE,1);
                 startActivity(intent);
                 break;
             case R.id.imageBack:

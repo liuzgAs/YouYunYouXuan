@@ -54,7 +54,8 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
     private TextView textBank1;
     private View viewPhone;
     private View viewCode;
-//    private String mobile;
+    private int type;
+    //    private String mobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,8 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
 
     @Override
     protected void initIntent() {
-
+        Intent intent = getIntent();
+        type = intent.getIntExtra(Constant.IntentKey.TYPE, 0);
     }
 
     @Override
@@ -90,7 +92,17 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
 
     @Override
     protected void initViews() {
-        ((TextView) findViewById(R.id.textViewTitle)).setText("提现");
+        switch (type) {
+            case 1:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("余额提现");
+                break;
+            case 2:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("佣金提现");
+                break;
+            default:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("提现");
+                break;
+        }
         MoneyInputFilter.init(editJinE);
         textViewRight.setText("提现记录");
         viewPhone.setVisibility(View.GONE);
@@ -113,7 +125,18 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.WITHDRAW_ADDBEFORE;
+        String url;
+        switch (type) {
+            case 1:
+                url = Constant.HOST + Constant.Url.WITHDRAW_ADDBEFORE;
+                break;
+            case 2:
+                url = Constant.HOST + Constant.Url.WITHDRAW_ADDBEFORECOM;
+                break;
+            default:
+                url = Constant.HOST + Constant.Url.WITHDRAW_ADDBEFORE;
+                break;
+        }
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
@@ -183,6 +206,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
             case R.id.textViewRight:
                 Intent intent = new Intent();
                 intent.setClass(TiXianActivity.this, TiXianJLActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE,type);
                 startActivity(intent);
                 break;
             case R.id.buttonSms:
@@ -443,6 +467,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
                                 singleBtnDialog.dismiss();
                                 Intent intent1 = new Intent();
                                 intent1.setClass(TiXianActivity.this, TiXianJLActivity.class);
+                                intent1.putExtra(Constant.IntentKey.TYPE,type);
                                 startActivity(intent1);
                             }
                         });

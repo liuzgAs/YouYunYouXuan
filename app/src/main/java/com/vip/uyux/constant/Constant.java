@@ -277,17 +277,25 @@ public class Constant {
          */
         public static final String FAQ_EUBUSINESS = "/Faq/EUBusiness";
         /**
-         * 提现请求
+         * 余额提现请求
          */
         public static final String WITHDRAW_ADDBEFORE = "/Withdraw/addBefore";
+        /**
+         * 佣金提现请求
+         */
+        public static final String WITHDRAW_ADDBEFORECOM = "/Withdraw/addBeforeCom";
         /**
          * 提现提交
          */
         public static final String WITHDRAW_ADDDONE = "/Withdraw/addDone";
         /**
-         * 提现记录
+         * 余额提现记录
          */
-        public static final String WITHDRAW_GETWITHDRAW = "/Withdraw/getWithdraw";
+        public static final String WITHDRAW_TBALANCE = "/Withdraw/tBalance";
+        /**
+         * 佣金提现记录
+         */
+        public static final String WITHDRAW_TCOMMISSION = "/Withdraw/tCommission";
         /**
          * 余额明细
          */

@@ -1,6 +1,7 @@
 package com.vip.uyux.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -40,6 +41,7 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
     private int page = 1;
     private TextView textStart;
     private TextView textEnd;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,8 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
 
     @Override
     protected void initIntent() {
-
+        Intent intent = getIntent();
+        type = intent.getIntExtra(Constant.IntentKey.TYPE, 0);
     }
 
     @Override
@@ -67,7 +70,17 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
 
     @Override
     protected void initViews() {
-        ((TextView) findViewById(R.id.textViewTitle)).setText("提现记录");
+        switch (type) {
+            case 1:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("余额提现记录");
+                break;
+            case 2:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("余额提现记录");
+                break;
+            default:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("佣金提现记录");
+                break;
+        }
         initRecycle();
     }
 
@@ -172,7 +185,18 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.WITHDRAW_GETWITHDRAW;
+        String url ;
+        switch (type) {
+            case 1:
+                url = Constant.HOST + Constant.Url.WITHDRAW_TBALANCE;
+                break;
+            case 2:
+                url = Constant.HOST + Constant.Url.WITHDRAW_TCOMMISSION;
+                break;
+            default:
+                url = Constant.HOST + Constant.Url.WITHDRAW_TBALANCE;
+                break;
+        }
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
@@ -255,7 +279,7 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
                     }
                 }, c1.get(Calendar.YEAR), c1.get(Calendar.MONTH), c1.get(Calendar.DAY_OF_MONTH));
                 if (!TextUtils.isEmpty(date_end)) {
-                    datePickerDialog1.getDatePicker().setMaxDate(Long.parseLong(date_end)*1000);
+                    datePickerDialog1.getDatePicker().setMaxDate(Long.parseLong(date_end) * 1000);
                 } else {
                     datePickerDialog1.getDatePicker().setMaxDate(System.currentTimeMillis());
                 }
@@ -277,7 +301,7 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 if (!TextUtils.isEmpty(date_begin)) {
-                    datePickerDialog.getDatePicker().setMinDate(Long.parseLong(date_begin)*1000);
+                    datePickerDialog.getDatePicker().setMinDate(Long.parseLong(date_begin) * 1000);
                 }
                 datePickerDialog.show();
                 break;

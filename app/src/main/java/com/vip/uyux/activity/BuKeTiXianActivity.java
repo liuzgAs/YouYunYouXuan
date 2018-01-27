@@ -99,7 +99,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 btnLiJiTX.setText("立即升级马上提现");
                 break;
             case 2:
-                btnLiJiTX.setText("立即提现");
+                btnLiJiTX.setText("我要提现");
                 break;
             case 3:
                 btnLiJiTX.setText("我要提现");
@@ -115,6 +115,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        btnLiJiTX.setOnClickListener(this);
     }
 
     @Override
@@ -133,6 +134,27 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btnLiJiTX:
+                Intent intent = new Intent();
+                switch (type) {
+                    case 1:
+
+                        break;
+                    case 2:
+                        intent.setClass(this, TiXianActivity.class);
+                        intent.putExtra(Constant.IntentKey.TYPE, 2);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent.setClass(this, TiXianActivity.class);
+                        intent.putExtra(Constant.IntentKey.TYPE, 2);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+
+                break;
             case R.id.imageBack:
                 finish();
                 break;
