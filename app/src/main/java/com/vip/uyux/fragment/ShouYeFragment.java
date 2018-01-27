@@ -28,6 +28,7 @@ import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.adapter.BannerAdapter;
 import com.vip.uyux.base.MyDialog;
+import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.IndexHome;
@@ -370,8 +371,12 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.imageTip:
-                intent.setClass(mContext, XiaoXiZXActivity.class);
-                startActivity(intent);
+                if (isLogin){
+                    intent.setClass(mContext, XiaoXiZXActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.imageSearch:
                 intent.setClass(mContext, SouSuoActivity.class);

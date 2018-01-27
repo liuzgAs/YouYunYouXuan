@@ -5,15 +5,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
@@ -21,6 +24,7 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.GoodsIndex;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.ChanPinLBViewHolder;
@@ -35,6 +39,10 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     private int cate;
     private String title;
     private int pcate;
+    private ImageView imgeRight;
+    private boolean isDuoLie = false;
+    private DividerDecoration itemDecoration;
+    private SpaceDecoration itemDecoration1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +67,12 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+        imgeRight = (ImageView) findViewById(R.id.imgeRight);
     }
 
     @Override
     protected void initViews() {
-        ((TextView)findViewById(R.id.textViewTitle)).setText(title);
+        ((TextView) findViewById(R.id.textViewTitle)).setText(title);
         initRecycler();
     }
 
@@ -71,15 +80,26 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
      * 初始化recyclerview
      */
     private void initRecycler() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
-        recyclerView.addItemDecoration(itemDecoration);
+        itemDecoration1 = new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, ChanPinLBActivity.this));
+//        recyclerView.addItemDecoration(itemDecoration1);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+//        if (itemDecoration!=null){
+//            recyclerView.removeItemDecoration(itemDecoration);
+//        }
+        recyclerView.addItemDecoration(itemDecoration1);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsIndex.DataBean>(ChanPinLBActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_chanpin;
+                int layout ;
+                if (isDuoLie){
+                    layout = R.layout.item_lb_duolie;
+                }else {
+                    layout = R.layout.item_chanpin;
+                }
                 return new ChanPinLBViewHolder(parent, layout);
             }
         });
@@ -89,7 +109,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                 ApiClient.post(ChanPinLBActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
@@ -155,9 +175,10 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        imgeRight.setOnClickListener(this);
     }
 
-    int page =1;
+    int page = 1;
 
     /**
      * des： 网络请求参数
@@ -169,11 +190,11 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
-        params.put("cate",String.valueOf(cate));
-        params.put("pcate",String.valueOf(pcate));
+        params.put("p", String.valueOf(page));
+        params.put("cate", String.valueOf(cate));
+        params.put("pcate", String.valueOf(pcate));
         return new OkObject(params, url);
     }
 
@@ -185,6 +206,22 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.imgeRight:
+                isDuoLie = !isDuoLie;
+                if (isDuoLie) {
+                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    if (itemDecoration!=null){
+                        recyclerView.removeItemDecoration(itemDecoration);
+                    }
+                    recyclerView.addItemDecoration(itemDecoration1);
+                } else {
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    if (itemDecoration1!=null){
+                        recyclerView.removeItemDecoration(itemDecoration1);
+                    }
+                    recyclerView.addItemDecoration(itemDecoration);
+                }
+                break;
             case R.id.imageBack:
                 finish();
                 break;
@@ -195,7 +232,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
 
     @Override
     public void onRefresh() {
-        page =1;
+        page = 1;
         ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
@@ -207,7 +244,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                         List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
-                    } else if (goodsIndex.getStatus()== 3) {
+                    } else if (goodsIndex.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinLBActivity.this);
                     } else {
                         showError(goodsIndex.getInfo());
@@ -221,6 +258,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
             public void onError() {
                 showError("网络出错");
             }
+
             /**
              * 错误显示
              * @param msg

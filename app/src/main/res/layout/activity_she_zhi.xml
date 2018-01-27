@@ -143,6 +143,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/viewAbout"
                 android:layout_marginTop="1dp"
                 android:background="@drawable/layout_selector_white_system_gray"

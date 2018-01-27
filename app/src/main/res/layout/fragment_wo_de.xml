@@ -649,6 +649,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/viewGuanYuWM"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
                 android:layout_marginBottom="10dp"

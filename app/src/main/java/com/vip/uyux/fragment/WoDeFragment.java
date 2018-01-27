@@ -21,6 +21,7 @@ import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.JiFenSCActivity;
 import com.vip.uyux.activity.SheZhiActivity;
+import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.activity.WoDeJFActivity;
@@ -181,6 +182,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewUBiSC).setOnClickListener(this);
         mInflate.findViewById(R.id.imageSheZhi).setOnClickListener(this);
         mInflate.findViewById(R.id.imageXiaoXi).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewGuanYuWM).setOnClickListener(this);
     }
 
     /**
@@ -301,9 +303,19 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
-            case R.id.imageXiaoXi:
-                intent.setClass(mContext, XiaoXiZXActivity.class);
+            case R.id.viewGuanYuWM:
+                intent.setClass(mContext,WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE,"关于我们");
+                intent.putExtra(Constant.IntentKey.URL,Constant.Url.ABOUT);
                 startActivity(intent);
+                break;
+            case R.id.imageXiaoXi:
+                if (isLogin){
+                    intent.setClass(mContext, XiaoXiZXActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.imageSheZhi:
                 intent.setClass(mContext, SheZhiActivity.class);
