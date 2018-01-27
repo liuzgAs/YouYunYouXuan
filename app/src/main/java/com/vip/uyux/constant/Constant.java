@@ -205,6 +205,10 @@ public class Constant {
          */
         public static final String WITHDRAW_DISTRIBUTION = "/Withdraw/distribution";
         /**
+         * 预计佣金
+         */
+        public static final String WITHDRAW_ESTIMATE = "/Withdraw/Estimate";
+        /**
          * 我的客户
          */
         public static final String CUSTOMER = "/Customer";
@@ -272,6 +276,23 @@ public class Constant {
          * 优云商学院
          */
         public static final String FAQ_EUBUSINESS = "/Faq/EUBusiness";
+        /**
+         * 提现请求
+         */
+        public static final String WITHDRAW_ADDBEFORE = "/Withdraw/addBefore";
+        /**
+         * 提现提交
+         */
+        public static final String WITHDRAW_ADDDONE = "/Withdraw/addDone";
+        /**
+         * 提现记录
+         */
+        public static final String WITHDRAW_GETWITHDRAW = "/Withdraw/getWithdraw";
+        /**
+         * 余额明细
+         */
+        public static final String WITHDRAW_BALANCE = "/Withdraw/balance";
+
     }
 
     public static class IntentKey {
@@ -327,6 +348,7 @@ public class Constant {
         public static final String SHUA_XIN_CAR = "shuaXinCar";
         public static final String NUM_CHANGE = "num_change";
         public static final String SHUAXINDD = "shuaXinDD";
+        public static final String TIXIAN = "tiXian";
     }
 
 

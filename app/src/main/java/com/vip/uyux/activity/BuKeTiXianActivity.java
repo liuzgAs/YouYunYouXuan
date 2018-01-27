@@ -71,6 +71,9 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
             case 3:
                 textViewTitle.setText("分销佣金");
                 break;
+            case 4:
+                textViewTitle.setText("预计佣金");
+                break;
             default:
                 textViewTitle.setText("不可提现佣金");
                 break;
@@ -100,6 +103,9 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
             case 3:
                 btnLiJiTX.setText("我要提现");
+                break;
+            case 4:
+                btnLiJiTX.setVisibility(View.INVISIBLE);
                 break;
             default:
                 break;

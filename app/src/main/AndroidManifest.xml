@@ -175,6 +175,13 @@
         <activity
             android:name=".activity.YiJianFKActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.TiXianActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.TiXianJLActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activity.YuEActivity"></activity>
     </application>
 
 </manifest>

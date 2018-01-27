@@ -26,6 +26,7 @@ import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.activity.WoDeJFActivity;
 import com.vip.uyux.activity.WoDeSCActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
+import com.vip.uyux.activity.YuEActivity;
 import com.vip.uyux.activity.ZuJiActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ToLoginActivity;
@@ -72,6 +73,9 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             String action = intent.getAction();
             switch (action) {
                 case Constant.BroadcastCode.USERINFO:
+                    initData();
+                    break;
+                case Constant.BroadcastCode.TIXIAN:
                     initData();
                     break;
                 default:
@@ -380,12 +384,12 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 }
                 break;
             case R.id.viewYuE:
-//                if (isLogin) {
-//                    intent.setClass(mContext, BuKeTiXianActivity.class);
-//                    startActivity(intent);
-//                } else {
-//                    ToLoginActivity.toLoginActivity(mContext);
-//                }
+                if (isLogin) {
+                    intent.setClass(mContext, YuEActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             default:
                 break;
@@ -397,6 +401,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.USERINFO);
+        filter.addAction(Constant.BroadcastCode.TIXIAN);
         getActivity().registerReceiver(reciver, filter);
     }
 

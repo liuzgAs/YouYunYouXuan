@@ -85,6 +85,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.textLiJiSJ).setOnClickListener(this);
         findViewById(R.id.viewFenXiaoYJ).setOnClickListener(this);
         findViewById(R.id.viewYouYunSXY).setOnClickListener(this);
+        findViewById(R.id.viewYuJiYJ).setOnClickListener(this);
     }
 
     /**
@@ -165,6 +166,11 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
             case R.id.viewYouYunSXY:
                 intent.setClass(this, ChangJianWenTiActivity.class);
                 intent.putExtra(Constant.IntentKey.TYPE, 2);
+                startActivity(intent);
+                break;
+            case R.id.viewYuJiYJ:
+                intent.setClass(this, BuKeTiXianActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 4);
                 startActivity(intent);
                 break;
             case R.id.viewFenXiaoYJ:

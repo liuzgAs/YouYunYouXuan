@@ -1,10 +1,8 @@
-package com.vip.uyux.fragment;
+package com.vip.uyux.activity;
 
-
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -17,14 +15,12 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
-import com.vip.uyux.activity.BuKeTiXianActivity;
 import com.vip.uyux.base.MyDialog;
-import com.vip.uyux.base.ZjbBaseFragment;
+import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.WithdrawNotwithdraw;
 import com.vip.uyux.util.ApiClient;
-import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.XiaoFeiMXViewHolder;
@@ -32,47 +28,17 @@ import com.vip.uyux.viewholder.XiaoFeiMXViewHolder;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private int page = 1;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<WithdrawNotwithdraw.DataBean> adapter;
-    private View mInflate;
-    private int type;
-    private int typeP;
-
-    public YongJinFragment() {
-        // Required empty public constructor
-    }
-
-    @SuppressLint("ValidFragment")
-    public YongJinFragment(int type, int typeP) {
-        this.type = type;
-        this.typeP = typeP;
-    }
+    private TextView textShouYi;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        if (mInflate == null) {
-            mInflate = inflater.inflate(R.layout.fragment_yong_jin, container, false);
-            init();
-        }
-        //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-        ViewGroup parent = (ViewGroup) mInflate.getParent();
-        if (parent != null) {
-            parent.removeView(mInflate);
-        }
-        return mInflate;
-    }
-
-    @Override
-    protected void initIntent() {
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_yu_e);
+        init();
     }
 
     @Override
@@ -81,34 +47,42 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     }
 
     @Override
+    protected void initIntent() {
+
+    }
+
+    @Override
     protected void findID() {
-        recyclerView = (EasyRecyclerView) mInflate.findViewById(R.id.recyclerView);
+        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+        textShouYi = (TextView) findViewById(R.id.textShouYi);
     }
 
     @Override
     protected void initViews() {
-        initRecycle();
+        ((TextView) findViewById(R.id.textViewTitle)).setText("我的余额");
+        initRecycler();
     }
 
-    private void initRecycle() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        recyclerView.setLayoutManager(layoutManager);
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) DpUtils.convertDpToPixel(1f, mContext), 0, 0);
+    /**
+     * 初始化recyclerview
+     */
+    private void initRecycler() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<WithdrawNotwithdraw.DataBean>(mContext) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<WithdrawNotwithdraw.DataBean>(YuEActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_chong_zhi_mx;
-                return new XiaoFeiMXViewHolder(parent, layout, type);
+                return new XiaoFeiMXViewHolder(parent, layout, 1);
             }
-
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+                ApiClient.post(YuEActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
                         LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
@@ -120,7 +94,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                                 List<WithdrawNotwithdraw.DataBean> dataBeanList = dataBean.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
-                                MyDialog.showReLoginDialog(mContext);
+                                MyDialog.showReLoginDialog(YuEActivity.this);
                             } else {
                                 adapter.pauseMore();
                             }
@@ -162,18 +136,18 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 adapter.resumeMore();
             }
         });
-        recyclerView.setRefreshListener(this);
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
             }
         });
+        recyclerView.setRefreshListener(this);
     }
 
     @Override
     protected void setListeners() {
-
+        findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.btnLiJiTX).setOnClickListener(this);
     }
 
     @Override
@@ -181,45 +155,44 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         onRefresh();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnLiJiTX:
+                Intent intent = new Intent();
+                intent.setClass(this,TiXianActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageBack:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
+
+    int page = 1;
+
     /**
      * des： 网络请求参数
      * author： ZhangJieBo
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url;
-        switch (typeP) {
-            case 1:
-                url = Constant.HOST + Constant.Url.WITHDRAW_NOTWITHDRAW;
-                break;
-            case 2:
-                url = Constant.HOST + Constant.Url.WITHDRAW_CWITHDRAW;
-                break;
-            case 3:
-                url = Constant.HOST + Constant.Url.WITHDRAW_DISTRIBUTION;
-                break;
-            case 4:
-                url = Constant.HOST + Constant.Url.WITHDRAW_ESTIMATE;
-                break;
-            default:
-                url = Constant.HOST + Constant.Url.WITHDRAW_NOTWITHDRAW;
-                break;
-        }
+        String url = Constant.HOST + Constant.Url.WITHDRAW_BALANCE;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
         params.put("p", String.valueOf(page));
-        params.put("type_id", String.valueOf(type));
         return new OkObject(params, url);
     }
 
     @Override
     public void onRefresh() {
-
         page = 1;
-        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("", s);
@@ -227,12 +200,12 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     page++;
                     WithdrawNotwithdraw withdrawNotwithdraw = GsonUtils.parseJSON(s, WithdrawNotwithdraw.class);
                     if (withdrawNotwithdraw.getStatus() == 1) {
-                        ((BuKeTiXianActivity) mContext).setMoney(withdrawNotwithdraw.getN_amount());
+                        textShouYi.setText(withdrawNotwithdraw.getN_amount());
                         List<WithdrawNotwithdraw.DataBean> dataBeanList = withdrawNotwithdraw.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (withdrawNotwithdraw.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(mContext);
+                        MyDialog.showReLoginDialog(YuEActivity.this);
                     } else {
                         showError(withdrawNotwithdraw.getInfo());
                     }
@@ -252,7 +225,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(YuEActivity.this).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
