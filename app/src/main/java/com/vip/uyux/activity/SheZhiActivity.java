@@ -67,11 +67,6 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(16,SheZhiActivity.this)))
                 .load(R.mipmap.logo)
                 .into(imageLogo);
-        if (isLogin){
-            btnExit.setVisibility(View.VISIBLE);
-        }else {
-            btnExit.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -88,7 +83,11 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
 
     @Override
     protected void initData() {
-
+        if (isLogin){
+            btnExit.setVisibility(View.VISIBLE);
+        }else {
+            btnExit.setVisibility(View.GONE);
+        }
     }
 
     @Override

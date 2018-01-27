@@ -25,6 +25,7 @@ import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.activity.WoDeJFActivity;
 import com.vip.uyux.activity.WoDeSCActivity;
+import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
 import com.vip.uyux.activity.YuEActivity;
 import com.vip.uyux.activity.ZuJiActivity;
@@ -179,6 +180,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewDaiPingJia).setOnClickListener(this);
         mInflate.findViewById(R.id.viewUBiSC).setOnClickListener(this);
         mInflate.findViewById(R.id.imageSheZhi).setOnClickListener(this);
+        mInflate.findViewById(R.id.imageXiaoXi).setOnClickListener(this);
     }
 
     /**
@@ -299,6 +301,10 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.imageXiaoXi:
+                intent.setClass(mContext, XiaoXiZXActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageSheZhi:
                 intent.setClass(mContext, SheZhiActivity.class);
                 startActivity(intent);
