@@ -248,6 +248,10 @@ public class Constant {
          * 常见问题
          */
         public static final String FAQ_INDEX = "/Faq/index";
+        /**
+         * 取消订单
+         */
+        public static final String USER_CANCELORDER = "/User/cancelOrder";
     }
 
     public static class IntentKey {
