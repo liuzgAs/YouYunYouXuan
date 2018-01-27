@@ -93,6 +93,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             R.id.image0303,
             R.id.image0304,
     };
+    private String qc_url;
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -183,6 +184,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.imageSheZhi).setOnClickListener(this);
         mInflate.findViewById(R.id.imageXiaoXi).setOnClickListener(this);
         mInflate.findViewById(R.id.viewGuanYuWM).setOnClickListener(this);
+        mInflate.findViewById(R.id.imageShengJi).setOnClickListener(this);
     }
 
     /**
@@ -235,6 +237,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                             textName.setText(userMy.getNickname());
                             textId.setText(userMy.getId());
                             textGrowthDes.setText(userMy.getGrowthDes());
+                            qc_url = userMy.getQc_url();
                             for (int i = 0; i < imageDD.length; i++) {
                                 badgeDD[i].setBadgeNumber(userMy.getOrderNum().get(i)).bindTarget(imageDD[i]);
                             }
@@ -303,17 +306,23 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.imageShengJi:
+//                intent.setClass(mContext, WebActivity.class);
+//                intent.putExtra(Constant.IntentKey.TITLE, "升级");
+//                intent.putExtra(Constant.IntentKey.URL, qc_url);
+//                startActivity(intent);
+                break;
             case R.id.viewGuanYuWM:
-                intent.setClass(mContext,WebActivity.class);
-                intent.putExtra(Constant.IntentKey.TITLE,"关于我们");
-                intent.putExtra(Constant.IntentKey.URL,Constant.Url.ABOUT);
+                intent.setClass(mContext, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, "关于我们");
+                intent.putExtra(Constant.IntentKey.URL, Constant.Url.ABOUT);
                 startActivity(intent);
                 break;
             case R.id.imageXiaoXi:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(mContext, XiaoXiZXActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;

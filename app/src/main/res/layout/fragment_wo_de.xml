@@ -442,6 +442,7 @@
                 android:src="@mipmap/fenxiangzhongxin" />
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/viewWoDeCP"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
@@ -461,7 +462,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/image0500"
-                    android:text="我的评测"
+                    android:text="我的测评"
                     android:textSize="@dimen/normal_textsize" />
 
                 <ImageView

@@ -176,10 +176,14 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.viewVip:
-                MyDialog.share01(this, api, teamShare.getShareUrl(), teamShare.getShareImg(), teamShare.getShareTitle(), teamShare.getShareDes());
+                if (teamShare != null) {
+                    MyDialog.share01(this, api, teamShare.getShareUrl(), teamShare.getShareImg(), teamShare.getShareTitle(), teamShare.getShareDes());
+                }
                 break;
             case R.id.viewTuanDui:
-                MyDialog.share01(this, api, vipShare.getShareUrl(), vipShare.getShareImg(), vipShare.getShareTitle(), vipShare.getShareDes());
+                if (vipShare != null) {
+                    MyDialog.share01(this, api, vipShare.getShareUrl(), vipShare.getShareImg(), vipShare.getShareTitle(), vipShare.getShareDes());
+                }
                 break;
             case R.id.textLiJiSJ:
                 intent.setClass(FenXiangZXActivity.this, WebActivity.class);

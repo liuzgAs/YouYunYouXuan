@@ -23,6 +23,7 @@ import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
+import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -286,9 +287,10 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             @Override
             public void onItemClick(int position) {
                 if (adapter.getViewType(position) == 1) {
-//                    Intent intent = new Intent();
-//                    intent.setClass(mContext, ChanPinXQActivity.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ChanPinXQActivity.class);
+                    intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
+                    startActivity(intent);
                 } else {
                     Intent intent = new Intent();
                     intent.setClass(mContext, CePingXQActivity.class);

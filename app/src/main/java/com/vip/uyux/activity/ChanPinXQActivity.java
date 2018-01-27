@@ -97,6 +97,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private IWXAPI api;
     private TextView textStock_numD;
     private int stock_num;
+    private String tm_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +194,18 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 textTitle = view.findViewById(R.id.textTitle);
                 textVipDes = view.findViewById(R.id.textVipDes);
                 textOldPrice = view.findViewById(R.id.textOldPrice);
+                textOldPrice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!TextUtils.isEmpty(tm_url)){
+                            Intent intent = new Intent();
+                            intent.setClass(ChanPinXQActivity.this, WebActivity.class);
+                            intent.putExtra(Constant.IntentKey.TITLE, "天猫价");
+                            intent.putExtra(Constant.IntentKey.URL, tm_url);
+                            startActivity(intent);
+                        }
+                    }
+                });
                 return view;
             }
 
@@ -248,7 +261,12 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     textShareMoney.setText(goodsInfoData.getShareMoney());
                     textTitle.setText(goodsInfoData.getTitle());
                     textVipDes.setText(goodsInfoData.getVipDes());
-                    textOldPrice.setText("天猫价¥" + goodsInfoData.getOldPrice());
+                    if (TextUtils.isEmpty(goodsInfoData.getOldPrice())||Double.parseDouble(goodsInfoData.getOldPrice())==0){
+                        textOldPrice.setVisibility(View.GONE);
+                    }else {
+                        textOldPrice.setVisibility(View.VISIBLE);
+                        textOldPrice.setText("天猫价¥" + goodsInfoData.getOldPrice());
+                    }
                 }
             }
         });
@@ -522,6 +540,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         imgs2 = goodsInfoData.getImgs2();
                         skuCate = goodsInfo.getSkuCate();
                         skuLv = goodsInfo.getSkuLv();
+                        stock_num = goodsInfo.getData().getStockNum();
+                        tm_url = goodsInfo.getData().getTm_url();
                         listList.clear();
                         List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
                         catelist.addAll(listList);
@@ -774,6 +794,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                             intent.setClass(ChanPinXQActivity.this, QueRenDDActivity.class);
                             startActivity(intent);
                         } else {
+                            Toast.makeText(ChanPinXQActivity.this, "加入购物车成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
                             sendBroadcast(intent);

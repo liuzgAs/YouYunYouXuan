@@ -26,6 +26,7 @@ public class UserMy {
 
     private String id;
     private String nickname;
+    private String qc_url;
     private String headimg;
     private int lv;
     private String money;
@@ -37,6 +38,14 @@ public class UserMy {
     private int status;
     private String info;
     private List<Integer> orderNum ;
+
+    public String getQc_url() {
+        return qc_url;
+    }
+
+    public void setQc_url(String qc_url) {
+        this.qc_url = qc_url;
+    }
 
     public List<Integer> getOrderNum() {
         return orderNum;

@@ -116,9 +116,18 @@ public class GoodsInfo {
         private String shareMoney;
         private String scoreDes;
         private String thumb;
+        private String tm_url;
         private ShareBean share;
         private List<ImgsBean> imgs;
         private List<ImgsBean> imgs2;
+
+        public String getTm_url() {
+            return tm_url;
+        }
+
+        public void setTm_url(String tm_url) {
+            this.tm_url = tm_url;
+        }
 
         public ShareBean getShare() {
             return share;

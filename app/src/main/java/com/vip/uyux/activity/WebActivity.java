@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -13,8 +14,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.WebPay;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 
 
@@ -86,6 +91,30 @@ public class WebActivity extends ZjbBaseActivity implements View.OnClickListener
                 }
             }
         });
+        mWebView.addJavascriptInterface(new Object() {
+            @JavascriptInterface
+            public void closeActivity(final String value) {
+                LogUtil.LogShitou("WebActivity--closeActivity", ""+value);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        WebPay webPay = GsonUtils.parseJSON(value, WebPay.class);
+                        if (webPay.getStatus()==1){
+                            Intent intent = new Intent();
+                            intent.setAction(Constant.BroadcastCode.USERINFO);
+                            sendBroadcast(intent);
+                            intent.putExtra(Constant.IntentKey.ID, webPay.getOid());
+                            intent.putExtra(Constant.IntentKey.VALUE, webPay.getOrder_amount());
+                            intent.setClass(WebActivity.this, LiJiZFActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            MyDialog.showTipDialog(WebActivity.this,webPay.getInfo());
+                        }
+                    }
+                });
+            }
+        }, "javaMethod");
     }
 
     @Override

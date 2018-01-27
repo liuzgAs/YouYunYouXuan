@@ -96,6 +96,7 @@
         android:textSize="@dimen/litterText" />
 
     <RelativeLayout
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
@@ -152,7 +153,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="@dimen/leftAndRight"
-        android:layout_marginTop="5dp"
         android:background="@drawable/shape_tianmao_5dp"
         android:paddingBottom="2dp"
         android:paddingLeft="5dp"

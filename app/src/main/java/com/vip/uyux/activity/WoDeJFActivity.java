@@ -191,6 +191,7 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
+        params.put("p",String.valueOf(page));
         return new OkObject(params, url);
     }
 
