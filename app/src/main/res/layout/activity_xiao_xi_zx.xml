@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context="com.vip.uyux.activity.XiaoXiZXActivity">
+
+    <include layout="@layout/view_bar_white" />
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/tip1"
+            android:id="@+id/image0000"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+        <TextView
+            android:text="系统通知"
+            android:layout_toRightOf="@+id/image0000"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@+id/image0000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="最新系统消息"
+            android:textSize="@dimen/litterText"
+            android:layout_alignBottom="@+id/image0000"
+            android:layout_toRightOf="@+id/image0000"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/tip2"
+            android:id="@+id/image0100"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+        <TextView
+            android:text="优选活动"
+            android:layout_toRightOf="@+id/image0100"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@+id/image0100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="最新优选活动消息"
+            android:textSize="@dimen/litterText"
+            android:layout_alignBottom="@+id/image0100"
+            android:layout_toRightOf="@+id/image0100"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/viewWuLiuZhuShou"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/tip3"
+            android:id="@+id/image0200"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+        <TextView
+            android:text="物流助手"
+            android:layout_toRightOf="@+id/image0200"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@+id/image0200"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="最新物流消息"
+            android:textSize="@dimen/litterText"
+            android:layout_alignBottom="@+id/image0200"
+            android:layout_toRightOf="@+id/image0200"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/tip1"
+            android:id="@+id/image0300"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+        <TextView
+            android:text="客服消息"
+            android:layout_toRightOf="@+id/image0300"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@+id/image0300"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="最新客服消息"
+            android:textSize="@dimen/litterText"
+            android:layout_alignBottom="@+id/image0300"
+            android:layout_toRightOf="@+id/image0300"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/tip5"
+            android:id="@+id/image0400"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+        <TextView
+            android:text="佣金消息"
+            android:layout_toRightOf="@+id/image0400"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@+id/image0400"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="最新佣金收入消息"
+            android:textSize="@dimen/litterText"
+            android:layout_alignBottom="@+id/image0400"
+            android:layout_toRightOf="@+id/image0400"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

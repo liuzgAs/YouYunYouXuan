@@ -28,6 +28,7 @@ public class YinDaoActivity extends ZjbBaseNotLeftActivity {
             R.mipmap.welcome2,
             R.mipmap.welcome3,
             R.mipmap.welcome4,
+            R.mipmap.welcome5,
     };
 
     @Override
@@ -36,7 +37,7 @@ public class YinDaoActivity extends ZjbBaseNotLeftActivity {
         setContentView(R.layout.activity_yin_dao);
         mMyPager = (ViewPager) findViewById(R.id.myPager);
         mPageIndicatorView = (PageIndicatorView) findViewById(R.id.pageIndicatorView);
-        int blue = ContextCompat.getColor(this, R.color.white);
+        int blue = ContextCompat.getColor(this, R.color.basic_color);
         mPageIndicatorView.setSelectedColor(blue);
         mPageIndicatorView.setUnselectedColor(ContextCompat.getColor(this, R.color.gray_white));
         mPageIndicatorView.setAnimationType(AnimationType.WORM);

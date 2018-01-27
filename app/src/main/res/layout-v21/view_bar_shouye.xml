@@ -36,6 +36,7 @@
             android:src="@mipmap/search_index" />
 
         <ImageView
+            android:id="@+id/imageTip"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

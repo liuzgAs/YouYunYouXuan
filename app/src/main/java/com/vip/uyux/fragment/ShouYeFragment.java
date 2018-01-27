@@ -25,6 +25,7 @@ import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.activity.SouSuoActivity;
+import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.adapter.BannerAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -208,7 +209,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     public void onItemClick(int position) {
                         Intent intent = new Intent();
                         intent.setClass(mContext, ChanPinXQActivity.class);
-                        intent.putExtra(Constant.IntentKey.ID,adapterZiYin.getItem(position).getId());
+                        intent.putExtra(Constant.IntentKey.ID, adapterZiYin.getItem(position).getId());
                         getContext().startActivity(intent);
                     }
                 });
@@ -230,10 +231,10 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 } else {
                     textZhiShiQi.setText("0/0");
                 }
-                if (recomBeanList!=null){
+                if (recomBeanList != null) {
                     adapterZiYin.clear();
                     adapterZiYin.addAll(recomBeanList);
-                }else {
+                } else {
 
                 }
                 if (banner2BeanList != null) {
@@ -283,6 +284,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     @Override
     protected void setListeners() {
         mInflate.findViewById(R.id.imageSearch).setOnClickListener(this);
+        mInflate.findViewById(R.id.imageTip).setOnClickListener(this);
     }
 
     @Override
@@ -365,9 +367,13 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        Intent intent = new Intent();
+        switch (view.getId()) {
+            case R.id.imageTip:
+                intent.setClass(mContext, XiaoXiZXActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageSearch:
-                Intent intent = new Intent();
                 intent.setClass(mContext, SouSuoActivity.class);
                 startActivity(intent);
                 break;
