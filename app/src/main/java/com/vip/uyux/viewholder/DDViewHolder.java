@@ -15,6 +15,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.LiJiZFActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
@@ -57,7 +58,11 @@ public class DDViewHolder extends BaseViewHolder<Order.DataBean> {
         btnPingJia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent();
+                intent.putExtra(Constant.IntentKey.ID, data.getOid());
+                intent.putExtra(Constant.IntentKey.VALUE, data.getSum());
+                intent.setClass(getContext(), LiJiZFActivity.class);
+                getContext().startActivity(intent);
             }
         });
         textCancle.setOnClickListener(new View.OnClickListener() {
