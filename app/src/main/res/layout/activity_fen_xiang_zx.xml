@@ -224,6 +224,7 @@
                 android:background="@color/background" />
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -258,6 +259,7 @@
         android:layout_marginTop="5dp">
 
         <RelativeLayout
+            android:id="@+id/viewFenXiaoYJ"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -478,6 +480,7 @@
             android:layout_height="match_parent" />
 
         <RelativeLayout
+            android:id="@+id/viewYouYunSXY"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

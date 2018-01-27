@@ -83,6 +83,8 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.viewWoDeTD).setOnClickListener(this);
         findViewById(R.id.viewKeTiXian).setOnClickListener(this);
         findViewById(R.id.textLiJiSJ).setOnClickListener(this);
+        findViewById(R.id.viewFenXiaoYJ).setOnClickListener(this);
+        findViewById(R.id.viewYouYunSXY).setOnClickListener(this);
     }
 
     /**
@@ -158,6 +160,16 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 intent.setClass(FenXiangZXActivity.this, WebActivity.class);
                 intent.putExtra(Constant.IntentKey.TITLE, "立即升级");
                 intent.putExtra(Constant.IntentKey.URL, up_url);
+                startActivity(intent);
+                break;
+            case R.id.viewYouYunSXY:
+                intent.setClass(this, ChangJianWenTiActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 2);
+                startActivity(intent);
+                break;
+            case R.id.viewFenXiaoYJ:
+                intent.setClass(this, BuKeTiXianActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 3);
                 startActivity(intent);
                 break;
             case R.id.viewKeTiXian:

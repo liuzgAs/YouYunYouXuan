@@ -187,13 +187,16 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url ;
+        String url;
         switch (typeP) {
             case 1:
                 url = Constant.HOST + Constant.Url.WITHDRAW_NOTWITHDRAW;
                 break;
             case 2:
                 url = Constant.HOST + Constant.Url.WITHDRAW_CWITHDRAW;
+                break;
+            case 3:
+                url = Constant.HOST + Constant.Url.WITHDRAW_DISTRIBUTION;
                 break;
             default:
                 url = Constant.HOST + Constant.Url.WITHDRAW_NOTWITHDRAW;

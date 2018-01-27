@@ -125,6 +125,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
                 break;
             case R.id.viewChangJianWenTi:
                 intent.setClass(this, ChangJianWenTiActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE,1);
                 startActivity(intent);
                 break;
             case R.id.viewYiJianFanKui:

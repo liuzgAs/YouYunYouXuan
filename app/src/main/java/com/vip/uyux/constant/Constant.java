@@ -201,6 +201,10 @@ public class Constant {
          */
         public static final String WITHDRAW_CWITHDRAW = "/withdraw/Cwithdraw";
         /**
+         * 分销佣金
+         */
+        public static final String WITHDRAW_DISTRIBUTION = "/Withdraw/distribution";
+        /**
          * 我的客户
          */
         public static final String CUSTOMER = "/Customer";
@@ -264,6 +268,10 @@ public class Constant {
          * 分享中心
          */
         public static final String SHARE_INDEX = "/Share/index";
+        /**
+         * 优云商学院
+         */
+        public static final String FAQ_EUBUSINESS = "/Faq/EUBusiness";
     }
 
     public static class IntentKey {
