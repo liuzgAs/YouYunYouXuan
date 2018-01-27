@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textCreate_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -48,6 +49,7 @@
                 android:src="@mipmap/shangpin" />
 
             <TextView
+                android:id="@+id/textGoods_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageImg"
@@ -61,6 +63,7 @@
                 android:textSize="@dimen/normal_textsize" />
 
             <TextView
+                android:id="@+id/textExpress_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageImg"

@@ -304,6 +304,10 @@ public class Constant {
          * 分销订单
          */
         public static final String BONUS_DISTRIBUTIONORDER = "/bonus/distributionOrder";
+        /**
+         * 物流助手
+         */
+        public static final String MASSAGE_WULIU = "/massage/wuliu";
 
     }
 
