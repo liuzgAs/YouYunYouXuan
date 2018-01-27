@@ -228,6 +228,10 @@ public class Constant {
          * 订单列表
          */
         public static final String ORDER = "/User/myOrder";
+        /***
+         * 确认收货
+         */
+        public static final String USER_CONFIRMSHIP = "/User/confirmShip";
     }
 
     public static class IntentKey {
@@ -282,6 +286,7 @@ public class Constant {
         public static final String QUAN_XUAN = "quanXuan";
         public static final String SHUA_XIN_CAR = "shuaXinCar";
         public static final String NUM_CHANGE = "num_change";
+        public static final String SHUAXINDD = "shuaXinDD";
     }
 
 

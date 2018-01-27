@@ -2,6 +2,10 @@ package com.vip.uyux.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,6 +43,19 @@ public class DDFragment extends ZjbBaseFragment implements SwipeRefreshLayout.On
     private View mInflate;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<Order.DataBean> adapter;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUAXINDD:
+                    onRefresh();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public DDFragment() {
         // Required empty public constructor
@@ -108,7 +125,7 @@ public class DDFragment extends ZjbBaseFragment implements SwipeRefreshLayout.On
                 ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             Order order = GsonUtils.parseJSON(s, Order.class);
@@ -189,10 +206,10 @@ public class DDFragment extends ZjbBaseFragment implements SwipeRefreshLayout.On
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
-        params.put("status",String.valueOf(state));
+        params.put("p", String.valueOf(page));
+        params.put("state", String.valueOf(state));
         return new OkObject(params, url);
     }
 
@@ -247,5 +264,19 @@ public class DDFragment extends ZjbBaseFragment implements SwipeRefreshLayout.On
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUAXINDD);
+        mContext.registerReceiver(reciver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mContext.unregisterReceiver(reciver);
     }
 }

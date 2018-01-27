@@ -141,7 +141,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
         ViewGroup.LayoutParams layoutParams = mRelaTitleStatue.getLayoutParams();
         layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
         mRelaTitleStatue.setLayoutParams(layoutParams);
-        ((TextView) mInflate.findViewById(R.id.textViewTitle)).setText("购物车");
+        ((TextView) mInflate.findViewById(R.id.textViewTitle)).setText("购物袋");
         initRecycle();
     }
 

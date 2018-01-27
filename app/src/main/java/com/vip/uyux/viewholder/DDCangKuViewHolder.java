@@ -13,8 +13,18 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.WoDeDDActivity;
+import com.vip.uyux.base.MyDialog;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.customview.TwoBtnDialog;
+import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.Order;
+import com.vip.uyux.model.SimpleInfo;
+import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,7 +48,20 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
             public void onClick(View view) {
                 switch (data.getCode()) {
                     case "confirmShip":
-                        Toast.makeText(getContext(), "确认收货", Toast.LENGTH_SHORT).show();
+                        final TwoBtnDialog twoBtnDialog = new TwoBtnDialog(getContext(), "确定要确认收货吗？", "是", "否");
+                        twoBtnDialog.show();
+                        twoBtnDialog.setClicklistener(new TwoBtnDialog.ClickListenerInterface() {
+                            @Override
+                            public void doConfirm() {
+                                twoBtnDialog.dismiss();
+                                queRenDD();
+                            }
+
+                            @Override
+                            public void doCancel() {
+                                twoBtnDialog.dismiss();
+                            }
+                        });
                         break;
                     case "goComment":
                         Toast.makeText(getContext(), "评价", Toast.LENGTH_SHORT).show();
@@ -49,6 +72,54 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
             }
         });
         initRecycler();
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.USER_CONFIRMSHIP;
+        HashMap<String, String> params = new HashMap<>();
+        if (((WoDeDDActivity)getContext()).isLogin) {
+            params.put("uid", ((WoDeDDActivity)getContext()).userInfo.getUid());
+            params.put("tokenTime",((WoDeDDActivity)getContext()).tokenTime);
+        }
+        params.put("id",String.valueOf(data.getId()));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 确认订单
+     */
+    private void queRenDD() {
+        ((WoDeDDActivity)getContext()).showLoadingDialog();
+        ApiClient.post(getContext(), getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                ((WoDeDDActivity)getContext()).cancelLoadingDialog();
+                LogUtil.LogShitou("DDCangKuViewHolder--onSuccess",s+ "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus()==1){
+
+                    }else if (simpleInfo.getStatus()==3){
+                        MyDialog.showReLoginDialog(getContext());
+                    }else {
+                        Toast.makeText(getContext(), simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getContext(),"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                ((WoDeDDActivity)getContext()).cancelLoadingDialog();
+                Toast.makeText(getContext(), "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
