@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
@@ -36,11 +38,15 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     private TextView textKeHu;
     private String up_url;
     private Double yuji;
+    private IWXAPI api;
+    private ShareIndex.TeamShareBean teamShare;
+    private ShareIndex.VipShareBean vipShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fen_xiang_zx);
+        api = WXAPIFactory.createWXAPI(this, Constant.WXAPPID, true);
         init();
     }
 
@@ -88,6 +94,8 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.viewYouYunSXY).setOnClickListener(this);
         findViewById(R.id.viewYuJiYJ).setOnClickListener(this);
         findViewById(R.id.viewFenXiaoDD).setOnClickListener(this);
+        findViewById(R.id.viewTuanDui).setOnClickListener(this);
+        findViewById(R.id.viewVip).setOnClickListener(this);
     }
 
     /**
@@ -141,6 +149,8 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                         textFengXiaoDD.setText(String.valueOf((int) d1));
                         textTuanDui.setText(String.valueOf((int) d2));
                         textKeHu.setText(String.valueOf((int) d3));
+                        teamShare = shareIndex.getTeamShare();
+                        vipShare = shareIndex.getVipShare();
                     } else if (shareIndex.getStatus() == 3) {
                         MyDialog.showReLoginDialog(FenXiangZXActivity.this);
                     } else {
@@ -163,6 +173,12 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewVip:
+                MyDialog.share01(this, api, teamShare.getShareUrl(), teamShare.getShareImg(), teamShare.getShareTitle(), teamShare.getShareDes());
+                break;
+            case R.id.viewTuanDui:
+                MyDialog.share01(this, api, vipShare.getShareUrl(), vipShare.getShareImg(), vipShare.getShareTitle(), vipShare.getShareDes());
+                break;
             case R.id.textLiJiSJ:
                 intent.setClass(FenXiangZXActivity.this, WebActivity.class);
                 intent.putExtra(Constant.IntentKey.TITLE, "立即升级");
