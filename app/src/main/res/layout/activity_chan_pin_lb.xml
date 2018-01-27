@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="com.vip.uyux.activity.ChanPinLBActivity">
 
-    <include layout="@layout/view_bar_white" />
+    <include layout="@layout/view_bar_lb" />
 
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
