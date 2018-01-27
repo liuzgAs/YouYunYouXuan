@@ -42,14 +42,16 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private RecyclerArrayAdapter<WithdrawNotwithdraw.DataBean> adapter;
     private View mInflate;
     private int type;
+    private int typeP;
 
     public YongJinFragment() {
         // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
-    public YongJinFragment(int type) {
+    public YongJinFragment(int type, int typeP) {
         this.type = type;
+        this.typeP = typeP;
     }
 
     @Override
@@ -99,7 +101,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_chong_zhi_mx;
-                return new XiaoFeiMXViewHolder(parent, layout,type);
+                return new XiaoFeiMXViewHolder(parent, layout, type);
             }
 
         });
@@ -109,7 +111,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             WithdrawNotwithdraw dataBean = GsonUtils.parseJSON(s, WithdrawNotwithdraw.class);
@@ -185,21 +187,32 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.WITHDRAW_NOTWITHDRAW;
+        String url ;
+        switch (typeP) {
+            case 1:
+                url = Constant.HOST + Constant.Url.WITHDRAW_NOTWITHDRAW;
+                break;
+            case 2:
+                url = Constant.HOST + Constant.Url.WITHDRAW_CWITHDRAW;
+                break;
+            default:
+                url = Constant.HOST + Constant.Url.WITHDRAW_NOTWITHDRAW;
+                break;
+        }
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
-        params.put("type_id",String.valueOf(type));
+        params.put("p", String.valueOf(page));
+        params.put("type_id", String.valueOf(type));
         return new OkObject(params, url);
     }
 
     @Override
     public void onRefresh() {
 
-        page =1;
+        page = 1;
         ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
@@ -208,11 +221,11 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     page++;
                     WithdrawNotwithdraw withdrawNotwithdraw = GsonUtils.parseJSON(s, WithdrawNotwithdraw.class);
                     if (withdrawNotwithdraw.getStatus() == 1) {
-                        ((BuKeTiXianActivity)mContext).setMoney(withdrawNotwithdraw.getN_amount());
+                        ((BuKeTiXianActivity) mContext).setMoney(withdrawNotwithdraw.getN_amount());
                         List<WithdrawNotwithdraw.DataBean> dataBeanList = withdrawNotwithdraw.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
-                    } else if (withdrawNotwithdraw.getStatus()== 3) {
+                    } else if (withdrawNotwithdraw.getStatus() == 3) {
                         MyDialog.showReLoginDialog(mContext);
                     } else {
                         showError(withdrawNotwithdraw.getInfo());
@@ -226,6 +239,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             public void onError() {
                 showError("网络出错");
             }
+
             /**
              * 错误显示
              * @param msg

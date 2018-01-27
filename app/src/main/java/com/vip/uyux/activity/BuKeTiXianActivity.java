@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,10 +12,12 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.vip.uyux.R;
 import com.vip.uyux.base.ZjbBaseActivity;
+import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.YongJinFragment;
 
 import java.util.ArrayList;
@@ -25,6 +28,9 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     private ViewPager viewPager;
     List<String> list = new ArrayList<>();
     private TextView textShouYi;
+    private int type;
+    private Button btnLiJiTX;
+    private TextView textViewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +46,8 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     protected void initIntent() {
-
+        Intent intent = getIntent();
+        type = intent.getIntExtra(Constant.IntentKey.TYPE, 0);
     }
 
     @Override
@@ -48,11 +55,24 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         tablayout = (TabLayout) findViewById(R.id.tablayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         textShouYi = (TextView) findViewById(R.id.textShouYi);
+        btnLiJiTX = (Button) findViewById(R.id.btnLiJiTX);
+        textViewTitle = ((TextView) findViewById(R.id.textViewTitle));
     }
 
     @Override
     protected void initViews() {
-        ((TextView) findViewById(R.id.textViewTitle)).setText("不可提现佣金");
+        switch (type) {
+            case 1:
+                textViewTitle.setText("不可提现佣金");
+                break;
+            case 2:
+                textViewTitle.setText("可提现佣金");
+                break;
+            default:
+                textViewTitle.setText("不可提现佣金");
+                break;
+        }
+
         list.add("团队推广");
         list.add("消费返佣");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
@@ -68,6 +88,16 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 tablayout.addTab(tablayout.newTab().setCustomView(view), false);
             }
         }
+        switch (type) {
+            case 1:
+                btnLiJiTX.setText("立即升级马上提现");
+                break;
+            case 2:
+                btnLiJiTX.setText("立即提现");
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -82,8 +112,8 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         textShouYi.setText(span);
     }
 
-    public void setMoney(String money){
-        SpannableString span = new SpannableString("¥"+money);
+    public void setMoney(String money) {
+        SpannableString span = new SpannableString("¥" + money);
         span.setSpan(new RelativeSizeSpan(0.4f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textShouYi.setText(span);
     }
@@ -109,11 +139,11 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new YongJinFragment(1);
+                    return new YongJinFragment(1, type);
                 case 1:
-                    return new YongJinFragment(2);
+                    return new YongJinFragment(2, type);
                 default:
-                    return new YongJinFragment(2);
+                    return new YongJinFragment(2, type);
             }
 
         }

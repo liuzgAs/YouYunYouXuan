@@ -197,6 +197,10 @@ public class Constant {
          */
         public static final String WITHDRAW_NOTWITHDRAW = "/Withdraw/notWithdraw";
         /**
+         * 可提现佣金
+         */
+        public static final String WITHDRAW_CWITHDRAW = "/withdraw/Cwithdraw";
+        /**
          * 我的客户
          */
         public static final String CUSTOMER = "/Customer";
@@ -252,6 +256,10 @@ public class Constant {
          * 取消订单
          */
         public static final String USER_CANCELORDER = "/User/cancelOrder";
+        /**
+         * 验证码登录
+         */
+        public static final String LOGIN_SMS = "/Login/sms";
     }
 
     public static class IntentKey {

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.vip.uyux.R;
 import com.vip.uyux.base.ZjbBaseActivity;
+import com.vip.uyux.constant.Constant;
 
 public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickListener {
 
@@ -43,6 +44,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.viewBuKeTiXian).setOnClickListener(this);
         findViewById(R.id.viewWoDeKeHu).setOnClickListener(this);
         findViewById(R.id.viewWoDeTD).setOnClickListener(this);
+        findViewById(R.id.viewKeTiXian).setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +56,11 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewKeTiXian:
+                intent.setClass(this, BuKeTiXianActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE,2);
+                startActivity(intent);
+                break;
             case R.id.viewWoDeTD:
                 intent.setClass(this, WoDeTDActivity.class);
                 startActivity(intent);
@@ -64,6 +71,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
             case R.id.viewBuKeTiXian:
                 intent.setClass(this, BuKeTiXianActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE,1);
                 startActivity(intent);
                 break;
             case R.id.viewFenHongZX:
