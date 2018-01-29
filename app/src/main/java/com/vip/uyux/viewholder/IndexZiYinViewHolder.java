@@ -19,9 +19,9 @@ import com.vip.uyux.util.GlideApp;
 public class IndexZiYinViewHolder extends BaseViewHolder<IndexHome.RecomBean> {
 
     private final TextView textCutPrice;
-    private final ImageView imageImg;
+    private final YuanJiaoImageView imageImg;
     private final TextView textVipDes;
-    private final YuanJiaoImageView imageZiYin;
+    private final ImageView imageZiYin;
     private final TextView textTitle;
     private final TextView textDes;
     private final TextView textPrice;
@@ -34,7 +34,7 @@ public class IndexZiYinViewHolder extends BaseViewHolder<IndexHome.RecomBean> {
         textVipDes = $(R.id.textVipDes);
         imageZiYin = $(R.id.imageZiYin);
         float dp12 = DpUtils.convertDpToPixel(12, getContext());
-        imageZiYin.setRids(new float[]{dp12, dp12, dp12, dp12, 0, 0, 0, 0});
+        imageImg.setRids(new float[]{dp12, dp12, dp12, dp12, 0, 0, 0, 0});
         textTitle = $(R.id.textTitle);
         textDes = $(R.id.textDes);
         textPrice = $(R.id.textPrice);
