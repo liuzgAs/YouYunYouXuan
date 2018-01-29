@@ -70,7 +70,7 @@ import java.util.TimerTask;
 public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Integer> adapter;
+    private RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean> adapter;
     private List<String> stringList = new ArrayList<>();
     private List<String> goodsInfoBanner;
     private int id;
@@ -142,15 +142,18 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(ChanPinXQActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean>(ChanPinXQActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_chanpin_xq;
-                return new ItemChanPinXQViewHolder(parent, layout);
+                int layout = R.layout.item_image;
+                return new ChanPinFootViewHolder(parent, layout);
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
+            private TabLayout tablayout;
+            private RecyclerArrayAdapter<Integer> adapterPingLun;
+            private EasyRecyclerView recyclerViewPingLun;
             private TextView textOldPrice;
             private TextView textVipDes;
             private TextView textTitle;
@@ -197,7 +200,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 textOldPrice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!TextUtils.isEmpty(tm_url)){
+                        if (!TextUtils.isEmpty(tm_url)) {
                             Intent intent = new Intent();
                             intent.setClass(ChanPinXQActivity.this, WebActivity.class);
                             intent.putExtra(Constant.IntentKey.TITLE, "天猫价");
@@ -206,8 +209,70 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         }
                     }
                 });
+                recyclerViewPingLun = view.findViewById(R.id.recyclerView);
+                initFootRecycler();
+                tablayout = (TabLayout) view.findViewById(R.id.tablayout);
+                for (int i = 0; i < 2; i++) {
+                    View item_tablayout = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.item_tablayout, null);
+                    TextView textTitle = (TextView) item_tablayout.findViewById(R.id.textTitle);
+                    if (i == 0) {
+                        textTitle.setText("宝贝详情");
+                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
+                    } else {
+                        textTitle.setText("规格参数");
+                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
+                    }
+                }
+                tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        int position = tab.getPosition();
+                        if (position == 0) {
+                            if (imgs != null) {
+                                adapter.clear();
+                                adapter.addAll(imgs);
+                            }
+                        } else {
+                            if (imgs2 != null) {
+                                adapter.clear();
+                                adapter.addAll(imgs2);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                });
                 return view;
             }
+
+            /**
+             * 初始化recyclerview
+             */
+            private void initFootRecycler() {
+                recyclerViewPingLun.setLayoutManager(new LinearLayoutManager(ChanPinXQActivity.this));
+                recyclerViewPingLun.setAdapterWithProgress(adapterPingLun = new RecyclerArrayAdapter<Integer>(ChanPinXQActivity.this) {
+
+                    @Override
+                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                        int layout = R.layout.item_chanpin_xq;
+                        return new ItemChanPinXQViewHolder(parent, layout);
+                    }
+                });
+                adapterPingLun.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                    }
+                });
+            }
+
 
             @Override
             public void onBindView(View headerView) {
@@ -261,117 +326,16 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     textShareMoney.setText(goodsInfoData.getShareMoney());
                     textTitle.setText(goodsInfoData.getTitle());
                     textVipDes.setText(goodsInfoData.getVipDes());
-                    if (TextUtils.isEmpty(goodsInfoData.getOldPrice())||Double.parseDouble(goodsInfoData.getOldPrice())==0){
+                    if (TextUtils.isEmpty(goodsInfoData.getOldPrice()) || Double.parseDouble(goodsInfoData.getOldPrice()) == 0) {
                         textOldPrice.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         textOldPrice.setVisibility(View.VISIBLE);
                         textOldPrice.setText("天猫价¥" + goodsInfoData.getOldPrice());
                     }
                 }
-            }
-        });
-        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            private RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean> adapterFoot;
-            private EasyRecyclerView recyclerViewFoot;
-            private RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean> adapterFoot1;
-            private EasyRecyclerView recyclerViewFoot1;
-            private TabLayout tablayout;
-
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.footer_chanpin_xq, null);
-                tablayout = (TabLayout) view.findViewById(R.id.tablayout);
-                for (int i = 0; i < 2; i++) {
-                    View item_tablayout = LayoutInflater.from(ChanPinXQActivity.this).inflate(R.layout.item_tablayout, null);
-                    TextView textTitle = (TextView) item_tablayout.findViewById(R.id.textTitle);
-                    if (i == 0) {
-                        textTitle.setText("宝贝详情");
-                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
-                    } else {
-                        textTitle.setText("规格参数");
-                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
-                    }
-                }
-                tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        int position = tab.getPosition();
-                        if (position == 0) {
-                            recyclerViewFoot.setVisibility(View.VISIBLE);
-                            recyclerViewFoot1.setVisibility(View.GONE);
-                        } else {
-                            recyclerViewFoot.setVisibility(View.GONE);
-                            recyclerViewFoot1.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
-                });
-                recyclerViewFoot = view.findViewById(R.id.recyclerView);
-                recyclerViewFoot1 = view.findViewById(R.id.recyclerView1);
-                initFootRecycler();
-                initFootRecycler1();
-                return view;
-            }
-
-            /**
-             * 初始化recyclerview
-             */
-            private void initFootRecycler() {
-                recyclerViewFoot.setLayoutManager(new LinearLayoutManager(ChanPinXQActivity.this));
-                recyclerViewFoot.setAdapterWithProgress(adapterFoot = new RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean>(ChanPinXQActivity.this) {
-                    @Override
-                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                        int layout = R.layout.item_image;
-                        return new ChanPinFootViewHolder(parent, layout);
-                    }
-                });
-                adapterFoot.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                    }
-                });
-            }
-
-            /**
-             * 初始化recyclerview
-             */
-            private void initFootRecycler1() {
-                recyclerViewFoot1.setLayoutManager(new LinearLayoutManager(ChanPinXQActivity.this));
-                recyclerViewFoot1.setAdapterWithProgress(adapterFoot1 = new RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean>(ChanPinXQActivity.this) {
-                    @Override
-                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                        int layout = R.layout.item_image;
-                        return new ChanPinFootViewHolder(parent, layout);
-                    }
-                });
-                adapterFoot1.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                    }
-                });
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-                recyclerViewFoot.setVisibility(View.VISIBLE);
-                recyclerViewFoot1.setVisibility(View.GONE);
-                adapterFoot.clear();
-                adapterFoot1.clear();
-                if (imgs != null) {
-                    adapterFoot.addAll(imgs);
-                }
-                if (imgs2 != null) {
-                    adapterFoot1.addAll(imgs2);
-                }
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
+                adapterPingLun.clear();
+                adapterPingLun.addAll(new ArrayList<Integer>());
             }
         });
         recyclerView.setRefreshListener(this);
@@ -395,7 +359,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageFenXiang:
-                MyDialog.share(this,"ChanPinXQActivity",api,String.valueOf(id),goodsInfo.getData().getShare());
+                MyDialog.share(this, "ChanPinXQActivity", api, String.valueOf(id), goodsInfo.getData().getShare());
                 break;
             case R.id.imageShouCang:
                 if (goodsInfo.getIsc() == 0) {
@@ -545,14 +509,15 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         listList.clear();
                         List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
                         catelist.addAll(listList);
-                        LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
-                        adapter.clear();
-                        adapter.addAll(new ArrayList<Integer>());
                         viewDiBu.setVisibility(View.VISIBLE);
                         if (goodsInfo.getIsc() == 1) {
                             imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
                         } else {
                             imageShouCang.setImageResource(R.mipmap.shoucang_xq);
+                        }
+                        if (imgs != null) {
+                            adapter.clear();
+                            adapter.addAll(imgs);
                         }
                     } else if (goodsInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
@@ -913,7 +878,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 }
             }
             textGuiGe.setText(name);
-            textStock_numD.setText("库存"+stock_num+"件");
+            textStock_numD.setText("库存" + stock_num + "件");
         }
     }
 

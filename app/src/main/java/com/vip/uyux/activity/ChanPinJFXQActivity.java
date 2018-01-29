@@ -67,7 +67,7 @@ import java.util.List;
 public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Integer> adapter;
+    private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapter;
     private List<String> goodsInfoBanner;
     private int id;
     private CustomerIntegragoodsinfo.DataBean goodsInfoData;
@@ -135,15 +135,18 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(ChanPinJFXQActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_chanpin_xq;
-                return new ItemChanPinXQViewHolder(parent, layout);
+                int layout = R.layout.item_image;
+                return new ChanPinFootViewHolder(parent, layout);
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
+            private RecyclerArrayAdapter<Integer> adapterPingLun;
+            private TabLayout tablayout;
+            private EasyRecyclerView recyclerViewPingLun;
             private TextView textYongYouJF;
             private TextView textHas_des;
             private TextView textOldPrice;
@@ -171,7 +174,69 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 textOldPrice = view.findViewById(R.id.textOldPrice);
                 textHas_des = view.findViewById(R.id.textHas_des);
                 textYongYouJF = view.findViewById(R.id.textYongYouJF);
+
+                recyclerViewPingLun = view.findViewById(R.id.recyclerView);
+                initFootRecycler();
+                tablayout = (TabLayout) view.findViewById(R.id.tablayout);
+                for (int i = 0; i < 2; i++) {
+                    View item_tablayout = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.item_tablayout, null);
+                    TextView textTitle = (TextView) item_tablayout.findViewById(R.id.textTitle);
+                    if (i == 0) {
+                        textTitle.setText("宝贝详情");
+                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
+                    } else {
+                        textTitle.setText("规格参数");
+                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
+                    }
+                }
+                tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        int position = tab.getPosition();
+                        if (position == 0) {
+                            if (imgs != null) {
+                                adapter.clear();
+                                adapter.addAll(imgs);
+                            }
+                        } else {
+                            if (imgs2 != null) {
+                                adapter.clear();
+                                adapter.addAll(imgs2);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                });
                 return view;
+            }
+
+            /**
+             * 初始化recyclerview
+             */
+            private void initFootRecycler() {
+                recyclerViewPingLun.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
+                recyclerViewPingLun.setAdapterWithProgress(adapterPingLun = new RecyclerArrayAdapter<Integer>(ChanPinJFXQActivity.this) {
+
+                    @Override
+                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                        int layout = R.layout.item_chanpin_xq;
+                        return new ItemChanPinXQViewHolder(parent, layout);
+                    }
+                });
+                adapterPingLun.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                    }
+                });
             }
 
             @Override
@@ -194,112 +259,114 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                     textHas_des.setText(goodsInfoData.getHas_des());
                     textYongYouJF.setText(String.valueOf(goodsInfoData.getHas_integra()));
                 }
+                adapterPingLun.clear();
+                adapterPingLun.addAll(DataProvider.getPersonList(1));
             }
         });
-        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot;
-            private EasyRecyclerView recyclerViewFoot;
-            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot1;
-            private EasyRecyclerView recyclerViewFoot1;
-            private TabLayout tablayout;
-
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.footer_chanpin_xq, null);
-                tablayout = (TabLayout) view.findViewById(R.id.tablayout);
-                for (int i = 0; i < 2; i++) {
-                    View item_tablayout = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.item_tablayout, null);
-                    TextView textTitle = (TextView) item_tablayout.findViewById(R.id.textTitle);
-                    if (i == 0) {
-                        textTitle.setText("宝贝详情");
-                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
-                    } else {
-                        textTitle.setText("规格参数");
-                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
-                    }
-                }
-                tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        int position = tab.getPosition();
-                        if (position == 0) {
-                            recyclerViewFoot.setVisibility(View.VISIBLE);
-                            recyclerViewFoot1.setVisibility(View.GONE);
-                        } else {
-                            recyclerViewFoot.setVisibility(View.GONE);
-                            recyclerViewFoot1.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
-                });
-                recyclerViewFoot = view.findViewById(R.id.recyclerView);
-                recyclerViewFoot1 = view.findViewById(R.id.recyclerView1);
-                initFootRecycler();
-                initFootRecycler1();
-                return view;
-            }
-
-            /**
-             * 初始化recyclerview
-             */
-            private void initFootRecycler() {
-                recyclerViewFoot.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
-                recyclerViewFoot.setAdapterWithProgress(adapterFoot = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
-                    @Override
-                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                        int layout = R.layout.item_image;
-                        return new ChanPinFootViewHolder(parent, layout);
-                    }
-                });
-                adapterFoot.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                    }
-                });
-            }
-
-            /**
-             * 初始化recyclerview
-             */
-            private void initFootRecycler1() {
-                recyclerViewFoot1.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
-                recyclerViewFoot1.setAdapterWithProgress(adapterFoot1 = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
-                    @Override
-                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                        int layout = R.layout.item_image;
-                        return new ChanPinFootViewHolder(parent, layout);
-                    }
-                });
-                adapterFoot1.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                    }
-                });
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-                recyclerViewFoot.setVisibility(View.VISIBLE);
-                recyclerViewFoot1.setVisibility(View.GONE);
-                adapterFoot.clear();
-                adapterFoot1.clear();
-                if (imgs != null) {
-                    adapterFoot.addAll(imgs);
-                }
-                if (imgs2 != null) {
-                    adapterFoot1.addAll(imgs2);
-                }
-            }
-        });
+//        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+//            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot;
+//            private EasyRecyclerView recyclerViewFoot;
+//            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot1;
+////            private EasyRecyclerView recyclerViewFoot1;
+//            private TabLayout tablayout;
+//
+//            @Override
+//            public View onCreateView(ViewGroup parent) {
+//                View view = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.footer_chanpin_xq, null);
+//                tablayout = (TabLayout) view.findViewById(R.id.tablayout);
+//                for (int i = 0; i < 2; i++) {
+//                    View item_tablayout = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.item_tablayout, null);
+//                    TextView textTitle = (TextView) item_tablayout.findViewById(R.id.textTitle);
+//                    if (i == 0) {
+//                        textTitle.setText("宝贝详情");
+//                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
+//                    } else {
+//                        textTitle.setText("规格参数");
+//                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
+//                    }
+//                }
+//                tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//                    @Override
+//                    public void onTabSelected(TabLayout.Tab tab) {
+//                        int position = tab.getPosition();
+//                        if (position == 0) {
+//                            recyclerViewFoot.setVisibility(View.VISIBLE);
+////                            recyclerViewFoot1.setVisibility(View.GONE);
+//                        } else {
+//                            recyclerViewFoot.setVisibility(View.GONE);
+////                            recyclerViewFoot1.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onTabUnselected(TabLayout.Tab tab) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onTabReselected(TabLayout.Tab tab) {
+//
+//                    }
+//                });
+//                recyclerViewFoot = view.findViewById(R.id.recyclerView);
+////                recyclerViewFoot1 = view.findViewById(R.id.recyclerView1);
+//                initFootRecycler();
+////                initFootRecycler1();
+//                return view;
+//            }
+//
+//            /**
+//             * 初始化recyclerview
+//             */
+//            private void initFootRecycler() {
+//                recyclerViewFoot.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
+//                recyclerViewFoot.setAdapterWithProgress(adapterFoot = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
+//                    @Override
+//                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+//                        int layout = R.layout.item_image;
+//                        return new ChanPinFootViewHolder(parent, layout);
+//                    }
+//                });
+//                adapterFoot.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(int position) {
+//                    }
+//                });
+//            }
+//
+//            /**
+//             * 初始化recyclerview
+//             */
+////            private void initFootRecycler1() {
+////                recyclerViewFoot1.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
+////                recyclerViewFoot1.setAdapterWithProgress(adapterFoot1 = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
+////                    @Override
+////                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+////                        int layout = R.layout.item_image;
+////                        return new ChanPinFootViewHolder(parent, layout);
+////                    }
+////                });
+////                adapterFoot1.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+////                    @Override
+////                    public void onItemClick(int position) {
+////                    }
+////                });
+////            }
+//
+//            @Override
+//            public void onBindView(View headerView) {
+//                recyclerViewFoot.setVisibility(View.VISIBLE);
+////                recyclerViewFoot1.setVisibility(View.GONE);
+//                adapterFoot.clear();
+//                adapterFoot1.clear();
+//                if (imgs != null) {
+//                    adapterFoot.addAll(imgs);
+//                }
+//                if (imgs2 != null) {
+//                    adapterFoot1.addAll(imgs2);
+//                }
+//            }
+//        });
         recyclerView.setRefreshListener(this);
     }
 
@@ -466,13 +533,16 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                         catelist.clear();
                         catelist.addAll(listList);
                         LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
-                        adapter.clear();
-                        adapter.addAll(DataProvider.getPersonList(1));
                         viewDiBu.setVisibility(View.VISIBLE);
                         if (goodsInfo.getIsc() == 1) {
                             imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
                         } else {
                             imageShouCang.setImageResource(R.mipmap.shoucang_xq);
+                        }
+
+                        if (imgs != null) {
+                            adapter.clear();
+                            adapter.addAll(imgs);
                         }
                     } else if (goodsInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinJFXQActivity.this);

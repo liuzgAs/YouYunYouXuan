@@ -272,6 +272,7 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.ChanPinXQActivity"
+            android:hardwareAccelerated="false"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.ChanPinJFXQActivity"

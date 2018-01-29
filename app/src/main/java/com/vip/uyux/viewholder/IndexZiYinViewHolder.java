@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
+import com.vip.uyux.customview.YuanJiaoImageView;
 import com.vip.uyux.model.IndexHome;
+import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 
 /**
@@ -19,7 +21,7 @@ public class IndexZiYinViewHolder extends BaseViewHolder<IndexHome.RecomBean> {
     private final TextView textCutPrice;
     private final ImageView imageImg;
     private final TextView textVipDes;
-    private final ImageView imageZiYin;
+    private final YuanJiaoImageView imageZiYin;
     private final TextView textTitle;
     private final TextView textDes;
     private final TextView textPrice;
@@ -31,6 +33,8 @@ public class IndexZiYinViewHolder extends BaseViewHolder<IndexHome.RecomBean> {
         imageImg = $(R.id.imageImg);
         textVipDes = $(R.id.textVipDes);
         imageZiYin = $(R.id.imageZiYin);
+        float dp12 = DpUtils.convertDpToPixel(12, getContext());
+        imageZiYin.setRids(new float[]{dp12, dp12, dp12, dp12, 0, 0, 0, 0});
         textTitle = $(R.id.textTitle);
         textDes = $(R.id.textDes);
         textPrice = $(R.id.textPrice);

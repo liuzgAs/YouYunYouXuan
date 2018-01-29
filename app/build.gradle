@@ -51,4 +51,5 @@ dependencies {
     compile 'com.iarcuschin:simpleratingbar:0.1.2'
     implementation files('libs/ThreadPoolHelp-2.0.jar')
     compile 'q.rorbin:badgeview:1.1.2'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.9.0'
 }
