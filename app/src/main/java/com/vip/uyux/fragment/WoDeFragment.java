@@ -94,6 +94,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             R.id.image0304,
     };
     private String qc_url;
+    private ImageView imageFenXiangZX;
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -157,6 +158,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                     .setBadgeGravity(Gravity.END | Gravity.TOP)
                     .setGravityOffset(0f, 0f, true);
         }
+        imageFenXiangZX = mInflate.findViewById(R.id.imageFenXiangZX);
     }
 
     @Override
@@ -164,12 +166,13 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
         layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
         viewBar.setLayoutParams(layoutParams);
+        imageFenXiangZX.setVisibility(View.GONE);
     }
 
     @Override
     protected void setListeners() {
         mInflate.findViewById(R.id.viewYuE).setOnClickListener(this);
-        mInflate.findViewById(R.id.imageFenXiangZX).setOnClickListener(this);
+        imageFenXiangZX.setOnClickListener(this);
         mInflate.findViewById(R.id.viewGeRen).setOnClickListener(this);
         mInflate.findViewById(R.id.viewYouHuiQuan).setOnClickListener(this);
         mInflate.findViewById(R.id.viewWoDeCP).setOnClickListener(this);
@@ -241,6 +244,11 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                             for (int i = 0; i < imageDD.length; i++) {
                                 badgeDD[i].setBadgeNumber(userMy.getOrderNum().get(i)).bindTarget(imageDD[i]);
                             }
+                            if (userMy.getGrade()!=0){
+                                imageFenXiangZX.setVisibility(View.VISIBLE);
+                            }else {
+                                imageFenXiangZX.setVisibility(View.GONE);
+                            }
                             if (userMy.getLv() > 0) {
                                 textLv0.setVisibility(View.GONE);
                                 imageShengJi.setVisibility(View.GONE);
@@ -307,10 +315,10 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.imageShengJi:
-//                intent.setClass(mContext, WebActivity.class);
-//                intent.putExtra(Constant.IntentKey.TITLE, "升级");
-//                intent.putExtra(Constant.IntentKey.URL, qc_url);
-//                startActivity(intent);
+                intent.setClass(mContext, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, "升级");
+                intent.putExtra(Constant.IntentKey.URL, qc_url);
+                startActivity(intent);
                 break;
             case R.id.viewGuanYuWM:
                 intent.setClass(mContext, WebActivity.class);
