@@ -107,7 +107,7 @@ public class WebActivity extends ZjbBaseActivity implements View.OnClickListener
                             intent.putExtra(Constant.IntentKey.VALUE, webPay.getOrder_amount());
                             intent.setClass(WebActivity.this, LiJiZFActivity.class);
                             startActivity(intent);
-                            finish();
+//                            finish();
                         }else {
                             MyDialog.showTipDialog(WebActivity.this,webPay.getInfo());
                         }

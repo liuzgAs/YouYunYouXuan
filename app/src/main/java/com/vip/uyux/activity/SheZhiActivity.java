@@ -101,6 +101,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
                             public void doConfirm() {
                                 btnExit.setVisibility(View.GONE);
                                 twoBtnDialog.dismiss();
+                                Constant.changeControl++;
                                 ToLoginActivity.toLoginActivity(SheZhiActivity.this);
                             }
 
