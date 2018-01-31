@@ -84,7 +84,7 @@
             android:layout_below="@+id/textSum"
             android:layout_marginBottom="25dp"
             android:layout_centerHorizontal="true"
-            android:text="预计佣金"
+            android:text="元"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -96,7 +96,7 @@
         android:background="@color/white"
         app:tabIndicatorColor="@color/basic_color"
         app:tabIndicatorHeight="0dp"
-        app:tabMode="scrollable" />
+        app:tabMode="fixed" />
     <android.support.v4.view.ViewPager
         android:layout_marginTop="1dp"
         android:id="@+id/viewPager"

@@ -58,7 +58,7 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
         list.add("待付款");
         list.add("已付款");
         list.add("已完成");
-        list.add("返佣明细");
+//        list.add("返佣明细");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         tablayout.setupWithViewPager(viewPager);
         tablayout.removeAllTabs();
@@ -117,8 +117,8 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
                     return new FenXiaoFragment(20);
                 case 3:
                     return new FenXiaoFragment(30);
-                case 4:
-                    return new FenXiaoFragment(40);
+//                case 4:
+//                    return new FenXiaoFragment(40);
                 default:
                     return new FenXiaoFragment(0);
             }
