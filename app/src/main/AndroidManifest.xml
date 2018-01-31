@@ -16,7 +16,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- 阿里移动推送相关权限 -->
@@ -52,7 +51,6 @@
     <!-- 用于申请获取蓝牙信息进行室内定位 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -80,6 +78,7 @@
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="4a960b53bb8056dd9006a79f18b99f03" /> <!-- 请填写你自己的appSecret -->
+
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
@@ -382,6 +381,7 @@
         <activity
             android:name=".activity.WuLiuZhuShouActivity"
             android:launchMode="singleTop" />
+        <activity android:name=".activity.BangDingTelActivity"></activity>
     </application>
 
 </manifest>

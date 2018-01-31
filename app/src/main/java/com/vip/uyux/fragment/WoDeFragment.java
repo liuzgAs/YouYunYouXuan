@@ -307,6 +307,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             imageShengJi.setVisibility(View.VISIBLE);
             imageLvB.setVisibility(View.GONE);
             imageLv.setVisibility(View.GONE);
+            imageHead.setImageResource(R.mipmap.touxiang_mine);
         }
     }
 

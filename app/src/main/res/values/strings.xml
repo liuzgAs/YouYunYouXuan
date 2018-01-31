@@ -6,4 +6,5 @@
     <string name="xieyi">同意《用户协议》</string>
     <string name="wangguochucuo">网络出错</string>
     <string name="dianjichongshi">点击重试</string>
+    <string name="ninzanweianzhuang">您暂未安装微信或您的微信版本暂不支持支付功能,请下载安装最新版本的微信</string>
 </resources>

@@ -308,6 +308,18 @@ public class Constant {
          * 物流助手
          */
         public static final String MASSAGE_WULIU = "/massage/wuliu";
+        /**
+         * 登陆后绑定微信
+         */
+        public static final String LOGIN_LOGINWXBIND = "/Login/loginWxBind";
+        /**
+         * 微信授权后判断是否需要绑定电话
+         */
+        public static final String LOGIN_WXBIND = "/Login/wxBind";
+        /**
+         * 微信授权绑定电话提交
+         */
+        public static final String LOGIN_WXBINDSMS = "/Login/wxBindSms";
 
     }
 
@@ -365,6 +377,7 @@ public class Constant {
         public static final String NUM_CHANGE = "num_change";
         public static final String SHUAXINDD = "shuaXinDD";
         public static final String TIXIAN = "tiXian";
+        public static final String BANG_DING = "bangDing";
     }
 
 

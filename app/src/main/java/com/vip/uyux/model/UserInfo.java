@@ -15,8 +15,27 @@ public class UserInfo implements Serializable {
     private String headImg;
     private String userName;
     private int status;
+    private int goAuthorize;
+    private int goSms;
+
+    public int getGoSms() {
+        return goSms;
+    }
+
+    public void setGoSms(int goSms) {
+        this.goSms = goSms;
+    }
+
     private String info;
     private String yunToken;
+
+    public int getGoAuthorize() {
+        return goAuthorize;
+    }
+
+    public void setGoAuthorize(int goAuthorize) {
+        this.goAuthorize = goAuthorize;
+    }
 
     public String getYunToken() {
         return yunToken;

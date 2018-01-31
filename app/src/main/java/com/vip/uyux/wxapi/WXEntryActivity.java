@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -51,7 +52,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         Log.e("WXEntryActivity", "WXEntryActivity--onResp--" + resp.errCode);
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
+                String code = ((SendAuth.Resp) resp).code; //即为所需的code
                 Intent intent = new Intent(Constant.BroadcastCode.WX_SHARE);
+                intent.putExtra(Constant.BroadcastCode.WX_LOGIN, code);
                 sendBroadcast(intent);
                 finish();
                 break;

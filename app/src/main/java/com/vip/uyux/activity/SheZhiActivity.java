@@ -103,6 +103,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
                                 twoBtnDialog.dismiss();
                                 Constant.changeControl++;
                                 ToLoginActivity.toLoginActivity(SheZhiActivity.this);
+                                finish();
                             }
 
                             @Override
