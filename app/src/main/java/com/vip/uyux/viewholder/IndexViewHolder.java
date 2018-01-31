@@ -90,7 +90,11 @@ public class IndexViewHolder extends BaseViewHolder<IndexHome.DataBean> {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+
+                        break;
                     case MotionEvent.ACTION_DOWN:
+                        LogUtil.LogShitou("IndexViewHolder--onTouch", "11111");
                         isScroll = false;
                         //获取屏幕上点击的坐标
                         downX = motionEvent.getX();
