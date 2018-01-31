@@ -586,6 +586,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginBottom="40dp"
                 android:id="@+id/viewZuJi"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
@@ -619,6 +620,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
                 android:layout_marginTop="1dp"
@@ -651,6 +653,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/viewGuanYuWM"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
