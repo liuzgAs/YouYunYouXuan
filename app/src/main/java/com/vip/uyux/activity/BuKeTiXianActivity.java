@@ -31,6 +31,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     private int type;
     private Button btnLiJiTX;
     private TextView textViewTitle;
+    private String upUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,8 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         textShouYi.setText(span);
     }
 
-    public void setMoney(String money) {
+    public void setMoney(String money,String upUrl) {
+        this.upUrl=upUrl;
         SpannableString span = new SpannableString("¥" + money);
         span.setSpan(new RelativeSizeSpan(0.4f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textShouYi.setText(span);
@@ -138,7 +140,10 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 Intent intent = new Intent();
                 switch (type) {
                     case 1:
-
+                        intent.setClass(this, WebActivity.class);
+                        intent.putExtra(Constant.IntentKey.TITLE, "立即升级");
+                        intent.putExtra(Constant.IntentKey.URL, upUrl);
+                        startActivity(intent);
                         break;
                     case 2:
                         intent.setClass(this, TiXianActivity.class);

@@ -227,7 +227,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     page++;
                     WithdrawNotwithdraw withdrawNotwithdraw = GsonUtils.parseJSON(s, WithdrawNotwithdraw.class);
                     if (withdrawNotwithdraw.getStatus() == 1) {
-                        ((BuKeTiXianActivity) mContext).setMoney(withdrawNotwithdraw.getN_amount());
+                        ((BuKeTiXianActivity) mContext).setMoney(withdrawNotwithdraw.getN_amount(),withdrawNotwithdraw.getUp_url());
                         List<WithdrawNotwithdraw.DataBean> dataBeanList = withdrawNotwithdraw.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);

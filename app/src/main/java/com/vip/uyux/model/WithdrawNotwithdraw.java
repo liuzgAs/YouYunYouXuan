@@ -22,7 +22,16 @@ public class WithdrawNotwithdraw {
     private PageBean page;
     private int status;
     private String info;
+    private String up_url;
     private List<DataBean> data;
+
+    public String getUp_url() {
+        return up_url;
+    }
+
+    public void setUp_url(String up_url) {
+        this.up_url = up_url;
+    }
 
     public String getN_amount() {
         return n_amount;
