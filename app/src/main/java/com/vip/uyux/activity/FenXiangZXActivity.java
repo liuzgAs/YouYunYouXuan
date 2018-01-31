@@ -37,12 +37,12 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     private TextView textTuanDui;
     private TextView textKeHu;
     private String up_url;
-    private Double yuji;
+    private String yuji;
     private IWXAPI api;
     private ShareIndex.TeamShareBean teamShare;
     private ShareIndex.VipShareBean vipShare;
     private String college_url;
-    private double fenxiao;
+    private String fenxiao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,17 +140,17 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                             textLiJiSJ.setVisibility(View.GONE);
                         }
                         up_url = shareIndex.getUp_url();
-                        textKeTiXian.setText(String.valueOf(shareIndex.getMoney().get(0)));
-                        textBuKeTiXian.setText(String.valueOf(shareIndex.getMoney().get(1)));
+                        textKeTiXian.setText(shareIndex.getMoney().get(0));
+                        textBuKeTiXian.setText(shareIndex.getMoney().get(1));
                         yuji = shareIndex.getMoney().get(2);
                         textYuJi.setText(String.valueOf(yuji));
                         fenxiao = shareIndex.getNum().get(1);
-                        double d2 = shareIndex.getNum().get(2);
-                        double d3 = shareIndex.getNum().get(3);
+                        String d2 = shareIndex.getNum().get(2);
+                        String d3 = shareIndex.getNum().get(3);
                         textFenXiaoYJ.setText(String.valueOf(shareIndex.getNum().get(0)));
-                        textFengXiaoDD.setText(String.valueOf((int) fenxiao));
-                        textTuanDui.setText(String.valueOf((int) d2));
-                        textKeHu.setText(String.valueOf((int) d3));
+                        textFengXiaoDD.setText(fenxiao);
+                        textTuanDui.setText(d2);
+                        textKeHu.setText(d3);
                         teamShare = shareIndex.getTeamShare();
                         vipShare = shareIndex.getVipShare();
                         college_url = shareIndex.getCollege_url();
@@ -203,12 +203,12 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
             case R.id.viewFenXiaoDD:
                 intent.setClass(this, FenXiaoDDActivity.class);
-                intent.putExtra(Constant.IntentKey.VALUE, String.valueOf((int) fenxiao));
+                intent.putExtra(Constant.IntentKey.VALUE, fenxiao);
                 startActivity(intent);
                 break;
             case R.id.viewYuJiYJ:
                 intent.setClass(this, YuJiYJActivity.class);
-                intent.putExtra(Constant.IntentKey.VALUE, String.valueOf(yuji));
+                intent.putExtra(Constant.IntentKey.VALUE, yuji);
                 startActivity(intent);
                 break;
             case R.id.viewFenXiaoYJ:

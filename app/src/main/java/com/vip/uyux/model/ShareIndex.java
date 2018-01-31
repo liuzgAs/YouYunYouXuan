@@ -36,8 +36,8 @@ public class ShareIndex {
     private int status;
     private TeamShareBean teamShare;
     private String up_url;
-    private List<Double> money;
-    private List<Double> num;
+    private List<String> money;
+    private List<String> num;
 
     public VipShareBean getVipShare() {
         return VipShare;
@@ -127,19 +127,19 @@ public class ShareIndex {
         this.up_url = up_url;
     }
 
-    public List<Double> getMoney() {
+    public List<String> getMoney() {
         return money;
     }
 
-    public void setMoney(List<Double> money) {
+    public void setMoney(List<String> money) {
         this.money = money;
     }
 
-    public List<Double> getNum() {
+    public List<String> getNum() {
         return num;
     }
 
-    public void setNum(List<Double> num) {
+    public void setNum(List<String> num) {
         this.num = num;
     }
 
