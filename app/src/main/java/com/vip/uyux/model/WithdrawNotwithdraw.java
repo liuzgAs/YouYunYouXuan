@@ -133,6 +133,33 @@ public class WithdrawNotwithdraw {
         private String create_time;
         private String money;
         private String x_money;
+        private String grade;
+        private String nameDes;
+        private String moneyDes;
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getNameDes() {
+            return nameDes;
+        }
+
+        public void setNameDes(String nameDes) {
+            this.nameDes = nameDes;
+        }
+
+        public String getMoneyDes() {
+            return moneyDes;
+        }
+
+        public void setMoneyDes(String moneyDes) {
+            this.moneyDes = moneyDes;
+        }
 
         public int getId() {
             return id;

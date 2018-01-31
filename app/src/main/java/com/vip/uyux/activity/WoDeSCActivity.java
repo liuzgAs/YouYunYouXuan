@@ -20,7 +20,6 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.model.GoodsViewlog;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.model.UserCollect;
@@ -259,7 +258,7 @@ public class WoDeSCActivity extends ZjbBaseActivity implements SwipeRefreshLayou
             }
         }
         if (list.size() == 0) {
-            MyDialog.showTipDialog(this, "请选择要删除的足迹");
+            MyDialog.showTipDialog(this, "请选择要取消收藏的商品");
             return;
         }
         showLoadingDialog();

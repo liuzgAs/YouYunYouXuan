@@ -27,6 +27,7 @@ import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.viewholder.XiaoFeiMXFXViewHolder;
 import com.vip.uyux.viewholder.XiaoFeiMXViewHolder;
 
 import java.util.HashMap;
@@ -100,8 +101,16 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<WithdrawNotwithdraw.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_chong_zhi_mx;
-                return new XiaoFeiMXViewHolder(parent, layout, type);
+                int layout;
+                switch (typeP) {
+                    case 3:
+                        layout = R.layout.item_fenxiao;
+                        return new XiaoFeiMXFXViewHolder(parent, layout, type);
+                    default:
+                        layout = R.layout.item_chong_zhi_mx;
+                        return new XiaoFeiMXViewHolder(parent, layout, type);
+                }
+
             }
 
         });
@@ -227,7 +236,7 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     page++;
                     WithdrawNotwithdraw withdrawNotwithdraw = GsonUtils.parseJSON(s, WithdrawNotwithdraw.class);
                     if (withdrawNotwithdraw.getStatus() == 1) {
-                        ((BuKeTiXianActivity) mContext).setMoney(withdrawNotwithdraw.getN_amount(),withdrawNotwithdraw.getUp_url());
+                        ((BuKeTiXianActivity) mContext).setMoney(withdrawNotwithdraw.getN_amount(), withdrawNotwithdraw.getUp_url());
                         List<WithdrawNotwithdraw.DataBean> dataBeanList = withdrawNotwithdraw.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
