@@ -163,12 +163,21 @@ public class Order {
         private int type;
         private String orderSnDes;
         private String oid;
+        private String id;
         private String sumDes;
         private String sum;
         private int goPay;
         private int isCancel;
         private List<ListBeanX> list;
         private List<String> desList;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getOrderSn() {
             return orderSn;

@@ -102,7 +102,7 @@ public class DDViewHolder extends BaseViewHolder<Order.DataBean> {
             params.put("uid", ((WoDeDDActivity)getContext()).userInfo.getUid());
             params.put("tokenTime",((WoDeDDActivity)getContext()).tokenTime);
         }
-        params.put("id",String.valueOf(data.getOid()));
+        params.put("id",String.valueOf(data.getId()));
         return new OkObject(params, url);
     }
 
