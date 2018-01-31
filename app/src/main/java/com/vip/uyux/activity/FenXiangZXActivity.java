@@ -178,12 +178,12 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.viewVip:
                 if (teamShare != null) {
-                    MyDialog.share01(this, api, teamShare.getShareUrl(), teamShare.getShareImg(), teamShare.getShareTitle(), teamShare.getShareDes());
+                    MyDialog.share01(this, api, vipShare.getShareUrl(), vipShare.getShareImg(), vipShare.getShareTitle(), vipShare.getShareDes());
                 }
                 break;
             case R.id.viewTuanDui:
                 if (vipShare != null) {
-                    MyDialog.share01(this, api, vipShare.getShareUrl(), vipShare.getShareImg(), vipShare.getShareTitle(), vipShare.getShareDes());
+                    MyDialog.share01(this, api, teamShare.getShareUrl(), teamShare.getShareImg(), teamShare.getShareTitle(), teamShare.getShareDes());
                 }
                 break;
             case R.id.textLiJiSJ:
