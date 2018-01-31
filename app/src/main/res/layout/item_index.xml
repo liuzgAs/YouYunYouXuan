@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.jude.easyrecyclerview.EasyRecyclerView
+        <com.vip.uyux.customview.MyEasyRecyclerView
             app:scrollbars="none"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
