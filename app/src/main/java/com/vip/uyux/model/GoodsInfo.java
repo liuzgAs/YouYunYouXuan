@@ -120,6 +120,54 @@ public class GoodsInfo {
         private ShareBean share;
         private List<ImgsBean> imgs;
         private List<ImgsBean> imgs2;
+        private List<PromotionsafterBean> promotionsAfter;
+        private List<String> serveiceDes;
+        private String promotionsBefore;
+
+        public String getPromotionsBefore() {
+            return promotionsBefore;
+        }
+
+        public void setPromotionsBefore(String promotionsBefore) {
+            this.promotionsBefore = promotionsBefore;
+        }
+
+        public List<String> getServeiceDes() {
+            return serveiceDes;
+        }
+
+        public void setServeiceDes(List<String> serveiceDes) {
+            this.serveiceDes = serveiceDes;
+        }
+
+        public List<PromotionsafterBean> getPromotionsAfter() {
+            return promotionsAfter;
+        }
+
+        public void setPromotionsAfter(List<PromotionsafterBean> promotionsAfter) {
+            this.promotionsAfter = promotionsAfter;
+        }
+
+        public static class PromotionsafterBean{
+            private String title;
+            private String url;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+        }
 
         public String getTm_url() {
             return tm_url;

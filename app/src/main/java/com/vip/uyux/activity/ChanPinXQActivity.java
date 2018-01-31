@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +37,7 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
+import com.vip.uyux.adapter.MyChuXiaoAdapter;
 import com.vip.uyux.adapter.TagAdapter01;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
@@ -71,7 +73,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean> adapter;
-    private List<String> stringList = new ArrayList<>();
     private List<String> goodsInfoBanner;
     private int id;
     private GoodsInfo.DataBean goodsInfoData;
@@ -98,6 +99,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private TextView textStock_numD;
     private int stock_num;
     private String tm_url;
+    private List<GoodsInfo.DataBean.PromotionsafterBean> promotionsAfter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
+            private TextView textpromotionsBeforeDes;
+            private TextView textPromotionsBefore;
+            private View viewChuXiao;
             private TabLayout tablayout;
             private RecyclerArrayAdapter<Integer> adapterPingLun;
             private EasyRecyclerView recyclerViewPingLun;
@@ -181,11 +186,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
                 gridview = view.findViewById(R.id.gridview);
-                stringList.add("30天无忧退换货");
-                stringList.add("48小时快速退款");
-                stringList.add("单笔满99元免邮费");
-                stringList.add("优云优选自营品牌");
-                gridview.setAdapter(new MyAdapter());
                 textCountdown = view.findViewById(R.id.textCountdown);
                 textCountdownDes = view.findViewById(R.id.textCountdownDes);
                 textDes = view.findViewById(R.id.textDes);
@@ -250,6 +250,15 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
                     }
                 });
+                viewChuXiao = view.findViewById(R.id.viewChuXiao);
+                viewChuXiao.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showChuXiaoDialog();
+                    }
+                });
+                textPromotionsBefore = view.findViewById(R.id.textPromotionsBefore);
+                textpromotionsBeforeDes = view.findViewById(R.id.textpromotionsBeforeDes);
                 return view;
             }
 
@@ -332,6 +341,27 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         textOldPrice.setVisibility(View.VISIBLE);
                         textOldPrice.setText("天猫价¥" + goodsInfoData.getOldPrice());
                     }
+                    if (promotionsAfter!=null){
+                        if (promotionsAfter.size()>0){
+                            viewChuXiao.setVisibility(View.VISIBLE);
+                            textPromotionsBefore.setText(goodsInfoData.getPromotionsBefore());
+                            textpromotionsBeforeDes.setText(goodsInfoData.getPromotionsAfter().get(0).getTitle());
+                        }else {
+                            viewChuXiao.setVisibility(View.GONE);
+                        }
+                    }else {
+                        viewChuXiao.setVisibility(View.GONE);
+                    }
+                    if (goodsInfoData.getServeiceDes()!=null){
+                        if (goodsInfoData.getServeiceDes().size()>0){
+                            gridview.setVisibility(View.VISIBLE);
+                            gridview.setAdapter(new MyAdapter());
+                        }else {
+                            gridview.setVisibility(View.GONE);
+                        }
+                    }else {
+                        gridview.setVisibility(View.GONE);
+                    }
                 }
                 LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
                 adapterPingLun.clear();
@@ -339,6 +369,46 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             }
         });
         recyclerView.setRefreshListener(this);
+    }
+
+    /**
+     * 促销dialog
+     */
+    private void showChuXiaoDialog() {
+        View dialog_tu_pian = LayoutInflater.from(this).inflate(R.layout.dialog_chuciao, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(this, R.style.dialog)
+                .setView(dialog_tu_pian)
+                .create();
+        alertDialog.show();
+        TextView textTitle = dialog_tu_pian.findViewById(R.id.textTitle);
+        textTitle.setText(goodsInfoData.getPromotionsBefore());
+        ListView listView = dialog_tu_pian.findViewById(R.id.listView);
+        final List<GoodsInfo.DataBean.PromotionsafterBean> promotionsAfter = goodsInfoData.getPromotionsAfter();
+        listView.setAdapter(new MyChuXiaoAdapter(this, promotionsAfter));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                GoodsInfo.DataBean.PromotionsafterBean promotionsafterBean = goodsInfoData.getPromotionsAfter().get(i);
+                Intent intent = new Intent();
+                intent.setClass(ChanPinXQActivity.this, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, promotionsafterBean.getTitle());
+                intent.putExtra(Constant.IntentKey.URL, promotionsafterBean.getUrl());
+                startActivity(intent);
+            }
+        });
+        dialog_tu_pian.findViewById(R.id.textQuXiao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        Window dialogWindow = alertDialog.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.dialogFenXiang);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        DisplayMetrics d = getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+        lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
+        dialogWindow.setAttributes(lp);
     }
 
     @Override
@@ -519,6 +589,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                             adapter.clear();
                             adapter.addAll(imgs);
                         }
+                        promotionsAfter = goodsInfo.getData().getPromotionsAfter();
                     } else if (goodsInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
                     } else {
@@ -566,7 +637,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
         @Override
         public int getCount() {
-            return stringList.size();
+            return goodsInfoData.getServeiceDes().size();
         }
 
         @Override
@@ -590,7 +661,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.title.setText(stringList.get(position));
+            holder.title.setText(goodsInfoData.getServeiceDes().get(position));
             return convertView;
         }
     }
@@ -906,4 +977,5 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             timer.cancel();
         }
     }
+
 }

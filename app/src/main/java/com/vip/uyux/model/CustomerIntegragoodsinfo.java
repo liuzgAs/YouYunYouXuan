@@ -113,6 +113,45 @@ public class CustomerIntegragoodsinfo {
         private ShareBean share;
         private List<ImgsBean> imgs;
         private List<ImgsBean> imgs2;
+        private List<GoodsInfo.DataBean.PromotionsafterBean> promotionsAfter;
+        private List<String> serveiceDes;
+
+        public List<String> getServeiceDes() {
+            return serveiceDes;
+        }
+
+        public void setServeiceDes(List<String> serveiceDes) {
+            this.serveiceDes = serveiceDes;
+        }
+
+        public List<GoodsInfo.DataBean.PromotionsafterBean> getPromotionsAfter() {
+            return promotionsAfter;
+        }
+
+        public void setPromotionsAfter(List<GoodsInfo.DataBean.PromotionsafterBean> promotionsAfter) {
+            this.promotionsAfter = promotionsAfter;
+        }
+
+        public static class PromotionsafterBean{
+            private String title;
+            private String url;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+        }
 
         public String getThumb() {
             return thumb;
