@@ -277,6 +277,18 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 }
             }
         });
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                View view = LayoutInflater.from(mContext).inflate(R.layout.view_nomore_shouye, null);
+                return view;
+            }
+
+            @Override
+            public void onBindView(View headerView) {
+
+            }
+        });
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
