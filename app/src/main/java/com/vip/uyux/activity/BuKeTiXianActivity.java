@@ -71,17 +71,20 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
             case 3:
                 textViewTitle.setText("分销佣金");
+                list.clear();
+                list.add("团队推广");
+                list.add("返佣明细");
                 break;
             case 4:
                 textViewTitle.setText("预计佣金");
                 break;
             default:
                 textViewTitle.setText("不可提现佣金");
+                list.clear();
+                list.add("团队推广");
+                list.add("消费返佣");
                 break;
         }
-
-        list.add("团队推广");
-        list.add("消费返佣");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         tablayout.setupWithViewPager(viewPager);
         tablayout.removeAllTabs();
@@ -103,7 +106,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 btnLiJiTX.setText("我要提现");
                 break;
             case 3:
-                btnLiJiTX.setText("我要提现");
+                btnLiJiTX.setText("累计佣金");
                 break;
             case 4:
                 btnLiJiTX.setVisibility(View.INVISIBLE);
