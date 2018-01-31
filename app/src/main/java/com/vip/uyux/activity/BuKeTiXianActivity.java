@@ -13,11 +13,13 @@ import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vip.uyux.R;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.customview.SingleBtnDialog;
 import com.vip.uyux.fragment.YongJinFragment;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     private Button btnLiJiTX;
     private TextView textViewTitle;
     private String upUrl;
+    private ImageView imageWhat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         textShouYi = (TextView) findViewById(R.id.textShouYi);
         btnLiJiTX = (Button) findViewById(R.id.btnLiJiTX);
         textViewTitle = ((TextView) findViewById(R.id.textViewTitle));
+        imageWhat = (ImageView) findViewById(R.id.imageWhat);
     }
 
     @Override
@@ -65,9 +69,16 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         switch (type) {
             case 1:
                 textViewTitle.setText("不可提现佣金");
+                imageWhat.setVisibility(View.VISIBLE);
+                list.clear();
+                list.add("团队推广");
+                list.add("返佣明细");
                 break;
             case 2:
                 textViewTitle.setText("可提现佣金");
+                list.clear();
+                list.add("团队推广");
+                list.add("返佣明细");
                 break;
             case 3:
                 textViewTitle.setText("分销佣金");
@@ -77,6 +88,9 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
             case 4:
                 textViewTitle.setText("预计佣金");
+                list.clear();
+                list.add("团队推广");
+                list.add("返佣明细");
                 break;
             default:
                 textViewTitle.setText("不可提现佣金");
@@ -120,6 +134,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
         btnLiJiTX.setOnClickListener(this);
+        imageWhat.setOnClickListener(this);
     }
 
     @Override
@@ -139,6 +154,16 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.imageWhat:
+                final SingleBtnDialog singleBtnDialog = new SingleBtnDialog(this, "您的身份等级低于下线等级情况下，获得推⼴广奖励和消费返佣为待提现状态，升级等级即可提现", "知道了");
+                singleBtnDialog.show();
+                singleBtnDialog.setClicklistener(new SingleBtnDialog.ClickListenerInterface() {
+                    @Override
+                    public void doWhat() {
+                        singleBtnDialog.dismiss();
+                    }
+                });
+                break;
             case R.id.btnLiJiTX:
                 Intent intent = new Intent();
                 switch (type) {

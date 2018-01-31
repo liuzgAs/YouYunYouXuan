@@ -40,6 +40,7 @@
             android:text="立即升级马上提现"
             android:textColor="@color/white" />
         <ImageView
+            android:id="@+id/imageWhat"
             android:visibility="gone"
             android:src="@mipmap/wenhao"
             android:layout_alignParentRight="true"
