@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.vip.uyux.activity.FenXiaoDDActivity">
+    tools:context="com.vip.uyux.activity.YuJiYJActivity">
     <LinearLayout
         android:id="@+id/viewBar"
         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
 
         <com.vip.uyux.customview.MyFontTextView
             android:layout_marginTop="10dp"
-            android:text="23435"
+            android:text="0"
             android:textSize="35dp"
             android:textColor="@color/white"
             android:id="@+id/textSum"
@@ -84,7 +84,7 @@
             android:layout_below="@+id/textSum"
             android:layout_marginBottom="25dp"
             android:layout_centerHorizontal="true"
-            android:text="元"
+            android:text="累计订单数"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

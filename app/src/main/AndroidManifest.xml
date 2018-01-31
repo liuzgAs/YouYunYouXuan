@@ -283,6 +283,9 @@
             android:name=".activity.FenXiangZXActivity"
             android:launchMode="singleTop" />
         <activity
+            android:name=".activity.FenXiaoDDActivity"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".activity.GeRenXXActivity"
             android:launchMode="singleTop" />
         <activity
@@ -373,7 +376,7 @@
             android:name=".activity.YuEActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.FenXiaoDDActivity"
+            android:name=".activity.YuJiYJActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.XiaoXiZXActivity"

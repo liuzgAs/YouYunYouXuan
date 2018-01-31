@@ -42,6 +42,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     private ShareIndex.TeamShareBean teamShare;
     private ShareIndex.VipShareBean vipShare;
     private String college_url;
+    private double fenxiao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,11 +144,11 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                         textBuKeTiXian.setText(String.valueOf(shareIndex.getMoney().get(1)));
                         yuji = shareIndex.getMoney().get(2);
                         textYuJi.setText(String.valueOf(yuji));
-                        double d1 = shareIndex.getNum().get(1);
+                        fenxiao = shareIndex.getNum().get(1);
                         double d2 = shareIndex.getNum().get(2);
                         double d3 = shareIndex.getNum().get(3);
                         textFenXiaoYJ.setText(String.valueOf(shareIndex.getNum().get(0)));
-                        textFengXiaoDD.setText(String.valueOf((int) d1));
+                        textFengXiaoDD.setText(String.valueOf((int) fenxiao));
                         textTuanDui.setText(String.valueOf((int) d2));
                         textKeHu.setText(String.valueOf((int) d3));
                         teamShare = shareIndex.getTeamShare();
@@ -202,11 +203,11 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
             case R.id.viewFenXiaoDD:
                 intent.setClass(this, FenXiaoDDActivity.class);
-                intent.putExtra(Constant.IntentKey.VALUE, String.valueOf(yuji));
+                intent.putExtra(Constant.IntentKey.VALUE, String.valueOf((int) fenxiao));
                 startActivity(intent);
                 break;
             case R.id.viewYuJiYJ:
-                intent.setClass(this, FenXiaoDDActivity.class);
+                intent.setClass(this, YuJiYJActivity.class);
                 intent.putExtra(Constant.IntentKey.VALUE, String.valueOf(yuji));
                 startActivity(intent);
                 break;

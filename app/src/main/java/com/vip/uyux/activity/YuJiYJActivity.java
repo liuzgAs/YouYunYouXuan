@@ -19,7 +19,7 @@ import com.vip.uyux.fragment.FenXiaoFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickListener {
+public class YuJiYJActivity extends ZjbBaseActivity implements View.OnClickListener {
     private TabLayout tablayout;
     private ViewPager viewPager;
     List<String> list = new ArrayList<>();
@@ -29,7 +29,7 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fenxiao_yj);
+        setContentView(R.layout.activity_yu_ji_yj);
         init();
     }
 
@@ -54,9 +54,10 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void initViews() {
         textSum.setText(sum);
-        list.add("预返佣单");
-        list.add("已返佣单");
-        list.add("失效佣单");
+        list.add("全部");
+        list.add("待付款");
+        list.add("已付款");
+        list.add("已完成");
 //        list.add("返佣明细");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         tablayout.setupWithViewPager(viewPager);
@@ -114,8 +115,8 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
                     return new FenXiaoFragment(10);
                 case 2:
                     return new FenXiaoFragment(20);
-//                case 3:
-//                    return new FenXiaoFragment(30);
+                case 3:
+                    return new FenXiaoFragment(30);
 //                case 4:
 //                    return new FenXiaoFragment(40);
                 default:
