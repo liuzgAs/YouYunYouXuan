@@ -63,6 +63,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private String num3;
     private String num4;
     private List<IndexHome.RecomBean> recomBeanList;
+    private boolean isScroll = false;
+    private float downX;
+    private float upX;
 
     public ShouYeFragment() {
         // Required empty public constructor

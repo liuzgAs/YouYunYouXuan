@@ -328,38 +328,47 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     }, 0, 1000);
                     textCountdownDes.setText(goodsInfoData.getCountdownDes());
                     textDes.setText(goodsInfoData.getDes());
-                    textYuanJia.setText("¥" + goodsInfoData.getVipPrice());
+                    if (TextUtils.isEmpty(goodsInfoData.getVipPrice())) {
+                        textYuanJia.setText("");
+                    } else {
+                        textYuanJia.setText("¥" + goodsInfoData.getVipPrice());
+                    }
                     textPrice.setText("¥" + goodsInfoData.getPrice());
                     textSaleNumStockNum.setText("已售" + goodsInfoData.getSaleNum() + "|剩" + goodsInfoData.getStockNum() + "件");
                     textScoreDes.setText(goodsInfoData.getScoreDes());
                     textShareMoney.setText(goodsInfoData.getShareMoney());
                     textTitle.setText(goodsInfoData.getTitle());
-                    textVipDes.setText(goodsInfoData.getVipDes());
+                    if (TextUtils.isEmpty(goodsInfoData.getVipDes())) {
+                        textVipDes.setVisibility(View.GONE);
+                    } else {
+                        textVipDes.setVisibility(View.VISIBLE);
+                        textVipDes.setText(goodsInfoData.getVipDes());
+                    }
                     if (TextUtils.isEmpty(goodsInfoData.getOldPrice()) || Double.parseDouble(goodsInfoData.getOldPrice()) == 0) {
                         textOldPrice.setVisibility(View.GONE);
                     } else {
                         textOldPrice.setVisibility(View.VISIBLE);
                         textOldPrice.setText("天猫价¥" + goodsInfoData.getOldPrice());
                     }
-                    if (promotionsAfter!=null){
-                        if (promotionsAfter.size()>0){
+                    if (promotionsAfter != null) {
+                        if (promotionsAfter.size() > 0) {
                             viewChuXiao.setVisibility(View.VISIBLE);
                             textPromotionsBefore.setText(goodsInfoData.getPromotionsBefore());
                             textpromotionsBeforeDes.setText(goodsInfoData.getPromotionsAfter().get(0).getTitle());
-                        }else {
+                        } else {
                             viewChuXiao.setVisibility(View.GONE);
                         }
-                    }else {
+                    } else {
                         viewChuXiao.setVisibility(View.GONE);
                     }
-                    if (goodsInfoData.getServeiceDes()!=null){
-                        if (goodsInfoData.getServeiceDes().size()>0){
+                    if (goodsInfoData.getServeiceDes() != null) {
+                        if (goodsInfoData.getServeiceDes().size() > 0) {
                             gridview.setVisibility(View.VISIBLE);
                             gridview.setAdapter(new MyAdapter());
-                        }else {
+                        } else {
                             gridview.setVisibility(View.GONE);
                         }
-                    }else {
+                    } else {
                         gridview.setVisibility(View.GONE);
                     }
                 }

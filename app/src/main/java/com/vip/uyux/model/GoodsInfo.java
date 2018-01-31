@@ -106,7 +106,7 @@ public class GoodsInfo {
         private String title;
         private String des;
         private String price;
-        private double vipPrice;
+        private String vipPrice;
         private String oldPrice;
         private String vipDes;
         private int countdown;
@@ -225,11 +225,11 @@ public class GoodsInfo {
             this.price = price;
         }
 
-        public double getVipPrice() {
+        public String getVipPrice() {
             return vipPrice;
         }
 
-        public void setVipPrice(double vipPrice) {
+        public void setVipPrice(String vipPrice) {
             this.vipPrice = vipPrice;
         }
 
