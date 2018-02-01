@@ -184,16 +184,16 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getTXOkObject() {
-        String url = Constant.HOST + Constant.Url.WITHDRAW_ADDDONE;
+        String url = Constant.HOST + Constant.Url.WITHDRAW_ADDDONECOM;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
         params.put("money", editJinE.getText().toString().trim());
-        params.put("bank", String.valueOf(bankID));
-        params.put("userName", editPhone.getText().toString().trim());
-        params.put("code", editCode.getText().toString().trim());
+//        params.put("bank", String.valueOf(bankID));
+//        params.put("userName", editPhone.getText().toString().trim());
+//        params.put("code", editCode.getText().toString().trim());
         return new OkObject(params, url);
     }
 
@@ -233,7 +233,8 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
 //                    Toast.makeText(TiXianActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-                chooseBank();
+//                chooseBank();
+                tiXian();
                 break;
             case R.id.imageBack:
                 finish();

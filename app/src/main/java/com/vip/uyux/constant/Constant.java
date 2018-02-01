@@ -289,6 +289,10 @@ public class Constant {
          */
         public static final String WITHDRAW_ADDDONE = "/Withdraw/addDone";
         /**
+         * 佣金提现提交
+         */
+        public static final String WITHDRAW_ADDDONECOM = "/withdraw/addDoneCom";
+        /**
          * 余额提现记录
          */
         public static final String WITHDRAW_TBALANCE = "/Withdraw/tBalance";
