@@ -426,6 +426,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         findViewById(R.id.textLiJiGouMai).setOnClickListener(this);
         findViewById(R.id.textJiaRuGWC).setOnClickListener(this);
         findViewById(R.id.imageFenXiang).setOnClickListener(this);
+        findViewById(R.id.imageGouWuChe).setOnClickListener(this);
         imageShouCang.setOnClickListener(this);
     }
 
@@ -437,6 +438,11 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.imageGouWuChe:
+                Intent intent = new Intent();
+                intent.setClass(this,GouWuCheActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageFenXiang:
                 MyDialog.share(this, "ChanPinXQActivity", api, String.valueOf(id), goodsInfo.getData().getShare());
                 break;

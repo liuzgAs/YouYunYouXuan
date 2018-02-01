@@ -1,6 +1,7 @@
 package com.vip.uyux.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -75,6 +76,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
             }
         }
     };
+    private View imageBack;
 
     /**
      * 刷新car总价
@@ -96,6 +98,13 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
 
     public GouWuCheFragment() {
         // Required empty public constructor
+    }
+
+    int type;
+
+    @SuppressLint("ValidFragment")
+    public GouWuCheFragment(int type) {
+        this.type=type;
     }
 
 
@@ -132,11 +141,16 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
         textHeJi = (TextView) mInflate.findViewById(R.id.textHeJi);
         imageQuanXuan = (ImageView) mInflate.findViewById(R.id.imageQuanXuan);
         viewJieSuan = mInflate.findViewById(R.id.viewJieSuan);
+        imageBack = mInflate.findViewById(R.id.imageBack);
     }
 
     @Override
     protected void initViews() {
-        mInflate.findViewById(R.id.imageBack).setVisibility(View.GONE);
+        if (type==1){
+            imageBack.setVisibility(View.VISIBLE);
+        }else {
+            imageBack.setVisibility(View.GONE);
+        }
         viewJieSuan.setVisibility(View.GONE);
         ViewGroup.LayoutParams layoutParams = mRelaTitleStatue.getLayoutParams();
         layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) mContext.getResources().getDimension(R.dimen.titleHeight);
@@ -149,6 +163,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     protected void setListeners() {
         mInflate.findViewById(R.id.buttonJieSuan).setOnClickListener(this);
         mInflate.findViewById(R.id.viewQuanXuan).setOnClickListener(this);
+        imageBack.setOnClickListener(this);
     }
 
     @Override
@@ -268,6 +283,9 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.imageBack:
+                getActivity().finish();
+                break;
             case R.id.viewQuanXuan:
                 isQuan = !isQuan;
                 List<CartIndex.CartBean> allData = adapter.getAllData();

@@ -385,7 +385,8 @@
             android:name=".activity.WuLiuZhuShouActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activity.BangDingTelActivity" />
-        <activity android:name=".activity.DingDanXqActivity"></activity>
+        <activity android:name=".activity.DingDanXqActivity" />
+        <activity android:name=".activity.GouWuCheActivity"></activity>
     </application>
 
 </manifest>

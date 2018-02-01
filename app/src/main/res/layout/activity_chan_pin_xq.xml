@@ -52,6 +52,7 @@
                 android:background="@color/background" />
 
             <ImageView
+                android:id="@+id/imageGouWuChe"
                 android:layout_width="@dimen/normalItemHeight"
                 android:layout_height="@dimen/normalItemHeight"
                 android:padding="13dp"
