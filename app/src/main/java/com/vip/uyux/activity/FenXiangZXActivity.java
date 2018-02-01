@@ -203,12 +203,12 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
             case R.id.viewFenXiaoDD:
                 intent.setClass(this, FenXiaoDDActivity.class);
-                intent.putExtra(Constant.IntentKey.VALUE, fenxiao);
+                intent.putExtra(Constant.IntentKey.TYPE, 2);
                 startActivity(intent);
                 break;
             case R.id.viewYuJiYJ:
-                intent.setClass(this, YuJiYJActivity.class);
-                intent.putExtra(Constant.IntentKey.VALUE, yuji);
+                intent.setClass(this, FenXiaoDDActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, 1);
                 startActivity(intent);
                 break;
             case R.id.viewFenXiaoYJ:

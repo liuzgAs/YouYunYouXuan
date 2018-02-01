@@ -23,8 +23,9 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
     private TabLayout tablayout;
     private ViewPager viewPager;
     List<String> list = new ArrayList<>();
-    private String sum;
     private TextView textSum;
+    private int type;
+    private TextView textDes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void initIntent() {
         Intent intent = getIntent();
-        sum = intent.getStringExtra(Constant.IntentKey.VALUE);
+        type = intent.getIntExtra(Constant.IntentKey.TYPE, 1);
     }
 
     @Override
@@ -49,11 +50,23 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
         tablayout = (TabLayout) findViewById(R.id.tablayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         textSum = (TextView) findViewById(R.id.textSum);
+        textDes = (TextView) findViewById(R.id.textDes);
     }
 
     @Override
     protected void initViews() {
-        textSum.setText(sum);
+        switch (type) {
+            case 1:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("预计佣金");
+                textDes.setText("元");
+                break;
+            case 2:
+                ((TextView) findViewById(R.id.textViewTitle)).setText("分销订单");
+                textDes.setText("累计订单数");
+                break;
+            default:
+                break;
+        }
         list.add("预返佣单");
         list.add("已返佣单");
         list.add("失效佣单");
@@ -109,17 +122,17 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new FenXiaoFragment(0);
+                    return new FenXiaoFragment(0,type);
                 case 1:
-                    return new FenXiaoFragment(10);
+                    return new FenXiaoFragment(10,type);
                 case 2:
-                    return new FenXiaoFragment(20);
+                    return new FenXiaoFragment(20,type);
 //                case 3:
 //                    return new FenXiaoFragment(30);
 //                case 4:
 //                    return new FenXiaoFragment(40);
                 default:
-                    return new FenXiaoFragment(0);
+                    return new FenXiaoFragment(0,type);
             }
 
         }
@@ -128,5 +141,9 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
         public int getCount() {
             return list.size();
         }
+    }
+
+    public void setSum(String sum){
+        textSum.setText(sum);
     }
 }

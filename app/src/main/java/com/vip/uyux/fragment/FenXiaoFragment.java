@@ -17,6 +17,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.FenXiaoDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
@@ -36,6 +37,7 @@ import java.util.List;
 public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     int status;
+    int type;
     private View mInflate;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<BonusDistributionorder.DataBean> adapter;
@@ -45,8 +47,9 @@ public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     }
 
     @SuppressLint("ValidFragment")
-    public FenXiaoFragment(int status) {
+    public FenXiaoFragment(int status, int type) {
         this.status = status;
+        this.type = type;
     }
 
 
@@ -105,7 +108,32 @@ public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
+                ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+                    @Override
+                    public void onSuccess(String s) {
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        try {
+                            page++;
+                            BonusDistributionorder bonusDistributionorder = GsonUtils.parseJSON(s, BonusDistributionorder.class);
+                            int status = bonusDistributionorder.getStatus();
+                            if (status == 1) {
+                                List<BonusDistributionorder.DataBean> dataBeanList = bonusDistributionorder.getData();
+                                adapter.addAll(dataBeanList);
+                            } else if (status == 3) {
+                                MyDialog.showReLoginDialog(mContext);
+                            } else {
+                                adapter.pauseMore();
+                            }
+                        } catch (Exception e) {
+                            adapter.pauseMore();
+                        }
+                    }
 
+                    @Override
+                    public void onError() {
+                        adapter.pauseMore();
+                    }
+                });
             }
 
             @Override
@@ -160,14 +188,25 @@ public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayo
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.BONUS_DISTRIBUTIONORDER;
+        String url;
+        switch (type) {
+            case 1:
+                url = Constant.HOST + Constant.Url.SHARE_ESTIMATE;
+                break;
+            case 2:
+                url = Constant.HOST + Constant.Url.SHARE_ORDER;
+                break;
+            default:
+                url = Constant.HOST + Constant.Url.SHARE_ESTIMATE;
+                break;
+        }
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
         params.put("p", String.valueOf(page));
-        params.put("status", String.valueOf(status));
+        params.put("state", String.valueOf(status));
         return new OkObject(params, url);
     }
 
@@ -183,6 +222,7 @@ public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     BonusDistributionorder bonusDistributionorder = GsonUtils.parseJSON(s, BonusDistributionorder.class);
                     if (bonusDistributionorder.getStatus() == 1) {
                         List<BonusDistributionorder.DataBean> dataBeanList = bonusDistributionorder.getData();
+                        ((FenXiaoDDActivity)mContext).setSum(bonusDistributionorder.getAmount());
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (bonusDistributionorder.getStatus() == 3) {

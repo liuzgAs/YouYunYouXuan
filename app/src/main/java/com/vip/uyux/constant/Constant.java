@@ -307,7 +307,11 @@ public class Constant {
         /**
          * 分销订单
          */
-        public static final String BONUS_DISTRIBUTIONORDER = "/bonus/distributionOrder";
+        public static final String SHARE_ORDER = "/Share/order";
+        /**
+         * 预计佣金
+         */
+        public static final String SHARE_ESTIMATE = "/Share/estimate";
         /**
          * 物流助手
          */

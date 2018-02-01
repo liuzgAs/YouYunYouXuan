@@ -54,10 +54,9 @@ public class YuJiYJActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     protected void initViews() {
         textSum.setText(sum);
-        list.add("全部");
-        list.add("待付款");
-        list.add("已付款");
-        list.add("已完成");
+        list.add("预返佣单");
+        list.add("已返佣单");
+        list.add("失效佣单");
 //        list.add("返佣明细");
         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
         tablayout.setupWithViewPager(viewPager);
@@ -110,17 +109,17 @@ public class YuJiYJActivity extends ZjbBaseActivity implements View.OnClickListe
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new FenXiaoFragment(0);
+                    return new FenXiaoFragment(0,1);
                 case 1:
-                    return new FenXiaoFragment(10);
+                    return new FenXiaoFragment(10,1);
                 case 2:
-                    return new FenXiaoFragment(20);
-                case 3:
-                    return new FenXiaoFragment(30);
+                    return new FenXiaoFragment(20,1);
+//                case 3:
+//                    return new FenXiaoFragment(30);
 //                case 4:
 //                    return new FenXiaoFragment(40);
                 default:
-                    return new FenXiaoFragment(0);
+                    return new FenXiaoFragment(0,1);
             }
 
         }

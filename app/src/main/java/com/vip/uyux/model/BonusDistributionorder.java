@@ -11,16 +11,28 @@ import java.util.List;
 public class BonusDistributionorder {
 
     /**
-     * data : [{"id":1,"order_no":"15252253325[一级]","name":"周公","headimg":"","nickname":"liuming1235","grade_name":"大师","estimate_money":22,"status":10,"order_goods":[{"gid":1,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"},{"gid":2,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"}]},{"id":1,"order_no":"15252253325[一级]","name":"凯凯","headimg":"","nickname":"liuming1235","grade_name":"大师","estimate_money":22,"status":10,"order_goods":[{"gid":1,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"},{"gid":2,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"}]},{"id":1,"order_no":"15252253325[一级]","name":"巴萨","headimg":"","nickname":"liuming1235","grade_name":"大师","estimate_money":22,"status":20,"order_goods":[{"gid":1,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"},{"gid":2,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"}]},{"id":1,"order_no":"15252253325[一级]","name":"周大及","headimg":"","nickname":"liuming1235","grade_name":"大师","estimate_money":22,"status":30,"order_goods":[{"gid":1,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"},{"gid":2,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"}]},{"id":1,"order_no":"15252253325[一级]","name":"张铪","headimg":"","nickname":"liuming1235","grade_name":"大师","estimate_money":22,"status":40,"order_goods":[{"gid":1,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"},{"gid":2,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"}]},{"id":1,"order_no":"15252253325[一级]","name":"孙怡","headimg":"","nickname":"liuming1235","grade_name":"大师","estimate_money":22,"status":50,"order_goods":[{"gid":1,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"},{"gid":2,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"}]}]
-     * page : {"page":1,"pageTotal":1,"pageSize":15,"dataTotal":6}
+     * amount : 0.12
+     * data : [{"oid":237,"orderSn":"编号UY201801280351091[直推]","orderSnDes":"已付款","nickname":"优云优选示范","nicknameDes":1011118,"headimg":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTISj8QhdS54r5I0SMic92qQib1Q2KlicZzpd4YVTibLMV0kgT46mxkHGQSJWvvpzjfQFumvXwuiaJWfs4A/132","gn":"","des":"预计佣金：￥0.12"}]
+     * page : {"page":"1","pageTotal":1,"pageSize":10,"dataTotal":1}
+     * type : [{"n":"全部","v":"0","act":1},{"n":"已付款","v":"20","act":0},{"n":"已完成","v":"40","act":0},{"n":"已返佣","v":"60","act":0}]
      * status : 1
-     * info : 获取成功
+     * info : 操作成功！
      */
 
+    private String amount;
     private PageBean page;
     private int status;
     private String info;
     private List<DataBean> data;
+    private List<TypeBean> type;
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     public PageBean getPage() {
         return page;
@@ -54,24 +66,32 @@ public class BonusDistributionorder {
         this.data = data;
     }
 
+    public List<TypeBean> getType() {
+        return type;
+    }
+
+    public void setType(List<TypeBean> type) {
+        this.type = type;
+    }
+
     public static class PageBean {
         /**
          * page : 1
          * pageTotal : 1
-         * pageSize : 15
-         * dataTotal : 6
+         * pageSize : 10
+         * dataTotal : 1
          */
 
-        private int page;
+        private String page;
         private int pageTotal;
         private int pageSize;
         private int dataTotal;
 
-        public int getPage() {
+        public String getPage() {
             return page;
         }
 
-        public void setPage(int page) {
+        public void setPage(String page) {
             this.page = page;
         }
 
@@ -102,66 +122,47 @@ public class BonusDistributionorder {
 
     public static class DataBean {
         /**
-         * id : 1
-         * order_no : 15252253325[一级]
-         * name : 周公
-         * headimg :
-         * nickname : liuming1235
-         * grade_name : 大师
-         * estimate_money : 22
-         * status : 10
-         * order_goods : [{"gid":1,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"},{"gid":2,"goods_img":"","goods_title":"一品轩皇家有机食用调和油","create_time":"2018-08-31 14:59:12"}]
+         * oid : 237
+         * orderSn : 编号UY201801280351091[直推]
+         * orderSnDes : 已付款
+         * nickname : 优云优选示范
+         * nicknameDes : 1011118
+         * headimg : https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTISj8QhdS54r5I0SMic92qQib1Q2KlicZzpd4YVTibLMV0kgT46mxkHGQSJWvvpzjfQFumvXwuiaJWfs4A/132
+         * gn :
+         * des : 预计佣金：￥0.12
          */
 
-        private int id;
-        private String order_no;
-        private String name;
-        private String headimg;
+        private int oid;
+        private String orderSn;
+        private String orderSnDes;
         private String nickname;
-        private String grade_name;
-        private int estimate_money;
-        private int status;
-        private String status_v;
-        private List<OrderGoodsBean> order_goods;
+        private String nicknameDes;
+        private String headimg;
+        private String gn;
+        private String des;
 
-        public String getStatus_v() {
-            return status_v;
+        public int getOid() {
+            return oid;
         }
 
-        public void setStatus_v(String status_v) {
-            this.status_v = status_v;
+        public void setOid(int oid) {
+            this.oid = oid;
         }
 
-        public int getId() {
-            return id;
+        public String getOrderSn() {
+            return orderSn;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setOrderSn(String orderSn) {
+            this.orderSn = orderSn;
         }
 
-        public String getOrder_no() {
-            return order_no;
+        public String getOrderSnDes() {
+            return orderSnDes;
         }
 
-        public void setOrder_no(String order_no) {
-            this.order_no = order_no;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getHeadimg() {
-            return headimg;
-        }
-
-        public void setHeadimg(String headimg) {
-            this.headimg = headimg;
+        public void setOrderSnDes(String orderSnDes) {
+            this.orderSnDes = orderSnDes;
         }
 
         public String getNickname() {
@@ -172,82 +173,72 @@ public class BonusDistributionorder {
             this.nickname = nickname;
         }
 
-        public String getGrade_name() {
-            return grade_name;
+        public String getNicknameDes() {
+            return nicknameDes;
         }
 
-        public void setGrade_name(String grade_name) {
-            this.grade_name = grade_name;
+        public void setNicknameDes(String nicknameDes) {
+            this.nicknameDes = nicknameDes;
         }
 
-        public int getEstimate_money() {
-            return estimate_money;
+        public String getHeadimg() {
+            return headimg;
         }
 
-        public void setEstimate_money(int estimate_money) {
-            this.estimate_money = estimate_money;
+        public void setHeadimg(String headimg) {
+            this.headimg = headimg;
         }
 
-        public int getStatus() {
-            return status;
+        public String getGn() {
+            return gn;
         }
 
-        public void setStatus(int status) {
-            this.status = status;
+        public void setGn(String gn) {
+            this.gn = gn;
         }
 
-        public List<OrderGoodsBean> getOrder_goods() {
-            return order_goods;
+        public String getDes() {
+            return des;
         }
 
-        public void setOrder_goods(List<OrderGoodsBean> order_goods) {
-            this.order_goods = order_goods;
+        public void setDes(String des) {
+            this.des = des;
+        }
+    }
+
+    public static class TypeBean {
+        /**
+         * n : 全部
+         * v : 0
+         * act : 1
+         */
+
+        private String n;
+        private String v;
+        private int act;
+
+        public String getN() {
+            return n;
         }
 
-        public static class OrderGoodsBean {
-            /**
-             * gid : 1
-             * goods_img :
-             * goods_title : 一品轩皇家有机食用调和油
-             * create_time : 2018-08-31 14:59:12
-             */
+        public void setN(String n) {
+            this.n = n;
+        }
 
-            private int gid;
-            private String goods_img;
-            private String goods_title;
-            private String create_time;
+        public String getV() {
+            return v;
+        }
 
-            public int getGid() {
-                return gid;
-            }
+        public void setV(String v) {
+            this.v = v;
+        }
 
-            public void setGid(int gid) {
-                this.gid = gid;
-            }
+        public int getAct() {
+            return act;
+        }
 
-            public String getGoods_img() {
-                return goods_img;
-            }
-
-            public void setGoods_img(String goods_img) {
-                this.goods_img = goods_img;
-            }
-
-            public String getGoods_title() {
-                return goods_title;
-            }
-
-            public void setGoods_title(String goods_title) {
-                this.goods_title = goods_title;
-            }
-
-            public String getCreate_time() {
-                return create_time;
-            }
-
-            public void setCreate_time(String create_time) {
-                this.create_time = create_time;
-            }
+        public void setAct(int act) {
+            this.act = act;
         }
     }
 }
