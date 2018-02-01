@@ -121,12 +121,12 @@
             android:layout_marginLeft="@dimen/leftAndRight"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:src="@mipmap/tip1"
+            android:src="@mipmap/tip4"
             android:id="@+id/image0300"
             android:layout_width="55dp"
             android:layout_height="55dp" />
         <TextView
-            android:text="客服消息"
+            android:text="客服助手"
             android:layout_toRightOf="@+id/image0300"
             android:textSize="@dimen/bigText"
             android:textColor="@color/light_black"

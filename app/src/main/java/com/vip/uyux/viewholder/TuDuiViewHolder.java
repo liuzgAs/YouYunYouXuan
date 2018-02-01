@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.model.CustomerMyteam;
-import com.vip.uyux.util.DateTransforam;
 import com.vip.uyux.util.GlideApp;
 
 /**
@@ -40,7 +39,7 @@ public class TuDuiViewHolder extends BaseViewHolder<CustomerMyteam.DataBean> {
                 .into(imageImg);
         textName.setText(data.getName());
         textDes.setText("佣金：+" +data.getMoney()+"\u3000\u3000"+"成员数："+data.getMember());
-        textDate.setText(DateTransforam.stampToDate(Long.parseLong(data.getCreate_time())));
+        textDate.setText(data.getCreate_time());
     }
     
 }

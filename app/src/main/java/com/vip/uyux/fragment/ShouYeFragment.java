@@ -2,6 +2,7 @@ package com.vip.uyux.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,6 +20,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
@@ -118,6 +120,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private void initRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setRefreshingColorResources(R.color.basic_color);
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.top), 0, 0);
+        itemDecoration.setDrawLastItem(false);
+        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexHome.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
@@ -141,7 +146,12 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             @Override
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(mContext).inflate(R.layout.header_index, null);
+                int screenWidth = ScreenUtils.getScreenWidth(mContext);
                 banner = view.findViewById(R.id.banner);
+                ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
+                layoutParams.width = screenWidth;
+                layoutParams.height = (int) (578f*(float) screenWidth/1080f);
+                banner.setLayoutParams(layoutParams);
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
                 textZhiShiQi = view.findViewById(R.id.textZhiShiQi);

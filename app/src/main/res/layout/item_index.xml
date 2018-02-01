@@ -26,14 +26,6 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <ImageView
-                android:layout_toRightOf="@+id/text0000"
-                android:id="@+id/image0000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/leftAndRight"
-                android:src="@mipmap/right" />
 
             <TextView
                 android:id="@+id/text0000"
@@ -42,8 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:text="更多"
+                android:layout_marginRight="@dimen/leftAndRight"
+                android:text="更多 >"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/litterText" />
         </RelativeLayout>

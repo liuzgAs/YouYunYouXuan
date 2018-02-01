@@ -62,7 +62,7 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
 
     @Override
     protected void initViews() {
-        ((TextView) findViewById(R.id.textViewTitle)).setText("积分商城");
+        ((TextView) findViewById(R.id.textViewTitle)).setText("U币商城");
         initRecycler();
     }
 
