@@ -113,7 +113,7 @@ public class Customer {
         private String create_time;
         private String band;
         private String headimg;
-        private int lmoney;
+        private String lmoney;
 
         public String getHeadimg() {
             return headimg;
@@ -155,11 +155,11 @@ public class Customer {
             this.band = band;
         }
 
-        public int getLmoney() {
+        public String getLmoney() {
             return lmoney;
         }
 
-        public void setLmoney(int lmoney) {
+        public void setLmoney(String lmoney) {
             this.lmoney = lmoney;
         }
     }

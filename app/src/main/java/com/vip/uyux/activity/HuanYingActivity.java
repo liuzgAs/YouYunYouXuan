@@ -3,6 +3,7 @@ package com.vip.uyux.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.vip.uyux.R;
@@ -20,7 +21,10 @@ import com.vip.uyux.util.VersionUtils;
 import java.util.HashMap;
 
 /**
- * web网页        app_i主页      app_goods_info商品详情页（配item_id）       app_user_msg用户消息页
+ * web网页
+ * app_i主页
+ * app_goods_info商品详情页（配item_id）
+ * app_user_msg用户消息页
  * app_goods_pcate商品列表页（配item_id  当pcate传）
  * app_goods_cate商品列表页（配item_id  当cate传）
  */
@@ -29,6 +33,7 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
     private String isFirst = "1";
     private long currentTimeMillis;
     private int GPS_REQUEST_CODE = 10;
+    private ImageView imageImg;
 
     /**
      * des： 网络请求参数
@@ -89,7 +94,31 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    toMainActivity();
+//                    if (indexStartad.getAdvs().size() > 0) {
+//                        GlideApp.with(HuanYingActivity.this)
+//                                .asBitmap()
+//                                .load(indexStartad.getAdvs().get(0).getImg())
+//                                .centerCrop()
+//                                .placeholder(R.mipmap.ic_empty)
+//                                .into(new SimpleTarget<Bitmap>() {
+//                                    @Override
+//                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+//                                        imageImg.setImageBitmap(resource);
+//                                    }
+//                                });
+//
+//                        RequestOptions options = new RequestOptions();
+//                        options.centerCrop()
+//                                .placeholder(R.mipmap.ic_empty)
+//                                .error(R.mipmap.ic_empty);
+//
+//                        Glide.with(HuanYingActivity.this)
+//                                .load(indexStartad.getAdvs().get(0).getImg())
+//                                .apply(options)
+//                                .into(imageImg);
+//                    } else {
+                        toMainActivity();
+//                    }
                 }
             }
 
@@ -127,7 +156,7 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
 
     @Override
     protected void findID() {
-
+        imageImg = findViewById(R.id.imageImg);
     }
 
     @Override

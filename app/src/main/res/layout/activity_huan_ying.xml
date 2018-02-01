@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.HuanYingActivity">
     <ImageView
+        android:id="@+id/imageImg"
         android:scaleType="centerCrop"
         android:src="@mipmap/welcome"
         android:layout_width="match_parent"
