@@ -28,6 +28,7 @@ import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.model.IndexRecom;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
@@ -53,8 +54,8 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private View viewBar;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<IndexRecom.DataBean> adapter;
-    private List<IndexRecom.BannerBean> bannerBeanList;
-    private List<IndexRecom.Banner2Bean> banner2BeanList;
+    private List<AdvsBean> bannerBeanList;
+    private List<AdvsBean> banner2BeanList;
 
     public TuiJianFragment() {
         // Required empty public constructor
@@ -168,6 +169,15 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     }
                 });
                 viewViewPager = view.findViewById(R.id.viewViewPager);
+                image0300.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.putExtra(Constant.IntentKey.BEAN,banner2BeanList.get(0));
+                        intent.setAction(Constant.BroadcastCode.ADV);
+                        mContext.sendBroadcast(intent);
+                    }
+                });
                 return view;
             }
 

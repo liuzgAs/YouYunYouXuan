@@ -41,25 +41,15 @@ public class BannerAdapter extends PagerAdapter{
         inflate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(mContext, WebActivity.class);
-//                intent.putExtra(Constant.IntentKey.TITLE, imgList.get(position%imgList.size()).getTitle());
-//                intent.putExtra(Constant.IntentKey.URL, imgList.get(position%imgList.size()).getShare_url());
-//                mContext.startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra(Constant.IntentKey.BEAN,imgList.get(position%imgList.size()));
+                intent.setAction(Constant.BroadcastCode.ADV);
+                mContext.sendBroadcast(intent);
             }
         });
         ImageView imageImg = inflate.findViewById(R.id.imageImg);
         if (imgList!=null){
             if (imgList.size()>0){
-                imageImg.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.putExtra(Constant.IntentKey.BEAN,imgList.get(position%imgList.size()));
-                        intent.setAction(Constant.BroadcastCode.ADV);
-                        mContext.sendBroadcast(intent);
-                    }
-                });
                 GlideApp.with(mContext)
                         .asBitmap()
                         .load(imgList.get(position%imgList.size()).getImg())

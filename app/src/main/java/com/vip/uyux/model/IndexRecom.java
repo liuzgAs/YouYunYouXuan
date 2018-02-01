@@ -19,8 +19,8 @@ public class IndexRecom {
 
     private int status;
     private String info;
-    private List<BannerBean> banner;
-    private List<Banner2Bean> banner2;
+    private List<AdvsBean> banner;
+    private List<AdvsBean> banner2;
     private List<DataBean> data;
 
     public int getStatus() {
@@ -39,19 +39,19 @@ public class IndexRecom {
         this.info = info;
     }
 
-    public List<BannerBean> getBanner() {
+    public List<AdvsBean> getBanner() {
         return banner;
     }
 
-    public void setBanner(List<BannerBean> banner) {
+    public void setBanner(List<AdvsBean> banner) {
         this.banner = banner;
     }
 
-    public List<Banner2Bean> getBanner2() {
+    public List<AdvsBean> getBanner2() {
         return banner2;
     }
 
-    public void setBanner2(List<Banner2Bean> banner2) {
+    public void setBanner2(List<AdvsBean> banner2) {
         this.banner2 = banner2;
     }
 
@@ -63,97 +63,6 @@ public class IndexRecom {
         this.data = data;
     }
 
-    public static class BannerBean {
-        /**
-         * img : http://api.uyux.vip/Uploads/attachment/20180119/5ce9903e9c1a656874d488ebc077fa88.png
-         * code :
-         * item_id : 0
-         * url :
-         */
-
-        private String img;
-        private String code;
-        private int item_id;
-        private String url;
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public int getItem_id() {
-            return item_id;
-        }
-
-        public void setItem_id(int item_id) {
-            this.item_id = item_id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
-
-    public static class Banner2Bean {
-        /**
-         * img : http://api.uyux.vip/Uploads/attachment/20180119/5faa856af1159f4ca38cafa44f44db9e.png
-         * code :
-         * item_id : 0
-         * url :
-         */
-
-        private String img;
-        private String code;
-        private int item_id;
-        private String url;
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public int getItem_id() {
-            return item_id;
-        }
-
-        public void setItem_id(int item_id) {
-            this.item_id = item_id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
 
     public static class DataBean {
         /**

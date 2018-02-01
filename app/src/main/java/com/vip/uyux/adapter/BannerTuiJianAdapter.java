@@ -1,6 +1,7 @@
 package com.vip.uyux.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.vip.uyux.R;
-import com.vip.uyux.model.IndexRecom;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.util.GlideApp;
 
 import java.util.List;
@@ -21,9 +23,9 @@ import java.util.List;
 public class BannerTuiJianAdapter extends PagerAdapter{
 
     private Context mContext;
-    private  List<IndexRecom.BannerBean> imgList;
+    private  List<AdvsBean> imgList;
 
-    public BannerTuiJianAdapter(Context context, List<IndexRecom.BannerBean> imgList) {
+    public BannerTuiJianAdapter(Context context, List<AdvsBean> imgList) {
         this.mContext = context;
         this.imgList=imgList;
     }
@@ -39,11 +41,10 @@ public class BannerTuiJianAdapter extends PagerAdapter{
         inflate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(mContext, WebActivity.class);
-//                intent.putExtra(Constant.IntentKey.TITLE, imgList.get(position%imgList.size()).getTitle());
-//                intent.putExtra(Constant.IntentKey.URL, imgList.get(position%imgList.size()).getShare_url());
-//                mContext.startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra(Constant.IntentKey.BEAN,imgList.get(position%imgList.size()));
+                intent.setAction(Constant.BroadcastCode.ADV);
+                mContext.sendBroadcast(intent);
             }
         });
         ImageView imageImg = inflate.findViewById(R.id.imageImg);
