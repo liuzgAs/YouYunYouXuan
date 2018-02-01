@@ -1,11 +1,23 @@
 package com.vip.uyux.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseNotLeftActivity;
@@ -23,10 +35,10 @@ import java.util.HashMap;
 /**
  * web网页
  * app_i主页
- * app_goods_info商品详情页（配item_id）
- * app_user_msg用户消息页
- * app_goods_pcate商品列表页（配item_id  当pcate传）
- * app_goods_cate商品列表页（配item_id  当cate传）
+ * app_goods_info 商品详情页（配item_id）
+ * app_user_msg 用户消息页
+ * app_goods_pcate 商品列表页（配item_id  当pcate传）
+ * app_goods_cate 商品列表页（配item_id  当cate传）
  */
 public class HuanYingActivity extends ZjbBaseNotLeftActivity {
     private static final int LOCATION = 1991;
@@ -34,6 +46,9 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
     private long currentTimeMillis;
     private int GPS_REQUEST_CODE = 10;
     private ImageView imageImg;
+    private TextView textDaoJiShi;
+    private boolean isBreak = true;
+    private int daoJiShi =3;
 
     /**
      * des： 网络请求参数
@@ -86,7 +101,7 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
 
             }
 
-            private void go(IndexStartad indexStartad) {
+            private void go(final IndexStartad indexStartad) {
                 ACache aCache = ACache.get(HuanYingActivity.this, Constant.Acache.LOCATION);
                 aCache.put(Constant.Acache.DID, indexStartad.getDid() + "");
                 if (TextUtils.equals(isFirst, "1")) {
@@ -94,31 +109,78 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
                     startActivity(intent);
                     finish();
                 } else {
-//                    if (indexStartad.getAdvs().size() > 0) {
-//                        GlideApp.with(HuanYingActivity.this)
-//                                .asBitmap()
-//                                .load(indexStartad.getAdvs().get(0).getImg())
-//                                .centerCrop()
-//                                .placeholder(R.mipmap.ic_empty)
-//                                .into(new SimpleTarget<Bitmap>() {
-//                                    @Override
-//                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-//                                        imageImg.setImageBitmap(resource);
-//                                    }
-//                                });
-//
-//                        RequestOptions options = new RequestOptions();
-//                        options.centerCrop()
-//                                .placeholder(R.mipmap.ic_empty)
-//                                .error(R.mipmap.ic_empty);
-//
-//                        Glide.with(HuanYingActivity.this)
-//                                .load(indexStartad.getAdvs().get(0).getImg())
-//                                .apply(options)
-//                                .into(imageImg);
-//                    } else {
+                    if (indexStartad.getAdvs().size() > 0) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RequestOptions options = new RequestOptions();
+                                options.centerCrop()
+                                        .placeholder(R.mipmap.welcome)
+                                        .error(R.mipmap.welcome);
+                                Glide.with(HuanYingActivity.this)
+                                        .load(indexStartad.getAdvs().get(0).getImg())
+                                        .apply(options)
+                                        .listener(new RequestListener<Drawable>() {
+                                            @Override
+                                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                                return false;
+                                            }
+
+                                            @Override
+                                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                                textDaoJiShi.setVisibility(View.VISIBLE);
+                                                textDaoJiShi.setText(daoJiShi+"s");
+                                                textDaoJiShi.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        isBreak = false;
+                                                        toMainActivity();
+                                                    }
+                                                });
+                                                imageImg.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        if (!TextUtils.isEmpty(indexStartad.getAdvs().get(0).getCode())){
+                                                            isBreak = false;
+                                                            Intent intent = new Intent();
+                                                            intent.setClass(HuanYingActivity.this, MainActivity.class);
+                                                            intent.putExtra(Constant.IntentKey.BEAN,indexStartad.getAdvs().get(0));
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    }
+                                                });
+                                                ThreadPoolHelp.Builder
+                                                        .cached()
+                                                        .builder()
+                                                        .execute(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                try {
+                                                                    while(isBreak){
+                                                                        Thread.sleep(1000);
+                                                                        daoJiShi--;
+                                                                        textDaoJiShi.setText(daoJiShi+"s");
+                                                                        if (daoJiShi==0){
+                                                                            isBreak=false;
+                                                                            toMainActivity();
+                                                                        }
+                                                                    }
+                                                                } catch (InterruptedException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        });
+                                                return false;
+                                            }
+                                        })
+                                        .transition(new DrawableTransitionOptions().crossFade(1000))
+                                        .into(imageImg);
+                            }
+                        });
+                    } else {
                         toMainActivity();
-//                    }
+                    }
                 }
             }
 
@@ -157,11 +219,12 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
     @Override
     protected void findID() {
         imageImg = findViewById(R.id.imageImg);
+        textDaoJiShi = findViewById(R.id.textDaoJiShi);
     }
 
     @Override
     protected void initViews() {
-
+        textDaoJiShi.setVisibility(View.GONE);
     }
 
     @Override

@@ -386,6 +386,7 @@ public class Constant {
         public static final String SHUAXINDD = "shuaXinDD";
         public static final String TIXIAN = "tiXian";
         public static final String BANG_DING = "bangDing";
+        public static final String ADV = "adv";
     }
 
 

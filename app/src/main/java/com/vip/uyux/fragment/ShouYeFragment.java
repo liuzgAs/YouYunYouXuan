@@ -33,6 +33,7 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
@@ -58,8 +59,8 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private View viewBar;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<IndexHome.DataBean> adapter;
-    private List<IndexHome.BannerBean> bannerList;
-    private List<IndexHome.Banner2Bean> banner2BeanList;
+    private List<AdvsBean> bannerList;
+    private List<AdvsBean> banner2BeanList;
     private String num1;
     private String num2;
     private String num3;
@@ -236,7 +237,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                         banner.setPages(new CBViewHolderCreator() {
                             @Override
                             public Object createHolder() {
-                                return new IndexBannerImgHolderView(bannerList);
+                                return new IndexBannerImgHolderView();
                             }
                         }, bannerList);
                     } else {

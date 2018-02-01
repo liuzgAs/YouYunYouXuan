@@ -1,6 +1,7 @@
 package com.vip.uyux.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.vip.uyux.R;
-import com.vip.uyux.model.IndexHome;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.util.GlideApp;
 
 import java.util.List;
@@ -21,9 +23,9 @@ import java.util.List;
 public class BannerAdapter extends PagerAdapter{
 
     private Context mContext;
-    private  List<IndexHome.Banner2Bean> imgList;
+    private  List<AdvsBean> imgList;
 
-    public BannerAdapter(Context context, List<IndexHome.Banner2Bean> imgList) {
+    public BannerAdapter(Context context, List<AdvsBean> imgList) {
         this.mContext = context;
         this.imgList=imgList;
     }
@@ -49,6 +51,15 @@ public class BannerAdapter extends PagerAdapter{
         ImageView imageImg = inflate.findViewById(R.id.imageImg);
         if (imgList!=null){
             if (imgList.size()>0){
+                imageImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.putExtra(Constant.IntentKey.BEAN,imgList.get(position%imgList.size()));
+                        intent.setAction(Constant.BroadcastCode.ADV);
+                        mContext.sendBroadcast(intent);
+                    }
+                });
                 GlideApp.with(mContext)
                         .asBitmap()
                         .load(imgList.get(position%imgList.size()).getImg())

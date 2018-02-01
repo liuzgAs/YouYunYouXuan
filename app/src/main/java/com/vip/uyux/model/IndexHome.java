@@ -29,8 +29,8 @@ public class IndexHome {
     private String num3;
     private String num4;
     private int status;
-    private List<BannerBean> banner;
-    private List<Banner2Bean> banner2;
+    private List<AdvsBean> banner;
+    private List<AdvsBean> banner2;
     private List<DataBean> data;
     private List<RecomBean> recom;
 
@@ -82,19 +82,19 @@ public class IndexHome {
         this.status = status;
     }
 
-    public List<BannerBean> getBanner() {
+    public List<AdvsBean> getBanner() {
         return banner;
     }
 
-    public void setBanner(List<BannerBean> banner) {
+    public void setBanner(List<AdvsBean> banner) {
         this.banner = banner;
     }
 
-    public List<Banner2Bean> getBanner2() {
+    public List<AdvsBean> getBanner2() {
         return banner2;
     }
 
-    public void setBanner2(List<Banner2Bean> banner2) {
+    public void setBanner2(List<AdvsBean> banner2) {
         this.banner2 = banner2;
     }
 
@@ -114,97 +114,6 @@ public class IndexHome {
         this.recom = recom;
     }
 
-    public static class BannerBean {
-        /**
-         * code :
-         * img : http://api.uyux.vip/Uploads/attachment/20180119/5faa856af1159f4ca38cafa44f44db9e.png
-         * item_id : 0
-         * url :
-         */
-
-        private String code;
-        private String img;
-        private int item_id;
-        private String url;
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
-        }
-
-        public int getItem_id() {
-            return item_id;
-        }
-
-        public void setItem_id(int item_id) {
-            this.item_id = item_id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
-
-    public static class Banner2Bean {
-        /**
-         * code :
-         * img : http://api.uyux.vip/Uploads/attachment/20180119/5ce9903e9c1a656874d488ebc077fa88.png
-         * item_id : 0
-         * url :
-         */
-
-        private String code;
-        private String img;
-        private int item_id;
-        private String url;
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
-        }
-
-        public int getItem_id() {
-            return item_id;
-        }
-
-        public void setItem_id(int item_id) {
-            this.item_id = item_id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
 
     public static class DataBean {
         /**

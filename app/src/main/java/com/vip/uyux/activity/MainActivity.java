@@ -1,5 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
@@ -16,6 +20,7 @@ import com.vip.uyux.fragment.GouWuCheFragment;
 import com.vip.uyux.fragment.ShouYeFragment;
 import com.vip.uyux.fragment.TuiJianFragment;
 import com.vip.uyux.fragment.WoDeFragment;
+import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.util.BackHandlerHelper;
 import com.vip.uyux.util.UpgradeUtils;
 
@@ -37,6 +42,20 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
             R.drawable.selector_item05,
     };
     public FragmentTabHost mTabHost;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.ADV:
+                    AdvsBean advsBean = (AdvsBean) intent.getSerializableExtra(Constant.IntentKey.BEAN);
+                    tiaoZhuan(advsBean);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +72,53 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
 
     @Override
     protected void initIntent() {
+        Intent intent = getIntent();
+        AdvsBean advsBean = (AdvsBean) intent.getSerializableExtra(Constant.IntentKey.BEAN);
+        if (advsBean != null) {
+            tiaoZhuan(advsBean);
+        }
+    }
 
+    /**
+     * code跳转
+     *
+     * @param advsBean
+     */
+    private void tiaoZhuan(AdvsBean advsBean) {
+        Intent intent = new Intent();
+        switch (advsBean.getCode()) {
+            case "web":
+                intent.setClass(this, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, advsBean.getTitle());
+                intent.putExtra(Constant.IntentKey.URL, advsBean.getUrl());
+                startActivity(intent);
+                break;
+            case "app_i":
+                break;
+            case "app_goods_info":
+                intent.setClass(this, ChanPinXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, advsBean.getItem_id());
+                startActivity(intent);
+                break;
+            case "app_user_msg":
+                intent.setClass(this, XiaoXiZXActivity.class);
+                startActivity(intent);
+                break;
+            case "app_goods_pcate":
+                intent.setClass(this, ChanPinLBActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, advsBean.getTitle());
+                intent.putExtra(Constant.IntentKey.PCATE, advsBean.getItem_id());
+                startActivity(intent);
+                break;
+            case "app_goods_cate":
+                intent.setClass(this, ChanPinLBActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, advsBean.getTitle());
+                intent.putExtra(Constant.IntentKey.CATE, advsBean.getItem_id());
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -109,5 +174,19 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 System.exit(0);
             }
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.ADV);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(reciver);
     }
 }

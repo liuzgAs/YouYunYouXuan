@@ -10,4 +10,16 @@
         android:src="@mipmap/welcome"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <TextView
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_marginTop="25dp"
+        android:id="@+id/textDaoJiShi"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/litterText"
+        android:gravity="center"
+        android:background="@drawable/shape_daojishi"
+        android:text="3s"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 </RelativeLayout>
