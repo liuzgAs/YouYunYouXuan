@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ViewPagerIndicator="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:ViewPagerIndicator="http://schemas.android.com/tools"
     android:background="@color/background"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/indexBannerHeight"
-            app:canLoop="true"/>
+            app:canLoop="true" />
 
 
         <TextView
@@ -74,14 +74,14 @@
                 android:textSize="@dimen/moreLitterText" />
 
             <LinearLayout
-                android:divider="@drawable/line_shu"
-                android:showDividers="middle"
                 android:id="@+id/viewNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:orientation="horizontal">
+                android:divider="@drawable/line_shu"
+                android:orientation="horizontal"
+                android:showDividers="middle">
 
             </LinearLayout>
 
@@ -94,11 +94,13 @@
 
             <LinearLayout
                 android:id="@+id/viewNum2"
-                android:divider="@drawable/line_shu"
-                android:showDividers="middle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:divider="@drawable/line_shu"
+                android:orientation="horizontal"
+                android:showDividers="middle">
 
             </LinearLayout>
 
@@ -119,7 +121,6 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
-            app:cardPreventCornerOverlap="false"
             android:layout_width="match_parent"
             android:layout_height="85dp"
             android:layout_marginBottom="20dp"
@@ -127,12 +128,13 @@
             android:layout_marginRight="6dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            app:cardPreventCornerOverlap="false">
 
             <RelativeLayout
-                android:background="@drawable/jianbian_benshoushangxin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/jianbian_benshoushangxin"
                 android:gravity="center">
 
                 <ImageView
@@ -143,16 +145,16 @@
                     android:src="@mipmap/benzhoushangxin" />
 
                 <TextView
-                    android:shadowDx="5"
-                    android:shadowDy="5"
-                    android:shadowRadius="3"
-                    android:shadowColor="#ff454e"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/imageBenZhou"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@+id/imageBenZhou"
+                    android:shadowColor="#ff454e"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="3"
                     android:text="本周上新"
                     android:textColor="@color/white"
                     android:textSize="@dimen/bigText"
@@ -173,7 +175,6 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            app:cardPreventCornerOverlap="false"
             android:layout_width="match_parent"
             android:layout_height="85dp"
             android:layout_marginBottom="20dp"
@@ -181,12 +182,13 @@
             android:layout_marginRight="@dimen/leftAndRight"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            app:cardPreventCornerOverlap="false">
 
             <RelativeLayout
-                android:background="@drawable/jianbian_remaituijian"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/jianbian_remaituijian"
                 android:gravity="center">
 
                 <ImageView
@@ -197,16 +199,16 @@
                     android:src="@mipmap/remaituijian" />
 
                 <TextView
-                    android:shadowColor="#ff9806"
-                    android:shadowDx="5"
-                    android:shadowDy="5"
-                    android:shadowRadius="3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/imageReMai"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@+id/imageReMai"
+                    android:shadowColor="#ff9806"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="3"
                     android:text="热卖推荐"
                     android:textColor="@color/white"
                     android:textSize="@dimen/bigText"
@@ -245,19 +247,20 @@
         android:textSize="@dimen/moreLitterText" />
 
     <com.vip.uyux.customview.HorizontalView
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
 
         <com.jude.easyrecyclerview.EasyRecyclerView
-            app:scrollbars="none"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_empty="@layout/view_empty"
             app:layout_progress="@layout/view_progress"
-            app:scrollbarStyle="insideOverlay" />
+            app:scrollbarStyle="insideOverlay"
+            app:scrollbars="none" />
     </com.vip.uyux.customview.HorizontalView>
+
     <LinearLayout
         android:id="@+id/viewViewPager"
         android:layout_width="match_parent"
@@ -278,13 +281,13 @@
             android:clipChildren="false" />
 
         <com.rd.PageIndicatorView
-            app:piv_selectedColor="@color/basic_color"
-            app:piv_unselectedColor="@color/background"
-            app:piv_radius="2dp"
             android:id="@+id/pageIndicatorView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            app:piv_radius="2dp"
+            app:piv_selectedColor="@color/basic_color"
+            app:piv_unselectedColor="@color/background" />
     </LinearLayout>
 </LinearLayout>

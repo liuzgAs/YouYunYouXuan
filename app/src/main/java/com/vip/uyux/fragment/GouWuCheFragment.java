@@ -25,6 +25,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.activity.QueRenDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -190,6 +191,15 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                     }
                 });
                 return carViewHolder;
+            }
+        });
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, ChanPinXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getGoods_id());
+                startActivity(intent);
             }
         });
     }
