@@ -42,7 +42,7 @@ public class DuiHuanJLViewHolder extends BaseViewHolder<BonusExchangerecode.Prod
                 .load(data.getImg())
                 .into(imageImg);
         textTitle.setText(data.getGoods_title());
-        textJiFen.setText(data.getIntegral()+"积分");
+        textJiFen.setText(data.getIntegral()+"U币");
         textDate.setText(data.getCreate_time());
         textNum.setText("×"+data.getNum());
     }

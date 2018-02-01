@@ -32,7 +32,7 @@
                 android:layout_centerVertical="true"
                 android:paddingLeft="5dp"
                 android:paddingRight="@dimen/leftAndRight"
-                android:src="@mipmap/tip_true" />
+                android:src="@mipmap/mine_xinxi" />
 
             <RelativeLayout
                 android:id="@+id/viewSearch"

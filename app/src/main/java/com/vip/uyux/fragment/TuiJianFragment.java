@@ -220,7 +220,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                                 .asBitmap()
                                 .centerCrop()
                                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
-                                .load(R.mipmap.viewpagerindex)
+                                .load(banner2BeanList.get(0).getImg())
                                 .into(image0300);
                     }
                 }

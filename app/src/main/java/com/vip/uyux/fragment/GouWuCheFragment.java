@@ -80,14 +80,14 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
      * 刷新car总价
      */
     private void shuaXinSum() {
-        double sum= 0;
+        double sum = 0;
         for (int i = 0; i < adapter.getAllData().size(); i++) {
-            if (adapter.getItem(i).isSelect()){
+            if (adapter.getItem(i).isSelect()) {
                 Double mul = Arith.mul((double) adapter.getItem(i).getNum(), adapter.getItem(i).getGoods_price());
                 sum = Arith.add(sum, mul);
             }
         }
-        SpannableString span = new SpannableString("¥"+sum);
+        SpannableString span = new SpannableString("¥" + sum);
         span.setSpan(new RelativeSizeSpan(0.65f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textHeJi.setText(span);
     }
@@ -215,7 +215,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                                 Double mul = Arith.mul((double) cartBeanList.get(i).getNum(), cartBeanList.get(i).getGoods_price());
                                 sum = Arith.add(sum, mul);
                             }
-                            SpannableString span = new SpannableString("¥"+sum);
+                            SpannableString span = new SpannableString("¥" + sum);
                             span.setSpan(new RelativeSizeSpan(0.65f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             textHeJi.setText(span);
                             imageQuanXuan.setImageResource(R.mipmap.xuanzhong);
@@ -289,7 +289,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                         integerList.add(adapter.getAllData().get(i).getId());
                     }
                 }
-                if (integerList.size()==0) {
+                if (integerList.size() == 0) {
                     Toast.makeText(mContext, "请选择要结算的商品", Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -9,6 +9,7 @@
         android:id="@+id/relaTitleStatue"
         layout="@layout/view_bar_white"/>
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/viewHuoDong"
         android:layout_below="@+id/relaTitleStatue"
         android:background="@drawable/layout_selector_white_system_gray"

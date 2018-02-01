@@ -16,16 +16,16 @@ public class CartIndex {
      * info : 返回成功！
      */
 
-    private int sum;
+    private String sum;
     private int status;
     private String info;
     private List<CartBean> cart;
 
-    public int getSum() {
+    public String getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
+    public void setSum(String sum) {
         this.sum = sum;
     }
 

@@ -20,7 +20,9 @@ import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinLBActivity;
 import com.vip.uyux.activity.SouSuoActivity;
+import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.base.MyDialog;
+import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.IndexCate;
@@ -188,6 +190,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
             }
         });
         mInflate.findViewById(R.id.viewSearch).setOnClickListener(this);
+        mInflate.findViewById(R.id.imageXiaoXi).setOnClickListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -431,9 +434,17 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.imageXiaoXi:
+                if (isLogin) {
+                    intent.setClass(mContext, XiaoXiZXActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
+                break;
             case R.id.viewSearch:
-                Intent intent = new Intent();
                 intent.setClass(mContext, SouSuoActivity.class);
                 startActivity(intent);
                 break;
