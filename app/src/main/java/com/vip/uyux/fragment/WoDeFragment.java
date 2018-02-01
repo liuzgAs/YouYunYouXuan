@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,12 +58,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     private View viewBar;
     private ImageView imageHead;
     private TextView textName;
-    private TextView textLv0;
     private TextView textId;
-    private TextView textGrowthDes;
-    private ImageView imageShengJi;
-    private ImageView imageLvB;
-    private ImageView imageLv;
     private TextView textYuE;
     private TextView textJiFen;
     private Badge[] badgeDD = new Badge[5];
@@ -95,6 +91,21 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     };
     private String qc_url;
     private ImageView imageFenXiangZX;
+    private Button btnShengJi;
+    private TextView textScore;
+    private TextView textChengZhangZhi;
+    private TextView textLv;
+    private View viewDiBu;
+    private ImageView imageZhuanShi;
+    private TextView textFuWu;
+    private TextView textShengJiFW;
+    private ImageView image0100;
+    private ImageView image0102;
+    private ImageView image0101;
+    private ImageView image0103;
+    private View text0101;
+    private View text0100;
+    private View text0102;
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -132,12 +143,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         viewBar = mInflate.findViewById(R.id.viewBar);
         imageHead = mInflate.findViewById(R.id.imageHead);
         textName = mInflate.findViewById(R.id.textName);
-        textLv0 = mInflate.findViewById(R.id.textLv0);
         textId = mInflate.findViewById(R.id.textId);
-        textGrowthDes = mInflate.findViewById(R.id.textGrowthDes);
-        imageShengJi = mInflate.findViewById(R.id.imageShengJi);
-        imageLvB = mInflate.findViewById(R.id.imageLvB);
-        imageLv = mInflate.findViewById(R.id.imageLv);
         textYuE = mInflate.findViewById(R.id.textYuE);
         textJiFen = mInflate.findViewById(R.id.textJiFen);
         badge = new QBadgeView(mContext)
@@ -159,6 +165,21 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                     .setGravityOffset(0f, 0f, true);
         }
         imageFenXiangZX = mInflate.findViewById(R.id.imageFenXiangZX);
+        btnShengJi = mInflate.findViewById(R.id.btnShengJi);
+        textScore = mInflate.findViewById(R.id.textScore);
+        textChengZhangZhi = mInflate.findViewById(R.id.textChengZhangZhi);
+        textLv = mInflate.findViewById(R.id.textLv);
+        viewDiBu = mInflate.findViewById(R.id.viewDiBu);
+        imageZhuanShi = mInflate.findViewById(R.id.imageZhuanShi);
+        textFuWu = mInflate.findViewById(R.id.textFuWu);
+        textShengJiFW = mInflate.findViewById(R.id.textShengJiFW);
+        image0100 = mInflate.findViewById(R.id.image0100);
+        image0102 = mInflate.findViewById(R.id.image0102);
+        image0101 = mInflate.findViewById(R.id.image0101);
+        image0103 = mInflate.findViewById(R.id.image0103);
+        text0101 = mInflate.findViewById(R.id.text0101);
+        text0100 = mInflate.findViewById(R.id.text0100);
+        text0102 = mInflate.findViewById(R.id.text0102);
     }
 
     @Override
@@ -187,7 +208,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.imageSheZhi).setOnClickListener(this);
         mInflate.findViewById(R.id.imageXiaoXi).setOnClickListener(this);
         mInflate.findViewById(R.id.viewGuanYuWM).setOnClickListener(this);
-        mInflate.findViewById(R.id.imageShengJi).setOnClickListener(this);
+        btnShengJi.setOnClickListener(this);
     }
 
     /**
@@ -216,12 +237,22 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                     .placeholder(R.mipmap.ic_empty)
                     .into(imageHead);
             textName.setText(userInfo.getUserName());
-            textLv0.setVisibility(View.GONE);
             textId.setText("");
-            textGrowthDes.setText("成长值：0");
-            imageShengJi.setVisibility(View.VISIBLE);
-            imageLvB.setVisibility(View.GONE);
-            imageLv.setVisibility(View.GONE);
+            textLv.setText("VIP.0");
+            textScore.setVisibility(View.GONE);
+            textChengZhangZhi.setVisibility(View.GONE);
+            btnShengJi.setVisibility(View.VISIBLE);
+            viewDiBu.setBackgroundResource(R.drawable.shape_wode_dibu);
+            imageZhuanShi.setImageResource(R.mipmap.zhuanshi_b);
+            textFuWu.setVisibility(View.GONE);
+            textShengJiFW.setVisibility(View.VISIBLE);
+            text0101.setBackgroundResource(R.color.light_black);
+            text0100.setBackgroundResource(R.color.light_black);
+            text0102.setBackgroundResource(R.color.light_black);
+            image0100.setImageResource(R.mipmap.gengduo_mine_b);
+            image0102.setImageResource(R.mipmap.mine_baobao_b);
+            image0101.setImageResource(R.mipmap.mine_che_b);
+            image0103.setImageResource(R.mipmap.mine_shandian_b);
             showLoadingDialog();
             ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
                 @Override
@@ -239,7 +270,6 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                                     .into(imageHead);
                             textName.setText(userMy.getNickname());
                             textId.setText(userMy.getId());
-                            textGrowthDes.setText(userMy.getGrowthDes());
                             qc_url = userMy.getQc_url();
                             for (int i = 0; i < imageDD.length; i++) {
                                 badgeDD[i].setBadgeNumber(userMy.getOrderNum().get(i)).bindTarget(imageDD[i]);
@@ -249,39 +279,42 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                             }else {
                                 imageFenXiangZX.setVisibility(View.GONE);
                             }
+                            textLv.setText("VIP."+userMy.getLv());
+                            textYuE.setText(userMy.getMoney());
+                            textJiFen.setText(String.valueOf(userMy.getScore()));
+                            textCouponNum.setText(userMy.getCouponNum() + "张");
+                            badge.setBadgeNumber(userMy.getTipsNum()).bindTarget(imageXiaoXi);
                             if (userMy.getLv() > 0) {
-                                textLv0.setVisibility(View.GONE);
-                                imageShengJi.setVisibility(View.GONE);
-                                imageLvB.setVisibility(View.VISIBLE);
-                                switch (userMy.getLv()) {
-                                    case 1:
-                                        imageLv.setImageResource(R.mipmap.lv1);
-                                        break;
-                                    case 2:
-                                        imageLv.setImageResource(R.mipmap.lv2);
-                                        break;
-                                    case 3:
-                                        imageLv.setImageResource(R.mipmap.lv3);
-                                        break;
-                                    case 4:
-                                        imageLv.setImageResource(R.mipmap.lv4);
-                                        break;
-                                    case 5:
-                                        imageLv.setImageResource(R.mipmap.lv5);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                imageLv.setVisibility(View.VISIBLE);
-                                textYuE.setText(userMy.getMoney());
-                                textJiFen.setText(String.valueOf(userMy.getScore()));
-                                textCouponNum.setText(userMy.getCouponNum() + "张");
+                                viewDiBu.setBackgroundColor(Color.TRANSPARENT);
+                                btnShengJi.setVisibility(View.GONE);
+                                textScore.setText(userMy.getGrowthDes());
+                                textScore.setVisibility(View.VISIBLE);
+                                textChengZhangZhi.setVisibility(View.VISIBLE);
+                                imageZhuanShi.setImageResource(R.mipmap.zhuanshi);
+                                textFuWu.setVisibility(View.VISIBLE);
+                                textShengJiFW.setVisibility(View.GONE);
+                                text0101.setBackgroundColor(Color.parseColor("#656055"));
+                                text0100.setBackgroundColor(Color.parseColor("#656055"));
+                                text0102.setBackgroundColor(Color.parseColor("#656055"));
+                                image0100.setImageResource(R.mipmap.gengduo_mine);
+                                image0102.setImageResource(R.mipmap.mine_baobao);
+                                image0101.setImageResource(R.mipmap.mine_che);
+                                image0103.setImageResource(R.mipmap.mine_shandian);
                             } else {
-                                textLv0.setVisibility(View.VISIBLE);
-                                imageShengJi.setVisibility(View.VISIBLE);
-                                imageLvB.setVisibility(View.GONE);
-                                imageLv.setVisibility(View.GONE);
-                                badge.setBadgeNumber(userMy.getTipsNum()).bindTarget(imageXiaoXi);
+                                imageZhuanShi.setImageResource(R.mipmap.zhuanshi_b);
+                                textScore.setVisibility(View.GONE);
+                                textChengZhangZhi.setVisibility(View.GONE);
+                                viewDiBu.setBackgroundResource(R.drawable.shape_wode_dibu);
+                                btnShengJi.setVisibility(View.VISIBLE);
+                                textFuWu.setVisibility(View.GONE);
+                                textShengJiFW.setVisibility(View.VISIBLE);
+                                text0101.setBackgroundResource(R.color.light_black);
+                                text0100.setBackgroundResource(R.color.light_black);
+                                text0102.setBackgroundResource(R.color.light_black);
+                                image0100.setImageResource(R.mipmap.gengduo_mine_b);
+                                image0102.setImageResource(R.mipmap.mine_baobao_b);
+                                image0101.setImageResource(R.mipmap.mine_che_b);
+                                image0103.setImageResource(R.mipmap.mine_shandian_b);
                             }
                         } else if (userMy.getStatus() == 3) {
                             MyDialog.showReLoginDialog(mContext);
@@ -301,13 +334,23 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             });
         } else {
             textName.setText("登录");
-            textLv0.setVisibility(View.VISIBLE);
             textId.setText("");
-            textGrowthDes.setText("成长值：0");
-            imageShengJi.setVisibility(View.VISIBLE);
-            imageLvB.setVisibility(View.GONE);
-            imageLv.setVisibility(View.GONE);
+            textScore.setVisibility(View.GONE);
+            textChengZhangZhi.setVisibility(View.GONE);
+            btnShengJi.setVisibility(View.VISIBLE);
+            textLv.setText("VIP.0");
             imageHead.setImageResource(R.mipmap.touxiang_mine);
+            viewDiBu.setBackgroundResource(R.drawable.shape_wode_dibu);
+            imageZhuanShi.setImageResource(R.mipmap.zhuanshi_b);
+            textFuWu.setVisibility(View.GONE);
+            textShengJiFW.setVisibility(View.VISIBLE);
+            text0101.setBackgroundResource(R.color.light_black);
+            text0100.setBackgroundResource(R.color.light_black);
+            text0102.setBackgroundResource(R.color.light_black);
+            image0100.setImageResource(R.mipmap.gengduo_mine_b);
+            image0102.setImageResource(R.mipmap.mine_baobao_b);
+            image0101.setImageResource(R.mipmap.mine_che_b);
+            image0103.setImageResource(R.mipmap.mine_shandian_b);
         }
     }
 
@@ -315,7 +358,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
-            case R.id.imageShengJi:
+            case R.id.btnShengJi:
                 if (isLogin){
                     intent.setClass(mContext, WebActivity.class);
                     intent.putExtra(Constant.IntentKey.TITLE, "升级");

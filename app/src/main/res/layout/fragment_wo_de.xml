@@ -36,119 +36,142 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
-                        <RelativeLayout
+
+                        <LinearLayout
+                            android:layout_marginTop="15dp"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_above="@+id/textGrowthDes"
-                            android:layout_weight="1">
-
+                            android:orientation="vertical"
+                            android:layout_height="match_parent">
                             <RelativeLayout
-                                android:id="@+id/viewGeRen"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true">
-
-                                <com.vip.uyux.customview.CircleImageView
-                                    android:id="@+id/imageHead"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="15dp"
-                                    android:src="@mipmap/touxiang_mine" />
-
-                                <TextView
-                                    android:textStyle="bold"
-                                    android:id="@+id/textName"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <RelativeLayout
+                                    android:id="@+id/viewGeRen"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignTop="@+id/imageHead"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginTop="8dp"
-                                    android:layout_toRightOf="@+id/imageHead"
-                                    android:text="登录"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/MoreBigText" />
+                                    >
+
+                                    <com.vip.uyux.customview.CircleImageView
+                                        android:id="@+id/imageHead"
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="20dp"
+                                        android:src="@mipmap/touxiang_mine"
+                                        app:civ_border_color="@color/white"
+                                        app:civ_border_width="1.5dp" />
+
+                                    <TextView
+                                        android:id="@+id/textName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignTop="@+id/imageHead"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginTop="3dp"
+                                        android:layout_toRightOf="@+id/imageHead"
+                                        android:text="登录"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/MoreBigText"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textId"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignBottom="@+id/imageHead"
+                                        android:layout_marginBottom="3dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_toRightOf="@+id/imageHead"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/normal_textsize"
+                                        tools:text="ID:465464654" />
+                                </RelativeLayout>
 
                                 <com.vip.uyux.customview.MyFontTextView
-                                    android:id="@+id/textLv0"
-                                    android:paddingBottom="2dp"
-                                    android:paddingTop="2dp"
-                                    android:paddingLeft="5dp"
-                                    android:paddingRight="5dp"
-                                    android:background="@drawable/shape_noright_top15dp_gray"
-                                    android:layout_toRightOf="@+id/textName"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginBottom="3dp"
-                                    android:layout_alignBottom="@+id/textName"
+                                    android:textStyle="bold"
+                                    android:layout_alignParentRight="true"
+                                    android:textSize="25dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="LV0"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/moreLitterText" />
-
+                                    android:text="VIP.5"
+                                    android:id="@+id/textLv"
+                                    android:textColor="#efdda4" />
                                 <TextView
-                                    android:id="@+id/textId"
+                                    android:text="会员等级"
+                                    android:textSize="@dimen/normal_textsize"
+                                    android:textColor="#efdda4"
+                                    android:layout_below="@+id/textLv"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <com.vip.uyux.customview.MyFontTextView
+                                    android:textStyle="bold"
+                                    android:layout_alignParentRight="true"
+                                    android:textSize="25dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignBottom="@+id/imageHead"
-                                    android:layout_marginBottom="8dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_toRightOf="@+id/imageHead"
-                                    android:textColor="@color/white"
+                                    android:text="300"
+                                    android:id="@+id/textScore"
+                                    android:textColor="#efdda4" />
+                                <TextView
+                                    android:id="@+id/textChengZhangZhi"
+                                    android:text="成长值"
                                     android:textSize="@dimen/normal_textsize"
-                                    tools:text="ID:465464654" />
+                                    android:textColor="#efdda4"
+                                    android:layout_below="@+id/textScore"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                                <Button
+                                    android:id="@+id/btnShengJi"
+                                    android:textSize="@dimen/normal_textsize"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/shape_shengji"
+                                    android:textColor="#efdda4"
+                                    android:text="升级"
+                                    android:layout_width="70dp"
+                                    android:layout_height="28dp" />
                             </RelativeLayout>
-
-
-                        </RelativeLayout>
-                        <ImageView
-                            android:id="@+id/imageShengJi"
-                            android:layout_marginTop="-1dp"
-                            android:layout_alignParentRight="true"
-                            android:src="@mipmap/shengji"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp" />
-                        <TextView
-                            android:id="@+id/textGrowthDes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="12dp"
-                            android:layout_marginLeft="15dp"
-                            android:text="成长值：0"
-                            android:textColor="#efdda4"
-                            android:textSize="@dimen/normal_textsize" />
-
-                        <ImageView
-                            android:id="@+id/imageLv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="115dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="-3dp"
-                            android:src="@mipmap/lv5" />
-
-                        <ImageView
-                            android:id="@+id/imageLvB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="45dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_toLeftOf="@+id/imageLv"
-                            android:src="@mipmap/lv" />
+                        </LinearLayout>
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/viewDiBu"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:background="#22000000">
+                        >
 
                         <ImageView
+                            android:id="@+id/imageZhuanShi"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
                             android:src="@mipmap/zhuanshi" />
+
+                        <TextView
+                            android:id="@+id/textShengJiFW"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/imageZhuanShi"
+                            android:layout_marginLeft="8dp"
+                            android:text="立即升级VIP尊享16项服务"
+                            android:textSize="@dimen/litterText"
+                            android:textColor="@color/light_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
                         <LinearLayout
                             android:id="@+id/viewFuWu"
@@ -208,6 +231,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/textFuWu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -294,20 +318,20 @@
 
                 <RelativeLayout
                     android:id="@+id/viewDaiFuKuan"
-                    android:background="@drawable/layout_selector_white_system_gray"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_selector_white_system_gray"
                     android:gravity="center">
 
                     <ImageView
-                        android:paddingRight="5dp"
-                        android:paddingLeft="5dp"
                         android:id="@+id/image0300"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:paddingBottom="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:paddingTop="10dp"
                         android:src="@mipmap/mine_qianbao" />
 
@@ -322,19 +346,19 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:background="@drawable/layout_selector_white_system_gray"
                     android:id="@+id/viewDaiFaHuo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_selector_white_system_gray"
                     android:gravity="center">
 
                     <ImageView
-                        android:padding="5dp"
                         android:id="@+id/image0301"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
+                        android:padding="5dp"
                         android:src="@mipmap/mine_daifahuo" />
 
                     <TextView
@@ -347,21 +371,21 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:background="@drawable/layout_selector_white_system_gray"
                     android:id="@+id/viewDaiShouHuo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_selector_white_system_gray"
                     android:gravity="center">
 
                     <ImageView
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
                         android:id="@+id/image0302"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:paddingBottom="9dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:paddingTop="9dp"
                         android:src="@mipmap/mine_daishouhuo" />
 
@@ -375,21 +399,21 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:background="@drawable/layout_selector_white_system_gray"
                     android:id="@+id/viewDaiPingJia"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_selector_white_system_gray"
                     android:gravity="center">
 
                     <ImageView
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
                         android:id="@+id/image0303"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:paddingBottom="7dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:paddingTop="7dp"
                         android:src="@mipmap/mine_daipingjia" />
 
@@ -403,21 +427,21 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:background="@drawable/layout_selector_white_system_gray"
                     android:id="@+id/viewTuiHuanHuo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_selector_white_system_gray"
                     android:gravity="center">
 
                     <ImageView
-                        android:paddingRight="5dp"
-                        android:paddingLeft="5dp"
                         android:id="@+id/image0304"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:paddingBottom="7dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:paddingTop="7dp"
                         android:src="@mipmap/mine_tuihuanhuo" />
 
@@ -442,11 +466,11 @@
                 android:src="@mipmap/fenxiangzhongxin" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/viewWoDeCP"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
-                android:background="@drawable/layout_selector_white_system_gray">
+                android:background="@drawable/layout_selector_white_system_gray"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/image0500"
@@ -586,10 +610,10 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginBottom="40dp"
                 android:id="@+id/viewZuJi"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
+                android:layout_marginBottom="40dp"
                 android:layout_marginTop="1dp"
                 android:background="@drawable/layout_selector_white_system_gray">
 
@@ -620,11 +644,11 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
                 android:layout_marginTop="1dp"
-                android:background="@drawable/layout_selector_white_system_gray">
+                android:background="@drawable/layout_selector_white_system_gray"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/image1000"
@@ -653,13 +677,13 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/viewGuanYuWM"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="1dp"
-                android:background="@drawable/layout_selector_white_system_gray">
+                android:background="@drawable/layout_selector_white_system_gray"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/image1100"
