@@ -1,6 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -46,6 +49,7 @@ import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.customview.OnTagSelectListener;
 import com.vip.uyux.customview.WrapHeightGridView;
 import com.vip.uyux.model.CartAddcart;
+import com.vip.uyux.model.CartNum;
 import com.vip.uyux.model.GoodsInfo;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
@@ -68,6 +72,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -100,6 +107,23 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private int stock_num;
     private String tm_url;
     private List<GoodsInfo.DataBean.PromotionsafterBean> promotionsAfter;
+    private View imageGouWuChe;
+    private String did;
+    private Badge badge;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_CAR:
+                    gouWuChe();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    private View viewGouWuChe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +135,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
 
     @Override
     protected void initSP() {
-
+        ACache aCache = ACache.get(this, Constant.Acache.LOCATION);
+        did = aCache.getAsString(Constant.Acache.DID);
     }
 
     @Override
@@ -126,12 +151,21 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         imageFenXiang = (ImageView) findViewById(R.id.imageFenXiang);
         imageShouCang = (ImageView) findViewById(R.id.imageShouCang);
         viewDiBu = findViewById(R.id.viewDiBu);
+        imageGouWuChe = findViewById(R.id.imageGouWuChe);
+        viewGouWuChe = findViewById(R.id.viewGouWuChe);
     }
 
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("产品详情");
         viewDiBu.setVisibility(View.GONE);
+        badge = new QBadgeView(ChanPinXQActivity.this)
+                .setBadgeTextColor(Color.WHITE)
+                .setBadgeTextSize(10f, true)
+                .setBadgeBackgroundColor(getResources().getColor(R.color.basic_color))
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setBadgePadding(2f, true)
+                .setGravityOffset(5f, 3f, true);
         initRecycler();
     }
 
@@ -426,19 +460,64 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         findViewById(R.id.textLiJiGouMai).setOnClickListener(this);
         findViewById(R.id.textJiaRuGWC).setOnClickListener(this);
         findViewById(R.id.imageFenXiang).setOnClickListener(this);
-        findViewById(R.id.imageGouWuChe).setOnClickListener(this);
+        viewGouWuChe.setOnClickListener(this);
         imageShouCang.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
         onRefresh();
+        gouWuChe();
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getCarOkObject() {
+        String url = Constant.HOST + Constant.Url.CART_NUM;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("did", did);
+        return new OkObject(params, url);
+    }
+
+    private void gouWuChe() {
+        ApiClient.post(ChanPinXQActivity.this, getCarOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("MainActivity--onSuccess",s+ "");
+                try {
+                    CartNum cartNum = GsonUtils.parseJSON(s, CartNum.class);
+                    if (cartNum.getStatus()==1){
+                        badge.setBadgeNumber(cartNum.getNum())
+                                .bindTarget(imageGouWuChe);
+                    }else if (cartNum.getStatus()==3){
+                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                    }else {
+                        Toast.makeText(ChanPinXQActivity.this, cartNum.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ChanPinXQActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(ChanPinXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageGouWuChe:
+            case R.id.viewGouWuChe:
+                LogUtil.LogShitou("ChanPinXQActivity--onClick", "111111111");
                 Intent intent = new Intent();
                 intent.setClass(this,GouWuCheActivity.class);
                 startActivity(intent);
@@ -809,8 +888,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getCarOkObject(String num) {
-        ACache aCache = ACache.get(ChanPinXQActivity.this, Constant.Acache.LOCATION);
-        String did = aCache.getAsString(Constant.Acache.DID);
         String url = Constant.HOST + Constant.Url.CART_ADDCART;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
@@ -987,11 +1064,20 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (timer != null) {
             timer.cancel();
         }
+        unregisterReceiver(reciver);
     }
 
 }

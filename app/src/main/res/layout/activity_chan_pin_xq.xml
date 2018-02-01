@@ -50,13 +50,18 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/background" />
+            <RelativeLayout
+                android:id="@+id/viewGouWuChe"
+                android:layout_width="45dp"
+                android:layout_height="45dp">
+                <ImageView
+                    android:id="@+id/imageGouWuChe"
+                    android:layout_width="@dimen/normalItemHeight"
+                    android:layout_height="@dimen/normalItemHeight"
+                    android:padding="13dp"
+                    android:src="@mipmap/car_chanpin" />
+            </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/imageGouWuChe"
-                android:layout_width="@dimen/normalItemHeight"
-                android:layout_height="@dimen/normalItemHeight"
-                android:padding="13dp"
-                android:src="@mipmap/car_chanpin" />
 
             <TextView
                 android:layout_width="1dp"

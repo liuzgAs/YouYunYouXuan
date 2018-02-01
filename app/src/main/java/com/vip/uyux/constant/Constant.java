@@ -328,6 +328,10 @@ public class Constant {
          * 微信授权绑定电话提交
          */
         public static final String LOGIN_WXBINDSMS = "/Login/wxBindSms";
+        /**
+         * 购物车数量
+         */
+        public static final String CART_NUM = "/Cart/num";
 
     }
 
