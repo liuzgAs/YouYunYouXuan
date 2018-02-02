@@ -187,7 +187,7 @@ public class DDViewHolder extends BaseViewHolder<Order.DataBean> {
         if (data.getIsCancel() == 1) {
             textCancle.setVisibility(View.VISIBLE);
         } else {
-            btnPingJia.setVisibility(View.GONE);
+            textCancle.setVisibility(View.GONE);
         }
         List<Order.DataBean.ListBeanX> listBeanXList = data.getList();
         adapter.clear();
