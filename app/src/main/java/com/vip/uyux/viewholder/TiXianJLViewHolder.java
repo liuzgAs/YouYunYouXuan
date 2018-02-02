@@ -1,6 +1,7 @@
 package com.vip.uyux.viewholder;
 
 import android.support.annotation.LayoutRes;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -17,12 +18,15 @@ public class TiXianJLViewHolder extends BaseViewHolder<WithdrawGetwithdraw.DataB
     private final TextView textDes;
     private final TextView textCreatetime;
     private final TextView textPrice;
+    private final TextView textPrice1;
 
     public TiXianJLViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
         textDes = $(R.id.textDes);
         textCreatetime = $(R.id.textCreatetime);
         textPrice = $(R.id.textPrice);
+        textPrice1 = $(R.id.textPrice1);
+        textPrice1.setVisibility(View.GONE);
     }
 
     @Override
