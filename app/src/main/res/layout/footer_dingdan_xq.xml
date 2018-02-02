@@ -6,109 +6,115 @@
     android:orientation="vertical">
 
     <com.jude.easyrecyclerview.EasyRecyclerView
-        android:layout_marginTop="5dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
         app:scrollbarStyle="insideOverlay" />
     <!--<RelativeLayout-->
-        <!--android:background="@color/white"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<TextView-->
-            <!--android:layout_marginLeft="@dimen/leftAndRight"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginBottom="15dp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:text="订单总价"-->
-            <!--android:textSize="@dimen/bigText"-->
-            <!--android:id="@+id/textDDZJ"-->
-            <!--android:textColor="@color/light_black"-->
-            <!--android:layout_height="wrap_content" />-->
-        <!--<TextView-->
-            <!--android:text="¥11.80元"-->
-            <!--android:layout_alignBaseline="@+id/textDDZJ"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginRight="@dimen/leftAndRight"-->
-            <!--android:textSize="@dimen/normal_textsize"-->
-            <!--android:textColor="@color/light_black"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
+    <!--android:background="@color/white"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+    <!--<TextView-->
+    <!--android:layout_marginLeft="@dimen/leftAndRight"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:layout_marginBottom="15dp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:text="订单总价"-->
+    <!--android:textSize="@dimen/bigText"-->
+    <!--android:id="@+id/textDDZJ"-->
+    <!--android:textColor="@color/light_black"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!--<TextView-->
+    <!--android:text="¥11.80元"-->
+    <!--android:layout_alignBaseline="@+id/textDDZJ"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="@dimen/leftAndRight"-->
+    <!--android:textSize="@dimen/normal_textsize"-->
+    <!--android:textColor="@color/light_black"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
     <!--</RelativeLayout>-->
     <RelativeLayout
-        android:background="@color/white"
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
         <TextView
-            android:text="¥245.00"
+            android:id="@+id/textSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="@color/basic_color"
-            android:textSize="@dimen/bigText"
+            android:layout_marginBottom="15dp"
             android:layout_marginRight="@dimen/leftAndRight"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_width="wrap_content"
-            android:id="@+id/textSum"
-            android:layout_height="wrap_content" />
+            android:text="¥245.00"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/bigText" />
+
         <TextView
             android:id="@+id/textSumDes"
-            android:layout_toLeftOf="@+id/textSum"
-            android:textSize="@dimen/normal_textsize"
-            android:textColor="@color/light_black"
-            android:layout_alignBaseline="@+id/textSum"
-            android:text="小计："
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textSum"
+            android:layout_toLeftOf="@+id/textSum"
+            android:text="小计："
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/normal_textsize" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
-        android:layout_height="wrap_content">
+        android:background="@color/white">
+
         <TextView
-            android:visibility="invisible"
-            android:text="订单编号"
-            android:textSize="@dimen/normal_textsize"
-            android:textColor="@color/text_gray"
-            android:layout_marginLeft="@dimen/leftAndRight"
-            android:layout_marginTop="15dp"
             android:id="@+id/textDDBH"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:text="订单编号"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/normal_textsize"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textOrderSn"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/normal_textsize"
-            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textDDBH"
-            android:text="4564545645"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/leftAndRight"
+            android:text="4564545645"
             android:textColor="@color/text_gray"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/normal_textsize" />
+
         <TextView
-            android:layout_marginBottom="15dp"
-            android:visibility="invisible"
-            android:layout_below="@+id/textDDBH"
-            android:text="创建时间"
-            android:textSize="@dimen/normal_textsize"
-            android:textColor="@color/text_gray"
-            android:layout_marginLeft="@dimen/leftAndRight"
-            android:layout_marginTop="5dp"
             android:id="@+id/textCJSJ"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textDDBH"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="5dp"
+            android:text="创建时间"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/normal_textsize"
+            android:visibility="invisible" />
+
         <TextView
             android:id="@+id/textCreate_time"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/normal_textsize"
-            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textCJSJ"
-            android:text="4564545645"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/leftAndRight"
+            android:text="4564545645"
             android:textColor="@color/text_gray"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/normal_textsize" />
     </RelativeLayout>
 </LinearLayout>

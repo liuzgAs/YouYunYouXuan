@@ -183,12 +183,12 @@ public class DingDanXqActivity extends ZjbBaseActivity implements View.OnClickLi
              * 初始化recyclerview
              */
             private void initRecycler() {
-                recyclerView.setLayoutManager(new LinearLayoutManager(DingDanXqActivity.this));
+                recyclerViewFoot.setLayoutManager(new LinearLayoutManager(DingDanXqActivity.this));
                 DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
                 itemDecoration.setDrawLastItem(false);
-                recyclerView.addItemDecoration(itemDecoration);
-                recyclerView.setRefreshingColorResources(R.color.basic_color);
-                recyclerView.setAdapterWithProgress(adapterDes = new RecyclerArrayAdapter<String>(DingDanXqActivity.this) {
+                recyclerViewFoot.addItemDecoration(itemDecoration);
+                recyclerViewFoot.setRefreshingColorResources(R.color.basic_color);
+                recyclerViewFoot.setAdapterWithProgress(adapterDes = new RecyclerArrayAdapter<String>(DingDanXqActivity.this) {
                     @Override
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                         int layout = R.layout.item_deslist;

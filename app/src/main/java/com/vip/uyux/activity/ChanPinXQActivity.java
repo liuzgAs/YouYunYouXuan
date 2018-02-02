@@ -132,6 +132,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         isShare = false;
                     }
                     break;
+                case Constant.BroadcastCode.ZHI_FU_CG:
+                    finish();
+                    break;
                 default:
                     break;
             }
@@ -1141,6 +1144,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_CAR);
         filter.addAction(Constant.BroadcastCode.WX_SHARE);
         filter.addAction(Constant.BroadcastCode.WX_SHARE_FAIL);
+        filter.addAction(Constant.BroadcastCode.ZHI_FU_CG);
         registerReceiver(reciver, filter);
     }
 

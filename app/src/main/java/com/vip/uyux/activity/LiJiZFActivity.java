@@ -34,7 +34,6 @@ import java.util.Map;
 
 public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListener {
 
-    private String order;
     private String price;
     private TextView textBlance;
     private int payMode = 0;
@@ -180,10 +179,10 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
             @Override
             public void doWhat() {
                 singleBtnDialog.dismiss();
-//                Intent intent1 = new Intent();
-//                intent1.setClass(LiJiZFActivity.this,DingDanXQActivity.class);
-//                intent1.putExtra(Constant.IntentKey.VALUE,order);
-//                startActivity(intent1);
+                Intent intent1 = new Intent();
+                intent1.setClass(LiJiZFActivity.this,DingDanXqActivity.class);
+                intent1.putExtra(Constant.IntentKey.ID,orderPay.getData().getId());
+                startActivity(intent1);
                 finish();
             }
         });
