@@ -520,6 +520,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics d = getResources().getDisplayMetrics(); // 获取屏幕宽、高用
         lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
+        lp.height = (int) (d.heightPixels * 0.5f); // 高度设置为屏幕的0.6
         dialogWindow.setAttributes(lp);
     }
 

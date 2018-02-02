@@ -109,17 +109,17 @@ public class YuJiYJActivity extends ZjbBaseActivity implements View.OnClickListe
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new FenXiaoFragment(0,1);
+                    return new FenXiaoFragment(0+"",1);
                 case 1:
-                    return new FenXiaoFragment(10,1);
+                    return new FenXiaoFragment(10+"",1);
                 case 2:
-                    return new FenXiaoFragment(20,1);
+                    return new FenXiaoFragment(20+"",1);
 //                case 3:
 //                    return new FenXiaoFragment(30);
 //                case 4:
 //                    return new FenXiaoFragment(40);
                 default:
-                    return new FenXiaoFragment(0,1);
+                    return new FenXiaoFragment(0+"",1);
             }
 
         }

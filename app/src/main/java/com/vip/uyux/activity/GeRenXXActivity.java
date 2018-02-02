@@ -20,7 +20,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.customview.EditDialog;
+import com.vip.uyux.customview.EditNameDialog;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.RespondAppimgadd;
 import com.vip.uyux.model.SimpleInfo;
@@ -363,8 +363,8 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.viewRealName:
-                final EditDialog editDialog1 = new EditDialog(this, "修改真实姓名", userProfile.getReal_name(), "确认", "取消");
-                editDialog1.setClicklistener(new EditDialog.ClickListenerInterface() {
+                final EditNameDialog editDialog1 = new EditNameDialog(this, "修改真实姓名", userProfile.getReal_name(), "确认", "取消");
+                editDialog1.setClicklistener(new EditNameDialog.ClickListenerInterface() {
                     @Override
                     public void doConfirm(String intro) {
                         editDialog1.dismiss();
@@ -379,8 +379,8 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
                 editDialog1.show();
                 break;
             case R.id.viewNickName:
-                final EditDialog editDialog = new EditDialog(this, "修改昵称", userProfile.getNickname(), "确认", "取消");
-                editDialog.setClicklistener(new EditDialog.ClickListenerInterface() {
+                final EditNameDialog editDialog = new EditNameDialog(this, "修改昵称", userProfile.getNickname(), "确认", "取消");
+                editDialog.setClicklistener(new EditNameDialog.ClickListenerInterface() {
                     @Override
                     public void doConfirm(String intro) {
                         editDialog.dismiss();

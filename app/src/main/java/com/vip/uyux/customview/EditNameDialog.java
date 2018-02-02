@@ -3,6 +3,7 @@ package com.vip.uyux.customview;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -14,9 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vip.uyux.R;
+import com.vip.uyux.util.NameLengthFilter;
 
 
-public class EditDialog extends Dialog {
+public class EditNameDialog extends Dialog {
 
     private Context context;
     private String title;
@@ -33,7 +35,7 @@ public class EditDialog extends Dialog {
         void doCancel();
     }
 
-    public EditDialog(Context context, String title, String editStr, String confirmButtonText, String cacelButtonText) {
+    public EditNameDialog(Context context, String title, String editStr, String confirmButtonText, String cacelButtonText) {
         super(context, R.style.dialog);
         this.context = context;
         this.title = title;
@@ -57,6 +59,8 @@ public class EditDialog extends Dialog {
 
         TextView tvTitle = (TextView) view.findViewById(R.id.textTitle);
         editIntro = view.findViewById(R.id.editIntro);
+        InputFilter[] filters = {new NameLengthFilter(12)};
+        editIntro.setFilters(filters);
         TextView tvConfirm = (TextView) view.findViewById(R.id.textQueDing);
         TextView tvCancel = (TextView) view.findViewById(R.id.textQuXiao);
         editIntro.setText(editStr);

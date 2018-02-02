@@ -10,22 +10,29 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.FenXiaoFragment;
+import com.vip.uyux.model.BonusDistributionorder;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickListener {
     private TabLayout tablayout;
     private ViewPager viewPager;
-    List<String> list = new ArrayList<>();
     private TextView textSum;
     private int type;
     private TextView textDes;
+    private List<BonusDistributionorder.TypeBean> typeBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,23 +74,6 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
             default:
                 break;
         }
-        list.add("预返佣单");
-        list.add("已返佣单");
-        list.add("失效佣单");
-//        list.add("返佣明细");
-        viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
-        tablayout.setupWithViewPager(viewPager);
-        tablayout.removeAllTabs();
-        for (int i = 0; i < list.size(); i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.item_tablayout, null);
-            TextView textTitle = view.findViewById(R.id.textTitle);
-            textTitle.setText(list.get(i));
-            if (i == 0) {
-                tablayout.addTab(tablayout.newTab().setCustomView(view), true);
-            } else {
-                tablayout.addTab(tablayout.newTab().setCustomView(view), false);
-            }
-        }
     }
 
     @Override
@@ -104,11 +94,77 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
 
     @Override
     protected void initData() {
-
+        onRefresh();
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url;
+        switch (type) {
+            case 1:
+                url = Constant.HOST + Constant.Url.SHARE_ESTIMATE;
+                break;
+            case 2:
+                url = Constant.HOST + Constant.Url.SHARE_ORDER;
+                break;
+            default:
+                url = Constant.HOST + Constant.Url.SHARE_ESTIMATE;
+                break;
+        }
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        return new OkObject(params, url);
+    }
+
+    public void onRefresh() {
+
+        showLoadingDialog();
+        ApiClient.post(FenXiaoDDActivity.this, getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("FenXiaoDDActivity--onSuccess", s + "");
+                try {
+                    BonusDistributionorder bonusDistributionorder = GsonUtils.parseJSON(s, BonusDistributionorder.class);
+                    if (bonusDistributionorder.getStatus() == 1) {
+                        typeBeanList = bonusDistributionorder.getType();
+                        viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
+                        tablayout.setupWithViewPager(viewPager);
+                        tablayout.removeAllTabs();
+                        for (int i = 0; i < typeBeanList.size(); i++) {
+                            View view = LayoutInflater.from(FenXiaoDDActivity.this).inflate(R.layout.item_tablayout, null);
+                            TextView textTitle = view.findViewById(R.id.textTitle);
+                            textTitle.setText(typeBeanList.get(i).getN());
+                            if (i == 0) {
+                                tablayout.addTab(tablayout.newTab().setCustomView(view), true);
+                            } else {
+                                tablayout.addTab(tablayout.newTab().setCustomView(view), false);
+                            }
+                        }
+                    } else if (bonusDistributionorder.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(FenXiaoDDActivity.this);
+                    } else {
+                        Toast.makeText(FenXiaoDDActivity.this, bonusDistributionorder.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(FenXiaoDDActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(FenXiaoDDActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 
@@ -120,30 +176,16 @@ public class FenXiaoDDActivity extends ZjbBaseActivity implements View.OnClickLi
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new FenXiaoFragment(0,type);
-                case 1:
-                    return new FenXiaoFragment(10,type);
-                case 2:
-                    return new FenXiaoFragment(20,type);
-//                case 3:
-//                    return new FenXiaoFragment(30);
-//                case 4:
-//                    return new FenXiaoFragment(40);
-                default:
-                    return new FenXiaoFragment(0,type);
-            }
-
+            return new FenXiaoFragment(typeBeanList.get(position).getV(), type);
         }
 
         @Override
         public int getCount() {
-            return list.size();
+            return typeBeanList.size();
         }
     }
 
-    public void setSum(String sum){
+    public void setSum(String sum) {
         textSum.setText(sum);
     }
 }

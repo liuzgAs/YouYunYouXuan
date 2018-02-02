@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    int status;
+    String status;
     int type;
     private View mInflate;
     private EasyRecyclerView recyclerView;
@@ -47,7 +47,7 @@ public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     }
 
     @SuppressLint("ValidFragment")
-    public FenXiaoFragment(int status, int type) {
+    public FenXiaoFragment(String status, int type) {
         this.status = status;
         this.type = type;
     }
@@ -206,7 +206,7 @@ public class FenXiaoFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             params.put("tokenTime", tokenTime);
         }
         params.put("p", String.valueOf(page));
-        params.put("state", String.valueOf(status));
+        params.put("state", status);
         return new OkObject(params, url);
     }
 

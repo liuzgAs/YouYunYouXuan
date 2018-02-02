@@ -51,6 +51,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
             }
         }
     };
+    private TextView textViewRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +79,12 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         btnLiJiTX = (Button) findViewById(R.id.btnLiJiTX);
         textViewTitle = ((TextView) findViewById(R.id.textViewTitle));
         imageWhat = (ImageView) findViewById(R.id.imageWhat);
+        textViewRight = (TextView) findViewById(R.id.textViewRight);
     }
 
     @Override
     protected void initViews() {
+        textViewRight.setText("提现记录");
         switch (type) {
             case 1:
                 textViewTitle.setText("不可提现佣金");
@@ -151,6 +154,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.imageBack).setOnClickListener(this);
         btnLiJiTX.setOnClickListener(this);
         imageWhat.setOnClickListener(this);
+        textViewRight.setOnClickListener(this);
     }
 
     @Override
@@ -169,7 +173,13 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.textViewRight:
+                intent.setClass(BuKeTiXianActivity.this, TiXianJLActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE, type);
+                startActivity(intent);
+                break;
             case R.id.imageWhat:
                 final SingleBtnDialog singleBtnDialog = new SingleBtnDialog(this, "您的身份等级低于下线等级情况下，获得推⼴广奖励和消费返佣为待提现状态，升级等级即可提现", "知道了");
                 singleBtnDialog.show();
@@ -181,7 +191,6 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 });
                 break;
             case R.id.btnLiJiTX:
-                Intent intent = new Intent();
                 switch (type) {
                     case 1:
                         intent.setClass(this, WebActivity.class);
@@ -195,9 +204,9 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                         startActivity(intent);
                         break;
                     case 3:
-                        intent.setClass(this, TiXianActivity.class);
-                        intent.putExtra(Constant.IntentKey.TYPE, 2);
-                        startActivity(intent);
+//                        intent.setClass(this, TiXianActivity.class);
+//                        intent.putExtra(Constant.IntentKey.TYPE, 2);
+//                        startActivity(intent);
                         break;
                     default:
                         break;

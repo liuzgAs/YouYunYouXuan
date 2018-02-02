@@ -91,7 +91,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         findViewById(R.id.viewWoDeKeHu).setOnClickListener(this);
         findViewById(R.id.viewWoDeTD).setOnClickListener(this);
         findViewById(R.id.viewKeTiXian).setOnClickListener(this);
-        findViewById(R.id.textLiJiSJ).setOnClickListener(this);
+        textLiJiSJ.setOnClickListener(this);
         findViewById(R.id.viewFenXiaoYJ).setOnClickListener(this);
         findViewById(R.id.viewYouYunSXY).setOnClickListener(this);
         findViewById(R.id.viewYuJiYJ).setOnClickListener(this);
