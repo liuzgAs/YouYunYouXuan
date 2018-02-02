@@ -110,6 +110,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private View imageGouWuChe;
     private String did;
     private Badge badge;
+    private boolean isShare = false;
     private BroadcastReceiver reciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -118,11 +119,79 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 case Constant.BroadcastCode.SHUA_XIN_CAR:
                     gouWuChe();
                     break;
+                case Constant.BroadcastCode.WX_SHARE:
+                    if (isShare) {
+                        MyDialog.showTipDialog(ChanPinXQActivity.this, "分享成功");
+                        isShare = false;
+                        shareHuiDiao();
+                    }
+                    break;
+                case Constant.BroadcastCode.WX_SHARE_FAIL:
+                    if (isShare) {
+                        MyDialog.showTipDialog(ChanPinXQActivity.this, "取消分享");
+                        isShare = false;
+                    }
+                    break;
                 default:
                     break;
             }
         }
     };
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getHDOkObject() {
+        String url = Constant.HOST + Constant.Url.SHARE_SHAREAFTER;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("shareType",String.valueOf(0));
+        params.put("source",Constant.source);
+        params.put("shareTitle",goodsInfo.getData().getShare().getShareTitle());
+        params.put("shareImg",goodsInfo.getData().getShare().getShareImg());
+        params.put("shareDes",goodsInfo.getData().getShare().getShareDes());
+        params.put("url",goodsInfo.getData().getShare().getShareUrl());
+        params.put("id",String.valueOf(id));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 分享回调
+     */
+    private void shareHuiDiao() {
+        showLoadingDialog();
+        ApiClient.post(ChanPinXQActivity.this, getHDOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess",s+ "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus()==1){
+                        LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "回调成功");
+                    }else if (simpleInfo.getStatus()==3){
+                        MyDialog.showReLoginDialog(ChanPinXQActivity.this);
+                    }else {
+                        Toast.makeText(ChanPinXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ChanPinXQActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(ChanPinXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private View viewGouWuChe;
 
     @Override
@@ -523,6 +592,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 startActivity(intent);
                 break;
             case R.id.imageFenXiang:
+                isShare = true;
                 MyDialog.share(this, "ChanPinXQActivity", api, String.valueOf(id), goodsInfo.getData().getShare());
                 break;
             case R.id.imageShouCang:
@@ -1068,6 +1138,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+        filter.addAction(Constant.BroadcastCode.WX_SHARE);
+        filter.addAction(Constant.BroadcastCode.WX_SHARE_FAIL);
         registerReceiver(reciver, filter);
     }
 

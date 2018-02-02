@@ -160,7 +160,12 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
                                                                     while(isBreak){
                                                                         Thread.sleep(1000);
                                                                         daoJiShi--;
-                                                                        textDaoJiShi.setText(daoJiShi+"s");
+                                                                        runOnUiThread(new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+                                                                                textDaoJiShi.setText(daoJiShi+"s");
+                                                                            }
+                                                                        });
                                                                         if (daoJiShi==0){
                                                                             isBreak=false;
                                                                             toMainActivity();

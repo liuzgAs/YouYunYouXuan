@@ -241,6 +241,7 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Constant.source="web";
                 wxShare(api, 0, share.getShareUrl(), share.getShareTitle(), share.getShareDes(), share.getShareImg());
                 alertDialog1.dismiss();
             }
@@ -252,6 +253,7 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Constant.source="wxp";
                 wxShare(api, 1, share.getShareUrl(), share.getShareTitle(), share.getShareDes(), share.getShareImg());
                 alertDialog1.dismiss();
             }
@@ -263,6 +265,7 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Constant.source="";
                 duoTuPengYouQuan(context, activity, id,1);
                 alertDialog1.dismiss();
             }
@@ -457,6 +460,7 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Constant.source= "wxw";
                 wxShare1(context, api, 0, url, img,title,des);
                 alertDialog1.dismiss();
             }
@@ -468,6 +472,7 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Constant.source ="wxp";
                 wxShare1(context, api, 1, url,img, title,des);
                 alertDialog1.dismiss();
             }
@@ -476,7 +481,6 @@ public class MyDialog {
             @Override
             public void onClick(View view) {
                 wxShare1(context, api, 2, url,img, title,des);
-                alertDialog1.dismiss();
                 alertDialog1.dismiss();
             }
         });

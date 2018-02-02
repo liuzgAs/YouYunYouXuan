@@ -219,6 +219,7 @@ public class DengLuActivity extends ZjbBaseActivity implements View.OnClickListe
                     return;
                 }
                 isWxDengLu = true;
+                Constant.isLogin = true;
                 showLoadingDialog();
                 api.registerApp(Constant.WXAPPID);
                 SendAuth.Req req = new SendAuth.Req();
@@ -573,5 +574,6 @@ public class DengLuActivity extends ZjbBaseActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        Constant.isLogin = false;
     }
 }

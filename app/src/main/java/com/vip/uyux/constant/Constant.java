@@ -11,6 +11,8 @@ public class Constant {
      * 判断数据是否有改变
      */
     public static int changeControl = 2017;
+    public static String source = "";
+    public static boolean isLogin = false;
     /**
      * 微信appid
      */
@@ -332,6 +334,10 @@ public class Constant {
          * 购物车数量
          */
         public static final String CART_NUM = "/Cart/num";
+        /**
+         * 分享回调
+         */
+        public static final String SHARE_SHAREAFTER = "/Share/shareAfter";
 
     }
 

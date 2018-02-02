@@ -52,9 +52,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         Log.e("WXEntryActivity", "WXEntryActivity--onResp--" + resp.errCode);
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-                String code = ((SendAuth.Resp) resp).code; //即为所需的code
                 Intent intent = new Intent(Constant.BroadcastCode.WX_SHARE);
-                intent.putExtra(Constant.BroadcastCode.WX_LOGIN, code);
+                if (Constant.isLogin){
+                    String code = ((SendAuth.Resp) resp).code;
+                    intent.putExtra(Constant.BroadcastCode.WX_LOGIN, code);
+                }
                 sendBroadcast(intent);
                 finish();
                 break;
