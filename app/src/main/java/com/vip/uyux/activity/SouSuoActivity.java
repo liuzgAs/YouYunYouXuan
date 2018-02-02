@@ -3,6 +3,7 @@ package com.vip.uyux.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
@@ -53,6 +54,15 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private ImageView imageSouSuo;
     private ScrollView scrollHot;
     private View include3;
+    private View viewSearch;
+    private int[] shaiXuanArr = new int[3];
+    private TextView textZongHe;
+    private TextView textXiaoLiang;
+    private TextView textJiaGe;
+    private ImageView sanJiaoUp;
+    private ImageView sanJiaoDown;
+    private ImageView sanJiaoUp1;
+    private ImageView sanJiaoDown1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +88,24 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         editSouSuo = (EditText) findViewById(R.id.editSouSuo);
         imageSouSuo = (ImageView) findViewById(R.id.imageSouSuo);
         scrollHot = (ScrollView) findViewById(R.id.scrollHot);
+        viewSearch = findViewById(R.id.viewSearch);
+        textZongHe = (TextView) findViewById(R.id.textZongHe);
+        textXiaoLiang = (TextView) findViewById(R.id.textXiaoLiang);
+        textJiaGe = (TextView) findViewById(R.id.textJiaGe);
+        sanJiaoUp = (ImageView) findViewById(R.id.sanJiaoUp);
+        sanJiaoDown = (ImageView) findViewById(R.id.sanJiaoDown);
+        sanJiaoUp1 = (ImageView) findViewById(R.id.sanJiaoUp1);
+        sanJiaoDown1 = (ImageView) findViewById(R.id.sanJiaoDown1);
     }
 
     @Override
     protected void initViews() {
+        shaiXuanArr[0] = 1;
+        shaiXuanArr[1] = 0;
+        shaiXuanArr[2] = 0;
+        setShaiXuan();
         ((TextView) include3.findViewById(R.id.textViewTitle)).setText("搜索");
-        recyclerView.setVisibility(View.GONE);
+        viewSearch.setVisibility(View.GONE);
         ViewGroup.LayoutParams layoutParams = include3.getLayoutParams();
         layoutParams.height = (int) (getResources().getDimension(R.dimen.titleHeight) + ScreenUtils.getStatusBarHeight(this));
         include3.setLayoutParams(layoutParams);
@@ -171,8 +193,50 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         });
     }
 
+    /**
+     * 设置筛选
+     */
+    private void setShaiXuan() {
+        if (shaiXuanArr[0] == 0) {
+            textZongHe.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+        } else {
+            textZongHe.setTextColor(ContextCompat.getColor(this, R.color.basic_color));
+        }
+        if (shaiXuanArr[1] == 0) {
+            textXiaoLiang.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+            sanJiaoUp.setImageResource(R.mipmap.san_jiao_up_g);
+            sanJiaoDown.setImageResource(R.mipmap.san_jiao_down_g);
+        } else {
+            textXiaoLiang.setTextColor(ContextCompat.getColor(this, R.color.basic_color));
+            if (shaiXuanArr[1] == 1) {
+                sanJiaoUp.setImageResource(R.mipmap.san_jiao_up_r);
+                sanJiaoDown.setImageResource(R.mipmap.san_jiao_down_g);
+            } else {
+                sanJiaoUp.setImageResource(R.mipmap.san_jiao_up_g);
+                sanJiaoDown.setImageResource(R.mipmap.san_jiao_down_r);
+            }
+        }
+        if (shaiXuanArr[2] == 0) {
+            textJiaGe.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+            sanJiaoUp1.setImageResource(R.mipmap.san_jiao_up_g);
+            sanJiaoDown1.setImageResource(R.mipmap.san_jiao_down_g);
+        } else {
+            textJiaGe.setTextColor(ContextCompat.getColor(this, R.color.basic_color));
+            if (shaiXuanArr[2] == 1) {
+                sanJiaoUp1.setImageResource(R.mipmap.san_jiao_up_r);
+                sanJiaoDown1.setImageResource(R.mipmap.san_jiao_down_g);
+            } else {
+                sanJiaoUp1.setImageResource(R.mipmap.san_jiao_up_g);
+                sanJiaoDown1.setImageResource(R.mipmap.san_jiao_down_r);
+            }
+        }
+    }
+
     @Override
     protected void setListeners() {
+        findViewById(R.id.viewZongHe).setOnClickListener(this);
+        findViewById(R.id.viewXiaoLiang).setOnClickListener(this);
+        findViewById(R.id.viewJiaGe).setOnClickListener(this);
         editSouSuo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -187,13 +251,13 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    recyclerView.setVisibility(View.GONE);
+                    viewSearch.setVisibility(View.GONE);
                     scrollHot.setVisibility(View.VISIBLE);
                 } else {
                     keywords = s.toString().trim();
                     ApiClient.cancleAll();
                     SouSuo();
-                    recyclerView.setVisibility(View.VISIBLE);
+                    viewSearch.setVisibility(View.VISIBLE);
                     scrollHot.setVisibility(View.GONE);
                 }
             }
@@ -291,6 +355,21 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         }
         params.put("p", page + "");
         params.put("keywords", keywords);
+        if (shaiXuanArr[0] == 0) {
+            if (shaiXuanArr[1]==1){
+                params.put("sort", "saleAsc");
+            }else if (shaiXuanArr[1]==2){
+                params.put("sort", "saleDesc");
+            }else {
+                if (shaiXuanArr[2]==1){
+                    params.put("sort", "priceAsc");
+                }else if (shaiXuanArr[2]==2){
+                    params.put("sort", "priceDesc");
+                }else {
+
+                }
+            }
+        }
         return new OkObject(params, url);
     }
 
@@ -344,6 +423,50 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.viewZongHe:
+                shaiXuanArr[0] = 1;
+                shaiXuanArr[1] = 0;
+                shaiXuanArr[2] = 0;
+                setShaiXuan();
+                recyclerView.showProgress();
+                SouSuo();
+                break;
+            case R.id.viewXiaoLiang:
+                if (shaiXuanArr[1] == 0) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 1;
+                    shaiXuanArr[2] = 0;
+                } else if (shaiXuanArr[1] == 1) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 2;
+                    shaiXuanArr[2] = 0;
+                } else {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 1;
+                    shaiXuanArr[2] = 0;
+                }
+                setShaiXuan();
+                recyclerView.showProgress();
+                SouSuo();
+                break;
+            case R.id.viewJiaGe:
+                if (shaiXuanArr[2] == 0) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 0;
+                    shaiXuanArr[2] = 1;
+                } else if (shaiXuanArr[2] == 1) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 0;
+                    shaiXuanArr[2] = 2;
+                } else {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 0;
+                    shaiXuanArr[2] = 1;
+                }
+                setShaiXuan();
+                recyclerView.showProgress();
+                SouSuo();
+                break;
             case R.id.imageSouSuo:
                 keywords = editSouSuo.getText().toString().trim();
                 editSouSuo.setText(keywords);

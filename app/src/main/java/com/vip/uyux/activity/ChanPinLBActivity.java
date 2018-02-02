@@ -3,6 +3,7 @@ package com.vip.uyux.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +44,14 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     private boolean isDuoLie = false;
     private DividerDecoration itemDecoration;
     private SpaceDecoration itemDecoration1;
+    private int[] shaiXuanArr = new int[3];
+    private TextView textZongHe;
+    private TextView textXiaoLiang;
+    private TextView textJiaGe;
+    private ImageView sanJiaoUp;
+    private ImageView sanJiaoDown;
+    private ImageView sanJiaoUp1;
+    private ImageView sanJiaoDown1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +77,62 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         imgeRight = (ImageView) findViewById(R.id.imgeRight);
+        textZongHe = (TextView) findViewById(R.id.textZongHe);
+        textXiaoLiang = (TextView) findViewById(R.id.textXiaoLiang);
+        textJiaGe = (TextView) findViewById(R.id.textJiaGe);
+        sanJiaoUp = (ImageView) findViewById(R.id.sanJiaoUp);
+        sanJiaoDown = (ImageView) findViewById(R.id.sanJiaoDown);
+        sanJiaoUp1 = (ImageView) findViewById(R.id.sanJiaoUp1);
+        sanJiaoDown1 = (ImageView) findViewById(R.id.sanJiaoDown1);
     }
 
     @Override
     protected void initViews() {
+        shaiXuanArr[0] = 1;
+        shaiXuanArr[1] = 0;
+        shaiXuanArr[2] = 0;
+        setShaiXuan();
         ((TextView) findViewById(R.id.textViewTitle)).setText(title);
         initRecycler();
+    }
+
+    /**
+     * 设置筛选
+     */
+    private void setShaiXuan() {
+        if (shaiXuanArr[0] == 0) {
+            textZongHe.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+        } else {
+            textZongHe.setTextColor(ContextCompat.getColor(this, R.color.basic_color));
+        }
+        if (shaiXuanArr[1] == 0) {
+            textXiaoLiang.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+            sanJiaoUp.setImageResource(R.mipmap.san_jiao_up_g);
+            sanJiaoDown.setImageResource(R.mipmap.san_jiao_down_g);
+        } else {
+            textXiaoLiang.setTextColor(ContextCompat.getColor(this, R.color.basic_color));
+            if (shaiXuanArr[1] == 1) {
+                sanJiaoUp.setImageResource(R.mipmap.san_jiao_up_r);
+                sanJiaoDown.setImageResource(R.mipmap.san_jiao_down_g);
+            } else {
+                sanJiaoUp.setImageResource(R.mipmap.san_jiao_up_g);
+                sanJiaoDown.setImageResource(R.mipmap.san_jiao_down_r);
+            }
+        }
+        if (shaiXuanArr[2] == 0) {
+            textJiaGe.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+            sanJiaoUp1.setImageResource(R.mipmap.san_jiao_up_g);
+            sanJiaoDown1.setImageResource(R.mipmap.san_jiao_down_g);
+        } else {
+            textJiaGe.setTextColor(ContextCompat.getColor(this, R.color.basic_color));
+            if (shaiXuanArr[2] == 1) {
+                sanJiaoUp1.setImageResource(R.mipmap.san_jiao_up_r);
+                sanJiaoDown1.setImageResource(R.mipmap.san_jiao_down_g);
+            } else {
+                sanJiaoUp1.setImageResource(R.mipmap.san_jiao_up_g);
+                sanJiaoDown1.setImageResource(R.mipmap.san_jiao_down_r);
+            }
+        }
     }
 
     /**
@@ -91,15 +150,15 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsIndex.DataBean>(ChanPinLBActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout ;
-                if (viewType==1){
+                int layout;
+                if (viewType == 1) {
                     layout = R.layout.item_lb_duolie;
-                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", ""+viewType);
-                }else {
-                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", ""+viewType);
+                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", "" + viewType);
+                } else {
+                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", "" + viewType);
                     layout = R.layout.item_chanpin;
                 }
-                return new ChanPinLBViewHolder(parent, layout,viewType);
+                return new ChanPinLBViewHolder(parent, layout, viewType);
             }
 
             @Override
@@ -120,11 +179,11 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                             int status = goodsIndex.getStatus();
                             if (status == 1) {
                                 List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
-                                if (isDuoLie){
+                                if (isDuoLie) {
                                     for (int i = 0; i < dataBeanList.size(); i++) {
                                         dataBeanList.get(i).setViewType(1);
                                     }
-                                }else {
+                                } else {
                                     for (int i = 0; i < dataBeanList.size(); i++) {
                                         dataBeanList.get(i).setViewType(0);
                                     }
@@ -188,6 +247,9 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.viewZongHe).setOnClickListener(this);
+        findViewById(R.id.viewXiaoLiang).setOnClickListener(this);
+        findViewById(R.id.viewJiaGe).setOnClickListener(this);
         imgeRight.setOnClickListener(this);
     }
 
@@ -208,6 +270,21 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         params.put("p", String.valueOf(page));
         params.put("cate", String.valueOf(cate));
         params.put("pcate", String.valueOf(pcate));
+        if (shaiXuanArr[0] == 0) {
+            if (shaiXuanArr[1]==1){
+                params.put("sort", "saleAsc");
+            }else if (shaiXuanArr[1]==2){
+                params.put("sort", "saleDesc");
+            }else {
+                if (shaiXuanArr[2]==1){
+                    params.put("sort", "priceAsc");
+                }else if (shaiXuanArr[2]==2){
+                    params.put("sort", "priceDesc");
+                }else {
+
+                }
+            }
+        }
         return new OkObject(params, url);
     }
 
@@ -219,14 +296,58 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.viewZongHe:
+                shaiXuanArr[0] = 1;
+                shaiXuanArr[1] = 0;
+                shaiXuanArr[2] = 0;
+                setShaiXuan();
+                recyclerView.showProgress();
+                onRefresh();
+                break;
+            case R.id.viewXiaoLiang:
+                if (shaiXuanArr[1] == 0) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 1;
+                    shaiXuanArr[2] = 0;
+                } else if (shaiXuanArr[1] == 1) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 2;
+                    shaiXuanArr[2] = 0;
+                } else {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 1;
+                    shaiXuanArr[2] = 0;
+                }
+                setShaiXuan();
+                recyclerView.showProgress();
+                onRefresh();
+                break;
+            case R.id.viewJiaGe:
+                if (shaiXuanArr[2] == 0) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 0;
+                    shaiXuanArr[2] = 1;
+                } else if (shaiXuanArr[2] == 1) {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 0;
+                    shaiXuanArr[2] = 2;
+                } else {
+                    shaiXuanArr[0] = 0;
+                    shaiXuanArr[1] = 0;
+                    shaiXuanArr[2] = 1;
+                }
+                setShaiXuan();
+                recyclerView.showProgress();
+                onRefresh();
+                break;
             case R.id.imgeRight:
                 isDuoLie = !isDuoLie;
                 if (isDuoLie) {
                     for (int i = 0; i < adapter.getAllData().size(); i++) {
                         adapter.getItem(i).setViewType(1);
                     }
-                    recyclerView.setLayoutManager(new GridLayoutManager(this,2 ));
-                    if (itemDecoration!=null){
+                    recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+                    if (itemDecoration != null) {
                         recyclerView.removeItemDecoration(itemDecoration);
                     }
                     imgeRight.setImageResource(R.mipmap.liebiao2);
@@ -236,7 +357,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                         adapter.getItem(i).setViewType(0);
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                    if (itemDecoration1!=null){
+                    if (itemDecoration1 != null) {
                         recyclerView.removeItemDecoration(itemDecoration1);
                     }
                     imgeRight.setImageResource(R.mipmap.liebiao);
@@ -264,11 +385,11 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                     GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
                     if (goodsIndex.getStatus() == 1) {
                         List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
-                        if (isDuoLie){
+                        if (isDuoLie) {
                             for (int i = 0; i < dataBeanList.size(); i++) {
                                 dataBeanList.get(i).setViewType(1);
                             }
-                        }else {
+                        } else {
                             for (int i = 0; i < dataBeanList.size(); i++) {
                                 dataBeanList.get(i).setViewType(0);
                             }

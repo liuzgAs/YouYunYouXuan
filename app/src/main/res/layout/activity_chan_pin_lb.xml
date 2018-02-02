@@ -10,7 +10,107 @@
 
     <include layout="@layout/view_bar_lb" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/viewZongHe"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textZongHe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="综合"
+                android:textSize="@dimen/normal_textsize" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/viewXiaoLiang"
+            android:gravity="center"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="按销量"
+                android:id="@+id/textXiaoLiang"
+                android:textSize="@dimen/normal_textsize" />
+            <RelativeLayout
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/textXiaoLiang"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/sanJiaoUp"
+                    android:src="@mipmap/san_jiao_up_g"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_marginTop="-2dp"
+                    android:id="@+id/sanJiaoDown"
+                    android:layout_below="@+id/sanJiaoUp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/san_jiao_down_g"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/viewJiaGe"
+            android:gravity="center"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="按价格"
+                android:id="@+id/textJiaGe"
+                android:textSize="@dimen/normal_textsize" />
+            <RelativeLayout
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/textJiaGe"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/sanJiaoUp1"
+                    android:src="@mipmap/san_jiao_up_g"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+                <ImageView
+                    android:layout_marginTop="-2dp"
+                    android:id="@+id/sanJiaoDown1"
+                    android:layout_below="@+id/sanJiaoUp1"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/san_jiao_down_g"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
     <com.jude.easyrecyclerview.EasyRecyclerView
+        android:layout_marginTop="1dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
