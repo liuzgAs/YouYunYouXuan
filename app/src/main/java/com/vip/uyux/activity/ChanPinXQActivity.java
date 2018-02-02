@@ -43,6 +43,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.adapter.MyChuXiaoAdapter;
 import com.vip.uyux.adapter.TagAdapter01;
 import com.vip.uyux.base.MyDialog;
+import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
@@ -600,15 +601,23 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 MyDialog.share(this, "ChanPinXQActivity", api, String.valueOf(id), goodsInfo.getData().getShare());
                 break;
             case R.id.imageShouCang:
-                if (goodsInfo.getIsc() == 0) {
-                    shouCang();
-                } else {
-                    quXiaoSC();
+                if (isLogin){
+                    if (goodsInfo.getIsc() == 0) {
+                        shouCang();
+                    } else {
+                        quXiaoSC();
+                    }
+                }else {
+                    ToLoginActivity.toLoginActivity(this);
                 }
                 break;
             case R.id.textLiJiGouMai:
-                buy_now = 1;
-                mai();
+                if (isLogin){
+                    buy_now = 1;
+                    mai();
+                }else {
+                    ToLoginActivity.toLoginActivity(this);
+                }
                 break;
             case R.id.textJiaRuGWC:
                 buy_now = 0;

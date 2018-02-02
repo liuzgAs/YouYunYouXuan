@@ -342,6 +342,10 @@ public class Constant {
          * 订单详情
          */
         public static final String USER_ORDERINFO= "/User/orderInfo";
+        /**
+         * 余额支付
+         */
+        public static final String PAY_BALANCEPAY= "/pay/balancePay";
 
     }
 

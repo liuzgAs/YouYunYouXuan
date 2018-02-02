@@ -24,6 +24,7 @@ import com.vip.uyux.customview.SingleBtnDialog;
 import com.vip.uyux.model.AliPayBean;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.OrderPay;
+import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.model.UserMy;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
@@ -180,8 +181,8 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
             public void doWhat() {
                 singleBtnDialog.dismiss();
                 Intent intent1 = new Intent();
-                intent1.setClass(LiJiZFActivity.this,DingDanXqActivity.class);
-                intent1.putExtra(Constant.IntentKey.ID,orderPay.getData().getId());
+                intent1.setClass(LiJiZFActivity.this, DingDanXqActivity.class);
+                intent1.putExtra(Constant.IntentKey.ID, orderPay.getData().getId());
                 startActivity(intent1);
                 finish();
             }
@@ -204,8 +205,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btnLiJiZF:
                 if (payMode == 0) {
-                    MyDialog.showTipDialog(this,"余额支付暂未开通");
-//                    yuEZhiFu();
+                    MyDialog.showTipDialog(this, "余额支付暂未开通");
                 } else {
                     zhiFu();
                 }
@@ -319,6 +319,9 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
      */
     private void pay() {
         switch (payMode) {
+            case 0:
+                yuEZhiFu();
+                break;
             case 1:
                 Runnable payRunnable = new Runnable() {
 
@@ -379,6 +382,55 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getYuEOkObject() {
+        String url = Constant.HOST + Constant.Url.PAY_BALANCEPAY;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("order_no",orderPay.getData().getOrderSn());
+        return new OkObject(params, url);
+    }
+
+
+    /**
+     * 余额支付
+     */
+    private void yuEZhiFu() {
+        showLoadingDialog();
+        ApiClient.post(LiJiZFActivity.this, getYuEOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("LiJiZFActivity--onSuccess",s+ "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus()==1){
+                        paySuccess();
+                    }else if (simpleInfo.getStatus()==3){
+                        MyDialog.showReLoginDialog(LiJiZFActivity.this);
+                    }else {
+                        Toast.makeText(LiJiZFActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(LiJiZFActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(LiJiZFActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

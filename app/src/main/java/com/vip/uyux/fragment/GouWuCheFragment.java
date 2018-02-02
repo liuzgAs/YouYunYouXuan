@@ -28,6 +28,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.activity.QueRenDDActivity;
 import com.vip.uyux.base.MyDialog;
+import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.CartIndex;
@@ -311,20 +312,24 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.buttonJieSuan:
-                List<Integer> integerList = new ArrayList<>();
-                for (int i = 0; i < adapter.getAllData().size(); i++) {
-                    if (adapter.getAllData().get(i).isSelect()) {
-                        integerList.add(adapter.getAllData().get(i).getId());
+                if (isLogin){
+                    List<Integer> integerList = new ArrayList<>();
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        if (adapter.getAllData().get(i).isSelect()) {
+                            integerList.add(adapter.getAllData().get(i).getId());
+                        }
                     }
+                    if (integerList.size() == 0) {
+                        Toast.makeText(mContext, "请选择要结算的商品", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Intent intent = new Intent();
+                    intent.putExtra(Constant.IntentKey.BEAN, new JieSuan(integerList));
+                    intent.setClass(mContext, QueRenDDActivity.class);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(mContext);
                 }
-                if (integerList.size() == 0) {
-                    Toast.makeText(mContext, "请选择要结算的商品", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Intent intent = new Intent();
-                intent.putExtra(Constant.IntentKey.BEAN, new JieSuan(integerList));
-                intent.setClass(mContext, QueRenDDActivity.class);
-                startActivity(intent);
                 break;
             default:
 
