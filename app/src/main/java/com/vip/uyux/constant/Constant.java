@@ -99,6 +99,10 @@ public class Constant {
          */
         public static final String LOGIN_BINDSMS = "/Login/bindSms";
         /**
+         * 银行卡验证码
+         */
+        public static final String LOGIN_BANKSMS = "/Login/bankSms";
+        /**
          * 银行卡添加提交
          */
         public static final String BANK_CARDADD = "/Bank/cardAdd";

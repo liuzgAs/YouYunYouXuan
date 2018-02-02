@@ -237,7 +237,7 @@ public class XinZengYHKActivity extends ZjbBaseActivity implements View.OnClickL
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject1() {
-        String url = Constant.HOST + Constant.Url.LOGIN_BINDSMS;
+        String url = Constant.HOST + Constant.Url.LOGIN_BANKSMS;
         HashMap<String, String> params = new HashMap<>();
         params.put("userName", mPhone_sms);
         return new OkObject(params, url);
