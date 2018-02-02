@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/shangpin"
+        android:id="@+id/imageImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+    <TextView
+        android:ellipsize="end"
+        android:text="一品轩"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_alignTop="@+id/imageImg"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:id="@+id/textTitle"
+        android:textSize="@dimen/bigText"
+        android:textColor="@color/light_black"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:lines="2"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textDes"
+        android:textColor="@color/text_gray"
+        android:text="分类：无糖山楂"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_below="@+id/textTitle"
+        android:layout_marginLeft="12dp"
+        android:textSize="@dimen/litterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="¥78.00"
+        android:textColor="@color/basic_color"
+        android:layout_alignBottom="@+id/imageImg"
+        android:layout_toRightOf="@+id/imageImg"
+        android:textSize="@dimen/normal_textsize"
+        android:layout_marginLeft="12dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/textPrice"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textNum"
+        android:textSize="@dimen/litterText"
+        android:textColor="@color/light_black"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/textPrice"
+        android:text="×2"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

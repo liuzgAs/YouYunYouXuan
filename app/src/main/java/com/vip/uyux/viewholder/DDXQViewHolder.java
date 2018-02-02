@@ -1,6 +1,5 @@
 package com.vip.uyux.viewholder;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,14 +13,13 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
-import com.vip.uyux.activity.DingDanXqActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.TwoBtnDialog;
 import com.vip.uyux.model.OkObject;
-import com.vip.uyux.model.Order;
 import com.vip.uyux.model.SimpleInfo;
+import com.vip.uyux.model.UserOrderinfo;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -32,18 +30,16 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX> {
+public class DDXQViewHolder extends BaseViewHolder<UserOrderinfo.DataBean.ListBeanX> {
 
     private final EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Order.DataBean.ListBeanX.ListBean> adapter;
+    private RecyclerArrayAdapter<UserOrderinfo.DataBean.ListBeanX.ListBean> adapter;
     private final TextView textSupplier;
     private final TextView textText;
-    Order.DataBean.ListBeanX data;
-    String id;
+    UserOrderinfo.DataBean.ListBeanX data;
 
-    public DDCangKuViewHolder(ViewGroup parent, @LayoutRes int res,String id) {
+    public DDXQViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
-        this.id=id;
         textSupplier = $(R.id.textSupplier);
         textText = $(R.id.textText);
         recyclerView = $(R.id.recyclerView);
@@ -76,6 +72,22 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
             }
         });
         initRecycler();
+    }
+
+    @Override
+    public void setData(UserOrderinfo.DataBean.ListBeanX data) {
+        super.setData(data);
+        this.data=data;
+        textSupplier.setText(data.getSupplier());
+        if (data.getIs_btn() == 1) {
+            textText.setVisibility(View.VISIBLE);
+            textText.setText(data.getText());
+        } else {
+            textText.setVisibility(View.GONE);
+        }
+        List<UserOrderinfo.DataBean.ListBeanX.ListBean> listBeanList = data.getList();
+        adapter.clear();
+        adapter.addAll(listBeanList);
     }
 
     /**
@@ -135,38 +147,13 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Order.DataBean.ListBeanX.ListBean>(getContext()) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<UserOrderinfo.DataBean.ListBeanX.ListBean>(getContext()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_ding_dan;
-                return new DDItemViewHolder(parent, layout);
-            }
-        });
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Intent intent = new Intent();
-                intent.setClass(getContext(), DingDanXqActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,id);
-                getContext().startActivity(intent);
+                int layout = R.layout.item_ddxq_item;
+                return new DingDanXQItemViewHolder(parent, layout);
             }
         });
     }
-
-    @Override
-    public void setData(Order.DataBean.ListBeanX data) {
-        super.setData(data);
-        this.data = data;
-        textSupplier.setText(data.getSupplier());
-        if (data.getIs_btn() == 1) {
-            textText.setVisibility(View.VISIBLE);
-            textText.setText(data.getText());
-        } else {
-            textText.setVisibility(View.GONE);
-        }
-        List<Order.DataBean.ListBeanX.ListBean> listBeanList = data.getList();
-        adapter.clear();
-        adapter.addAll(listBeanList);
-    }
-
+    
 }

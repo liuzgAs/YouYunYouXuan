@@ -2,10 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/background"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
     tools:context="com.vip.uyux.activity.DingDanXqActivity">
 
+    <include layout="@layout/view_bar_white" />
+
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:layout_weight="1"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_empty="@layout/view_empty"
+        app:layout_progress="@layout/view_progress"
+        app:scrollbarStyle="insideOverlay" />
+    <LinearLayout
+        android:background="@color/white"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textCancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnPingJia"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/btnPingJia"
+            android:padding="10dp"
+            android:text="取消订单" />
+        <Button
+            android:id="@+id/btnPingJia"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_basic01_25dp_jian_bian"
+            android:text="立即付款"
+            android:textColor="@color/white"
+            android:textSize="@dimen/normal_textsize" />
+
+    </LinearLayout>
 </LinearLayout>

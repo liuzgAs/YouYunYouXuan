@@ -338,6 +338,10 @@ public class Constant {
          * 分享回调
          */
         public static final String SHARE_SHAREAFTER = "/Share/shareAfter";
+        /**
+         * 订单详情
+         */
+        public static final String USER_ORDERINFO= "/User/orderInfo";
 
     }
 

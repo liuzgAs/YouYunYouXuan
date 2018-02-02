@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:background="@drawable/jianbian_fenxiangzhongxin"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:src="@mipmap/dingdan_xq_daifukuan"
+            android:id="@+id/imageStatus"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/textLogTitle"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:text="等待买家付款"
+            android:layout_marginTop="-3dp"
+            android:layout_toRightOf="@+id/imageStatus"
+            android:layout_alignTop="@+id/imageStatus"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textLogDes"
+            android:text="剩余10天"
+            android:textSize="@dimen/moreLitterText"
+            android:layout_toRightOf="@+id/imageStatus"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="-3dp"
+            android:layout_alignBottom="@+id/imageStatus"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/viewAddress"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="小小小"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/textConsignee"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textPhone"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/bigText"
+            android:textColor="@color/light_black"
+            android:text="15871105320"
+            android:layout_alignBaseline="@+id/textConsignee"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textAreaAddress"
+            android:text="地址"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_below="@+id/textConsignee"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

@@ -15,6 +15,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.DingDanXqActivity;
 import com.vip.uyux.activity.LiJiZFActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.base.MyDialog;
@@ -152,7 +153,16 @@ public class DDViewHolder extends BaseViewHolder<Order.DataBean> {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_ding_dan_cangku;
-                return new DDCangKuViewHolder(parent, layout);
+                return new DDCangKuViewHolder(parent, layout,data.getId());
+            }
+        });
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), DingDanXqActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,data.getId());
+                getContext().startActivity(intent);
             }
         });
     }
@@ -167,6 +177,15 @@ public class DDViewHolder extends BaseViewHolder<Order.DataBean> {
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_dd_des;
                 return new DDDesViewHolder(parent, layout);
+            }
+        });
+        adapterDes.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), DingDanXqActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,data.getId());
+                getContext().startActivity(intent);
             }
         });
     }
