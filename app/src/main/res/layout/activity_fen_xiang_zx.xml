@@ -444,7 +444,7 @@
                 android:layout_below="@+id/image0401"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="VIP体验邀请"
+                android:text="会员邀请"
                 android:textSize="@dimen/normal_textsize" />
         </RelativeLayout>
 
