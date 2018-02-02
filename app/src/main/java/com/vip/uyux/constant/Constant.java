@@ -29,7 +29,7 @@ public class Constant {
     public static String QQ_KEY = "HcA9s2rpKkLO2M5w";
 
     public static class Url {
-        public static final String ABOUT =WEB_HOST+"/Article/info/type/about";
+        public static final String ABOUT = WEB_HOST + "/Article/info/type/about";
         /**
          * 升级
          */
@@ -345,11 +345,11 @@ public class Constant {
         /**
          * 订单详情
          */
-        public static final String USER_ORDERINFO= "/User/orderInfo";
+        public static final String USER_ORDERINFO = "/User/orderInfo";
         /**
          * 余额支付
          */
-        public static final String PAY_BALANCEPAY= "/pay/balancePay";
+        public static final String PAY_BALANCEPAY = "/pay/balancePay";
 
     }
 
@@ -366,6 +366,8 @@ public class Constant {
         public static final String BEAN = "bean";
         public static final String CATE = "cate";
         public static final String PCATE = "pcate";
+        public static final String ISNEW = "isNew";
+        public static final String ISHOT = "isHot";
     }
 
     public static class RequestResultCode {

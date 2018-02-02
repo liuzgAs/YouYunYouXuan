@@ -132,6 +132,7 @@
             app:cardPreventCornerOverlap="false">
 
             <RelativeLayout
+                android:id="@+id/viewIsNew"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/jianbian_benshoushangxin"
@@ -186,6 +187,7 @@
             app:cardPreventCornerOverlap="false">
 
             <RelativeLayout
+                android:id="@+id/viewIsHot"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/jianbian_remaituijian"

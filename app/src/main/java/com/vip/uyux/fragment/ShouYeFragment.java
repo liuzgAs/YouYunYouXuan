@@ -25,6 +25,7 @@ import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.ChanPinLBActivity;
 import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.activity.XiaoXiZXActivity;
@@ -151,7 +152,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 banner = view.findViewById(R.id.banner);
                 ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
                 layoutParams.width = screenWidth;
-                layoutParams.height = (int) (578f*(float) screenWidth/1080f);
+                layoutParams.height = (int) (578f * (float) screenWidth / 1080f);
                 banner.setLayoutParams(layoutParams);
                 banner.setScrollDuration(1000);
                 banner.startTurning(3000);
@@ -200,6 +201,26 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 viewNum2 = view.findViewById(R.id.viewNum2);
                 textNum3 = view.findViewById(R.id.textNum3);
                 textNum4 = view.findViewById(R.id.textNum4);
+                view.findViewById(R.id.viewIsNew).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, ChanPinLBActivity.class);
+                        intent.putExtra(Constant.IntentKey.TITLE, "本周上新");
+                        intent.putExtra(Constant.IntentKey.ISNEW, 1);
+                        startActivity(intent);
+                    }
+                });
+                view.findViewById(R.id.viewIsHot).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, ChanPinLBActivity.class);
+                        intent.putExtra(Constant.IntentKey.TITLE, "热卖推荐");
+                        intent.putExtra(Constant.IntentKey.ISHOT, 1);
+                        startActivity(intent);
+                    }
+                });
                 return view;
             }
 
@@ -397,10 +418,10 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.imageTip:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(mContext, XiaoXiZXActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;

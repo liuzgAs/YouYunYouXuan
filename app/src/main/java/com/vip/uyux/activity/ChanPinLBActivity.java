@@ -52,6 +52,8 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     private ImageView sanJiaoDown;
     private ImageView sanJiaoUp1;
     private ImageView sanJiaoDown1;
+    private int isNew;
+    private int isHot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         cate = intent.getIntExtra(Constant.IntentKey.CATE, 0);
         pcate = intent.getIntExtra(Constant.IntentKey.PCATE, 0);
         title = intent.getStringExtra(Constant.IntentKey.TITLE);
+        isNew = intent.getIntExtra(Constant.IntentKey.ISNEW,0);
+        isHot = intent.getIntExtra(Constant.IntentKey.ISHOT,0);
     }
 
     @Override
@@ -270,6 +274,8 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         params.put("p", String.valueOf(page));
         params.put("cate", String.valueOf(cate));
         params.put("pcate", String.valueOf(pcate));
+        params.put("isnew", String.valueOf(isNew));
+        params.put("ishot", String.valueOf(isHot));
         if (shaiXuanArr[0] == 0) {
             if (shaiXuanArr[1]==1){
                 params.put("sort", "saleAsc");
