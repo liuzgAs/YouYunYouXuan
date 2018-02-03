@@ -9,18 +9,27 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
+import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.PingJiaFragment;
+import com.vip.uyux.model.Comment;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PingJiaGLActivity extends ZjbBaseActivity implements View.OnClickListener {
     private TabLayout tablayout;
     private ViewPager viewPager;
-    List<String> list = new ArrayList<>();
+    private List<Comment.TypeBean> typeBeanList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +56,6 @@ public class PingJiaGLActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("评价管理");
-        list.add("已评价");
-        list.add("待评价");
-        viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
-        tablayout.setupWithViewPager(viewPager);
-        tablayout.removeAllTabs();
-        for (int i = 0; i < list.size(); i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.item_tablayout, null);
-            TextView textTitle = view.findViewById(R.id.textTitle);
-            textTitle.setText(list.get(i));
-            if (i == 0) {
-                tablayout.addTab(tablayout.newTab().setCustomView(view), true);
-            } else {
-                tablayout.addTab(tablayout.newTab().setCustomView(view), false);
-            }
-        }
     }
 
     @Override
@@ -69,9 +63,59 @@ public class PingJiaGLActivity extends ZjbBaseActivity implements View.OnClickLi
         findViewById(R.id.imageBack).setOnClickListener(this);
     }
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.COMMENT;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        return new OkObject(params, url);
+    }
+
     @Override
     protected void initData() {
+        ApiClient.post(PingJiaGLActivity.this, getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("PingJiaGLActivity--onSuccess", s + "");
+                try {
+                    Comment comment = GsonUtils.parseJSON(s, Comment.class);
+                    if (comment.getStatus() == 1) {
+                        typeBeanList = comment.getType();
+                        viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
+                        tablayout.setupWithViewPager(viewPager);
+                        tablayout.removeAllTabs();
+                        for (int i = 0; i < typeBeanList.size(); i++) {
+                            View view = LayoutInflater.from(PingJiaGLActivity.this).inflate(R.layout.item_tablayout, null);
+                            TextView textTitle = view.findViewById(R.id.textTitle);
+                            textTitle.setText(typeBeanList.get(i).getN());
+                            if (i == 0) {
+                                tablayout.addTab(tablayout.newTab().setCustomView(view), true);
+                            } else {
+                                tablayout.addTab(tablayout.newTab().setCustomView(view), false);
+                            }
+                        }
+                    } else if (comment.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(PingJiaGLActivity.this);
+                    } else {
+                        Toast.makeText(PingJiaGLActivity.this, comment.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(PingJiaGLActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onError() {
+                Toast.makeText(PingJiaGLActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -93,20 +137,13 @@ public class PingJiaGLActivity extends ZjbBaseActivity implements View.OnClickLi
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new PingJiaFragment(1);
-                case 1:
-                    return new PingJiaFragment(2);
-                default:
-                    return new PingJiaFragment(1);
-            }
+            return new PingJiaFragment(typeBeanList.get(position).getV());
 
         }
 
         @Override
         public int getCount() {
-            return list.size();
+            return typeBeanList.size();
         }
     }
 }

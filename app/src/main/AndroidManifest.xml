@@ -73,11 +73,11 @@
             android:value="5a682ad0f43e484fb5000055" />
         <!-- 正式推送 -->
         <!--<meta-data-->
-            <!--android:name="com.alibaba.app.appkey"-->
-            <!--android:value="24769263" /> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
+        <!--android:name="com.alibaba.app.appkey"-->
+        <!--android:value="24769263" /> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
         <!--<meta-data-->
-            <!--android:name="com.alibaba.app.appsecret"-->
-            <!--android:value="4a960b53bb8056dd9006a79f18b99f03" /> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;      -->
+        <!--android:name="com.alibaba.app.appsecret"-->
+        <!--android:value="4a960b53bb8056dd9006a79f18b99f03" /> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;      -->
         <!-- 测试推送 -->
         <meta-data
             android:name="com.alibaba.app.appkey"
@@ -391,9 +391,18 @@
         <activity
             android:name=".activity.WuLiuZhuShouActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.BangDingTelActivity" />
-        <activity android:name=".activity.DingDanXqActivity" />
-        <activity android:name=".activity.GouWuCheActivity"></activity>
+        <activity
+            android:name=".activity.BangDingTelActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.DingDanXqActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.GouWuCheActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.PingJiaGLActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

@@ -350,6 +350,10 @@ public class Constant {
          * 余额支付
          */
         public static final String PAY_BALANCEPAY = "/pay/balancePay";
+        /**
+         * 评价列表
+         */
+        public static final String COMMENT = "/Comment";
 
     }
 

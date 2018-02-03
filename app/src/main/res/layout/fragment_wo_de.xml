@@ -618,7 +618,6 @@
                 android:id="@+id/viewZuJi"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
-                android:layout_marginBottom="40dp"
                 android:layout_marginTop="1dp"
                 android:background="@drawable/layout_selector_white_system_gray">
 

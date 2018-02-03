@@ -21,6 +21,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
 import com.vip.uyux.activity.JiFenSCActivity;
+import com.vip.uyux.activity.PingJiaGLActivity;
 import com.vip.uyux.activity.SheZhiActivity;
 import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
@@ -208,6 +209,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.imageSheZhi).setOnClickListener(this);
         mInflate.findViewById(R.id.imageXiaoXi).setOnClickListener(this);
         mInflate.findViewById(R.id.viewGuanYuWM).setOnClickListener(this);
+        mInflate.findViewById(R.id.viewPingJiaGL).setOnClickListener(this);
         btnShengJi.setOnClickListener(this);
     }
 
@@ -274,12 +276,12 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                             for (int i = 0; i < imageDD.length; i++) {
                                 badgeDD[i].setBadgeNumber(userMy.getOrderNum().get(i)).bindTarget(imageDD[i]);
                             }
-                            if (userMy.getGrade()!=0){
+                            if (userMy.getGrade() != 0) {
                                 imageFenXiangZX.setVisibility(View.VISIBLE);
-                            }else {
+                            } else {
                                 imageFenXiangZX.setVisibility(View.GONE);
                             }
-                            textLv.setText("VIP."+userMy.getLv());
+                            textLv.setText("VIP." + userMy.getLv());
                             textYuE.setText(userMy.getMoney());
                             textJiFen.setText(String.valueOf(userMy.getScore()));
                             textCouponNum.setText(userMy.getCouponNum() + "张");
@@ -359,12 +361,12 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.btnShengJi:
-                if (isLogin){
+                if (isLogin) {
                     intent.setClass(mContext, WebActivity.class);
                     intent.putExtra(Constant.IntentKey.TITLE, "升级");
                     intent.putExtra(Constant.IntentKey.URL, qc_url);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;
@@ -373,6 +375,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 intent.putExtra(Constant.IntentKey.TITLE, "关于我们");
                 intent.putExtra(Constant.IntentKey.URL, Constant.Url.ABOUT);
                 startActivity(intent);
+                break;
+            case R.id.viewPingJiaGL:
+                if (isLogin) {
+                    intent.setClass(mContext, PingJiaGLActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.imageXiaoXi:
                 if (isLogin) {

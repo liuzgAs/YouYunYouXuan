@@ -14,26 +14,35 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.provider.DataProvider;
+import com.vip.uyux.model.Comment;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.PingJiaViewHolder;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private int type;
+    private String v;
     private View mInflate;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Integer> adapter;
+    private RecyclerArrayAdapter<Comment.DataBean> adapter;
     private BroadcastReceiver reciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -53,9 +62,9 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     }
 
     @SuppressLint("ValidFragment")
-    public PingJiaFragment(int type) {
+    public PingJiaFragment(String v) {
         // Required empty public constructor
-        this.type = type;
+        this.v = v;
     }
 
 
@@ -104,42 +113,42 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(mContext) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Comment.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_yipingjia;
-                return new PingJiaViewHolder(parent, layout, type);
+                return new PingJiaViewHolder(parent, layout);
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-//                ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
-//                    @Override
-//                    public void onSuccess(String s) {
-//                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
-//                        try {
-//                            page++;
-//                            OrderGeteeva orderGeteeva = GsonUtils.parseJSON(s, OrderGeteeva.class);
-//                            int status = orderGeteeva.getStatus();
-//                            if (status == 1) {
-//                                List<OrderGeteeva.DataBean> dataBeanList = orderGeteeva.getData();
-//                                adapter.addAll(dataBeanList);
-//                            } else if (status == 3) {
-//                                MyDialog.showReLoginDialog(mContext);
-//                            } else {
-//                                adapter.pauseMore();
-//                            }
-//                        } catch (Exception e) {
-//                            adapter.pauseMore();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError() {
-//                        adapter.pauseMore();
-//                    }
-//                });
+                ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+                    @Override
+                    public void onSuccess(String s) {
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
+                        try {
+                            page++;
+                            Comment comment = GsonUtils.parseJSON(s, Comment.class);
+                            int status = comment.getStatus();
+                            if (status == 1) {
+                                List<Comment.DataBean> dataBeanList = comment.getData();
+                                adapter.addAll(dataBeanList);
+                            } else if (status == 3) {
+                                MyDialog.showReLoginDialog(mContext);
+                            } else {
+                                adapter.pauseMore();
+                            }
+                        } catch (Exception e) {
+                            adapter.pauseMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        adapter.pauseMore();
+                    }
+                });
             }
 
             @Override
@@ -191,73 +200,71 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
      * author： ZhangJieBo
      * date： 2017/8/28 0028 上午 9:55
      */
-//    private OkObject getOkObject() {
-//        String url = Constant.HOST + Constant.Url.ORDER_GETEEVA;
-//        HashMap<String, String> params = new HashMap<>();
-//        if (isLogin) {
-//            params.put("uid", userInfo.getUid());
-//            params.put("tokenTime", tokenTime);
-//        }
-//        params.put("type_id", String.valueOf(type));
-//        params.put("p", String.valueOf(page));
-//        return new OkObject(params, url);
-//    }
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.COMMENT;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("state", v);
+        params.put("p", String.valueOf(page));
+        return new OkObject(params, url);
+    }
 
     int page = 1;
 
     @Override
     public void onRefresh() {
         page = 1;
-        adapter.clear();
-        adapter.addAll(DataProvider.getPersonList(page));
-//        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
-//            @Override
-//            public void onSuccess(String s) {
-//                LogUtil.LogShitou("评价管理", s);
-//                try {
-//                    page++;
-//                    OrderGeteeva orderGeteeva = GsonUtils.parseJSON(s, OrderGeteeva.class);
-//                    if (orderGeteeva.getStatus() == 1) {
-//                        List<OrderGeteeva.DataBean> dataBeanList = orderGeteeva.getData();
-//                        adapter.clear();
-//                        adapter.addAll(dataBeanList);
-//                    } else if (orderGeteeva.getStatus() == 3) {
-//                        MyDialog.showReLoginDialog(mContext);
-//                    } else {
-//                        showError(orderGeteeva.getInfo());
-//                    }
-//                } catch (Exception e) {
-//                    showError("数据出错");
-//                }
-//            }
-//
-//            @Override
-//            public void onError() {
-//                showError("网络出错");
-//            }
-//
-//            /**
-//             * 错误显示
-//             * @param msg
-//             */
-//            private void showError(String msg) {
-//                try {
-//                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
-//                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
-//                    textMsg.setText(msg);
-//                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            recyclerView.showProgress();
-//                            initData();
-//                        }
-//                    });
-//                    recyclerView.setErrorView(viewLoader);
-//                    recyclerView.showError();
-//                } catch (Exception e) {
-//                }
-//            }
-//        });
+        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("评价管理", s);
+                try {
+                    page++;
+                    Comment comment = GsonUtils.parseJSON(s, Comment.class);
+                    if (comment.getStatus() == 1) {
+                        List<Comment.DataBean> dataBeanList = comment.getData();
+                        adapter.clear();
+                        adapter.addAll(dataBeanList);
+                    } else if (comment.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(mContext);
+                    } else {
+                        showError(comment.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 
     @Override

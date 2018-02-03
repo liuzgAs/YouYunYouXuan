@@ -31,12 +31,12 @@
 
         <com.iarcuschin.simpleratingbar.SimpleRatingBar
             android:id="@+id/ratingbar_pingfeng"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/leftAndRight"
+            android:visibility="gone"
             app:srb_drawBorderEnabled="false"
             app:srb_fillColor="@color/basic_yellow"
             app:srb_isIndicator="true"
@@ -45,29 +45,32 @@
             app:srb_rating="4"
             app:srb_starBackgroundColor="@color/text_gray"
             app:srb_starSize="15dp" />
+
         <RelativeLayout
             android:id="@+id/viewPingJia"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
             <TextView
-                android:layout_marginLeft="5dp"
+                android:id="@+id/textPingJia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="@dimen/leftAndRight"
                 android:layout_toRightOf="@+id/imagePingJia"
                 android:text="写评价"
-                android:textSize="@dimen/litterText"
-                android:layout_width="wrap_content"
-                android:id="@+id/textPingJia"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/litterText" />
+
             <ImageView
                 android:id="@+id/imagePingJia"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/pingjia"
-                android:layout_marginRight="5dp"
                 android:layout_width="15dp"
-                android:layout_height="15dp" />
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/pingjia" />
 
         </RelativeLayout>
     </RelativeLayout>
@@ -82,101 +85,12 @@
         android:text="很先进，价格也很实在"
         android:textSize="@dimen/normal_textsize" />
 
-    <LinearLayout
-        android:id="@+id/viewImgs"
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textDes"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="57dp"
-        android:layout_marginRight="57dp"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <com.luck.picture.lib.widget.SquareRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:scaleType="centerCrop"
-                android:id="@+id/imagePic1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_empty" />
-        </com.luck.picture.lib.widget.SquareRelativeLayout>
-
-        <TextView
-            android:layout_width="6dp"
-            android:layout_height="match_parent" />
-
-        <com.luck.picture.lib.widget.SquareRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:scaleType="centerCrop"
-                android:id="@+id/imagePic2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_empty" />
-        </com.luck.picture.lib.widget.SquareRelativeLayout>
-
-        <TextView
-            android:id="@+id/textView226"
-            android:layout_width="6dp"
-            android:layout_height="match_parent" />
-
-        <com.luck.picture.lib.widget.SquareRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:scaleType="centerCrop"
-                android:id="@+id/imagePic3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_empty" />
-        </com.luck.picture.lib.widget.SquareRelativeLayout>
-
-        <TextView
-            android:id="@+id/textView227"
-            android:layout_width="6dp"
-            android:layout_height="match_parent" />
-
-        <com.luck.picture.lib.widget.SquareRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:scaleType="centerCrop"
-                android:id="@+id/imagePic4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_empty" />
-        </com.luck.picture.lib.widget.SquareRelativeLayout>
-
-        <TextView
-            android:id="@+id/textView228"
-            android:layout_width="6dp"
-            android:layout_height="match_parent" />
-
-        <com.luck.picture.lib.widget.SquareRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:scaleType="centerCrop"
-                android:id="@+id/imagePic5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_empty" />
-        </com.luck.picture.lib.widget.SquareRelativeLayout>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        app:scrollbarStyle="insideOverlay"
+        app:scrollbars="none" />
 
     <RelativeLayout
         android:id="@+id/viewGood"
@@ -187,11 +101,11 @@
         android:background="@color/background">
 
         <ImageView
-            android:src="@mipmap/ic_empty"
             android:id="@+id/imageGood"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="15dp" />
+            android:layout_margin="15dp"
+            android:src="@mipmap/ic_empty" />
 
         <TextView
             android:id="@+id/textGoodName"
@@ -202,6 +116,17 @@
             android:layout_toRightOf="@+id/imageGood"
             android:text="测试"
             android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textSpe_name"
+            android:layout_alignBaseline="@+id/textPrice"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_marginTop="2dp"
+            android:textSize="@dimen/litterText"
+            android:text="L码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textPrice"
