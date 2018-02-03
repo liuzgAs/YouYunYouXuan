@@ -43,6 +43,8 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     private ShareIndex.VipShareBean vipShare;
     private String college_url;
     private String fenxiao;
+    private View lineBuKeTX;
+    private View viewBuKeTiXian;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,8 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         textFengXiaoDD = (TextView) findViewById(R.id.textFengXiaoDD);
         textTuanDui = (TextView) findViewById(R.id.textTuanDui);
         textKeHu = (TextView) findViewById(R.id.textKeHu);
+        lineBuKeTX = findViewById(R.id.lineBuKeTX);
+        viewBuKeTiXian = findViewById(R.id.viewBuKeTiXian);
     }
 
     @Override
@@ -87,7 +91,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     protected void setListeners() {
         findViewById(R.id.viewFenHongZX).setOnClickListener(this);
         findViewById(R.id.imageBack).setOnClickListener(this);
-        findViewById(R.id.viewBuKeTiXian).setOnClickListener(this);
+        viewBuKeTiXian.setOnClickListener(this);
         findViewById(R.id.viewWoDeKeHu).setOnClickListener(this);
         findViewById(R.id.viewWoDeTD).setOnClickListener(this);
         findViewById(R.id.viewKeTiXian).setOnClickListener(this);
@@ -136,8 +140,12 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                         textGrade_name.setText(shareIndex.getGrade_name());
                         if (shareIndex.getIs_up() == 1) {
                             textLiJiSJ.setVisibility(View.VISIBLE);
+                            lineBuKeTX.setVisibility(View.VISIBLE);
+                            viewBuKeTiXian.setVisibility(View.VISIBLE);
                         } else {
                             textLiJiSJ.setVisibility(View.GONE);
+                            lineBuKeTX.setVisibility(View.GONE);
+                            viewBuKeTiXian.setVisibility(View.GONE);
                         }
                         up_url = shareIndex.getUp_url();
                         textKeTiXian.setText(shareIndex.getMoney().get(0));

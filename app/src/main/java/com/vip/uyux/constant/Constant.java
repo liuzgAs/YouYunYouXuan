@@ -354,6 +354,14 @@ public class Constant {
          * 评价列表
          */
         public static final String COMMENT = "/Comment";
+        /**
+         * 评价请求
+         */
+        public static final String COMMENT_ADDBEFORE = "/Comment/addBefore";
+        /**
+         * 评价提交
+         */
+        public static final String COMMENT_ADDSUBMIT = "/Comment/addSubmit";
 
     }
 

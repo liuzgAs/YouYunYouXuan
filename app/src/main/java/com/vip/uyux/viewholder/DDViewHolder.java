@@ -197,7 +197,7 @@ public class DDViewHolder extends BaseViewHolder<Order.DataBean> {
         textOrderSn.setText(data.getOrderSn());
         textOrderSnDes.setText(data.getOrderSnDes());
         textSumDes.setText(data.getSumDes());
-        textSum.setText(data.getSum());
+        textSum.setText("¥"+data.getSum());
         if (data.getGoPay() == 1) {
             btnPingJia.setVisibility(View.VISIBLE);
         } else {

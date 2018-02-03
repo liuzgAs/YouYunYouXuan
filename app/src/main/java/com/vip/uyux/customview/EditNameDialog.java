@@ -59,7 +59,7 @@ public class EditNameDialog extends Dialog {
 
         TextView tvTitle = (TextView) view.findViewById(R.id.textTitle);
         editIntro = view.findViewById(R.id.editIntro);
-        InputFilter[] filters = {new NameLengthFilter(12)};
+        InputFilter[] filters = {new NameLengthFilter(20)};
         editIntro.setFilters(filters);
         TextView tvConfirm = (TextView) view.findViewById(R.id.textQueDing);
         TextView tvCancel = (TextView) view.findViewById(R.id.textQuXiao);

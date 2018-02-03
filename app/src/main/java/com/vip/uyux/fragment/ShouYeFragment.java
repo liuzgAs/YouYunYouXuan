@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,8 +23,6 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
-import com.rd.PageIndicatorView;
-import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinLBActivity;
 import com.vip.uyux.activity.ChanPinXQActivity;
@@ -38,7 +37,6 @@ import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
-import com.vip.uyux.util.BannerSettingUtil;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -125,6 +123,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
         DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.top), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexHome.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
@@ -143,7 +142,6 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             private TextView textZhiShiQi;
             private ConvenientBanner banner;
             private ViewPager id_viewpager;
-            private PageIndicatorView mPageIndicatorView;
 
             @Override
             public View onCreateView(ViewGroup parent) {
@@ -176,26 +174,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 recyclerZiYinView = view.findViewById(R.id.recyclerView);
                 initZiYinRecycler();
                 id_viewpager = view.findViewById(R.id.id_viewpager);
-                new BannerSettingUtil(id_viewpager, (int) mContext.getResources().getDimension(R.dimen.leftAndRight), false).set();
-                mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
-                mPageIndicatorView.setAnimationType(AnimationType.WORM);
-                mPageIndicatorView.setCount(3);
-                id_viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        mPageIndicatorView.setSelection(position % 3);
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-
-                    }
-                });
+//                new BannerSettingUtil(id_viewpager, (int) mContext.getResources().getDimension(R.dimen.leftAndRight), false).set();
                 viewViewPager = view.findViewById(R.id.viewViewPager);
                 viewNum = view.findViewById(R.id.viewNum);
                 viewNum2 = view.findViewById(R.id.viewNum2);
@@ -274,13 +253,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
                 }
                 if (banner2BeanList != null) {
-                    if (banner2BeanList.size() > 0) {
-                        viewViewPager.setVisibility(View.VISIBLE);
-                        id_viewpager.setAdapter(new BannerAdapter(mContext, banner2BeanList));
-                        id_viewpager.setCurrentItem(50);
-                    } else {
-                        viewViewPager.setVisibility(View.GONE);
-                    }
+                    BannerAdapter adapter = new BannerAdapter(mContext, banner2BeanList);
+                    id_viewpager.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
                 LogUtil.LogShitou("ShouYeFragment--onBindView", "" + num1);
                 if (!TextUtils.isEmpty(num1)) {

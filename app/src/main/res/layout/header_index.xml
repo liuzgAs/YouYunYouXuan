@@ -269,7 +269,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@color/white"
-        android:clipChildren="false"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingTop="15dp">
@@ -278,11 +277,11 @@
             android:id="@+id/id_viewpager"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:clipChildren="false" />
+            />
 
         <com.rd.PageIndicatorView
+            app:piv_animationType="worm"
+            app:piv_viewPager="@id/id_viewpager"
             android:id="@+id/pageIndicatorView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

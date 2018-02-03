@@ -126,6 +126,7 @@ public class Comment {
          */
 
         private int uid;
+        private int id;
         private String img;
         private int goods_id;
         private String goods_name;
@@ -138,6 +139,14 @@ public class Comment {
         private String nickname;
         private String spe_name;
         private List<ImgsBean> imgs;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
 
         public String getSpe_name() {
             return spe_name;

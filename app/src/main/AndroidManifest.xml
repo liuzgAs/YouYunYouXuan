@@ -403,6 +403,9 @@
         <activity
             android:name=".activity.PingJiaGLActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.PingJiaActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

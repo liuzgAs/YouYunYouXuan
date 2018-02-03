@@ -181,7 +181,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.imageWhat:
-                final SingleBtnDialog singleBtnDialog = new SingleBtnDialog(this, "您的身份等级低于下线等级情况下，获得推⼴广奖励和消费返佣为待提现状态，升级等级即可提现", "知道了");
+                final SingleBtnDialog singleBtnDialog = new SingleBtnDialog(this, "您的身份等级低于下线等级情况下，获得推⼴奖励和消费返佣为待提现状态，升级等级即可提现", "知道了");
                 singleBtnDialog.show();
                 singleBtnDialog.setClicklistener(new SingleBtnDialog.ClickListenerInterface() {
                     @Override

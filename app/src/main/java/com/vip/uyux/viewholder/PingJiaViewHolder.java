@@ -1,5 +1,6 @@
 package com.vip.uyux.viewholder;
 
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.PingJiaActivity;
+import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.Comment;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
@@ -49,10 +52,10 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
         viewPingJia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(getContext(), PingJiaActivity.class);
-//                intent.putExtra(Constant.IntentKey.ID,data.getId());
-//                getContext().startActivity(intent);
+                Intent intent = new Intent();
+                intent.setClass(getContext(), PingJiaActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,data.getId());
+                getContext().startActivity(intent);
             }
         });
     }

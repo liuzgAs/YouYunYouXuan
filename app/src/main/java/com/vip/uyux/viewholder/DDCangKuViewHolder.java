@@ -15,6 +15,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.DingDanXqActivity;
+import com.vip.uyux.activity.PingJiaGLActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
@@ -68,7 +69,9 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
                         });
                         break;
                     case "goComment":
-                        Toast.makeText(getContext(), "评价", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setClass(getContext(), PingJiaGLActivity.class);
+                        getContext().startActivity(intent);
                         break;
                     default:
                         break;
@@ -107,7 +110,9 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
                     if (simpleInfo.getStatus()==1){
-
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUAXINDD);
+                        getContext().sendBroadcast(intent);
                     }else if (simpleInfo.getStatus()==3){
                         MyDialog.showReLoginDialog(getContext());
                     }else {

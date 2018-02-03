@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/viewGood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:src="@mipmap/shangpin"
+                android:id="@+id/imageGood"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_marginTop="15dp" />
+
+            <TextView
+                android:id="@+id/textGoodName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageGood"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/light_black"
+                android:layout_toRightOf="@+id/imageGood"
+                android:text="商品"
+                android:textSize="@dimen/bigText" />
+
+            <TextView
+                android:id="@+id/textPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageGood"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/imageGood"
+                android:text="¥2880"
+                android:textColor="@color/basic_color"
+                android:textSize="@dimen/normal_textsize"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <com.hedgehog.ratingbar.RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:clickable="true"
+                app:halfstart="false"
+                app:starCount="5"
+                app:starEmpty="@mipmap/star_false"
+                app:starFill="@mipmap/star_true"
+                app:starImageHeight="40dp"
+                app:starImagePadding="8dp"
+                app:starImageWidth="40dp" />
+
+            <com.vip.uyux.customview.FlowTagLayout
+                android:id="@+id/flowTagLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_marginRight="@dimen/leftAndRight" />
+
+            <EditText
+                android:id="@+id/editPingLun"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_marginRight="@dimen/leftAndRight"
+                android:background="@color/background"
+                android:gravity="left|top"
+                android:hint="商品满足您的期待吗？说说它的优点和美中不足吧。"
+                android:padding="10dp"
+                android:textSize="@dimen/normal_textsize" />
+
+        </LinearLayout>
+
+</LinearLayout>

@@ -580,7 +580,38 @@
                     android:layout_marginRight="@dimen/leftAndRight"
                     android:src="@mipmap/right" />
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/viewPingJiaGL"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normalItemHeight"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/layout_selector_white_system_gray">
 
+                <ImageView
+                    android:id="@+id/image1200"
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/leftAndRight"
+                    android:src="@mipmap/pingjiaguanli" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/image1200"
+                    android:text="评价管理"
+                    android:textSize="@dimen/normal_textsize" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/leftAndRight"
+                    android:src="@mipmap/right" />
+            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/viewShouCang"
                 android:layout_width="match_parent"
@@ -615,6 +646,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginBottom="40dp"
                 android:id="@+id/viewZuJi"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
@@ -636,40 +668,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/image0900"
                     android:text="我的足迹"
-                    android:textSize="@dimen/normal_textsize" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/leftAndRight"
-                    android:src="@mipmap/right" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/viewPingJiaGL"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/normalItemHeight"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="1dp"
-                android:background="@drawable/layout_selector_white_system_gray">
-
-                <ImageView
-                    android:id="@+id/image1200"
-                    android:layout_width="15dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/leftAndRight"
-                    android:src="@mipmap/mine05" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/image1200"
-                    android:text="评价管理"
                     android:textSize="@dimen/normal_textsize" />
 
                 <ImageView
