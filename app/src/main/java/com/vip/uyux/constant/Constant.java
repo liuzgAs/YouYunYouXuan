@@ -411,6 +411,7 @@ public class Constant {
         public static final String TIXIAN = "tiXian";
         public static final String BANG_DING = "bangDing";
         public static final String ADV = "adv";
+        public static final String SHUA_XIN_PING_JIA = "shua_xin_ping_jia";
     }
 
 
