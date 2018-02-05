@@ -72,12 +72,12 @@
             android:name="UMENG_APPKEY"
             android:value="5a682ad0f43e484fb5000055" />
         <!-- 正式推送 -->
-        <!--<meta-data-->
-        <!--android:name="com.alibaba.app.appkey"-->
-        <!--android:value="24769263" /> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
-        <!--<meta-data-->
-        <!--android:name="com.alibaba.app.appsecret"-->
-        <!--android:value="4a960b53bb8056dd9006a79f18b99f03" /> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;      -->
+        <!-- <meta-data -->
+        <!-- android:name="com.alibaba.app.appkey" -->
+        <!-- android:value="24769263" /> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="com.alibaba.app.appsecret" -->
+        <!-- android:value="4a960b53bb8056dd9006a79f18b99f03" /> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt; -->
         <!-- 测试推送 -->
         <meta-data
             android:name="com.alibaba.app.appkey"
@@ -406,6 +406,7 @@
         <activity
             android:name=".activity.PingJiaActivity"
             android:launchMode="singleTop" />
+        <activity android:name=".activity.PingLunLBActivity"></activity>
     </application>
 
 </manifest>

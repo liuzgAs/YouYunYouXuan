@@ -331,6 +331,7 @@
         android:layout_height="5dp"
         android:background="@color/background" />
     <RelativeLayout
+        android:background="@drawable/layout_selector_white_system_gray"
         android:id="@+id/viewPingLun"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

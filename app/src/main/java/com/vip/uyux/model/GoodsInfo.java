@@ -98,26 +98,6 @@ public class GoodsInfo {
         }
         private String evaluate_time;
         private String evaluate;
-        public static class ImgsBean{
-            private String thumb;
-            private String img;
-
-            public String getThumb() {
-                return thumb;
-            }
-
-            public void setThumb(String thumb) {
-                this.thumb = thumb;
-            }
-
-            public String getImg() {
-                return img;
-            }
-
-            public void setImg(String img) {
-                this.img = img;
-            }
-        }
 
         public String getTitle() {
             return title;

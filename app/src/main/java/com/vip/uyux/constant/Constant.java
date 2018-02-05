@@ -362,6 +362,10 @@ public class Constant {
          * 评价提交
          */
         public static final String COMMENT_ADDSUBMIT = "/Comment/addSubmit";
+        /**
+         * 商品评价列表
+         */
+        public static final String COMMENT_GOODS = "/Comment/goods";
 
     }
 

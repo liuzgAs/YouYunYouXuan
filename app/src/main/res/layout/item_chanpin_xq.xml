@@ -88,8 +88,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_empty="@layout/view_empty"
-            app:layout_progress="@layout/view_progress"
             app:scrollbarStyle="insideOverlay" />
     </com.vip.uyux.customview.HorizontalView>
 </LinearLayout>

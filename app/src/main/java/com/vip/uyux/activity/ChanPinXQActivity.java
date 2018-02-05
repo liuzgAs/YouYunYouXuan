@@ -375,6 +375,15 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 textPingLunTitle = view.findViewById(R.id.textPingLunTitle);
                 linePingLun = view.findViewById(R.id.linePingLun);
                 viewPingLun = view.findViewById(R.id.viewPingLun);
+                viewPingLun.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(ChanPinXQActivity.this,PingLunLBActivity.class);
+                        intent.putExtra(Constant.IntentKey.ID,id);
+                        startActivity(intent);
+                    }
+                });
                 return view;
             }
 
@@ -389,11 +398,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                         int layout = R.layout.item_chanpin_xq;
                         return new ItemChanPinXQViewHolder(parent, layout);
-                    }
-                });
-                adapterPingLun.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
                     }
                 });
             }

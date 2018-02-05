@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_shangpin" />
+
+    <RelativeLayout
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textTitle"
+            android:text="用户点评（888+）"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/text_gray"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="@dimen/leftAndRight"
+            android:layout_marginBottom="@dimen/leftAndRight"
+            android:layout_height="wrap_content" />
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:layout_below="@+id/textTitle"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:id="@+id/ratingbar_pingfeng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srb_drawBorderEnabled="false"
+            app:srb_fillColor="@color/basic_yellow"
+            app:srb_isIndicator="true"
+            app:srb_numberOfStars="5"
+            app:srb_pressedFillColor="@color/basic_yellow"
+            app:srb_rating="4"
+            android:layout_marginBottom="15dp"
+            app:srb_starBackgroundColor="@color/text_gray"
+            app:srb_starSize="25dp" />
+        <TextView
+            android:text="好评率"
+            android:textColor="@color/text_gray"
+            android:layout_alignBaseline="@+id/textBaiFenHao"
+            android:textSize="@dimen/litterText"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@+id/textHp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textBaiFenHao"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/ratingbar_pingfeng"
+            android:text="%"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/text_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.vip.uyux.customview.MyFontTextView
+            android:text="99.4"
+            android:id="@+id/textHp"
+            android:layout_alignBaseline="@+id/textBaiFenHao"
+            android:layout_toLeftOf="@+id/textBaiFenHao"
+            android:textSize="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

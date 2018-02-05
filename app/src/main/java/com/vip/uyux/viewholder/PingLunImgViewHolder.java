@@ -6,13 +6,13 @@ import android.widget.ImageView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
-import com.vip.uyux.model.GoodsInfo;
+import com.vip.uyux.model.ImgsBean;
 import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class PingLunImgViewHolder extends BaseViewHolder<GoodsInfo.CommentBean.ImgsBean> {
+public class PingLunImgViewHolder extends BaseViewHolder<ImgsBean> {
 
     private final ImageView imageImg;
 
@@ -22,7 +22,7 @@ public class PingLunImgViewHolder extends BaseViewHolder<GoodsInfo.CommentBean.I
     }
 
     @Override
-    public void setData(GoodsInfo.CommentBean.ImgsBean data) {
+    public void setData(ImgsBean data) {
         super.setData(data);
         GlideApp.with(getContext())
                 .load(data.getThumb())

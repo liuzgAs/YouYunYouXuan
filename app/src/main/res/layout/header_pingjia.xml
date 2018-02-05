@@ -5,49 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/viewGood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@color/white">
+    <include layout="@layout/view_shangpin" />
 
-            <ImageView
-                android:src="@mipmap/shangpin"
-                android:id="@+id/imageGood"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="@dimen/leftAndRight"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:id="@+id/textGoodName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/imageGood"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/light_black"
-                android:layout_toRightOf="@+id/imageGood"
-                android:text="商品"
-                android:textSize="@dimen/bigText" />
-
-            <TextView
-                android:id="@+id/textPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageGood"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/imageGood"
-                android:text="¥2880"
-                android:textColor="@color/basic_color"
-                android:textSize="@dimen/normal_textsize"
-                android:visibility="gone" />
-        </RelativeLayout>
-
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
