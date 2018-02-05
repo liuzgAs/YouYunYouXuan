@@ -407,7 +407,8 @@
             android:name=".activity.PingJiaActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activity.PingLunLBActivity" />
-        <activity android:name=".activity.ShouHouFWActivity"></activity>
+        <activity android:name=".activity.ShouHouFWActivity" />
+        <activity android:name=".activity.ShenQingSHActivity"></activity>
     </application>
 
 </manifest>

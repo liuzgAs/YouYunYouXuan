@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="服务类型"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/text0000"
+            android:layout_height="wrap_content" />
+        <com.vip.uyux.customview.FlowTagLayout
+            android:layout_below="@+id/text0000"
+            android:layout_weight="1"
+            android:id="@+id/flowTagLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/shangpin"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="60dp"
+            android:id="@+id/imageImg"
+            android:layout_height="60dp" />
+        <TextView
+            android:text="一品轩"
+            android:lines="2"
+            android:ellipsize="end"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_toRightOf="@+id/imageImg"
+            android:layout_alignTop="@+id/imageImg"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/bigText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="@dimen/litterText"
+            android:textColor="@color/text_gray"
+            android:text="规格"
+            android:layout_alignBottom="@+id/imageImg"
+            android:layout_toRightOf="@+id/imageImg"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_height="100dp">
+        <EditText
+            android:hint="请在此输入问题描述"
+            android:textSize="@dimen/normal_textsize"
+            android:gravity="top|left"
+            android:padding="@dimen/leftAndRight"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/text_gray"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/leftAndRight"
+            android:text="0/400"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="上传图片"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/basic_color"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

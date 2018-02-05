@@ -52,7 +52,6 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
     private EasyRecyclerView recyclerView;
     public RecyclerArrayAdapter<Picture> adapter;
     private int selectMax = 9;
-    private GridLayoutManager manager;
     private List<CommentAddbefore.TagBean> tagBeanList;
     private CommentAddbefore orderGotoeeva;
     private EditText editPingLun;
@@ -94,7 +93,7 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
      * 初始化recyclerview
      */
     private void initRecycler() {
-        manager = new GridLayoutManager(this, 4);
+        GridLayoutManager manager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(manager);
         SpaceDecoration itemDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(12f, PingJiaActivity.this));
         recyclerView.addItemDecoration(itemDecoration);
