@@ -1,12 +1,20 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
@@ -14,37 +22,99 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.ShareBean;
 import com.vip.uyux.model.ShareIndex;
+import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.util.ApiClient;
-import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.viewholder.FenXiangZXViewHolder;
 
 import java.util.HashMap;
 
 public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickListener {
-
-    private ImageView imageImg;
-    private TextView textName;
-    private TextView textDate;
-    private TextView textGrade_name;
-    private TextView textLiJiSJ;
-    private TextView textKeTiXian;
-    private TextView textBuKeTiXian;
-    private TextView textYuJi;
-    private TextView textFenXiaoYJ;
-    private TextView textFengXiaoDD;
-    private TextView textTuanDui;
-    private TextView textKeHu;
-    private String up_url;
-    private String yuji;
+    private EasyRecyclerView recyclerView;
+    private RecyclerArrayAdapter<ShareIndex> adapter;
     private IWXAPI api;
-    private ShareIndex.TeamShareBean teamShare;
-    private ShareIndex.VipShareBean vipShare;
-    private String college_url;
-    private String fenxiao;
-    private View lineBuKeTX;
-    private View viewBuKeTiXian;
+    private boolean isShare = false;
+    ShareBean shareBeanX;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.WX_SHARE:
+                    if (isShare) {
+                        MyDialog.showTipDialog(FenXiangZXActivity.this, "分享成功");
+                        isShare = false;
+                        shareHuiDiao();
+                    }
+                    break;
+                case Constant.BroadcastCode.WX_SHARE_FAIL:
+                    if (isShare) {
+                        MyDialog.showTipDialog(FenXiangZXActivity.this, "取消分享");
+                        isShare = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getHDOkObject() {
+        String url = Constant.HOST + Constant.Url.SHARE_SHAREAFTER;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("shareType",String.valueOf(0));
+        params.put("source",Constant.source);
+        params.put("shareTitle",shareBeanX.getShareTitle());
+        params.put("shareImg",shareBeanX.getShareImg());
+        params.put("shareDes",shareBeanX.getShareDes());
+        params.put("url",shareBeanX.getShareUrl());
+        params.put("id",String.valueOf(0));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 分享回调
+     */
+    private void shareHuiDiao() {
+        showLoadingDialog();
+        ApiClient.post(FenXiangZXActivity.this, getHDOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess",s+ "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus()==1){
+                        LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "回调成功");
+                    }else if (simpleInfo.getStatus()==3){
+                        MyDialog.showReLoginDialog(FenXiangZXActivity.this);
+                    }else {
+                        Toast.makeText(FenXiangZXActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(FenXiangZXActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(FenXiangZXActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,42 +136,41 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     protected void findID() {
-        imageImg = (ImageView) findViewById(R.id.imageImg);
-        textName = (TextView) findViewById(R.id.textName);
-        textDate = (TextView) findViewById(R.id.textDate);
-        textGrade_name = (TextView) findViewById(R.id.textGrade_name);
-        textLiJiSJ = (TextView) findViewById(R.id.textLiJiSJ);
-        textKeTiXian = (TextView) findViewById(R.id.textKeTiXian);
-        textBuKeTiXian = (TextView) findViewById(R.id.textBuKeTiXian);
-        textYuJi = (TextView) findViewById(R.id.textYuJi);
-        textFenXiaoYJ = (TextView) findViewById(R.id.textFenXiaoYJ);
-        textFengXiaoDD = (TextView) findViewById(R.id.textFengXiaoDD);
-        textTuanDui = (TextView) findViewById(R.id.textTuanDui);
-        textKeHu = (TextView) findViewById(R.id.textKeHu);
-        lineBuKeTX = findViewById(R.id.lineBuKeTX);
-        viewBuKeTiXian = findViewById(R.id.viewBuKeTiXian);
+        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
     }
 
     @Override
     protected void initViews() {
+        initRecycler();
+    }
 
+    /**
+     * 初始化recyclerview
+     */
+    private void initRecycler() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setRefreshingColorResources(R.color.basic_color);
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<ShareIndex>(FenXiangZXActivity.this) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.item_fenxiangzhongxin;
+                FenXiangZXViewHolder fenXiangZXViewHolder = new FenXiangZXViewHolder(parent, layout);
+                fenXiangZXViewHolder.setOnShareListener(new FenXiangZXViewHolder.OnShareListener() {
+                    @Override
+                    public void share(ShareBean shareBean) {
+                        shareBeanX = shareBean;
+                        isShare=true;
+                        MyDialog.share01(getContext(), api, shareBean.getShareUrl(), shareBean.getShareImg(), shareBean.getShareTitle(), shareBean.getShareDes());
+                    }
+                });
+                return fenXiangZXViewHolder;
+            }
+        });
     }
 
     @Override
     protected void setListeners() {
-        findViewById(R.id.viewFenHongZX).setOnClickListener(this);
         findViewById(R.id.imageBack).setOnClickListener(this);
-        viewBuKeTiXian.setOnClickListener(this);
-        findViewById(R.id.viewWoDeKeHu).setOnClickListener(this);
-        findViewById(R.id.viewWoDeTD).setOnClickListener(this);
-        findViewById(R.id.viewKeTiXian).setOnClickListener(this);
-        textLiJiSJ.setOnClickListener(this);
-        findViewById(R.id.viewFenXiaoYJ).setOnClickListener(this);
-        findViewById(R.id.viewYouYunSXY).setOnClickListener(this);
-        findViewById(R.id.viewYuJiYJ).setOnClickListener(this);
-        findViewById(R.id.viewFenXiaoDD).setOnClickListener(this);
-        findViewById(R.id.viewTuanDui).setOnClickListener(this);
-        findViewById(R.id.viewVip).setOnClickListener(this);
     }
 
     /**
@@ -121,131 +190,57 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     protected void initData() {
-        showLoadingDialog();
-        ApiClient.post(FenXiangZXActivity.this, getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                cancelLoadingDialog();
-                LogUtil.LogShitou("FenXiangZXActivity--onSuccess", s + "");
+                LogUtil.LogShitou("", s);
                 try {
                     ShareIndex shareIndex = GsonUtils.parseJSON(s, ShareIndex.class);
                     if (shareIndex.getStatus() == 1) {
-                        GlideApp.with(FenXiangZXActivity.this)
-                                .load(shareIndex.getHeadimg())
-                                .centerCrop()
-                                .placeholder(R.mipmap.ic_empty)
-                                .into(imageImg);
-                        textName.setText(shareIndex.getNickname());
-                        textDate.setText(shareIndex.getDes());
-                        textGrade_name.setText(shareIndex.getGrade_name());
-                        if (shareIndex.getIs_up() == 1) {
-                            textLiJiSJ.setVisibility(View.VISIBLE);
-                            lineBuKeTX.setVisibility(View.VISIBLE);
-                            viewBuKeTiXian.setVisibility(View.VISIBLE);
-                        } else {
-                            textLiJiSJ.setVisibility(View.GONE);
-                            lineBuKeTX.setVisibility(View.GONE);
-                            viewBuKeTiXian.setVisibility(View.GONE);
-                        }
-                        up_url = shareIndex.getUp_url();
-                        textKeTiXian.setText(shareIndex.getMoney().get(0));
-                        textBuKeTiXian.setText(shareIndex.getMoney().get(1));
-                        yuji = shareIndex.getMoney().get(2);
-                        textYuJi.setText(String.valueOf(yuji));
-                        fenxiao = shareIndex.getNum().get(1);
-                        String d2 = shareIndex.getNum().get(2);
-                        String d3 = shareIndex.getNum().get(3);
-                        textFenXiaoYJ.setText(String.valueOf(shareIndex.getNum().get(0)));
-                        textFengXiaoDD.setText(fenxiao);
-                        textTuanDui.setText(d2);
-                        textKeHu.setText(d3);
-                        teamShare = shareIndex.getTeamShare();
-                        vipShare = shareIndex.getVipShare();
-                        college_url = shareIndex.getCollege_url();
-                    } else if (shareIndex.getStatus() == 3) {
+                        adapter.clear();
+                        adapter.add(shareIndex);
+                        adapter.notifyDataSetChanged();
+                    } else if (shareIndex.getStatus()== 3) {
                         MyDialog.showReLoginDialog(FenXiangZXActivity.this);
                     } else {
-                        Toast.makeText(FenXiangZXActivity.this, shareIndex.getInfo(), Toast.LENGTH_SHORT).show();
+                        showError(shareIndex.getInfo());
                     }
                 } catch (Exception e) {
-                    Toast.makeText(FenXiangZXActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                    showError("数据出错");
                 }
             }
 
             @Override
             public void onError() {
-                cancelLoadingDialog();
-                Toast.makeText(FenXiangZXActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                showError("网络出错");
+            }
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(FenXiangZXActivity.this).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
             }
         });
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent();
         switch (view.getId()) {
-            case R.id.viewVip:
-                if (teamShare != null) {
-                    MyDialog.share01(this, api, vipShare.getShareUrl(), vipShare.getShareImg(), vipShare.getShareTitle(), vipShare.getShareDes());
-                }
-                break;
-            case R.id.viewTuanDui:
-                if (vipShare != null) {
-                    MyDialog.share01(this, api, teamShare.getShareUrl(), teamShare.getShareImg(), teamShare.getShareTitle(), teamShare.getShareDes());
-                }
-                break;
-            case R.id.textLiJiSJ:
-                intent.setClass(FenXiangZXActivity.this, WebActivity.class);
-                intent.putExtra(Constant.IntentKey.TITLE, "立即升级");
-                intent.putExtra(Constant.IntentKey.URL, up_url);
-                startActivity(intent);
-                break;
-            case R.id.viewYouYunSXY:
-                intent.setClass(FenXiangZXActivity.this, WebActivity.class);
-                intent.putExtra(Constant.IntentKey.TITLE, "优云商学院");
-                intent.putExtra(Constant.IntentKey.URL, college_url);
-                startActivity(intent);
-//                intent.setClass(this, ChangJianWenTiActivity.class);
-//                intent.putExtra(Constant.IntentKey.TYPE, 2);
-//                startActivity(intent);
-                break;
-            case R.id.viewFenXiaoDD:
-                intent.setClass(this, FenXiaoDDActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 2);
-                startActivity(intent);
-                break;
-            case R.id.viewYuJiYJ:
-                intent.setClass(this, FenXiaoDDActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 1);
-                startActivity(intent);
-                break;
-            case R.id.viewFenXiaoYJ:
-                intent.setClass(this, BuKeTiXianActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 3);
-                startActivity(intent);
-                break;
-            case R.id.viewKeTiXian:
-                intent.setClass(this, BuKeTiXianActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 2);
-                startActivity(intent);
-                break;
-            case R.id.viewWoDeTD:
-                intent.setClass(this, WoDeTDActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.viewWoDeKeHu:
-                intent.setClass(this, WoDeKeHuActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.viewBuKeTiXian:
-                intent.setClass(this, BuKeTiXianActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE, 1);
-                startActivity(intent);
-                break;
-            case R.id.viewFenHongZX:
-                intent.setClass(this, FenHongZXActivity.class);
-                startActivity(intent);
-                break;
             case R.id.imageBack:
                 finish();
                 break;
@@ -253,4 +248,20 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 break;
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.WX_SHARE);
+        filter.addAction(Constant.BroadcastCode.WX_SHARE_FAIL);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(reciver);
+    }
+
 }

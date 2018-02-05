@@ -25,7 +25,7 @@ public class ShareIndex {
      * up_url : http://apizza.cc/
      */
 
-    private VipShareBean VipShare;
+    private ShareBean VipShare;
     private String college_url;
     private String des;
     private String grade_name;
@@ -34,16 +34,16 @@ public class ShareIndex {
     private int is_up;
     private String nickname;
     private int status;
-    private TeamShareBean teamShare;
+    private ShareBean teamShare;
     private String up_url;
     private List<String> money;
     private List<String> num;
 
-    public VipShareBean getVipShare() {
+    public ShareBean getVipShare() {
         return VipShare;
     }
 
-    public void setVipShare(VipShareBean VipShare) {
+    public void setVipShare(ShareBean VipShare) {
         this.VipShare = VipShare;
     }
 
@@ -111,11 +111,11 @@ public class ShareIndex {
         this.status = status;
     }
 
-    public TeamShareBean getTeamShare() {
+    public ShareBean getTeamShare() {
         return teamShare;
     }
 
-    public void setTeamShare(TeamShareBean teamShare) {
+    public void setTeamShare(ShareBean teamShare) {
         this.teamShare = teamShare;
     }
 
@@ -143,95 +143,4 @@ public class ShareIndex {
         this.num = num;
     }
 
-    public static class VipShareBean {
-        /**
-         * shareDes : 分享内容后台填写
-         * shareImg : http://app.uyux.vip/attachment/head/20180127/1011653_1517018769_1.png
-         * shareTitle : 分享标题后台填写
-         * shareUrl : http://apizza.cc/
-         */
-
-        private String shareDes;
-        private String shareImg;
-        private String shareTitle;
-        private String shareUrl;
-
-        public String getShareDes() {
-            return shareDes;
-        }
-
-        public void setShareDes(String shareDes) {
-            this.shareDes = shareDes;
-        }
-
-        public String getShareImg() {
-            return shareImg;
-        }
-
-        public void setShareImg(String shareImg) {
-            this.shareImg = shareImg;
-        }
-
-        public String getShareTitle() {
-            return shareTitle;
-        }
-
-        public void setShareTitle(String shareTitle) {
-            this.shareTitle = shareTitle;
-        }
-
-        public String getShareUrl() {
-            return shareUrl;
-        }
-
-        public void setShareUrl(String shareUrl) {
-            this.shareUrl = shareUrl;
-        }
-    }
-
-    public static class TeamShareBean {
-        /**
-         * shareDes : 分享内容后台填写
-         * shareImg : http://app.uyux.vip/attachment/head/20180127/1011653_1517018769_1.png
-         * shareTitle : 分享标题后台填写
-         * shareUrl : http://apizza.cc/
-         */
-
-        private String shareDes;
-        private String shareImg;
-        private String shareTitle;
-        private String shareUrl;
-
-        public String getShareDes() {
-            return shareDes;
-        }
-
-        public void setShareDes(String shareDes) {
-            this.shareDes = shareDes;
-        }
-
-        public String getShareImg() {
-            return shareImg;
-        }
-
-        public void setShareImg(String shareImg) {
-            this.shareImg = shareImg;
-        }
-
-        public String getShareTitle() {
-            return shareTitle;
-        }
-
-        public void setShareTitle(String shareTitle) {
-            this.shareTitle = shareTitle;
-        }
-
-        public String getShareUrl() {
-            return shareUrl;
-        }
-
-        public void setShareUrl(String shareUrl) {
-            this.shareUrl = shareUrl;
-        }
-    }
 }

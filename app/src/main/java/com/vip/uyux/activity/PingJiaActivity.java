@@ -319,13 +319,13 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
         }
     }
 
-    int imgCount = 0;
     int imgSum = 0;
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnTiJiao:
+                imgsList.clear();
                 imgSum = 0;
                 if (adapter.getAllData().size() > 1) {
                     for (int i = 0; i < adapter.getAllData().size(); i++) {
@@ -376,7 +376,10 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
                 try {
                     RespondAppimgadd respondAppimgadd = GsonUtils.parseJSON(s, RespondAppimgadd.class);
                     if (respondAppimgadd.getStatus() == 1) {
-//                        edit("headimg", String.valueOf(respondAppimgadd.getImgId()));
+                        imgsList.add(respondAppimgadd.getImgId());
+                        if (imgsList.size()==imgSum){
+                            tiJiao();
+                        }
                     } else if (respondAppimgadd.getStatus() == 3) {
                         MyDialog.showReLoginDialog(PingJiaActivity.this);
                     } else {
