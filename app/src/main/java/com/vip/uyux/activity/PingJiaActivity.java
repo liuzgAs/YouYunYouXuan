@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,11 +31,14 @@ import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.model.CommentAddbefore;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.Picture;
+import com.vip.uyux.model.PingJia;
+import com.vip.uyux.model.RespondAppimgadd;
 import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.ImgToBase64;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.PictureViewHolder;
 
@@ -51,6 +55,11 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
     private GridLayoutManager manager;
     private List<CommentAddbefore.TagBean> tagBeanList;
     private CommentAddbefore orderGotoeeva;
+    private EditText editPingLun;
+    private RatingBar ratingbar;
+    private float ratingCount = 5;
+    private FlowTagLayout flowTagLayout;
+    List<Integer> imgsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +127,9 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
         manager.setSpanSizeLookup(adapter.obtainGridSpanSizeLookUp(4));
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
-            private RatingBar ratingbar;
             private TextView textGoodName;
             private ImageView imageGood;
             private TagAdapter tagAdapter;
-            private FlowTagLayout flowTagLayout;
 
             @Override
             public View onCreateView(ViewGroup parent) {
@@ -133,6 +140,13 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
                 textGoodName = view.findViewById(R.id.textGoodName);
                 ratingbar = view.findViewById(R.id.ratingbar);
                 ratingbar.setStar(5);
+                ratingbar.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
+                    @Override
+                    public void onRatingChange(float RatingCount) {
+                        ratingCount = RatingCount;
+                    }
+                });
+                editPingLun = view.findViewById(R.id.editPingLun);
                 return view;
             }
 
@@ -305,50 +319,24 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
         }
     }
 
-    /**
-     * des： 网络请求参数
-     * author： ZhangJieBo
-     * date： 2017/8/28 0028 上午 9:55
-     */
-    private OkObject getTJOkObject() {
-        String url = Constant.HOST + Constant.Url.COMMENT_ADDSUBMIT;
-        HashMap<String, String> params = new HashMap<>();
-        if (isLogin) {
-            params.put("uid", userInfo.getUid());
-            params.put("tokenTime", tokenTime);
-        }
-        return new OkObject(params, url);
-    }
+    int imgCount = 0;
+    int imgSum = 0;
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnTiJiao:
-                showLoadingDialog();
-                ApiClient.post(PingJiaActivity.this, getTJOkObject(), new ApiClient.CallBack() {
-                    @Override
-                    public void onSuccess(String s) {
-                        cancelLoadingDialog();
-                        LogUtil.LogShitou("PingJiaActivity--onSuccess", s + "");
-                        try {
-                            SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                            if (simpleInfo.getStatus() == 1) {
-                            } else if (simpleInfo.getStatus() == 3) {
-                                MyDialog.showReLoginDialog(PingJiaActivity.this);
-                            } else {
-                                Toast.makeText(PingJiaActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception e) {
-                            Toast.makeText(PingJiaActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                imgSum = 0;
+                if (adapter.getAllData().size() > 1) {
+                    for (int i = 0; i < adapter.getAllData().size(); i++) {
+                        if (adapter.getItem(i).getType() == 0) {
+                            imgSum++;
+                            upImg(adapter.getItem(i).getLocalMedia().getCompressPath());
                         }
                     }
-
-                    @Override
-                    public void onError() {
-                        cancelLoadingDialog();
-                        Toast.makeText(PingJiaActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                } else {
+                    tiJiao();
+                }
                 break;
             case R.id.imageBack:
                 finish();
@@ -356,6 +344,93 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
             default:
                 break;
         }
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getTPOkObject(String path) {
+        String url = Constant.WEB_HOST + Constant.Url.RESPOND_APPIMGADD;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("code", "headimg");
+        params.put("img", ImgToBase64.toBase64(path));
+        params.put("type", "png");
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 上传图片
+     */
+    private void upImg(String path) {
+        ApiClient.post(PingJiaActivity.this, getTPOkObject(path), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("GeRenXXActivity--上传图片", s + "");
+                try {
+                    RespondAppimgadd respondAppimgadd = GsonUtils.parseJSON(s, RespondAppimgadd.class);
+                    if (respondAppimgadd.getStatus() == 1) {
+//                        edit("headimg", String.valueOf(respondAppimgadd.getImgId()));
+                    } else if (respondAppimgadd.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(PingJiaActivity.this);
+                    } else {
+                        Toast.makeText(PingJiaActivity.this, respondAppimgadd.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(PingJiaActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(PingJiaActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 提交
+     */
+    private void tiJiao() {
+        String url = Constant.HOST + Constant.Url.COMMENT_ADDSUBMIT;
+        List<Integer> tagList = new ArrayList<>();
+        List<Integer> allSelect = flowTagLayout.getAllSelect();
+        for (int i = 0; i < allSelect.size(); i++) {
+            tagList.add(tagBeanList.get(i).getId());
+        }
+        PingJia pingJia = new PingJia(1, "android", userInfo.getUid(), tokenTime, id, (int) ratingCount, editPingLun.getText().toString().trim(), tagList, imgsList);
+        showLoadingDialog();
+        ApiClient.postJson(PingJiaActivity.this, url, GsonUtils.parseObject(pingJia), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("PingJiaActivity--onSuccess", s + "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus() == 1) {
+                    } else if (simpleInfo.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(PingJiaActivity.this);
+                    } else {
+                        Toast.makeText(PingJiaActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(PingJiaActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(PingJiaActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

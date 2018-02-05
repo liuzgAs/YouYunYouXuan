@@ -34,6 +34,7 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.CartIndex;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.UserInfo;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.Arith;
@@ -106,7 +107,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
 
     @SuppressLint("ValidFragment")
     public GouWuCheFragment(int type) {
-        this.type=type;
+        this.type = type;
     }
 
 
@@ -148,9 +149,9 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
 
     @Override
     protected void initViews() {
-        if (type==1){
+        if (type == 1) {
             imageBack.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             imageBack.setVisibility(View.GONE);
         }
         viewJieSuan.setVisibility(View.GONE);
@@ -189,6 +190,33 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                 carViewHolder.setOnDeleteListener(new CarViewHolder.onDeleteListener() {
                     @Override
                     public void delete(final int position) {
+                    }
+                });
+                carViewHolder.setOnProgressDialogListener(new CarViewHolder.OnProgressDialogListener() {
+                    @Override
+                    public void show() {
+                        showLoadingDialog();
+                    }
+
+                    @Override
+                    public void hide() {
+                        cancelLoadingDialog();
+                    }
+                });
+                carViewHolder.setOnGetInfoListener(new CarViewHolder.OnGetInfoListener() {
+                    @Override
+                    public UserInfo getUserInfo() {
+                        return userInfo;
+                    }
+
+                    @Override
+                    public boolean isLogin() {
+                        return isLogin;
+                    }
+
+                    @Override
+                    public String tokenTime() {
+                        return null;
                     }
                 });
                 return carViewHolder;
@@ -312,7 +340,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.buttonJieSuan:
-                if (isLogin){
+                if (isLogin) {
                     List<Integer> integerList = new ArrayList<>();
                     for (int i = 0; i < adapter.getAllData().size(); i++) {
                         if (adapter.getAllData().get(i).isSelect()) {
@@ -327,7 +355,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                     intent.putExtra(Constant.IntentKey.BEAN, new JieSuan(integerList));
                     intent.setClass(mContext, QueRenDDActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;

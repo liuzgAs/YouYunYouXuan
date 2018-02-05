@@ -9,7 +9,6 @@ import java.util.List;
  */
 
 public class PingJia {
-    private String smsKey;
     private int loginType;
     private String platform;
     private String uid;
@@ -20,12 +19,16 @@ public class PingJia {
     private List<Integer> tag;
     private List<Integer> imgs;
 
-    public String getSmsKey() {
-        return smsKey;
-    }
-
-    public void setSmsKey(String smsKey) {
-        this.smsKey = smsKey;
+    public PingJia(int loginType, String platform, String uid, String tokenTime, int id, int star, String evaluate, List<Integer> tag, List<Integer> imgs) {
+        this.loginType = loginType;
+        this.platform = platform;
+        this.uid = uid;
+        this.tokenTime = tokenTime;
+        this.id = id;
+        this.star = star;
+        this.evaluate = evaluate;
+        this.tag = tag;
+        this.imgs = imgs;
     }
 
     public int getLoginType() {

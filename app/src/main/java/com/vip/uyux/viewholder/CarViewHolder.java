@@ -19,13 +19,13 @@ import android.widget.Toast;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
-import com.vip.uyux.activity.MainActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.TwoBtnDialog;
 import com.vip.uyux.model.CartIndex;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.SimpleInfo;
+import com.vip.uyux.model.UserInfo;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
@@ -42,6 +42,8 @@ import java.util.HashMap;
 public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
 
     private onDeleteListener onDeleteListener;
+    private OnProgressDialogListener onProgressDialogListener;
+    private OnGetInfoListener onGetInfoListener;
     private final TextView textTotalPrice;
     private final ImageView imageImg;
     private final TextView textName;
@@ -172,9 +174,9 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
     private OkObject getDelOkObject() {
         String url = Constant.HOST + Constant.Url.CART_DELCART;
         HashMap<String, String> params = new HashMap<>();
-        if (((MainActivity) getContext()).isLogin) {
-            params.put("uid", ((MainActivity) getContext()).userInfo.getUid());
-            params.put("tokenTime", ((MainActivity) getContext()).tokenTime);
+        if (onGetInfoListener.isLogin()) {
+            params.put("uid", onGetInfoListener.getUserInfo().getUid());
+            params.put("tokenTime", onGetInfoListener.tokenTime());
         }
         params.put("id", String.valueOf(data.getId()));
         return new OkObject(params, url);
@@ -184,11 +186,11 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
      * 删除购物车
      */
     private void shanChu() {
-        ((MainActivity) getContext()).showLoadingDialog();
+       onProgressDialogListener.show();
         ApiClient.post(getContext(), getDelOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                ((MainActivity) getContext()).cancelLoadingDialog();
+               onProgressDialogListener.hide();
                 LogUtil.LogShitou("CarViewHolder--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
@@ -208,7 +210,7 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
 
             @Override
             public void onError() {
-                ((MainActivity) getContext()).cancelLoadingDialog();
+                onProgressDialogListener.hide();
                 Toast.makeText(getContext(), "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
@@ -224,9 +226,9 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
         String did = aCache.getAsString(Constant.Acache.DID);
         String url = Constant.HOST + Constant.Url.CART_UPDATECART;
         HashMap<String, String> params = new HashMap<>();
-        if (((MainActivity) getContext()).isLogin) {
-            params.put("uid", ((MainActivity) getContext()).userInfo.getUid());
-            params.put("tokenTime", ((MainActivity) getContext()).tokenTime);
+        if (onGetInfoListener.isLogin()) {
+            params.put("uid", onGetInfoListener.getUserInfo().getUid());
+            params.put("tokenTime", onGetInfoListener.tokenTime());
         }
         params.put("did", did);
         params.put("num", String.valueOf(data.getNum()));
@@ -238,11 +240,11 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
      * 更新购物车数量
      */
     private void gengXinCarNum() {
-        ((MainActivity) getContext()).showLoadingDialog();
+        onProgressDialogListener.show();
         ApiClient.post(getContext(), getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                ((MainActivity) getContext()).cancelLoadingDialog();
+                onProgressDialogListener.hide();
                 LogUtil.LogShitou("CarViewHolder--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
@@ -262,7 +264,7 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
 
             @Override
             public void onError() {
-                ((MainActivity) getContext()).cancelLoadingDialog();
+                onProgressDialogListener.hide();
                 Toast.makeText(getContext(), "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
@@ -302,5 +304,24 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
 
     public interface onDeleteListener {
         void delete(int position);
+    }
+
+    public void setOnProgressDialogListener(OnProgressDialogListener onProgressDialogListener) {
+        this.onProgressDialogListener = onProgressDialogListener;
+    }
+
+    public interface OnProgressDialogListener{
+        void show();
+        void hide();
+    }
+
+    public void setOnGetInfoListener(OnGetInfoListener onGetInfoListener) {
+        this.onGetInfoListener = onGetInfoListener;
+    }
+
+    public interface OnGetInfoListener{
+        UserInfo getUserInfo();
+        boolean isLogin();
+        String tokenTime();
     }
 }
