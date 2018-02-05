@@ -85,18 +85,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@color/white"
-        android:clipChildren="false"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingTop="15dp">
 
         <android.support.v4.view.ViewPager
-            android:layout_marginLeft="@dimen/leftAndRight"
-            android:layout_marginRight="@dimen/leftAndRight"
             android:id="@+id/id_viewpager"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:clipChildren="false" />
+            />
 
         <com.rd.PageIndicatorView
             app:piv_viewPager="@+id/id_viewpager"

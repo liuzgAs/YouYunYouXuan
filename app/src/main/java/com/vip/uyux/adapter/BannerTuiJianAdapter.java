@@ -32,7 +32,7 @@ public class BannerTuiJianAdapter extends PagerAdapter{
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE/2;
+        return imgList.size();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BannerTuiJianAdapter extends PagerAdapter{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra(Constant.IntentKey.BEAN,imgList.get(position%imgList.size()));
+                intent.putExtra(Constant.IntentKey.BEAN,imgList.get(position));
                 intent.setAction(Constant.BroadcastCode.ADV);
                 mContext.sendBroadcast(intent);
             }
@@ -52,7 +52,7 @@ public class BannerTuiJianAdapter extends PagerAdapter{
             if (imgList.size()>0){
                 GlideApp.with(mContext)
                         .asBitmap()
-                        .load(imgList.get(position%imgList.size()).getImg())
+                        .load(imgList.get(position).getImg())
                         .placeholder(R.mipmap.ic_empty)
                         .into(imageImg);
             }
@@ -72,8 +72,4 @@ public class BannerTuiJianAdapter extends PagerAdapter{
         return view == object;
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
 }

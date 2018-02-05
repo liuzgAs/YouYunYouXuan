@@ -19,8 +19,6 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
-import com.rd.PageIndicatorView;
-import com.rd.animation.type.AnimationType;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
 import com.vip.uyux.activity.ChanPinXQActivity;
@@ -32,7 +30,6 @@ import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.model.IndexRecom;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
-import com.vip.uyux.util.BannerSettingUtil;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
@@ -135,7 +132,6 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             private ImageView image0300;
             //            private ImageView image0400;
             private ViewPager id_viewpager;
-            private PageIndicatorView mPageIndicatorView;
             private View viewViewPager;
 
             @Override
@@ -148,26 +144,6 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 image0300 = view.findViewById(R.id.image0300);
 //                image0400 = view.findViewById(R.id.image0400);
                 id_viewpager = view.findViewById(R.id.id_viewpager);
-                new BannerSettingUtil(id_viewpager, (int) mContext.getResources().getDimension(R.dimen.leftAndRight), true).set();
-                mPageIndicatorView = view.findViewById(R.id.pageIndicatorView);
-                mPageIndicatorView.setAnimationType(AnimationType.WORM);
-                mPageIndicatorView.setCount(3);
-                id_viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        mPageIndicatorView.setSelection(position % 3);
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-
-                    }
-                });
                 viewViewPager = view.findViewById(R.id.viewViewPager);
                 image0300.setOnClickListener(new View.OnClickListener() {
                     @Override
