@@ -519,18 +519,18 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-//                if (tablayout!=null){
-//                    int[] location = new int[2];
-//                    tablayout.getLocationInWindow(location);
-//                    int top = location[1] - viewTitleHeight;
-//                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+location[1]);
-//                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+top);
-//                    if (top<=0){
-//                        tablayoutX.setVisibility(View.VISIBLE);
-//                    }else {
-//                        tablayoutX.setVisibility(View.GONE);
-//                    }
-//                }
+                if (tablayout!=null){
+                    int[] location = new int[2];
+                    tablayout.getLocationInWindow(location);
+                    int top = location[1] - viewTitleHeight;
+                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+location[1]);
+                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+top);
+                    if (top<=0){
+                        tablayoutX.setVisibility(View.VISIBLE);
+                    }else {
+                        tablayoutX.setVisibility(View.GONE);
+                    }
+                }
             }
         });
     }
