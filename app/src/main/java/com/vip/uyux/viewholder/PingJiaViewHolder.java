@@ -67,13 +67,13 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
         super.setData(data);
         this.data = data;
         switch (data.getEvaluate_status()) {
-            case 0:
+            case 1:
                 viewPingJia.setVisibility(View.GONE);
                 ratingbar_pingfeng.setVisibility(View.VISIBLE);
                 textDes.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
                 break;
-            case 1:
+            case 0:
                 viewPingJia.setVisibility(View.VISIBLE);
                 ratingbar_pingfeng.setVisibility(View.GONE);
                 textDes.setVisibility(View.GONE);
@@ -90,7 +90,7 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
                 .placeholder(R.mipmap.ic_empty)
                 .into(imageImg);
         textName.setText(data.getNickname());
-        textDes.setText(data.getEvaluate());
+        textDes.setText(data.getEvaluate().toString().trim());
         ratingbar_pingfeng.setRating(data.getStar());
         viewGood.setVisibility(View.VISIBLE);
         GlideApp.with(getContext())

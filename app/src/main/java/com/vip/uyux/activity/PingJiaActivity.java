@@ -368,6 +368,7 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
      * 上传图片
      */
     private void upImg(String path) {
+        showLoadingDialog();
         ApiClient.post(PingJiaActivity.this, getTPOkObject(path), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
@@ -418,11 +419,15 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
                     if (simpleInfo.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_PING_JIA);
+                        sendBroadcast(intent);
+                        finish();
                     } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(PingJiaActivity.this);
                     } else {
-                        Toast.makeText(PingJiaActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                     }
+                    Toast.makeText(PingJiaActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(PingJiaActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }

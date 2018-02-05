@@ -1,5 +1,6 @@
 package com.vip.uyux.viewholder;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.PingJiaGLActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
@@ -64,7 +66,9 @@ public class DDXQViewHolder extends BaseViewHolder<UserOrderinfo.DataBean.ListBe
                         });
                         break;
                     case "goComment":
-                        Toast.makeText(getContext(), "评价", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setClass(getContext(), PingJiaGLActivity.class);
+                        getContext().startActivity(intent);
                         break;
                     default:
                         break;
