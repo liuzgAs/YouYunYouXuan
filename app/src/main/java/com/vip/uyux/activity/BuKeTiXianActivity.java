@@ -159,7 +159,7 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     protected void initData() {
-        SpannableString span = new SpannableString("¥473");
+        SpannableString span = new SpannableString("¥0");
         span.setSpan(new RelativeSizeSpan(0.4f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textShouYi.setText(span);
     }
