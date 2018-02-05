@@ -141,6 +141,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             }
         }
     };
+    private GoodsInfo.CommentBean comment;
 
     /**
      * des： 网络请求参数
@@ -264,7 +265,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             private TextView textPromotionsBefore;
             private View viewChuXiao;
             private TabLayout tablayout;
-            private RecyclerArrayAdapter<Integer> adapterPingLun;
+            private RecyclerArrayAdapter<GoodsInfo.CommentBean> adapterPingLun;
             private EasyRecyclerView recyclerViewPingLun;
             private TextView textOldPrice;
             private TextView textVipDes;
@@ -374,7 +375,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
              */
             private void initFootRecycler() {
                 recyclerViewPingLun.setLayoutManager(new LinearLayoutManager(ChanPinXQActivity.this));
-                recyclerViewPingLun.setAdapterWithProgress(adapterPingLun = new RecyclerArrayAdapter<Integer>(ChanPinXQActivity.this) {
+                recyclerViewPingLun.setAdapterWithProgress(adapterPingLun = new RecyclerArrayAdapter<GoodsInfo.CommentBean>(ChanPinXQActivity.this) {
 
                     @Override
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
@@ -480,8 +481,11 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     }
                 }
                 LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
-                adapterPingLun.clear();
-                adapterPingLun.addAll(new ArrayList<Integer>());
+                if (comment!=null){
+                    adapterPingLun.clear();
+                    adapterPingLun.add(comment);
+                    adapterPingLun.notifyDataSetChanged();
+                }
             }
         });
         recyclerView.setRefreshListener(this);
@@ -741,7 +745,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("产品详情", s);
-                try {
+//                try {
                     goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
                     if (goodsInfo.getStatus() == 1) {
                         goodsInfoBanner = goodsInfo.getBanner();
@@ -767,14 +771,15 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                             adapter.addAll(imgs);
                         }
                         promotionsAfter = goodsInfo.getData().getPromotionsAfter();
+                        comment = goodsInfo.getComment();
                     } else if (goodsInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
                     } else {
                         showError(goodsInfo.getInfo());
                     }
-                } catch (Exception e) {
-                    showError("数据出错");
-                }
+//                } catch (Exception e) {
+//                    showError("数据出错");
+//                }
             }
 
             @Override

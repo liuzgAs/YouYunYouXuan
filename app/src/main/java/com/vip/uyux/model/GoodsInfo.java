@@ -26,6 +26,131 @@ public class GoodsInfo {
     private List<SkuLvBean> skuLv;
     private List<SkuCateBean> skuCate;
     private int isc;
+    private CommentBean comment;
+
+    public CommentBean getComment() {
+        return comment;
+    }
+
+    public void setComment(CommentBean comment) {
+        this.comment = comment;
+    }
+
+    public static class CommentBean{
+        private String title;
+        private String des;
+        private UserBean user;
+        private List<ImgsBean> imgs;
+
+        public UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(UserBean user) {
+            this.user = user;
+        }
+
+        public List<ImgsBean> getImgs() {
+            return imgs;
+        }
+
+        public void setImgs(List<ImgsBean> imgs) {
+            this.imgs = imgs;
+        }
+
+        public static class UserBean{
+            private String headimg;
+            private String nicknam;
+            private String vip;
+            private int star;
+
+            public String getHeadimg() {
+                return headimg;
+            }
+
+            public void setHeadimg(String headimg) {
+                this.headimg = headimg;
+            }
+
+            public String getNicknam() {
+                return nicknam;
+            }
+
+            public void setNicknam(String nicknam) {
+                this.nicknam = nicknam;
+            }
+
+            public String getVip() {
+                return vip;
+            }
+
+            public void setVip(String vip) {
+                this.vip = vip;
+            }
+
+            public int getStar() {
+                return star;
+            }
+
+            public void setStar(int star) {
+                this.star = star;
+            }
+        }
+        private String evaluate_time;
+        private String evaluate;
+        public static class ImgsBean{
+            private String thumb;
+            private String img;
+
+            public String getThumb() {
+                return thumb;
+            }
+
+            public void setThumb(String thumb) {
+                this.thumb = thumb;
+            }
+
+            public String getImg() {
+                return img;
+            }
+
+            public void setImg(String img) {
+                this.img = img;
+            }
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getDes() {
+            return des;
+        }
+
+        public void setDes(String des) {
+            this.des = des;
+        }
+
+        public String getEvaluate_time() {
+            return evaluate_time;
+        }
+
+        public void setEvaluate_time(String evaluate_time) {
+            this.evaluate_time = evaluate_time;
+        }
+
+        public String getEvaluate() {
+            return evaluate;
+        }
+
+        public void setEvaluate(String evaluate) {
+            this.evaluate = evaluate;
+        }
+    }
 
     public int getIsc() {
         return isc;
