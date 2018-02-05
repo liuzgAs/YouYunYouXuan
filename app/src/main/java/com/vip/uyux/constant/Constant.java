@@ -366,6 +366,10 @@ public class Constant {
          * 商品评价列表
          */
         public static final String COMMENT_GOODS = "/Comment/goods";
+        /**
+         * 售后
+         */
+        public static final String AFTERS = "/Afters";
 
     }
 

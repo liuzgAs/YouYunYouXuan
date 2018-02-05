@@ -91,14 +91,15 @@
         android:paddingTop="15dp">
 
         <android.support.v4.view.ViewPager
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
             android:id="@+id/id_viewpager"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:clipChildren="false" />
 
         <com.rd.PageIndicatorView
+            app:piv_viewPager="@+id/id_viewpager"
             app:piv_selectedColor="@color/basic_color"
             app:piv_unselectedColor="@color/background"
             app:piv_radius="3dp"
