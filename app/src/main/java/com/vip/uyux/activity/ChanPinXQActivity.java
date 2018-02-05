@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -112,6 +113,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private String did;
     private Badge badge;
     private boolean isShare = false;
+    private TabLayout tablayout;
+
     private BroadcastReceiver reciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -142,6 +145,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         }
     };
     private GoodsInfo.CommentBean comment;
+    private int viewTitleHeight;
+    private TabLayout tablayoutX;
 
     /**
      * des： 网络请求参数
@@ -227,11 +232,14 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         viewDiBu = findViewById(R.id.viewDiBu);
         imageGouWuChe = findViewById(R.id.imageGouWuChe);
         viewGouWuChe = findViewById(R.id.viewGouWuChe);
+        tablayoutX = (TabLayout) findViewById(R.id.tablayout);
     }
 
     @Override
     protected void initViews() {
-        ((TextView) findViewById(R.id.textViewTitle)).setText("产品详情");
+        tablayoutX.setVisibility(View.GONE);
+        viewTitleHeight = ScreenUtils.getStatusBarHeight(ChanPinXQActivity.this) + (int) getResources().getDimension(R.dimen.titleHeight);
+                ((TextView) findViewById(R.id.textViewTitle)).setText("产品详情");
         viewDiBu.setVisibility(View.GONE);
         badge = new QBadgeView(ChanPinXQActivity.this)
                 .setBadgeTextColor(Color.WHITE)
@@ -268,7 +276,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             private TextView textpromotionsBeforeDes;
             private TextView textPromotionsBefore;
             private View viewChuXiao;
-            private TabLayout tablayout;
             private RecyclerArrayAdapter<GoodsInfo.CommentBean> adapterPingLun;
             private EasyRecyclerView recyclerViewPingLun;
             private TextView textOldPrice;
@@ -508,6 +515,24 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             }
         });
         recyclerView.setRefreshListener(this);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                if (tablayout!=null){
+//                    int[] location = new int[2];
+//                    tablayout.getLocationInWindow(location);
+//                    int top = location[1] - viewTitleHeight;
+//                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+location[1]);
+//                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+top);
+//                    if (top<=0){
+//                        tablayoutX.setVisibility(View.VISIBLE);
+//                    }else {
+//                        tablayoutX.setVisibility(View.GONE);
+//                    }
+//                }
+            }
+        });
     }
 
     /**
