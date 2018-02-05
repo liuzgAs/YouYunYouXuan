@@ -261,6 +261,10 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
+            private View viewPingLun;
+            private View linePingLun;
+            private TextView textPingLunTitle;
+            private TextView textPingLunDes;
             private TextView textpromotionsBeforeDes;
             private TextView textPromotionsBefore;
             private View viewChuXiao;
@@ -367,6 +371,10 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 });
                 textPromotionsBefore = view.findViewById(R.id.textPromotionsBefore);
                 textpromotionsBeforeDes = view.findViewById(R.id.textpromotionsBeforeDes);
+                textPingLunDes = view.findViewById(R.id.textPingLunDes);
+                textPingLunTitle = view.findViewById(R.id.textPingLunTitle);
+                linePingLun = view.findViewById(R.id.linePingLun);
+                viewPingLun = view.findViewById(R.id.viewPingLun);
                 return view;
             }
 
@@ -482,9 +490,16 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 }
                 LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
                 if (comment!=null){
+                    viewPingLun.setVisibility(View.VISIBLE);
+                    linePingLun.setVisibility(View.VISIBLE);
+                    textPingLunTitle.setText(comment.getTitle());
+                    textPingLunDes.setText(comment.getDes());
                     adapterPingLun.clear();
                     adapterPingLun.add(comment);
                     adapterPingLun.notifyDataSetChanged();
+                }else {
+                    viewPingLun.setVisibility(View.GONE);
+                    linePingLun.setVisibility(View.GONE);
                 }
             }
         });

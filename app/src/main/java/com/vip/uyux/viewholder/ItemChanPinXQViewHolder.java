@@ -55,7 +55,7 @@ public class ItemChanPinXQViewHolder extends BaseViewHolder<GoodsInfo.CommentBea
                 .circleCrop()
                 .placeholder(R.mipmap.ic_empty)
                 .into(imageImg);
-        textName.setText(data.getUser().getNicknam());
+        textName.setText(data.getUser().getNickname());
         if (TextUtils.isEmpty(data.getUser().getVip())) {
             textVip.setVisibility(View.GONE);
         } else {

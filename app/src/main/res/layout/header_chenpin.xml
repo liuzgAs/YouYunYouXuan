@@ -325,13 +325,19 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/background" />
     <RelativeLayout
+        android:id="@+id/viewPingLun"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
+            android:id="@+id/textPingLunTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -351,6 +357,7 @@
             android:src="@mipmap/right" />
 
         <TextView
+            android:id="@+id/textPingLunDes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -366,11 +373,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:scrollbarStyle="insideOverlay" />
+    <TextView
+        android:id="@+id/linePingLun"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/background" />
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/normalItemHeight"
-        android:layout_marginTop="5dp"
         android:background="@color/white"
         app:tabIndicatorColor="@color/basic_color"
         app:tabIndicatorHeight="0dp"

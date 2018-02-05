@@ -60,7 +60,7 @@ public class GoodsInfo {
 
         public static class UserBean{
             private String headimg;
-            private String nicknam;
+            private String nickname;
             private String vip;
             private int star;
 
@@ -72,12 +72,12 @@ public class GoodsInfo {
                 this.headimg = headimg;
             }
 
-            public String getNicknam() {
-                return nicknam;
+            public String getNickname() {
+                return nickname;
             }
 
-            public void setNicknam(String nicknam) {
-                this.nicknam = nicknam;
+            public void setNickname(String nickname) {
+                this.nickname = nickname;
             }
 
             public String getVip() {
