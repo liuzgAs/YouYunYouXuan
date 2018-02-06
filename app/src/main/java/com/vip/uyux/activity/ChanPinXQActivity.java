@@ -526,9 +526,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+location[1]);
                     LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+top);
                     if (top<=0){
-                        tablayoutX.setVisibility(View.VISIBLE);
+//                        tablayoutX.setVisibility(View.VISIBLE);
                     }else {
-                        tablayoutX.setVisibility(View.GONE);
+//                        tablayoutX.setVisibility(View.GONE);
                     }
                 }
             }
@@ -789,7 +789,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("产品详情", s);
-//                try {
+                try {
                     goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
                     if (goodsInfo.getStatus() == 1) {
                         goodsInfoBanner = goodsInfo.getBanner();
@@ -821,9 +821,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     } else {
                         showError(goodsInfo.getInfo());
                     }
-//                } catch (Exception e) {
-//                    showError("数据出错");
-//                }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
             }
 
             @Override

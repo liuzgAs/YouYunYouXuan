@@ -30,7 +30,7 @@ public class ChanPinFootViewHolder extends BaseViewHolder<GoodsInfo.DataBean.Img
         GlideApp.with(getContext())
                 .asBitmap()
                 .load(data.getImg())
-                .placeholder(R.mipmap.none_data)
+                .placeholder(R.mipmap.ic_empty_h)
                 .dontAnimate()
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
