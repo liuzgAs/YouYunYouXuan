@@ -398,6 +398,10 @@ public class Constant {
          * 直推分红
          */
         public static final String BONUS_DIRECT = "/Bonus/direct";
+        /**
+         * 购物车推荐商品
+         */
+        public static final String CART_RECOM = "/Cart/recom";
 
     }
 

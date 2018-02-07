@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -24,6 +25,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.activity.QueRenDDActivity;
@@ -32,15 +34,18 @@ import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.CartIndex;
+import com.vip.uyux.model.CartRecom;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.UserInfo;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.Arith;
+import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
+import com.vip.uyux.viewholder.CarTuiJianViewHolder;
 import com.vip.uyux.viewholder.CarViewHolder;
 
 import java.util.ArrayList;
@@ -80,6 +85,9 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
         }
     };
     private View imageBack;
+    private EasyRecyclerView recyclerViewTuiJian;
+    private RecyclerArrayAdapter<CartRecom.DataBean> adapterTuiJian;
+    private View viewTuiJian;
 
     /**
      * 刷新car总价
@@ -141,10 +149,12 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
     protected void findID() {
         mRelaTitleStatue = mInflate.findViewById(R.id.relaTitleStatue);
         recyclerView = (EasyRecyclerView) mInflate.findViewById(R.id.recyclerView);
+        recyclerViewTuiJian = (EasyRecyclerView) mInflate.findViewById(R.id.recyclerViewTuiJian);
         textHeJi = (TextView) mInflate.findViewById(R.id.textHeJi);
         imageQuanXuan = (ImageView) mInflate.findViewById(R.id.imageQuanXuan);
         viewJieSuan = mInflate.findViewById(R.id.viewJieSuan);
         imageBack = mInflate.findViewById(R.id.imageBack);
+        viewTuiJian = mInflate.findViewById(R.id.viewTuiJian);
     }
 
     @Override
@@ -231,7 +241,165 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                 startActivity(intent);
             }
         });
+        initTuiJianRecycler();
     }
+
+    /**
+     * 初始化recyclerview
+     */
+    private void initTuiJianRecycler() {
+        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
+        recyclerViewTuiJian.setLayoutManager(manager);
+        SpaceDecoration spaceDecoration =new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, mContext));
+//        recyclerView.addItemDecoration(itemDecoration1);
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerViewTuiJian.addItemDecoration(spaceDecoration);
+        recyclerViewTuiJian.setRefreshingColorResources(R.color.basic_color);
+        recyclerViewTuiJian.setAdapterWithProgress(adapterTuiJian = new RecyclerArrayAdapter<CartRecom.DataBean>(mContext) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.item_car_tuijian;
+                return new CarTuiJianViewHolder(parent, layout,1);
+            }
+        });
+        manager.setSpanSizeLookup(adapterTuiJian.obtainGridSpanSizeLookUp(2));
+        adapterTuiJian.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
+            @Override
+            public void onMoreShow() {
+                ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+                    @Override
+                    public void onSuccess(String s) {
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        try {
+                            page++;
+                            CartRecom cartRecom = GsonUtils.parseJSON(s, CartRecom.class);
+                            int status = cartRecom.getStatus();
+                            if (status == 1) {
+                                List<CartRecom.DataBean> dataBeanList = cartRecom.getData();
+                                adapterTuiJian.addAll(dataBeanList);
+                            } else if (status == 3) {
+                                MyDialog.showReLoginDialog(mContext);
+                            } else {
+                                adapterTuiJian.pauseMore();
+                            }
+                        } catch (Exception e) {
+                            adapterTuiJian.pauseMore();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        adapterTuiJian.pauseMore();
+                    }
+                });
+            }
+
+            @Override
+            public void onMoreClick() {
+
+            }
+        });
+        adapterTuiJian.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
+            @Override
+            public void onNoMoreShow() {
+
+            }
+
+            @Override
+            public void onNoMoreClick() {
+            }
+        });
+        adapterTuiJian.setError(R.layout.view_error, new RecyclerArrayAdapter.OnErrorListener() {
+            @Override
+            public void onErrorShow() {
+                adapter.resumeMore();
+            }
+
+            @Override
+            public void onErrorClick() {
+                adapter.resumeMore();
+            }
+        });
+        adapterTuiJian.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, ChanPinXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, adapterTuiJian.getItem(position).getId());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void tuijian() {
+        page =1;
+        ApiClient.post(mContext, getTuiJianOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("", s);
+                try {
+                    page++;
+                    CartRecom cartRecom = GsonUtils.parseJSON(s, CartRecom.class);
+                    if (cartRecom.getStatus() == 1) {
+                        List<CartRecom.DataBean> dataBeanList = cartRecom.getData();
+                        adapterTuiJian.clear();
+                        adapterTuiJian.addAll(dataBeanList);
+                    } else if (cartRecom.getStatus()== 3) {
+                        MyDialog.showReLoginDialog(mContext);
+                    } else {
+                        showError(cartRecom.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerViewTuiJian.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerViewTuiJian.setErrorView(viewLoader);
+                    recyclerViewTuiJian.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
+    }
+
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getTuiJianOkObject() {
+        String url = Constant.HOST + Constant.Url.CART_RECOM;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("p",String.valueOf(page));
+        return new OkObject(params, url);
+    }
+
+    int page =1;
 
     /**
      * des： 网络请求参数
@@ -278,7 +446,12 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
                         }
                         adapter.clear();
                         adapter.addAll(cartBeanList);
-
+                        if (adapter.getAllData().size()==0){
+                            viewTuiJian.setVisibility(View.VISIBLE);
+                            tuijian();
+                        }else {
+                            viewTuiJian.setVisibility(View.GONE);
+                        }
                     } else if (cartIndex.getStatus() == 3) {
                         MyDialog.showReLoginDialog(mContext);
                     } else {
