@@ -386,6 +386,14 @@ public class Constant {
          * 售后记录详情
          */
         public static final String AFTERS_LOGSINFO = "/Afters/logsInfo";
+        /**
+         * 吉芬商品提交订单
+         */
+        public static final String SCORE_NEWORDER = "/Score/newOrder";
+        /**
+         * 吉芬商品确认订单
+         */
+        public static final String SCORE_CONFIRMBEFORE = "/Score/confirmBefore";
 
     }
 
@@ -449,6 +457,7 @@ public class Constant {
         public static final String ADV = "adv";
         public static final String SHUA_XIN_PING_JIA = "shua_xin_ping_jia";
         public static final String SHUA_XIN_SHOW_HOU = "shuaXinShouHou";
+        public static final String SHUA_XIN_U_BI = "shuaXinUBI";
     }
 
 

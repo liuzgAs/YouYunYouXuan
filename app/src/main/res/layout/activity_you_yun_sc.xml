@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context="com.vip.uyux.activity.JiFenSCActivity">
+    tools:context="com.vip.uyux.activity.UbiSCActivity">
 
     <include layout="@layout/view_bar_white" />
 

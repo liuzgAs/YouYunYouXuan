@@ -1,6 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -30,13 +33,26 @@ import com.vip.uyux.viewholder.JiFenSCViewHolder;
 import java.util.HashMap;
 import java.util.List;
 
-public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<CustomerGetintegralshop.DataBean> adapter;
     private String top_img;
     private int my_integral;
     private int exchange_recode;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_U_BI:
+                    onRefresh();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +93,7 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
 //        itemDecoration.setPaddingHeaderFooter(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CustomerGetintegralshop.DataBean>(JiFenSCActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CustomerGetintegralshop.DataBean>(UbiSCActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_jifensc;
@@ -92,7 +108,7 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
 
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(JiFenSCActivity.this).inflate(R.layout.header_jifen_sc, null);
+                View view = LayoutInflater.from(UbiSCActivity.this).inflate(R.layout.header_jifen_sc, null);
                 imageImg = view.findViewById(R.id.imageImg);
                 textScore = view.findViewById(R.id.textScore);
                 textDuiHuanJL = view.findViewById(R.id.textDuiHuanJL);
@@ -101,7 +117,7 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
 
             @Override
             public void onBindView(View headerView) {
-                GlideApp.with(JiFenSCActivity.this)
+                GlideApp.with(UbiSCActivity.this)
                         .load(top_img)
                         .centerCrop()
                         .placeholder(R.mipmap.ic_empty)
@@ -113,10 +129,10 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                ApiClient.post(JiFenSCActivity.this, getOkObject(), new ApiClient.CallBack() {
+                ApiClient.post(UbiSCActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             CustomerGetintegralshop customerGetintegralshop = GsonUtils.parseJSON(s, CustomerGetintegralshop.class);
@@ -125,7 +141,7 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
                                 List<CustomerGetintegralshop.DataBean> dataBeanList = customerGetintegralshop.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
-                                MyDialog.showReLoginDialog(JiFenSCActivity.this);
+                                MyDialog.showReLoginDialog(UbiSCActivity.this);
                             } else {
                                 adapter.pauseMore();
                             }
@@ -171,8 +187,8 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
-                intent.setClass(JiFenSCActivity.this,ChanPinJFXQActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
+                intent.setClass(UbiSCActivity.this, ChanPinJFXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
                 startActivity(intent);
             }
         });
@@ -212,9 +228,9 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
+        params.put("p", String.valueOf(page));
         return new OkObject(params, url);
     }
 
@@ -236,7 +252,7 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (customerGetintegralshop.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(JiFenSCActivity.this);
+                        MyDialog.showReLoginDialog(UbiSCActivity.this);
                     } else {
                         showError(customerGetintegralshop.getInfo());
                     }
@@ -256,7 +272,7 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(JiFenSCActivity.this).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(UbiSCActivity.this).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
@@ -272,5 +288,19 @@ public class JiFenSCActivity extends ZjbBaseActivity implements View.OnClickList
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(reciver);
     }
 }

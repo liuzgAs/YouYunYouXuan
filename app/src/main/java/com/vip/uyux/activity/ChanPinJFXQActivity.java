@@ -42,14 +42,10 @@ import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.customview.OnTagSelectListener;
-import com.vip.uyux.model.CartAddcart;
 import com.vip.uyux.model.CustomerIntegragoodsinfo;
-import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShouCangShanChu;
 import com.vip.uyux.model.SimpleInfo;
-import com.vip.uyux.provider.DataProvider;
-import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
@@ -57,7 +53,6 @@ import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.ChanPinFootViewHolder;
-import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
 import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
 
 import java.util.ArrayList;
@@ -144,9 +139,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
-            private RecyclerArrayAdapter<Integer> adapterPingLun;
             private TabLayout tablayout;
-            private EasyRecyclerView recyclerViewPingLun;
             private TextView textYongYouJF;
             private TextView textHas_des;
             private TextView textOldPrice;
@@ -175,8 +168,6 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 textHas_des = view.findViewById(R.id.textHas_des);
                 textYongYouJF = view.findViewById(R.id.textYongYouJF);
 
-                recyclerViewPingLun = view.findViewById(R.id.recyclerView);
-                initFootRecycler();
                 tablayout = (TabLayout) view.findViewById(R.id.tablayout);
                 for (int i = 0; i < 2; i++) {
                     View item_tablayout = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.item_tablayout, null);
@@ -219,26 +210,6 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 return view;
             }
 
-            /**
-             * 初始化recyclerview
-             */
-            private void initFootRecycler() {
-                recyclerViewPingLun.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
-                recyclerViewPingLun.setAdapterWithProgress(adapterPingLun = new RecyclerArrayAdapter<Integer>(ChanPinJFXQActivity.this) {
-
-                    @Override
-                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                        int layout = R.layout.item_chanpin_xq;
-                        return new ItemChanPinXQViewHolder(parent, layout);
-                    }
-                });
-                adapterPingLun.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                    }
-                });
-            }
-
             @Override
             public void onBindView(View headerView) {
                 if (goodsInfoBanner != null) {
@@ -259,114 +230,8 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                     textHas_des.setText(goodsInfoData.getHas_des());
                     textYongYouJF.setText(String.valueOf(goodsInfoData.getHas_integra()));
                 }
-                adapterPingLun.clear();
-                adapterPingLun.addAll(DataProvider.getPersonList(1));
             }
         });
-//        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-//            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot;
-//            private EasyRecyclerView recyclerViewFoot;
-//            private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapterFoot1;
-////            private EasyRecyclerView recyclerViewFoot1;
-//            private TabLayout tablayout;
-//
-//            @Override
-//            public View onCreateView(ViewGroup parent) {
-//                View view = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.footer_chanpin_xq, null);
-//                tablayout = (TabLayout) view.findViewById(R.id.tablayout);
-//                for (int i = 0; i < 2; i++) {
-//                    View item_tablayout = LayoutInflater.from(ChanPinJFXQActivity.this).inflate(R.layout.item_tablayout, null);
-//                    TextView textTitle = (TextView) item_tablayout.findViewById(R.id.textTitle);
-//                    if (i == 0) {
-//                        textTitle.setText("宝贝详情");
-//                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
-//                    } else {
-//                        textTitle.setText("规格参数");
-//                        tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
-//                    }
-//                }
-//                tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//                    @Override
-//                    public void onTabSelected(TabLayout.Tab tab) {
-//                        int position = tab.getPosition();
-//                        if (position == 0) {
-//                            recyclerViewFoot.setVisibility(View.VISIBLE);
-////                            recyclerViewFoot1.setVisibility(View.GONE);
-//                        } else {
-//                            recyclerViewFoot.setVisibility(View.GONE);
-////                            recyclerViewFoot1.setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onTabUnselected(TabLayout.Tab tab) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onTabReselected(TabLayout.Tab tab) {
-//
-//                    }
-//                });
-//                recyclerViewFoot = view.findViewById(R.id.recyclerView);
-////                recyclerViewFoot1 = view.findViewById(R.id.recyclerView1);
-//                initFootRecycler();
-////                initFootRecycler1();
-//                return view;
-//            }
-//
-//            /**
-//             * 初始化recyclerview
-//             */
-//            private void initFootRecycler() {
-//                recyclerViewFoot.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
-//                recyclerViewFoot.setAdapterWithProgress(adapterFoot = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
-//                    @Override
-//                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-//                        int layout = R.layout.item_image;
-//                        return new ChanPinFootViewHolder(parent, layout);
-//                    }
-//                });
-//                adapterFoot.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(int position) {
-//                    }
-//                });
-//            }
-//
-//            /**
-//             * 初始化recyclerview
-//             */
-////            private void initFootRecycler1() {
-////                recyclerViewFoot1.setLayoutManager(new LinearLayoutManager(ChanPinJFXQActivity.this));
-////                recyclerViewFoot1.setAdapterWithProgress(adapterFoot1 = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
-////                    @Override
-////                    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-////                        int layout = R.layout.item_image;
-////                        return new ChanPinFootViewHolder(parent, layout);
-////                    }
-////                });
-////                adapterFoot1.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-////                    @Override
-////                    public void onItemClick(int position) {
-////                    }
-////                });
-////            }
-//
-//            @Override
-//            public void onBindView(View headerView) {
-//                recyclerViewFoot.setVisibility(View.VISIBLE);
-////                recyclerViewFoot1.setVisibility(View.GONE);
-//                adapterFoot.clear();
-//                adapterFoot1.clear();
-//                if (imgs != null) {
-//                    adapterFoot.addAll(imgs);
-//                }
-//                if (imgs2 != null) {
-//                    adapterFoot1.addAll(imgs2);
-//                }
-//            }
-//        });
         recyclerView.setRefreshListener(this);
     }
 
@@ -397,9 +262,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 }
                 break;
             case R.id.textJiaRuGWC:
-                Toast.makeText(ChanPinJFXQActivity.this, "暂未开放兑换", Toast.LENGTH_SHORT).show();
-//                buy_now = 0;
-//                mai();
+                mai();
                 break;
             case R.id.imageBack:
                 finish();
@@ -528,6 +391,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                         imgs2 = goodsInfoData.getImgs2();
                         skuCate = goodsInfo.getSkuCate();
                         skuLv = goodsInfo.getSkuLv();
+                        stock_num = goodsInfo.getData().getStockNum();
                         listList.clear();
                         List<List<CustomerIntegragoodsinfo.SkuCateBean>> listList = readTree(skuCate);
                         catelist.clear();
@@ -692,7 +556,11 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                     return;
                 }
                 alertDialogGouWu.dismiss();
-                addCar(editNum.getText().toString().trim());
+                Intent intent = new Intent();
+                intent.setClass(ChanPinJFXQActivity.this,QueRenDDJFActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,id);
+                intent.putExtra(Constant.IntentKey.VALUE,editNum.getText().toString().trim());
+                startActivity(intent);
             }
         });
 
@@ -704,71 +572,6 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         DisplayMetrics d = ChanPinJFXQActivity.this.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
         lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
         dialogWindow.setAttributes(lp);
-    }
-
-    /**
-     * des： 网络请求参数
-     * author： ZhangJieBo
-     * date： 2017/8/28 0028 上午 9:55
-     */
-    private OkObject getCarOkObject(String num) {
-        ACache aCache = ACache.get(ChanPinJFXQActivity.this, Constant.Acache.LOCATION);
-        String did = aCache.getAsString(Constant.Acache.DID);
-        String url = Constant.HOST + Constant.Url.CART_ADDCART;
-        HashMap<String, String> params = new HashMap<>();
-        if (isLogin) {
-            params.put("uid", userInfo.getUid());
-            params.put("tokenTime", tokenTime);
-        }
-        params.put("goods_id", String.valueOf(id));
-        params.put("sku_id", String.valueOf(sku_id));
-        params.put("buy_now", String.valueOf(buy_now));
-        params.put("did", String.valueOf(did));
-        params.put("num", num);
-        return new OkObject(params, url);
-    }
-
-    /**
-     * 添加到购物车
-     */
-    private void addCar(String num) {
-        showLoadingDialog();
-        ApiClient.post(ChanPinJFXQActivity.this, getCarOkObject(num), new ApiClient.CallBack() {
-            @Override
-            public void onSuccess(String s) {
-                cancelLoadingDialog();
-                LogUtil.LogShitou("ChanPinXQActivity--加入购物车", s + "");
-                try {
-                    CartAddcart cartAddcart = GsonUtils.parseJSON(s, CartAddcart.class);
-                    if (cartAddcart.getStatus() == 1) {
-                        if (buy_now == 1) {
-                            List<Integer> integerList = new ArrayList<>();
-                            integerList.add(cartAddcart.getCartId());
-                            Intent intent = new Intent();
-                            intent.putExtra(Constant.IntentKey.BEAN, new JieSuan(integerList));
-                            intent.setClass(ChanPinJFXQActivity.this, QueRenDDActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent();
-                            intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
-                            sendBroadcast(intent);
-                        }
-                    } else if (cartAddcart.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ChanPinJFXQActivity.this);
-                    } else {
-                        Toast.makeText(ChanPinJFXQActivity.this, cartAddcart.getInfo(), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(ChanPinJFXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onError() {
-                cancelLoadingDialog();
-                Toast.makeText(ChanPinJFXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     class MyGuiGeAdapter extends BaseAdapter {

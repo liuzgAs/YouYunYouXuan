@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
-import com.vip.uyux.activity.JiFenSCActivity;
+import com.vip.uyux.activity.UbiSCActivity;
 import com.vip.uyux.activity.PingJiaGLActivity;
 import com.vip.uyux.activity.SheZhiActivity;
 import com.vip.uyux.activity.ShouHouFWActivity;
@@ -76,6 +76,9 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                     initData();
                     break;
                 case Constant.BroadcastCode.TIXIAN:
+                    initData();
+                    break;
+                case Constant.BroadcastCode.SHUA_XIN_U_BI:
                     initData();
                     break;
                 default:
@@ -404,7 +407,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 break;
             case R.id.viewUBiSC:
                 if (isLogin) {
-                    intent.setClass(mContext, JiFenSCActivity.class);
+                    intent.setClass(mContext, UbiSCActivity.class);
                     startActivity(intent);
                 } else {
                     ToLoginActivity.toLoginActivity(mContext);
@@ -521,6 +524,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.USERINFO);
         filter.addAction(Constant.BroadcastCode.TIXIAN);
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
         getActivity().registerReceiver(reciver, filter);
     }
 

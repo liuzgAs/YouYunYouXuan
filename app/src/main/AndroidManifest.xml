@@ -350,7 +350,7 @@
             android:name=".activity.WoDeJFActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.JiFenSCActivity"
+            android:name=".activity.UbiSCActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.WoDeDDActivity"
@@ -406,11 +406,24 @@
         <activity
             android:name=".activity.PingJiaActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.PingLunLBActivity" />
-        <activity android:name=".activity.ShouHouFWActivity" />
-        <activity android:name=".activity.ShenQingSHActivity" />
-        <activity android:name=".activity.ShenQingSHJLActivity" />
-        <activity android:name=".activity.FuWuDanXQActivity"></activity>
+        <activity
+            android:name=".activity.PingLunLBActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.ShouHouFWActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.ShenQingSHActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.ShenQingSHJLActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.QueRenDDJFActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.FuWuDanXQActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

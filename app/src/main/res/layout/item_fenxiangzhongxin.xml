@@ -387,12 +387,10 @@
         </RelativeLayout>
 
         <TextView
-            android:visibility="gone"
             android:layout_width="1dp"
             android:layout_height="match_parent" />
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/viewFenHongZX"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

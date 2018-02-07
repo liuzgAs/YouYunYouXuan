@@ -1,6 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -36,6 +39,19 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
     private RecyclerArrayAdapter<CustomerGetintegral.DataBean> adapter;
     private ImageView imageHead;
     private TextView textScore;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_U_BI:
+                    onRefresh();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +184,7 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.viewUbiSC:
-                intent.setClass(this, JiFenSCActivity.class);
+                intent.setClass(this, UbiSCActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageBack:
@@ -191,7 +207,7 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
+        params.put("p", String.valueOf(page));
         return new OkObject(params, url);
     }
 
@@ -254,5 +270,19 @@ public class WoDeJFActivity extends ZjbBaseActivity implements View.OnClickListe
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(reciver);
     }
 }
