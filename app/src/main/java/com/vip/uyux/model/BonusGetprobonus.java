@@ -11,16 +11,18 @@ import java.util.List;
 public class BonusGetprobonus {
     /**
      * title : 产品分红
-     * k_money : 2365
-     * y_money : 8365
+     * k_money : 0
+     * y_money : 0
+     * des : 提现需要7个工作日审核
      * status : 1
      * info : 获取成功
-     * goods_list : [{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件","profit":[{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]},{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件","profit":[{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]},{"id":1,"goods_title":"一品轩皇家有机食用调和油","goods_rule":"买一送三","price":"78.00","total_money":"9632","des1":"近7日收益¥562","des2":"近7日销量100件","profit":[{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]}]
+     * goods_list : [{"goods_title":"地毯地垫厨房浴室防滑地垫门厅玄关入户地垫客厅卧室防尘蹭蹭垫子","id":1746,"img":"images/vslai_shop/1604/2018/01/HVZZP2PvQwm5qTPv24vWOjvOjMOqWP.jpg","goods_rule":"","price":"52.00","total_money":0,"des1":"近7日收益¥0","des2":"近7日销量0件","num1":0,"num2":0,"max":0,"profit":[{"title":"01-31","v1":0,"v2":0},{"title":"02-01","v1":0,"v2":0},{"title":"02-02","v1":0,"v2":0},{"title":"02-03","v1":0,"v2":0},{"title":"02-04","v1":0,"v2":0},{"title":"02-05","v1":0,"v2":0},{"title":"02-06","v1":0,"v2":0}]},{"goods_title":"优云优选新春大礼包","id":1747,"img":"images/1604/2018/01/p80191e10hZZvONzVt2Hz24YS1d8h0.png","goods_rule":"一整箱小吃年货组合礼包，超大容量18款进口零食11","price":"199.00","total_money":0,"des1":"近7日收益¥0","des2":"近7日销量0件","num1":11,"num2":66,"max":0,"profit":[{"title":"01-31","v1":0,"v2":0},{"title":"02-01","v1":0,"v2":0},{"title":"02-02","v1":0,"v2":0},{"title":"02-03","v1":0,"v2":0},{"title":"02-04","v1":0,"v2":0},{"title":"02-05","v1":0,"v2":0},{"title":"02-06","v1":0,"v2":0}]}]
      */
 
     private String title;
-    private double k_money;
-    private double y_money;
+    private String k_money;
+    private String y_money;
+    private String des;
     private int status;
     private String info;
     private List<GoodsListBean> goods_list;
@@ -33,20 +35,28 @@ public class BonusGetprobonus {
         this.title = title;
     }
 
-    public double getK_money() {
+    public String getK_money() {
         return k_money;
     }
 
-    public void setK_money(double k_money) {
+    public void setK_money(String k_money) {
         this.k_money = k_money;
     }
 
-    public double getY_money() {
+    public String getY_money() {
         return y_money;
     }
 
-    public void setY_money(double y_money) {
+    public void setY_money(String y_money) {
         this.y_money = y_money;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
     }
 
     public int getStatus() {
@@ -75,42 +85,41 @@ public class BonusGetprobonus {
 
     public static class GoodsListBean {
         /**
-         * id : 1
-         * goods_title : 一品轩皇家有机食用调和油
-         * goods_rule : 买一送三
-         * price : 78.00
-         * total_money : 9632
-         * des1 : 近7日收益¥562
-         * des2 : 近7日销量100件
-         * profit : [{"title":"12-28","v1":125,"v2":236},{"title":"12-29","v1":25,"v2":36},{"title":"12-30","v1":15,"v2":26},{"title":"12-31","v1":25,"v2":36},{"title":"01-01","v1":12,"v2":23},{"title":"01-02","v1":25,"v2":36},{"title":"01-03","v1":15,"v2":36}]
+         * goods_title : 地毯地垫厨房浴室防滑地垫门厅玄关入户地垫客厅卧室防尘蹭蹭垫子
+         * id : 1746
+         * img : images/vslai_shop/1604/2018/01/HVZZP2PvQwm5qTPv24vWOjvOjMOqWP.jpg
+         * goods_rule :
+         * price : 52.00
+         * total_money : 0
+         * des1 : 近7日收益¥0
+         * des2 : 近7日销量0件
+         * num1 : 0
+         * num2 : 0
+         * max : 0
+         * profit : [{"title":"01-31","v1":0,"v2":0},{"title":"02-01","v1":0,"v2":0},{"title":"02-02","v1":0,"v2":0},{"title":"02-03","v1":0,"v2":0},{"title":"02-04","v1":0,"v2":0},{"title":"02-05","v1":0,"v2":0},{"title":"02-06","v1":0,"v2":0}]
          */
 
-        private int id;
         private String goods_title;
+        private int id;
+        private String img;
         private String goods_rule;
         private String price;
         private String total_money;
+
+        public String getTotal_money() {
+            return total_money;
+        }
+
         private String des1;
         private String des2;
-        private String img;
+        private int num1;
+        private int num2;
         private int max;
-        private boolean isZhanKai;
         private List<ProfitBean> profit;
+        private boolean isZhanKai;
 
-        public int getMax() {
-            return max;
-        }
-
-        public void setMax(int max) {
-            this.max = max;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
+        public void setTotal_money(String total_money) {
+            this.total_money = total_money;
         }
 
         public boolean isZhanKai() {
@@ -121,6 +130,14 @@ public class BonusGetprobonus {
             isZhanKai = zhanKai;
         }
 
+        public String getGoods_title() {
+            return goods_title;
+        }
+
+        public void setGoods_title(String goods_title) {
+            this.goods_title = goods_title;
+        }
+
         public int getId() {
             return id;
         }
@@ -129,12 +146,12 @@ public class BonusGetprobonus {
             this.id = id;
         }
 
-        public String getGoods_title() {
-            return goods_title;
+        public String getImg() {
+            return img;
         }
 
-        public void setGoods_title(String goods_title) {
-            this.goods_title = goods_title;
+        public void setImg(String img) {
+            this.img = img;
         }
 
         public String getGoods_rule() {
@@ -153,14 +170,6 @@ public class BonusGetprobonus {
             this.price = price;
         }
 
-        public String getTotal_money() {
-            return total_money;
-        }
-
-        public void setTotal_money(String total_money) {
-            this.total_money = total_money;
-        }
-
         public String getDes1() {
             return des1;
         }
@@ -177,6 +186,30 @@ public class BonusGetprobonus {
             this.des2 = des2;
         }
 
+        public int getNum1() {
+            return num1;
+        }
+
+        public void setNum1(int num1) {
+            this.num1 = num1;
+        }
+
+        public int getNum2() {
+            return num2;
+        }
+
+        public void setNum2(int num2) {
+            this.num2 = num2;
+        }
+
+        public int getMax() {
+            return max;
+        }
+
+        public void setMax(int max) {
+            this.max = max;
+        }
+
         public List<ProfitBean> getProfit() {
             return profit;
         }
@@ -187,9 +220,9 @@ public class BonusGetprobonus {
 
         public static class ProfitBean {
             /**
-             * title : 12-28
-             * v1 : 125
-             * v2 : 236
+             * title : 01-31
+             * v1 : 0
+             * v2 : 0
              */
 
             private String title;

@@ -31,8 +31,8 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
 
     private EasyRecyclerView recyclerView;
     public RecyclerArrayAdapter<BonusGetprobonus.GoodsListBean> adapter;
-    private double k_money;
-    private double y_money;
+    private String k_money;
+    private String y_money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +210,116 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
             @Override
             public void onSuccess(String s) {
                 LogUtil.LogShitou("", s);
+                s="{\n" +
+                        "    \"title\": \"产品分红\",\n" +
+                        "    \"k_money\": 0,\n" +
+                        "    \"y_money\": 0,\n" +
+                        "    \"des\": \"提现需要7个工作日审核\",\n" +
+                        "    \"status\": 1,\n" +
+                        "    \"info\": \"获取成功\",\n" +
+                        "    \"goods_list\": [\n" +
+                        "        {\n" +
+                        "            \"goods_title\": \"地毯地垫厨房浴室防滑地垫门厅玄关入户地垫客厅卧室防尘蹭蹭垫子\",\n" +
+                        "            \"id\": 1746,\n" +
+                        "            \"img\": \"images/vslai_shop/1604/2018/01/HVZZP2PvQwm5qTPv24vWOjvOjMOqWP.jpg\",\n" +
+                        "            \"goods_rule\": \"\",\n" +
+                        "            \"price\": \"52.00\",\n" +
+                        "            \"total_money\": 0,\n" +
+                        "            \"des1\": \"近7日收益¥0\",\n" +
+                        "            \"des2\": \"近7日销量0件\",\n" +
+                        "            \"num1\": 0,\n" +
+                        "            \"num2\": 0,\n" +
+                        "            \"max\": 0,\n" +
+                        "            \"profit\": [\n" +
+                        "                {\n" +
+                        "                    \"title\": \"01-31\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-01\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-02\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-03\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-04\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-05\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-06\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                }\n" +
+                        "            ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "            \"goods_title\": \"优云优选新春大礼包\",\n" +
+                        "            \"id\": 1747,\n" +
+                        "            \"img\": \"images/1604/2018/01/p80191e10hZZvONzVt2Hz24YS1d8h0.png\",\n" +
+                        "            \"goods_rule\": \"一整箱小吃年货组合礼包，超大容量18款进口零食11\",\n" +
+                        "            \"price\": \"199.00\",\n" +
+                        "            \"total_money\": 0,\n" +
+                        "            \"des1\": \"近7日收益¥0\",\n" +
+                        "            \"des2\": \"近7日销量0件\",\n" +
+                        "            \"num1\": 11,\n" +
+                        "            \"num2\": 66,\n" +
+                        "            \"max\": 0,\n" +
+                        "            \"profit\": [\n" +
+                        "                {\n" +
+                        "                    \"title\": \"01-31\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-01\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-02\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-03\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-04\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-05\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                },\n" +
+                        "                {\n" +
+                        "                    \"title\": \"02-06\",\n" +
+                        "                    \"v1\": 0,\n" +
+                        "                    \"v2\": 0\n" +
+                        "                }\n" +
+                        "            ]\n" +
+                        "        }\n" +
+                        "    ]\n" +
+                        "}";
                 try {
                     page++;
                     BonusGetprobonus bonusGetprobonus = GsonUtils.parseJSON(s, BonusGetprobonus.class);
