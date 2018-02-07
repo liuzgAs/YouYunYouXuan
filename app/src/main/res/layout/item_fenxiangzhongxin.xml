@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,9 +13,9 @@
             android:id="@+id/imageImg"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="25dp"
             android:layout_marginLeft="@dimen/leftAndRight"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:src="@mipmap/touxiang_mine"
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp" />
@@ -86,7 +86,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="90dp"
             android:background="@drawable/shape_white_top15dp"
             android:orientation="horizontal">
 
@@ -193,7 +193,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="85dp"
         android:layout_marginTop="5dp">
 
         <RelativeLayout
@@ -261,7 +261,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="85dp"
         android:layout_marginTop="1dp">
 
         <RelativeLayout
@@ -326,11 +326,15 @@
                 android:textSize="@dimen/normal_textsize" />
         </RelativeLayout>
     </LinearLayout>
-
+    <com.vip.uyux.customview.ResizableImageView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:src="@mipmap/fenxiaoshangpintuijian"
+        android:layout_height="wrap_content" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_marginTop="5dp">
+        >
 
         <RelativeLayout
             android:id="@+id/viewTuanDui"

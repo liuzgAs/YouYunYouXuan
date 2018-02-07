@@ -8,16 +8,20 @@ package com.vip.uyux.model;
 
 public class Bonus {
     /**
-     * img :
-     * name : 胡安
-     * grade_name : 大师
-     * create_time : 2018-01-25
-     * product_bonus : {"id":1,"title":"产品分红","total_money":"155","y_money":"15767"}
-     * direct_bonus : {"id":2,"title":"直推分红","l_money":"147622","z_money":"1579"}
+     * up_url : http://app.uyux.vip/mobile/apply/provider/app/1/uid/1011113/pid/1013055
+     * url_title : 升级
+     * img : http://app.uyux.vip/attachment/head/20180201/1011113_1517455406_1.png
+     * name : 真实
+     * grade_name : 优选大师
+     * create_time : 2018-02-07
+     * product_bonus : {"id":1,"title":"产品分红","is_up":1,"num1":0,"num2":0,"des1":"销售数量","des2":"总收益"}
+     * direct_bonus : {"id":2,"title":"直推分红","is_up":1,"num1":0,"num2":0,"des1":"累计分红","des2":"团队总佣金"}
      * status : 1
      * info : 获取成功
      */
 
+    private String up_url;
+    private String url_title;
     private String img;
     private String name;
     private String grade_name;
@@ -26,6 +30,31 @@ public class Bonus {
     private DirectBonusBean direct_bonus;
     private int status;
     private String info;
+    private String tel;
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getUp_url() {
+        return up_url;
+    }
+
+    public void setUp_url(String up_url) {
+        this.up_url = up_url;
+    }
+
+    public String getUrl_title() {
+        return url_title;
+    }
+
+    public void setUrl_title(String url_title) {
+        this.url_title = url_title;
+    }
 
     public String getImg() {
         return img;
@@ -95,23 +124,20 @@ public class Bonus {
         /**
          * id : 1
          * title : 产品分红
-         * total_money : 155
-         * y_money : 15767
+         * is_up : 1
+         * num1 : 0
+         * num2 : 0
+         * des1 : 销售数量
+         * des2 : 总收益
          */
 
         private int id;
         private String title;
-        private String total_money;
-        private String y_money;
         private int is_up;
-
-        public int getIs_up() {
-            return is_up;
-        }
-
-        public void setIs_up(int is_up) {
-            this.is_up = is_up;
-        }
+        private String num1;
+        private String num2;
+        private String des1;
+        private String des2;
 
         public int getId() {
             return id;
@@ -129,20 +155,44 @@ public class Bonus {
             this.title = title;
         }
 
-        public String getTotal_money() {
-            return total_money;
+        public int getIs_up() {
+            return is_up;
         }
 
-        public void setTotal_money(String total_money) {
-            this.total_money = total_money;
+        public void setIs_up(int is_up) {
+            this.is_up = is_up;
         }
 
-        public String getY_money() {
-            return y_money;
+        public String getNum1() {
+            return num1;
         }
 
-        public void setY_money(String y_money) {
-            this.y_money = y_money;
+        public void setNum1(String num1) {
+            this.num1 = num1;
+        }
+
+        public String getNum2() {
+            return num2;
+        }
+
+        public void setNum2(String num2) {
+            this.num2 = num2;
+        }
+
+        public String getDes1() {
+            return des1;
+        }
+
+        public void setDes1(String des1) {
+            this.des1 = des1;
+        }
+
+        public String getDes2() {
+            return des2;
+        }
+
+        public void setDes2(String des2) {
+            this.des2 = des2;
         }
     }
 
@@ -150,23 +200,20 @@ public class Bonus {
         /**
          * id : 2
          * title : 直推分红
-         * l_money : 147622
-         * z_money : 1579
+         * is_up : 1
+         * num1 : 0
+         * num2 : 0
+         * des1 : 累计分红
+         * des2 : 团队总佣金
          */
 
         private int id;
         private String title;
-        private String l_money;
-        private String z_money;
         private int is_up;
-
-        public int getIs_up() {
-            return is_up;
-        }
-
-        public void setIs_up(int is_up) {
-            this.is_up = is_up;
-        }
+        private String num1;
+        private String num2;
+        private String des1;
+        private String des2;
 
         public int getId() {
             return id;
@@ -184,20 +231,44 @@ public class Bonus {
             this.title = title;
         }
 
-        public String getL_money() {
-            return l_money;
+        public int getIs_up() {
+            return is_up;
         }
 
-        public void setL_money(String l_money) {
-            this.l_money = l_money;
+        public void setIs_up(int is_up) {
+            this.is_up = is_up;
         }
 
-        public String getZ_money() {
-            return z_money;
+        public String getNum1() {
+            return num1;
         }
 
-        public void setZ_money(String z_money) {
-            this.z_money = z_money;
+        public void setNum1(String num1) {
+            this.num1 = num1;
+        }
+
+        public String getNum2() {
+            return num2;
+        }
+
+        public void setNum2(String num2) {
+            this.num2 = num2;
+        }
+
+        public String getDes1() {
+            return des1;
+        }
+
+        public void setDes1(String des1) {
+            this.des1 = des1;
+        }
+
+        public String getDes2() {
+            return des2;
+        }
+
+        public void setDes2(String des2) {
+            this.des2 = des2;
         }
     }
 }

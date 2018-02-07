@@ -1,39 +1,44 @@
 package com.vip.uyux.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.interfacepage.OnCallPhoneListener;
 import com.vip.uyux.model.Bonus;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
-import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.viewholder.FenHongZXViewHolder;
 
 import java.util.HashMap;
+import java.util.List;
 
-public class FenHongZXActivity extends ZjbBaseActivity implements View.OnClickListener {
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
-    private View viewFenHong01;
-    private View viewFenHong02;
-    private View viewQuanXian01;
-    private View viewQuanXian02;
-    private ImageView imageImg;
-    private TextView textName;
-    private TextView textLv;
-    private TextView textDate;
-    private TextView textTotal_money;
-    private TextView textY_money;
-    private TextView textL_money;
-    private TextView textZ_money;
+public class FenHongZXActivity extends ZjbBaseActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+
+    private EasyRecyclerView recyclerView;
+    private RecyclerArrayAdapter<Bonus> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,33 +59,43 @@ public class FenHongZXActivity extends ZjbBaseActivity implements View.OnClickLi
 
     @Override
     protected void findID() {
-        viewFenHong01 = findViewById(R.id.viewFenHong01);
-        viewFenHong02 = findViewById(R.id.viewFenHong02);
-        viewQuanXian01 = findViewById(R.id.viewQuanXian01);
-        viewQuanXian02 = findViewById(R.id.viewQuanXian02);
-        imageImg = (ImageView) findViewById(R.id.imageImg);
-        textName = (TextView) findViewById(R.id.textName);
-        textLv = (TextView) findViewById(R.id.textLv);
-        textDate = (TextView) findViewById(R.id.textDate);
-        textTotal_money = (TextView) findViewById(R.id.textTotal_money);
-        textY_money = (TextView) findViewById(R.id.textY_money);
-        textL_money = (TextView) findViewById(R.id.textL_money);
-        textZ_money = (TextView) findViewById(R.id.textZ_money);
+        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
     }
 
     @Override
     protected void initViews() {
-        viewFenHong01.setVisibility(View.GONE);
-        viewFenHong02.setVisibility(View.GONE);
-        viewQuanXian01.setVisibility(View.VISIBLE);
-        viewQuanXian02.setVisibility(View.VISIBLE);
+        initRecycler();
+    }
+
+    /**
+     * 初始化recyclerview
+     */
+    private void initRecycler() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
+        itemDecoration.setDrawLastItem(false);
+        recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setRefreshingColorResources(R.color.basic_color);
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Bonus>(FenHongZXActivity.this) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.view_fenhongzhongxin;
+                FenHongZXViewHolder fenHongZXViewHolder = new FenHongZXViewHolder(parent, layout);
+                fenHongZXViewHolder.setOnCallPhoneListener(new OnCallPhoneListener() {
+                    @Override
+                    public void callPhone(String phone) {
+                        requiresPermission(phone);
+                    }
+                });
+                return fenHongZXViewHolder;
+            }
+        });
     }
 
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
-        findViewById(R.id.viewChanPinFH).setOnClickListener(this);
-        findViewById(R.id.viewZhiTuiFH).setOnClickListener(this);
+
     }
 
     /**
@@ -100,67 +115,117 @@ public class FenHongZXActivity extends ZjbBaseActivity implements View.OnClickLi
 
     @Override
     protected void initData() {
-        showLoadingDialog();
-        ApiClient.post(FenHongZXActivity.this, getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                cancelLoadingDialog();
-                LogUtil.LogShitou("FenHongZXActivity--onSuccess", s + "");
+                LogUtil.LogShitou("", s);
                 try {
                     Bonus bonus = GsonUtils.parseJSON(s, Bonus.class);
                     if (bonus.getStatus() == 1) {
-                        GlideApp.with(FenHongZXActivity.this)
-                                .load(bonus.getImg())
-                                .centerCrop()
-                                .dontAnimate()
-                                .placeholder(R.mipmap.ic_empty)
-                                .into(imageImg);
-                        textName.setText(bonus.getName());
-                        textLv.setText(bonus.getGrade_name());
-                        textDate.setText(bonus.getCreate_time());
-                        textTotal_money.setText(bonus.getProduct_bonus().getTotal_money());
-                        textY_money.setText(bonus.getProduct_bonus().getY_money());
-                        textL_money.setText(bonus.getDirect_bonus().getL_money());
-                        textZ_money.setText(bonus.getDirect_bonus().getZ_money());
-                        if (bonus.getProduct_bonus().getIs_up() == 1) {
-                            viewFenHong01.setVisibility(View.VISIBLE);
-                        } else {
-                            viewFenHong01.setVisibility(View.GONE);
-                        }
-                        if (bonus.getDirect_bonus().getIs_up() == 1) {
-                            viewFenHong02.setVisibility(View.VISIBLE);
-                        } else {
-                            viewFenHong01.setVisibility(View.GONE);
-                        }
+                        adapter.clear();
+                        adapter.add(bonus);
+                        adapter.notifyDataSetChanged();
                     } else if (bonus.getStatus() == 3) {
                         MyDialog.showReLoginDialog(FenHongZXActivity.this);
                     } else {
-                        Toast.makeText(FenHongZXActivity.this, bonus.getInfo(), Toast.LENGTH_SHORT).show();
+                        showError(bonus.getInfo());
                     }
                 } catch (Exception e) {
-                    Toast.makeText(FenHongZXActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                    showError("数据出错");
                 }
             }
 
             @Override
             public void onError() {
-                cancelLoadingDialog();
-                Toast.makeText(FenHongZXActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                showError("网络出错");
+            }
+
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(FenHongZXActivity.this).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
             }
         });
+
+    }
+
+    private static final int CALL_PHONE = 1991;
+    private String phone;
+
+    /**
+     * 检查权限
+     */
+    private void requiresPermission(String phone) {
+        this.phone=phone;
+        String[] perms = {Manifest.permission.CALL_PHONE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            // Already have permission, do the thing
+            call();
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "需要拨打电话权限",
+                    CALL_PHONE, perms);
+        }
+    }
+
+    /**
+     * 拨打电话
+     */
+    private void call() {
+    /*跳转到拨号界面，同时传递电话号码*/
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(this, "电话号码为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        startActivity(dialIntent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        call();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this)
+                    .setTitle("为了您能使用拨打电话功能，请开启打电话权限！")
+                    .setPositiveButton("去设置")
+                    .setNegativeButton("取消")
+                    .setRequestCode(CALL_PHONE)
+                    .build()
+                    .show();
+        }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.viewZhiTuiFH:
-
-                break;
-            case R.id.viewChanPinFH:
-                Intent intent = new Intent();
-                intent.setClass(FenHongZXActivity.this,ChanPinFenHongActivity.class);
-                startActivity(intent);
-                break;
             case R.id.imageBack:
                 finish();
                 break;
