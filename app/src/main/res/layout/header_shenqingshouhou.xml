@@ -24,7 +24,7 @@
             android:id="@+id/flowTagLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="@dimen/leftAndRight"
             android:layout_marginRight="@dimen/leftAndRight" />
     </RelativeLayout>
@@ -39,10 +39,11 @@
             android:scaleType="centerCrop"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:layout_width="60dp"
+            android:layout_width="80dp"
             android:id="@+id/imageImg"
-            android:layout_height="60dp" />
+            android:layout_height="80dp" />
         <TextView
+            android:id="@+id/textGoods_name"
             android:text="一品轩"
             android:lines="2"
             android:ellipsize="end"
@@ -54,9 +55,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/textSpe_name"
+            android:layout_below="@+id/textGoods_name"
             android:textSize="@dimen/litterText"
             android:textColor="@color/text_gray"
             android:text="规格"
+            android:layout_toRightOf="@+id/imageImg"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textGoods_price"
+            android:textSize="@dimen/normal_textsize"
+            android:text="¥78.00"
+            android:textColor="@color/basic_color"
             android:layout_alignBottom="@+id/imageImg"
             android:layout_toRightOf="@+id/imageImg"
             android:layout_marginLeft="10dp"
@@ -69,6 +81,8 @@
         android:layout_marginTop="5dp"
         android:layout_height="100dp">
         <EditText
+            android:maxLength="400"
+            android:id="@+id/editDes"
             android:hint="请在此输入问题描述"
             android:textSize="@dimen/normal_textsize"
             android:gravity="top|left"
@@ -77,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <TextView
+            android:id="@+id/textLength"
             android:textSize="@dimen/normal_textsize"
             android:textColor="@color/text_gray"
             android:layout_alignParentRight="true"
@@ -102,4 +117,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+    <TextView
+        android:id="@+id/textDes2"
+        android:text="提交服务单后"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/normal_textsize"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

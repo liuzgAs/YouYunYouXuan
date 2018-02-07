@@ -20,6 +20,7 @@
         app:scrollbarStyle="insideOverlay" />
 
     <Button
+        android:id="@+id/btnTiJiao"
         style="@style/bottomBtn"
         android:text="提交" />
 </LinearLayout>

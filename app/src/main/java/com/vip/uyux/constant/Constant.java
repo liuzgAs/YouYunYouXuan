@@ -370,6 +370,14 @@ public class Constant {
          * 售后
          */
         public static final String AFTERS = "/Afters";
+        /**
+         * 售后前请求
+         */
+        public static final String AFTERS_ADDBEFORE = "/Afters/addBefore";
+        /**
+         * 售后申请提交
+         */
+        public static final String AFTERS_ADDSUBMIT = "/Afters/addSubmit";
 
     }
 
@@ -432,6 +440,7 @@ public class Constant {
         public static final String BANG_DING = "bangDing";
         public static final String ADV = "adv";
         public static final String SHUA_XIN_PING_JIA = "shua_xin_ping_jia";
+        public static final String SHUA_XIN_SHOW_HOU = "shuaXinShouHou";
     }
 
 

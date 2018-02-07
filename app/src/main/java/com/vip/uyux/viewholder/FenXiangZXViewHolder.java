@@ -119,12 +119,12 @@ public class FenXiangZXViewHolder extends BaseViewHolder<ShareIndex> implements 
         switch (view.getId()){
             case R.id.viewVip:
                 if (teamShare != null) {
-                    onShareListener.share(teamShare);
+                    onShareListener.share(vipShare);
                 }
                 break;
             case R.id.viewTuanDui:
                 if (vipShare != null) {
-                    onShareListener.share(vipShare);
+                    onShareListener.share(teamShare);
                 }
                 break;
             case R.id.textLiJiSJ:

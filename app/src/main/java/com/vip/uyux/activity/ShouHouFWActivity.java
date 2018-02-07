@@ -1,5 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,6 +36,19 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
     private TextView textViewRight;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<Afters.DataBean> adapter;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_SHOW_HOU:
+                    onRefresh();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +102,7 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
                 ApiClient.post(ShouHouFWActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             Afters afters = GsonUtils.parseJSON(s, Afters.class);
@@ -238,5 +255,19 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_SHOW_HOU);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(reciver);
     }
 }

@@ -28,6 +28,7 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
+import com.vip.uyux.customview.OnTagSelectListener;
 import com.vip.uyux.model.CommentAddbefore;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.Picture;
@@ -146,6 +147,17 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
                     }
                 });
                 editPingLun = view.findViewById(R.id.editPingLun);
+                flowTagLayout.setOnTagSelectListener(new OnTagSelectListener() {
+                    @Override
+                    public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
+                        for (int i = 0; i < tagBeanList.size(); i++) {
+                            tagBeanList.get(i).setSelect(false);
+                        }
+                        for (int i = 0; i < selectedList.size(); i++) {
+                            tagBeanList.get(selectedList.get(i)).setSelect(true);
+                        }
+                    }
+                });
                 return view;
             }
 
@@ -157,6 +169,11 @@ public class PingJiaActivity extends ZjbBaseActivity implements View.OnClickList
                         flowTagLayout.setAdapter(tagAdapter);
                         tagAdapter.clearAndAddAll(tagBeanList);
                         flowTagLayout.clearAllOption();
+                        for (int i = 0; i < tagBeanList.size(); i++) {
+                            if (tagBeanList.get(i).isSelect()){
+                                flowTagLayout.setSelect(i);
+                            }
+                        }
                     }
                     GlideApp.with(PingJiaActivity.this)
                             .asBitmap()
