@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textOrder_sn"
+        android:text="服务单号：5765454654"
+        android:textSize="@dimen/normal_textsize"
+        android:textColor="@color/light_black"
+        android:paddingLeft="@dimen/leftAndRight"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="80dp"
+            android:src="@mipmap/shangpin"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/imageImg"
+            android:layout_height="80dp" />
+        <TextView
+            android:id="@+id/textGoods_name"
+            android:textColor="@color/light_black"
+            android:layout_alignTop="@+id/imageImg"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_toRightOf="@+id/imageImg"
+            android:text="一品轩一品轩一品轩"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_marginLeft="10dp"
+            android:lines="2"
+            android:ellipsize="end"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textSpe_name"
+            android:text="规格"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/litterText"
+            android:layout_toRightOf="@+id/imageImg"
+            android:layout_below="@+id/textGoods_name"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textQuantity"
+            android:text="×2"
+            android:layout_alignBottom="@+id/imageImg"
+            android:layout_toRightOf="@+id/imageImg"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnIs_view"
+            android:background="@drawable/shape_basic01_1dp_25dp"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/basic_color"
+            android:text="查看详情"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="28dp" />
+        <TextView
+            android:id="@+id/textDes"
+            android:textSize="@dimen/normal_textsize"
+            android:text="退货"
+            android:textColor="@color/light_black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

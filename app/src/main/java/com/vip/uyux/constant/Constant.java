@@ -378,6 +378,10 @@ public class Constant {
          * 售后申请提交
          */
         public static final String AFTERS_ADDSUBMIT = "/Afters/addSubmit";
+        /**
+         * 售后记录
+         */
+        public static final String AFTERS_LOGS = "/Afters/logs";
 
     }
 

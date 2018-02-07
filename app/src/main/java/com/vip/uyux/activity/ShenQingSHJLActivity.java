@@ -1,9 +1,5 @@
 package com.vip.uyux.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,39 +17,25 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.model.Afters;
+import com.vip.uyux.model.AftersLogs;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
-import com.vip.uyux.viewholder.ShouHouViewHolder;
+import com.vip.uyux.viewholder.ShenQingShViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ShenQingSHJLActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private TextView textViewRight;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Afters.DataBean> adapter;
-    private BroadcastReceiver reciver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            switch (action) {
-                case Constant.BroadcastCode.SHUA_XIN_SHOW_HOU:
-                    onRefresh();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+    private RecyclerArrayAdapter<AftersLogs.DataBean> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shou_hou_fw);
+        setContentView(R.layout.activity_shen_qing_shjl);
         init();
     }
 
@@ -69,14 +51,12 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
 
     @Override
     protected void findID() {
-        textViewRight = (TextView) findViewById(R.id.textViewRight);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
     }
 
     @Override
     protected void initViews() {
-        ((TextView) findViewById(R.id.textViewTitle)).setText("售后服务");
-        textViewRight.setText("申请记录");
+        ((TextView) findViewById(R.id.textViewTitle)).setText("售后记录");
         initRecycler();
     }
 
@@ -89,29 +69,29 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Afters.DataBean>(ShouHouFWActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<AftersLogs.DataBean>(ShenQingSHJLActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_shouhou;
-                return new ShouHouViewHolder(parent, layout);
+                int layout = R.layout.item_shouhoujilu;
+                return new ShenQingShViewHolder(parent, layout);
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                ApiClient.post(ShouHouFWActivity.this, getOkObject(), new ApiClient.CallBack() {
+                ApiClient.post(ShenQingSHJLActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
                         try {
                             page++;
-                            Afters afters = GsonUtils.parseJSON(s, Afters.class);
-                            int status = afters.getStatus();
+                            AftersLogs aftersLogs = GsonUtils.parseJSON(s, AftersLogs.class);
+                            int status = aftersLogs.getStatus();
                             if (status == 1) {
-                                List<Afters.DataBean> dataBeanList = afters.getData();
+                                List<AftersLogs.DataBean> dataBeanList = aftersLogs.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
-                                MyDialog.showReLoginDialog(ShouHouFWActivity.this);
+                                MyDialog.showReLoginDialog(ShenQingSHJLActivity.this);
                             } else {
                                 adapter.pauseMore();
                             }
@@ -164,7 +144,6 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
-        textViewRight.setOnClickListener(this);
     }
 
     @Override
@@ -175,11 +154,6 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.textViewRight:
-                Intent intent = new Intent();
-                intent.setClass(ShouHouFWActivity.this, ShenQingSHJLActivity.class);
-                startActivity(intent);
-                break;
             case R.id.imageBack:
                 finish();
                 break;
@@ -188,23 +162,23 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
         }
     }
 
+    int page = 1;
+
     /**
      * des： 网络请求参数
      * author： ZhangJieBo
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.AFTERS;
+        String url = Constant.HOST + Constant.Url.AFTERS_LOGS;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime", tokenTime);
+            params.put("tokenTime",tokenTime);
         }
-        params.put("p", String.valueOf(page));
+        params.put("p",String.valueOf(page));
         return new OkObject(params, url);
     }
-
-    int page = 1;
 
     @Override
     public void onRefresh() {
@@ -215,15 +189,15 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
                 LogUtil.LogShitou("", s);
                 try {
                     page++;
-                    Afters afters = GsonUtils.parseJSON(s, Afters.class);
-                    if (afters.getStatus() == 1) {
-                        List<Afters.DataBean> dataBeanList = afters.getData();
+                    AftersLogs aftersLogs = GsonUtils.parseJSON(s, AftersLogs.class);
+                    if (aftersLogs.getStatus() == 1) {
+                        List<AftersLogs.DataBean> dataBeanList = aftersLogs.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
-                    } else if (afters.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ShouHouFWActivity.this);
+                    } else if (aftersLogs.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(ShenQingSHJLActivity.this);
                     } else {
-                        showError(afters.getInfo());
+                        showError(aftersLogs.getInfo());
                     }
                 } catch (Exception e) {
                     showError("数据出错");
@@ -241,7 +215,7 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(ShouHouFWActivity.this).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(ShenQingSHJLActivity.this).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
@@ -257,19 +231,5 @@ public class ShouHouFWActivity extends ZjbBaseActivity implements View.OnClickLi
                 }
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constant.BroadcastCode.SHUA_XIN_SHOW_HOU);
-        registerReceiver(reciver, filter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(reciver);
     }
 }
