@@ -253,7 +253,7 @@ public class Constant {
         /**
          * 兑换记录
          */
-        public static final String BONUS_EXCHANGERECODE = "/Bonus/exchangeRecode";
+        public static final String BONUS_EXCHANGERECODE = "/Score/logs";
         /**
          * 修改密码
          */

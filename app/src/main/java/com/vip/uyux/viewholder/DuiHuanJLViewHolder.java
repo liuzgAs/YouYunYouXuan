@@ -15,7 +15,7 @@ import com.vip.uyux.util.GlideApp;
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class DuiHuanJLViewHolder extends BaseViewHolder<BonusExchangerecode.ProductIntegralBean> {
+public class DuiHuanJLViewHolder extends BaseViewHolder<BonusExchangerecode.DataBean> {
 
     private final ImageView imageImg;
     private final TextView textTitle;
@@ -33,7 +33,7 @@ public class DuiHuanJLViewHolder extends BaseViewHolder<BonusExchangerecode.Prod
     }
 
     @Override
-    public void setData(BonusExchangerecode.ProductIntegralBean data) {
+    public void setData(BonusExchangerecode.DataBean data) {
         super.setData(data);
         GlideApp.with(getContext())
                 .asBitmap()
@@ -41,10 +41,10 @@ public class DuiHuanJLViewHolder extends BaseViewHolder<BonusExchangerecode.Prod
                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
                 .load(data.getImg())
                 .into(imageImg);
-        textTitle.setText(data.getGoods_title());
-        textJiFen.setText(data.getIntegral()+"U币");
-        textDate.setText(data.getCreate_time());
-        textNum.setText("×"+data.getNum());
+        textTitle.setText(data.getGoods_name());
+        textJiFen.setText(data.getGoods_score()+"U币");
+        textDate.setText(data.getPay_time());
+        textNum.setText("×"+data.getQuantity());
     }
 
 }

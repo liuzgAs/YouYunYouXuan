@@ -30,7 +30,7 @@ import java.util.List;
 public class DuiHuanJLActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<BonusExchangerecode.ProductIntegralBean> adapter;
+    private RecyclerArrayAdapter<BonusExchangerecode.DataBean> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class DuiHuanJLActivity extends ZjbBaseActivity implements View.OnClickLi
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<BonusExchangerecode.ProductIntegralBean>(DuiHuanJLActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<BonusExchangerecode.DataBean>(DuiHuanJLActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_duihuanjilu;
@@ -88,7 +88,7 @@ public class DuiHuanJLActivity extends ZjbBaseActivity implements View.OnClickLi
                             BonusExchangerecode bonusExchangerecode = GsonUtils.parseJSON(s, BonusExchangerecode.class);
                             int status = bonusExchangerecode.getStatus();
                             if (status == 1) {
-                                List<BonusExchangerecode.ProductIntegralBean> product_integral = bonusExchangerecode.getProduct_integral();
+                                List<BonusExchangerecode.DataBean> product_integral = bonusExchangerecode.getData();
                                 adapter.addAll(product_integral);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(DuiHuanJLActivity.this);
@@ -191,7 +191,7 @@ public class DuiHuanJLActivity extends ZjbBaseActivity implements View.OnClickLi
                   page++;
                   BonusExchangerecode bonusExchangerecode = GsonUtils.parseJSON(s, BonusExchangerecode.class);
                   if (bonusExchangerecode.getStatus() == 1) {
-                      List<BonusExchangerecode.ProductIntegralBean> product_integral = bonusExchangerecode.getProduct_integral();
+                      List<BonusExchangerecode.DataBean> product_integral = bonusExchangerecode.getData();
                       adapter.clear();
                       adapter.addAll(product_integral);
                   } else if (bonusExchangerecode.getStatus()== 3) {

@@ -11,16 +11,34 @@ import java.util.List;
 public class BonusExchangerecode {
 
     /**
+     * data : [{"goods_id":1772,"quantity":1,"goods_score":"100","img":"http://app.uyux.vip/attachment/images/20180128/6429276d15105828008b84183a972c1b_300x300.png","goods_name":"测试专增11","pay_time":"2018.02.07 15:32:33"},{"goods_id":1744,"quantity":1,"goods_score":"0","img":"http://app.uyux.vip/attachment/images/vslai_shop/1604/2018/01/Brw1IOIoHoIVIOY4Buw44945oSGs14_300x300.jpg","goods_name":"法兰绒地垫","pay_time":"2018.02.07 14:45:48"}]
+     * ts : 2018.02.07-2018.02.07
+     * page : {"page":1,"pageTotal":1,"pageSize":10,"dataTotal":2}
      * status : 1
-     * info : 获取成功
-     * page : {"page":1,"pageTotal":1,"pageSize":15,"dataTotal":3}
-     * product_integral : [{"id":1,"goods_title":"一品轩皇家有机食用调和油","integral":"78","img":"","num":"2","create_time":"2018-01-25 16:27:20"},{"id":1,"goods_title":"一品轩皇家有机食用调和油","integral":"88","img":"","num":"2","create_time":"2018-01-25 16:10:40"},{"id":1,"goods_title":"一品轩皇家有机食用调和油","integral":"98","img":"","num":"1","create_time":"2018-01-25 02:34:00"}]
+     * info : 返回成功！
      */
 
+    private String ts;
+    private PageBean page;
     private int status;
     private String info;
-    private PageBean page;
-    private List<ProductIntegralBean> product_integral;
+    private List<DataBean> data;
+
+    public String getTs() {
+        return ts;
+    }
+
+    public void setTs(String ts) {
+        this.ts = ts;
+    }
+
+    public PageBean getPage() {
+        return page;
+    }
+
+    public void setPage(PageBean page) {
+        this.page = page;
+    }
 
     public int getStatus() {
         return status;
@@ -38,28 +56,20 @@ public class BonusExchangerecode {
         this.info = info;
     }
 
-    public PageBean getPage() {
-        return page;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setPage(PageBean page) {
-        this.page = page;
-    }
-
-    public List<ProductIntegralBean> getProduct_integral() {
-        return product_integral;
-    }
-
-    public void setProduct_integral(List<ProductIntegralBean> product_integral) {
-        this.product_integral = product_integral;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
     public static class PageBean {
         /**
          * page : 1
          * pageTotal : 1
-         * pageSize : 15
-         * dataTotal : 3
+         * pageSize : 10
+         * dataTotal : 2
          */
 
         private int page;
@@ -100,45 +110,45 @@ public class BonusExchangerecode {
         }
     }
 
-    public static class ProductIntegralBean {
+    public static class DataBean {
         /**
-         * id : 1
-         * goods_title : 一品轩皇家有机食用调和油
-         * integral : 78
-         * img :
-         * num : 2
-         * create_time : 2018-01-25 16:27:20
+         * goods_id : 1772
+         * quantity : 1
+         * goods_score : 100
+         * img : http://app.uyux.vip/attachment/images/20180128/6429276d15105828008b84183a972c1b_300x300.png
+         * goods_name : 测试专增11
+         * pay_time : 2018.02.07 15:32:33
          */
 
-        private int id;
-        private String goods_title;
-        private String integral;
+        private int goods_id;
+        private int quantity;
+        private String goods_score;
         private String img;
-        private String num;
-        private String create_time;
+        private String goods_name;
+        private String pay_time;
 
-        public int getId() {
-            return id;
+        public int getGoods_id() {
+            return goods_id;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setGoods_id(int goods_id) {
+            this.goods_id = goods_id;
         }
 
-        public String getGoods_title() {
-            return goods_title;
+        public int getQuantity() {
+            return quantity;
         }
 
-        public void setGoods_title(String goods_title) {
-            this.goods_title = goods_title;
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
         }
 
-        public String getIntegral() {
-            return integral;
+        public String getGoods_score() {
+            return goods_score;
         }
 
-        public void setIntegral(String integral) {
-            this.integral = integral;
+        public void setGoods_score(String goods_score) {
+            this.goods_score = goods_score;
         }
 
         public String getImg() {
@@ -149,20 +159,20 @@ public class BonusExchangerecode {
             this.img = img;
         }
 
-        public String getNum() {
-            return num;
+        public String getGoods_name() {
+            return goods_name;
         }
 
-        public void setNum(String num) {
-            this.num = num;
+        public void setGoods_name(String goods_name) {
+            this.goods_name = goods_name;
         }
 
-        public String getCreate_time() {
-            return create_time;
+        public String getPay_time() {
+            return pay_time;
         }
 
-        public void setCreate_time(String create_time) {
-            this.create_time = create_time;
+        public void setPay_time(String pay_time) {
+            this.pay_time = pay_time;
         }
     }
 }
