@@ -382,6 +382,10 @@ public class Constant {
          * 售后记录
          */
         public static final String AFTERS_LOGS = "/Afters/logs";
+        /**
+         * 售后记录详情
+         */
+        public static final String AFTERS_LOGSINFO = "/Afters/logsInfo";
 
     }
 

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="服务单号：41545464654"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/normal_textsize"
+            android:id="@+id/textFuWuDanHao"
+            android:textColor="@color/light_black"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/light_black"
+            android:text="申请时间：2018-2-7"
+            android:id="@+id/textShenQingSJ"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_below="@+id/textFuWuDanHao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imageImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/shangpin" />
+
+        <TextView
+            android:id="@+id/textGoods_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageImg"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_toRightOf="@+id/imageImg"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="一品轩一品轩一品轩"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textSpe_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textGoods_name"
+            android:layout_alignStart="@+id/textGoods_name"
+            android:layout_alignBottom="@+id/imageImg"
+            android:layout_marginBottom="10dp"
+            android:text="规格"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/litterText" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

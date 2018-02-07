@@ -409,7 +409,8 @@
         <activity android:name=".activity.PingLunLBActivity" />
         <activity android:name=".activity.ShouHouFWActivity" />
         <activity android:name=".activity.ShenQingSHActivity" />
-        <activity android:name=".activity.ShenQingSHJLActivity"></activity>
+        <activity android:name=".activity.ShenQingSHJLActivity" />
+        <activity android:name=".activity.FuWuDanXQActivity"></activity>
     </application>
 
 </manifest>
