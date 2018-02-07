@@ -394,6 +394,10 @@ public class Constant {
          * 吉芬商品确认订单
          */
         public static final String SCORE_CONFIRMBEFORE = "/Score/confirmBefore";
+        /**
+         * 直推分红
+         */
+        public static final String BONUS_DIRECT = "/Bonus/direct";
 
     }
 

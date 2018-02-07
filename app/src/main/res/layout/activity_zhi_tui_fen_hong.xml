@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context="com.vip.uyux.activity.ZhiTuiFenHongActivity">
+
+    <LinearLayout
+        android:id="@+id/viewBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/jianbian_zhituifenhong"
+        android:fitsSystemWindows="true"
+        android:gravity="bottom"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titleHeight">
+
+            <ImageView
+                android:id="@+id/imageBack"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/white_selector"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                android:src="@mipmap/left_white" />
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:maxLength="8"
+                android:text="直推分红"
+                android:textColor="@color/white"
+                android:textSize="@dimen/titleSize"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/white_selector"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/basic_color"
+                android:textSize="@dimen/normal_textsize"
+                tools:text="右边" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_empty="@layout/view_empty"
+        app:layout_progress="@layout/view_progress"
+        app:scrollbarStyle="insideOverlay" />
+</LinearLayout>

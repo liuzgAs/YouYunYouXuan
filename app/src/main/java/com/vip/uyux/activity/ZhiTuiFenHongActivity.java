@@ -17,27 +17,26 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.model.BonusGetprobonus;
+import com.vip.uyux.model.BonusDirect;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
-import com.vip.uyux.viewholder.ChanPinFHViewHolder;
+import com.vip.uyux.viewholder.ZhiTuiFenHongViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ZhiTuiFenHongActivity extends ZjbBaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    public RecyclerArrayAdapter<BonusGetprobonus.GoodsListBean> adapter;
-    private String k_money;
-    private String y_money;
+    private RecyclerArrayAdapter<BonusDirect.DataBean> adapter;
+    private BonusDirect.DirectBonusBean direct_bonus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chan_pin_fen_hong);
+        setContentView(R.layout.activity_zhi_tui_fen_hong);
         init();
     }
 
@@ -66,55 +65,64 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
      */
     private void initRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.top), 0, 0);
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<BonusGetprobonus.GoodsListBean>(ChanPinFenHongActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<BonusDirect.DataBean>(ZhiTuiFenHongActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_chanpin_fenhong;
-                return new ChanPinFHViewHolder(parent, layout);
+                int layout = R.layout.item_zhituifenhong;
+                return new ZhiTuiFenHongViewHolder(parent, layout);
             }
         });
+
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
+            private TextView textDes;
+            private TextView testDes2;
+            private TextView testDes1;
             private TextView textYuJiFH;
             private TextView textKeTiXian;
 
             @Override
             public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(ChanPinFenHongActivity.this).inflate(R.layout.header_chanpin_fenhong, null);
+                View view = LayoutInflater.from(ZhiTuiFenHongActivity.this).inflate(R.layout.header_chanpin_zhitui, null);
                 textKeTiXian = view.findViewById(R.id.textKeTiXian);
                 textYuJiFH = view.findViewById(R.id.textYuJiFH);
+                testDes1 = view.findViewById(R.id.testDes1);
+                testDes2 = view.findViewById(R.id.testDes2);
+                textDes = view.findViewById(R.id.textDes);
                 return view;
             }
 
             @Override
             public void onBindView(View headerView) {
-                textKeTiXian.setText(String.valueOf(k_money));
-                textYuJiFH.setText(String.valueOf(y_money));
+                if (direct_bonus!=null){
+                    textKeTiXian.setText(direct_bonus.getNum1());
+                    textYuJiFH.setText(direct_bonus.getNum2());
+                    testDes1.setText(direct_bonus.getDes1());
+                    testDes2.setText(direct_bonus.getDes2());
+                    textDes.setText(direct_bonus.getDes());
+                }
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                ApiClient.post(ChanPinFenHongActivity.this, getOkObject(), new ApiClient.CallBack() {
+                ApiClient.post(ZhiTuiFenHongActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
                         LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
                         try {
                             page++;
-                            BonusGetprobonus bonusGetprobonus = GsonUtils.parseJSON(s, BonusGetprobonus.class);
-                            int status = bonusGetprobonus.getStatus();
+                            BonusDirect bonusDirect = GsonUtils.parseJSON(s, BonusDirect.class);
+                            int status = bonusDirect.getStatus();
                             if (status == 1) {
-                                List<BonusGetprobonus.GoodsListBean> goods_list = bonusGetprobonus.getGoods_list();
-                                for (int i = 0; i < goods_list.size(); i++) {
-                                    goods_list.get(i).setZhanKai(false);
-                                }
-                                adapter.addAll(goods_list);
+                                List<BonusDirect.DataBean> dataBeanList = bonusDirect.getData();
+                                adapter.addAll(dataBeanList);
                             } else if (status == 3) {
-                                MyDialog.showReLoginDialog(ChanPinFenHongActivity.this);
+                                MyDialog.showReLoginDialog(ZhiTuiFenHongActivity.this);
                             } else {
                                 adapter.pauseMore();
                             }
@@ -166,7 +174,7 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
 
     @Override
     protected void setListeners() {
-        findViewById(R.id.imageBack).setOnClickListener(this);
+
     }
 
     @Override
@@ -174,34 +182,23 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
         onRefresh();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.imageBack:
-                finish();
-                break;
-            default:
-                break;
-        }
-    }
-
-    int page = 1;
-
     /**
      * des： 网络请求参数
      * author： ZhangJieBo
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.BONUS_GETPROBONUS;
+        String url = Constant.HOST + Constant.Url.BONUS_DIRECT;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
+        params.put("p", String.valueOf(page));
         return new OkObject(params, url);
     }
+
+    int page = 1;
 
     @Override
     public void onRefresh() {
@@ -212,20 +209,16 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
                 LogUtil.LogShitou("", s);
                 try {
                     page++;
-                    BonusGetprobonus bonusGetprobonus = GsonUtils.parseJSON(s, BonusGetprobonus.class);
-                    if (bonusGetprobonus.getStatus() == 1) {
-                        k_money = bonusGetprobonus.getK_money();
-                        y_money = bonusGetprobonus.getY_money();
-                        List<BonusGetprobonus.GoodsListBean> goods_list = bonusGetprobonus.getGoods_list();
-                        for (int i = 0; i < goods_list.size(); i++) {
-                            goods_list.get(i).setZhanKai(false);
-                        }
+                    BonusDirect bonusDirect = GsonUtils.parseJSON(s, BonusDirect.class);
+                    if (bonusDirect.getStatus() == 1) {
+                        direct_bonus = bonusDirect.getDirect_bonus();
+                        List<BonusDirect.DataBean> dataBeanList = bonusDirect.getData();
                         adapter.clear();
-                        adapter.addAll(goods_list);
-                    } else if (bonusGetprobonus.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(ChanPinFenHongActivity.this);
+                        adapter.addAll(dataBeanList);
+                    } else if (bonusDirect.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(ZhiTuiFenHongActivity.this);
                     } else {
-                        showError(bonusGetprobonus.getInfo());
+                        showError(bonusDirect.getInfo());
                     }
                 } catch (Exception e) {
                     showError("数据出错");
@@ -243,7 +236,7 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(ChanPinFenHongActivity.this).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(ZhiTuiFenHongActivity.this).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {

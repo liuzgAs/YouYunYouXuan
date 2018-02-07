@@ -12,6 +12,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinFenHongActivity;
 import com.vip.uyux.activity.ChangJianWenTiActivity;
 import com.vip.uyux.activity.WebActivity;
+import com.vip.uyux.activity.ZhiTuiFenHongActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.interfacepage.OnCallPhoneListener;
 import com.vip.uyux.model.Bonus;
@@ -138,7 +139,8 @@ public class FenHongZXViewHolder extends BaseViewHolder<Bonus> implements View.O
                     intent.putExtra(Constant.IntentKey.URL, data.getUp_url());
                     getContext().startActivity(intent);
                 }else {
-
+                    intent.setClass(getContext(), ZhiTuiFenHongActivity.class);
+                    getContext().startActivity(intent);
                 }
                 break;
             case R.id.viewChanPinFH:
