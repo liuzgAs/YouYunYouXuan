@@ -11,16 +11,17 @@
     <include layout="@layout/view_bar_lb" />
 
     <LinearLayout
+        android:id="@+id/viewShaiXuan01"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/viewZongHe"
-            android:background="@drawable/layout_selector_white_system_gray"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_selector_white_system_gray">
 
             <TextView
                 android:id="@+id/textZongHe"
@@ -31,89 +32,137 @@
                 android:text="综合"
                 android:textSize="@dimen/normal_textsize" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/viewXiaoLiang"
-            android:gravity="center"
-            android:background="@drawable/layout_selector_white_system_gray"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:gravity="center">
 
             <TextView
+                android:id="@+id/textXiaoLiang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="按销量"
-                android:id="@+id/textXiaoLiang"
                 android:textSize="@dimen/normal_textsize" />
+
             <RelativeLayout
-                android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@+id/textXiaoLiang"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/textXiaoLiang">
+
                 <ImageView
                     android:id="@+id/sanJiaoUp"
-                    android:src="@mipmap/san_jiao_up_g"
-                    android:layout_centerHorizontal="true"
                     android:layout_width="10dp"
-                    android:layout_height="10dp" />
+                    android:layout_height="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/san_jiao_up_g" />
+
                 <ImageView
-                    android:layout_marginTop="-2dp"
                     android:id="@+id/sanJiaoDown"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_below="@+id/sanJiaoUp"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/san_jiao_down_g"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
+                    android:layout_marginTop="-2dp"
+                    android:src="@mipmap/san_jiao_down_g" />
             </RelativeLayout>
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/viewJiaGe"
-            android:gravity="center"
-            android:background="@drawable/layout_selector_white_system_gray"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:gravity="center">
 
             <TextView
+                android:id="@+id/textJiaGe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="按价格"
-                android:id="@+id/textJiaGe"
                 android:textSize="@dimen/normal_textsize" />
+
             <RelativeLayout
-                android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@+id/textJiaGe"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/textJiaGe">
+
                 <ImageView
                     android:id="@+id/sanJiaoUp1"
-                    android:src="@mipmap/san_jiao_up_g"
-                    android:layout_centerHorizontal="true"
                     android:layout_width="10dp"
-                    android:layout_height="10dp" />
+                    android:layout_height="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/san_jiao_up_g" />
+
                 <ImageView
-                    android:layout_marginTop="-2dp"
                     android:id="@+id/sanJiaoDown1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_below="@+id/sanJiaoUp1"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/san_jiao_down_g"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp" />
+                    android:layout_marginTop="-2dp"
+                    android:src="@mipmap/san_jiao_down_g" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/viewShaiXuan02"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textDrainage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="引流产品"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textMoney"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="高返佣"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textSaleDesc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="高转化"
+            android:textSize="@dimen/normal_textsize" />
+    </LinearLayout>
+
     <com.jude.easyrecyclerview.EasyRecyclerView
-        android:layout_marginTop="1dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
         app:layout_empty="@layout/view_empty"
         app:layout_progress="@layout/view_progress"
         app:scrollbarStyle="insideOverlay" />

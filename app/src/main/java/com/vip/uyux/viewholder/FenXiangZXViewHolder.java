@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.BuKeTiXianActivity;
+import com.vip.uyux.activity.ChanPinLBActivity;
 import com.vip.uyux.activity.FenHongZXActivity;
 import com.vip.uyux.activity.FenXiaoDDActivity;
 import com.vip.uyux.activity.WebActivity;
@@ -74,6 +75,7 @@ public class FenXiangZXViewHolder extends BaseViewHolder<ShareIndex> implements 
         $(R.id.viewFenXiaoDD).setOnClickListener(this);
         $(R.id.viewTuanDui).setOnClickListener(this);
         $(R.id.viewVip).setOnClickListener(this);
+        $(R.id.imageFenXiaoSPTJ).setOnClickListener(this);
     }
 
     @Override
@@ -117,6 +119,12 @@ public class FenXiangZXViewHolder extends BaseViewHolder<ShareIndex> implements 
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()){
+            case R.id.imageFenXiaoSPTJ:
+                intent.setClass(getContext(), ChanPinLBActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, "分销商品推荐");
+                intent.putExtra(Constant.IntentKey.ISGRADE, 1);
+                getContext().startActivity(intent);
+                break;
             case R.id.viewVip:
                 if (teamShare != null) {
                     onShareListener.share(vipShare);

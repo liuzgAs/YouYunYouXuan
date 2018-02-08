@@ -327,6 +327,7 @@
         </RelativeLayout>
     </LinearLayout>
     <com.vip.uyux.customview.ResizableImageView
+        android:id="@+id/imageFenXiaoSPTJ"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:src="@mipmap/fenxiaoshangpintuijian"

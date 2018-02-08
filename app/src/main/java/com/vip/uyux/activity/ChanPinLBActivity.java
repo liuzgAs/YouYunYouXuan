@@ -54,6 +54,16 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
     private ImageView sanJiaoDown1;
     private int isNew;
     private int isHot;
+    private int isGrade;
+    private View viewShaiXuan01;
+    private View viewShaiXuan02;
+    private TextView[] textFenXiao = new TextView[3];
+    private String[] fenXiao = new String[]{
+            "drainage",
+            "money",
+            "saleDesc"
+    };
+    private String fenXiaoSort = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +83,9 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         cate = intent.getIntExtra(Constant.IntentKey.CATE, 0);
         pcate = intent.getIntExtra(Constant.IntentKey.PCATE, 0);
         title = intent.getStringExtra(Constant.IntentKey.TITLE);
-        isNew = intent.getIntExtra(Constant.IntentKey.ISNEW,0);
-        isHot = intent.getIntExtra(Constant.IntentKey.ISHOT,0);
+        isNew = intent.getIntExtra(Constant.IntentKey.ISNEW, 0);
+        isHot = intent.getIntExtra(Constant.IntentKey.ISHOT, 0);
+        isGrade = intent.getIntExtra(Constant.IntentKey.ISGRADE, 0);
     }
 
     @Override
@@ -88,6 +99,11 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         sanJiaoDown = (ImageView) findViewById(R.id.sanJiaoDown);
         sanJiaoUp1 = (ImageView) findViewById(R.id.sanJiaoUp1);
         sanJiaoDown1 = (ImageView) findViewById(R.id.sanJiaoDown1);
+        viewShaiXuan01 = findViewById(R.id.viewShaiXuan01);
+        viewShaiXuan02 = findViewById(R.id.viewShaiXuan02);
+        textFenXiao[0] = (TextView) findViewById(R.id.textDrainage);
+        textFenXiao[1] = (TextView) findViewById(R.id.textMoney);
+        textFenXiao[2] = (TextView) findViewById(R.id.textSaleDesc);
     }
 
     @Override
@@ -95,6 +111,13 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         shaiXuanArr[0] = 1;
         shaiXuanArr[1] = 0;
         shaiXuanArr[2] = 0;
+        if (isGrade == 1) {
+            viewShaiXuan02.setVisibility(View.VISIBLE);
+            viewShaiXuan01.setVisibility(View.GONE);
+        } else {
+            viewShaiXuan02.setVisibility(View.GONE);
+            viewShaiXuan01.setVisibility(View.VISIBLE);
+        }
         setShaiXuan();
         ((TextView) findViewById(R.id.textViewTitle)).setText(title);
         initRecycler();
@@ -147,8 +170,6 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         itemDecoration1 = new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, ChanPinLBActivity.this));
-//        recyclerView.addItemDecoration(itemDecoration1);
-//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsIndex.DataBean>(ChanPinLBActivity.this) {
@@ -255,6 +276,21 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         findViewById(R.id.viewXiaoLiang).setOnClickListener(this);
         findViewById(R.id.viewJiaGe).setOnClickListener(this);
         imgeRight.setOnClickListener(this);
+        for (int i = 0; i < textFenXiao.length; i++) {
+            final int finalI = i;
+            textFenXiao[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (int j = 0; j < textFenXiao.length; j++) {
+                        textFenXiao[j].setTextColor(ContextCompat.getColor(ChanPinLBActivity.this,R.color.text_gray));
+                    }
+                    textFenXiao[finalI].setTextColor(ContextCompat.getColor(ChanPinLBActivity.this,R.color.basic_color));
+                    fenXiaoSort = fenXiao[finalI];
+                    recyclerView.showProgress();
+                    onRefresh();
+                }
+            });
+        }
     }
 
     int page = 1;
@@ -276,18 +312,23 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         params.put("pcate", String.valueOf(pcate));
         params.put("isnew", String.valueOf(isNew));
         params.put("ishot", String.valueOf(isHot));
-        if (shaiXuanArr[0] == 0) {
-            if (shaiXuanArr[1]==1){
-                params.put("sort", "saleAsc");
-            }else if (shaiXuanArr[1]==2){
-                params.put("sort", "saleDesc");
-            }else {
-                if (shaiXuanArr[2]==1){
-                    params.put("sort", "priceAsc");
-                }else if (shaiXuanArr[2]==2){
-                    params.put("sort", "priceDesc");
-                }else {
+        params.put("isgrade", String.valueOf(isGrade));
+        if (isGrade==1){
+            params.put("sort", fenXiaoSort);
+        }else {
+            if (shaiXuanArr[0] == 0) {
+                if (shaiXuanArr[1] == 1) {
+                    params.put("sort", "saleAsc");
+                } else if (shaiXuanArr[1] == 2) {
+                    params.put("sort", "saleDesc");
+                } else {
+                    if (shaiXuanArr[2] == 1) {
+                        params.put("sort", "priceAsc");
+                    } else if (shaiXuanArr[2] == 2) {
+                        params.put("sort", "priceDesc");
+                    } else {
 
+                    }
                 }
             }
         }

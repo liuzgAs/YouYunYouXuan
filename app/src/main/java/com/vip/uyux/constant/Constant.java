@@ -420,6 +420,7 @@ public class Constant {
         public static final String PCATE = "pcate";
         public static final String ISNEW = "isNew";
         public static final String ISHOT = "isHot";
+        public static final String ISGRADE = "isGrade";
     }
 
     public static class RequestResultCode {
