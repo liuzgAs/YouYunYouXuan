@@ -493,8 +493,10 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 .load(goodsInfoData.getThumb())
                 .into(imageImg);
         textDialogPrice = dialog_chan_pin.findViewById(R.id.textDialogPrice);
+        textDialogPrice.setText( goodsInfoData.getStockNum()+"U币");
         textGuiGe = dialog_chan_pin.findViewById(R.id.textGuiGe);
         textStock_numD = dialog_chan_pin.findViewById(R.id.textStock_numD);
+        textStock_numD.setText("库存" + stock_num + "件");
         ImageView imageAdd = dialog_chan_pin.findViewById(R.id.imageAdd);
         final ImageView imageDelete = dialog_chan_pin.findViewById(R.id.imageDelete);
         final EditText editNum = dialog_chan_pin.findViewById(R.id.editNum);
@@ -669,7 +671,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
             for (int i = 0; i < skuCateBeans1.size(); i++) {
                 CustomerIntegragoodsinfo.SkuCateBean skuCateBean = skuCateBeans1.get(i);
                 if (skuCateBean.isSelect()) {
-                    textDialogPrice.setText("¥" + skuCateBean.getPrice());
+                    textDialogPrice.setText(skuCateBean.getPrice()+"U币");
                     sku_id = skuCateBean.getSku_id();
                 }
 
