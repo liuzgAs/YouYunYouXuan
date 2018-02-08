@@ -925,6 +925,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         textDialogPrice.setText("¥" + goodsInfoData.getPrice());
         textGuiGe = dialog_chan_pin.findViewById(R.id.textGuiGe);
         textStock_numD = dialog_chan_pin.findViewById(R.id.textStock_numD);
+        textStock_numD.setText("库存" + stock_num + "件");
         ImageView imageAdd = dialog_chan_pin.findViewById(R.id.imageAdd);
         final ImageView imageDelete = dialog_chan_pin.findViewById(R.id.imageDelete);
         final EditText editNum = dialog_chan_pin.findViewById(R.id.editNum);
