@@ -349,7 +349,7 @@ public class Constant {
         /**
          * 余额支付
          */
-        public static final String PAY_BALANCEPAY = "/pay/balancePay";
+        public static final String PAY_BALANCEPAY = "/Respond/blance";
         /**
          * 评价列表
          */

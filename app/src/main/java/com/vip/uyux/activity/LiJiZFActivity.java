@@ -204,11 +204,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLiJiZF:
-                if (payMode == 0) {
-                    MyDialog.showTipDialog(this, "余额支付暂未开通");
-                } else {
-                    zhiFu();
-                }
+                zhiFu();
                 break;
             case R.id.imageBack:
                 finish();
@@ -394,9 +390,9 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("order_no",orderPay.getData().getOrderSn());
+        params.put("id", orderPay.getData().getId());
         return new OkObject(params, url);
     }
 
@@ -410,18 +406,18 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
-                LogUtil.LogShitou("LiJiZFActivity--onSuccess",s+ "");
+                LogUtil.LogShitou("LiJiZFActivity--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                    if (simpleInfo.getStatus()==1){
+                    if (simpleInfo.getStatus() == 1) {
                         paySuccess();
-                    }else if (simpleInfo.getStatus()==3){
+                    } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(LiJiZFActivity.this);
-                    }else {
+                    } else {
                         Toast.makeText(LiJiZFActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(LiJiZFActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LiJiZFActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
