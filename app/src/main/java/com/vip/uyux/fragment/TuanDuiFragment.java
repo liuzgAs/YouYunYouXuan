@@ -21,6 +21,7 @@ import com.vip.uyux.activity.WoDeTDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.interfacepage.OnNotifyItemChangeListener;
 import com.vip.uyux.model.CustomerMyteam;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
@@ -102,7 +103,14 @@ public class TuanDuiFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_tuandui;
-                return new TuDuiViewHolder(parent, layout);
+                TuDuiViewHolder tuDuiViewHolder = new TuDuiViewHolder(parent, layout);
+                tuDuiViewHolder.setOnNotifyItemChangeListener(new OnNotifyItemChangeListener() {
+                    @Override
+                    public void notify(int position) {
+                        adapter.notifyItemChanged(position);
+                    }
+                });
+                return tuDuiViewHolder;
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
@@ -118,6 +126,9 @@ public class TuanDuiFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                             int status = customerMyteam.getStatus();
                             if (status == 1) {
                                 List<CustomerMyteam.DataBean> dataBeanList = customerMyteam.getData();
+                                for (int i = 0; i < dataBeanList.size(); i++) {
+                                    dataBeanList.get(i).setZhanKai(false);
+                                }
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(mContext);
@@ -211,6 +222,9 @@ public class TuanDuiFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     CustomerMyteam customerMyteam = GsonUtils.parseJSON(s, CustomerMyteam.class);
                     if (customerMyteam.getStatus() == 1) {
                         List<CustomerMyteam.DataBean> dataBeanList = customerMyteam.getData();
+                        for (int i = 0; i < dataBeanList.size(); i++) {
+                            dataBeanList.get(i).setZhanKai(false);
+                        }
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                         List<CustomerMyteam.TitleBean> title = customerMyteam.getTitle();

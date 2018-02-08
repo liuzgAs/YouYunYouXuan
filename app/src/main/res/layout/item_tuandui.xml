@@ -2,45 +2,134 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:background="@drawable/layout_selector_white_system_gray">
 
     <ImageView
         android:id="@+id/imageImg"
-        android:layout_marginLeft="@dimen/leftAndRight"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="15dp"
         android:src="@mipmap/touxiang_mine" />
+
     <TextView
         android:id="@+id/textName"
-        android:text="李达达"
-        android:textColor="@color/light_black"
-        android:layout_toRightOf="@+id/imageImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageImg"
         android:layout_marginLeft="10dp"
-        android:textStyle="bold"
+        android:layout_toRightOf="@+id/imageImg"
+        android:text="李达达"
+        android:textColor="@color/light_black"
         android:textSize="@dimen/bigText"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textReal_name"
+        android:textSize="@dimen/bigText"
+        android:text="(名字)"
+        android:layout_toRightOf="@+id/textName"
+        android:layout_alignBaseline="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/textDes"
-        android:text="绑定"
-        android:textSize="@dimen/normal_textsize"
+
+    <LinearLayout
+        android:layout_toLeftOf="@+id/imageJiaJian"
+        android:id="@+id/view0000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageImg"
-        android:layout_toRightOf="@+id/imageImg"
         android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/textDate"
-        android:layout_below="@+id/textDes"
         android:layout_toRightOf="@+id/imageImg"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="15dp"
-        android:text="2018-1-25 18:05"
-        android:textSize="@dimen/litterText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="佣金："
+                android:textSize="@dimen/normal_textsize" />
+
+            <TextView
+                android:id="@+id/textMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+5454"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/normal_textsize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="成员数："
+                android:textSize="@dimen/normal_textsize" />
+
+            <TextView
+                android:id="@+id/textMember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/normal_textsize" />
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/viewBtm"
+        android:layout_below="@+id/view0000"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text0200"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="手机："
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text0200"
+            android:layout_toRightOf="@+id/text0200"
+            android:text="15871105320"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:id="@+id/textDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text0200"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:text="2018-1-25 18:05"
+            android:textSize="@dimen/litterText" />
+    </RelativeLayout>
+   
+    <ImageView
+        android:id="@+id/imageJiaJian"
+        android:src="@mipmap/jian"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="15dp"
+        android:paddingLeft="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 </RelativeLayout>

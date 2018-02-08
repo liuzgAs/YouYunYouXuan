@@ -10,10 +10,10 @@ import java.util.List;
 
 public class CustomerMyteam {
     /**
-     * total_num : 12
-     * title : [{"id":1,"title":"亲友(2)"},{"id":2,"title":"好友(2)"},{"id":3,"title":"朋友(2)"}]
-     * data : [{"id":1,"name":"李丹尼","create_time":"1576235692","member":"5","money":123562},{"id":2,"name":"孙李","create_time":"1576235892","member":"7","money":85986}]
-     * page : {"page":1,"pageTotal":1,"pageSize":15,"dataTotal":2}
+     * total_num : 2
+     * title : [{"id":1,"title":"直推(2)"},{"id":2,"title":"间推(1)"},{"id":3,"title":"衍推(0)"}]
+     * data : [{"id":1013055,"create_time":"2018.02.01","real_name":"暂未实名","name":"Benz","grade":"优选专家","mobile":"18250161297","headimg":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTITWhGqj6macCoVfdiaG7DD9Z2DtAym2VliaHicEEMfmUqZVt0z4djyMkBMaKPnXpjQnnZ5Y2pM91r0Q/132","member":1,"money":489.88},{"id":1011134,"create_time":"2017.12.30","real_name":"biu～","name":"biu~  ","grade":"优选达人","mobile":"18359260160","headimg":"http://wx.qlogo.cn/mmopen/Q3auHgzwzM4FDKwIuOpu2VdaACMibyaCcy44FcVxYdrNw0G6oSmUGNcibicdOFuVia8v39SgEmrkqMzaI6vhs2bk7w/132","member":0,"money":0}]
+     * page : {"page":1,"pageTotal":1,"pageSize":10,"dataTotal":2}
      * status : 1
      * info : 获取成功
      */
@@ -77,7 +77,7 @@ public class CustomerMyteam {
         /**
          * page : 1
          * pageTotal : 1
-         * pageSize : 15
+         * pageSize : 10
          * dataTotal : 2
          */
 
@@ -122,7 +122,7 @@ public class CustomerMyteam {
     public static class TitleBean {
         /**
          * id : 1
-         * title : 亲友(2)
+         * title : 直推(2)
          */
 
         private int id;
@@ -147,26 +147,34 @@ public class CustomerMyteam {
 
     public static class DataBean {
         /**
-         * id : 1
-         * name : 李丹尼
-         * create_time : 1576235692
-         * member : 5
-         * money : 123562
+         * id : 1013055
+         * create_time : 2018.02.01
+         * real_name : 暂未实名
+         * name : Benz
+         * grade : 优选专家
+         * mobile : 18250161297
+         * headimg : https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTITWhGqj6macCoVfdiaG7DD9Z2DtAym2VliaHicEEMfmUqZVt0z4djyMkBMaKPnXpjQnnZ5Y2pM91r0Q/132
+         * member : 1
+         * money : 489.88
          */
 
         private int id;
-        private String name;
         private String create_time;
-        private String member;
+        private String real_name;
+        private String name;
+        private String grade;
+        private String mobile;
         private String headimg;
-        private int money;
+        private int member;
+        private String money;
+        private boolean isZhanKai;
 
-        public String getHeadimg() {
-            return headimg;
+        public boolean isZhanKai() {
+            return isZhanKai;
         }
 
-        public void setHeadimg(String headimg) {
-            this.headimg = headimg;
+        public void setZhanKai(boolean zhanKai) {
+            isZhanKai = zhanKai;
         }
 
         public int getId() {
@@ -177,14 +185,6 @@ public class CustomerMyteam {
             this.id = id;
         }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
         public String getCreate_time() {
             return create_time;
         }
@@ -193,19 +193,59 @@ public class CustomerMyteam {
             this.create_time = create_time;
         }
 
-        public String getMember() {
+        public String getReal_name() {
+            return real_name;
+        }
+
+        public void setReal_name(String real_name) {
+            this.real_name = real_name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getHeadimg() {
+            return headimg;
+        }
+
+        public void setHeadimg(String headimg) {
+            this.headimg = headimg;
+        }
+
+        public int getMember() {
             return member;
         }
 
-        public void setMember(String member) {
+        public void setMember(int member) {
             this.member = member;
         }
 
-        public int getMoney() {
+        public String getMoney() {
             return money;
         }
 
-        public void setMoney(int money) {
+        public void setMoney(String money) {
             this.money = money;
         }
     }
