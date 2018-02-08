@@ -107,7 +107,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     private IWXAPI api;
     private TextView textStock_numD;
     private int stock_num;
-    private String tm_url;
     private List<GoodsInfo.DataBean.PromotionsafterBean> promotionsAfter;
     private View imageGouWuChe;
     private String did;
@@ -158,15 +157,15 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("shareType",String.valueOf(0));
-        params.put("source",Constant.source);
-        params.put("shareTitle",goodsInfo.getData().getShare().getShareTitle());
-        params.put("shareImg",goodsInfo.getData().getShare().getShareImg());
-        params.put("shareDes",goodsInfo.getData().getShare().getShareDes());
-        params.put("url",goodsInfo.getData().getShare().getShareUrl());
-        params.put("id",String.valueOf(id));
+        params.put("shareType", String.valueOf(0));
+        params.put("source", Constant.source);
+        params.put("shareTitle", goodsInfo.getData().getShare().getShareTitle());
+        params.put("shareImg", goodsInfo.getData().getShare().getShareImg());
+        params.put("shareDes", goodsInfo.getData().getShare().getShareDes());
+        params.put("url", goodsInfo.getData().getShare().getShareUrl());
+        params.put("id", String.valueOf(id));
         return new OkObject(params, url);
     }
 
@@ -179,18 +178,18 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
-                LogUtil.LogShitou("ChanPinXQActivity--onSuccess",s+ "");
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                    if (simpleInfo.getStatus()==1){
+                    if (simpleInfo.getStatus() == 1) {
                         LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "回调成功");
-                    }else if (simpleInfo.getStatus()==3){
+                    } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
-                    }else {
+                    } else {
                         Toast.makeText(ChanPinXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(ChanPinXQActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -239,7 +238,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
     protected void initViews() {
         tablayoutX.setVisibility(View.GONE);
         viewTitleHeight = ScreenUtils.getStatusBarHeight(ChanPinXQActivity.this) + (int) getResources().getDimension(R.dimen.titleHeight);
-                ((TextView) findViewById(R.id.textViewTitle)).setText("产品详情");
+        ((TextView) findViewById(R.id.textViewTitle)).setText("产品详情");
         viewDiBu.setVisibility(View.GONE);
         badge = new QBadgeView(ChanPinXQActivity.this)
                 .setBadgeTextColor(Color.WHITE)
@@ -279,6 +278,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             private RecyclerArrayAdapter<GoodsInfo.CommentBean> adapterPingLun;
             private EasyRecyclerView recyclerViewPingLun;
             private TextView textOldPrice;
+            private TextView textOldPriceJD;
             private TextView textVipDes;
             private TextView textTitle;
             private TextView textScoreDes;
@@ -316,16 +316,25 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 textTitle = view.findViewById(R.id.textTitle);
                 textVipDes = view.findViewById(R.id.textVipDes);
                 textOldPrice = view.findViewById(R.id.textOldPrice);
+                textOldPriceJD = view.findViewById(R.id.textOldPriceJD);
                 textOldPrice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!TextUtils.isEmpty(tm_url)) {
-                            Intent intent = new Intent();
-                            intent.setClass(ChanPinXQActivity.this, WebActivity.class);
-                            intent.putExtra(Constant.IntentKey.TITLE, "天猫价");
-                            intent.putExtra(Constant.IntentKey.URL, tm_url);
-                            startActivity(intent);
-                        }
+                        Intent intent = new Intent();
+                        intent.setClass(ChanPinXQActivity.this, WebActivity.class);
+                        intent.putExtra(Constant.IntentKey.TITLE, "天猫价");
+                        intent.putExtra(Constant.IntentKey.URL, goodsInfoData.getTm_url());
+                        startActivity(intent);
+                    }
+                });
+                textOldPriceJD.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(ChanPinXQActivity.this, WebActivity.class);
+                        intent.putExtra(Constant.IntentKey.TITLE, "京东价");
+                        intent.putExtra(Constant.IntentKey.URL, goodsInfoData.getJd_url());
+                        startActivity(intent);
                     }
                 });
                 recyclerViewPingLun = view.findViewById(R.id.recyclerView);
@@ -386,8 +395,8 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(ChanPinXQActivity.this,PingLunLBActivity.class);
-                        intent.putExtra(Constant.IntentKey.ID,id);
+                        intent.setClass(ChanPinXQActivity.this, PingLunLBActivity.class);
+                        intent.putExtra(Constant.IntentKey.ID, id);
                         startActivity(intent);
                     }
                 });
@@ -471,11 +480,17 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         textVipDes.setVisibility(View.VISIBLE);
                         textVipDes.setText(goodsInfoData.getVipDes());
                     }
-                    if (TextUtils.isEmpty(goodsInfoData.getOldPrice()) || Double.parseDouble(goodsInfoData.getOldPrice()) == 0) {
-                        textOldPrice.setVisibility(View.GONE);
-                    } else {
+                    if (goodsInfoData.getIs_gotm() == 1) {
+                        textOldPrice.setText("天猫价¥" + goodsInfoData.getTm_price());
                         textOldPrice.setVisibility(View.VISIBLE);
-                        textOldPrice.setText("天猫价¥" + goodsInfoData.getOldPrice());
+                    } else {
+                        textOldPrice.setVisibility(View.GONE);
+                    }
+                    if (goodsInfoData.getIs_gojd() == 1) {
+                        textOldPriceJD.setText("京东价¥" + goodsInfoData.getJd_price());
+                        textOldPriceJD.setVisibility(View.VISIBLE);
+                    } else {
+                        textOldPriceJD.setVisibility(View.GONE);
                     }
                     if (promotionsAfter != null) {
                         if (promotionsAfter.size() > 0) {
@@ -500,7 +515,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     }
                 }
                 LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "" + GsonUtils.parseObject(catelist));
-                if (comment!=null){
+                if (comment != null) {
                     viewPingLun.setVisibility(View.VISIBLE);
                     linePingLun.setVisibility(View.VISIBLE);
                     textPingLunTitle.setText(comment.getTitle());
@@ -508,7 +523,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     adapterPingLun.clear();
                     adapterPingLun.add(comment);
                     adapterPingLun.notifyDataSetChanged();
-                }else {
+                } else {
                     viewPingLun.setVisibility(View.GONE);
                     linePingLun.setVisibility(View.GONE);
                 }
@@ -519,15 +534,15 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (tablayout!=null){
+                if (tablayout != null) {
                     int[] location = new int[2];
                     tablayout.getLocationInWindow(location);
                     int top = location[1] - viewTitleHeight;
-                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+location[1]);
-                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", ""+top);
-                    if (top<=0){
+                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", "" + location[1]);
+                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", "" + top);
+                    if (top <= 0) {
 //                        tablayoutX.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
 //                        tablayoutX.setVisibility(View.GONE);
                     }
                 }
@@ -602,7 +617,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
         params.put("did", did);
         return new OkObject(params, url);
@@ -612,19 +627,19 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         ApiClient.post(ChanPinXQActivity.this, getCarOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                LogUtil.LogShitou("MainActivity--onSuccess",s+ "");
+                LogUtil.LogShitou("MainActivity--onSuccess", s + "");
                 try {
                     CartNum cartNum = GsonUtils.parseJSON(s, CartNum.class);
-                    if (cartNum.getStatus()==1){
+                    if (cartNum.getStatus() == 1) {
                         badge.setBadgeNumber(cartNum.getNum())
                                 .bindTarget(imageGouWuChe);
-                    }else if (cartNum.getStatus()==3){
+                    } else if (cartNum.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
-                    }else {
+                    } else {
                         Toast.makeText(ChanPinXQActivity.this, cartNum.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(ChanPinXQActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChanPinXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -641,7 +656,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
             case R.id.viewGouWuChe:
                 LogUtil.LogShitou("ChanPinXQActivity--onClick", "111111111");
                 Intent intent = new Intent();
-                intent.setClass(this,GouWuCheActivity.class);
+                intent.setClass(this, GouWuCheActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageFenXiang:
@@ -649,21 +664,21 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 MyDialog.share(this, "ChanPinXQActivity", api, String.valueOf(id), goodsInfo.getData().getShare());
                 break;
             case R.id.imageShouCang:
-                if (isLogin){
+                if (isLogin) {
                     if (goodsInfo.getIsc() == 0) {
                         shouCang();
                     } else {
                         quXiaoSC();
                     }
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(this);
                 }
                 break;
             case R.id.textLiJiGouMai:
-                if (isLogin){
+                if (isLogin) {
                     buy_now = 1;
                     mai();
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(this);
                 }
                 break;
@@ -800,7 +815,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                         skuCate = goodsInfo.getSkuCate();
                         skuLv = goodsInfo.getSkuLv();
                         stock_num = goodsInfo.getData().getStockNum();
-                        tm_url = goodsInfo.getData().getTm_url();
                         listList.clear();
                         List<List<GoodsInfo.SkuCateBean>> listList = readTree(skuCate);
                         catelist.addAll(listList);

@@ -36,7 +36,7 @@ public class GoodsInfo {
         this.comment = comment;
     }
 
-    public static class CommentBean{
+    public static class CommentBean {
         private String title;
         private String des;
         private UserBean user;
@@ -58,7 +58,7 @@ public class GoodsInfo {
             this.imgs = imgs;
         }
 
-        public static class UserBean{
+        public static class UserBean {
             private String headimg;
             private String nickname;
             private String vip;
@@ -96,6 +96,7 @@ public class GoodsInfo {
                 this.star = star;
             }
         }
+
         private String evaluate_time;
         private String evaluate;
 
@@ -221,13 +222,58 @@ public class GoodsInfo {
         private String shareMoney;
         private String scoreDes;
         private String thumb;
+        private int is_gotm;
         private String tm_url;
+        private String tm_price;
+        private int is_gojd;
+        private String jd_url;
+        private String jd_price;
         private ShareBean share;
         private List<ImgsBean> imgs;
         private List<ImgsBean> imgs2;
         private List<PromotionsafterBean> promotionsAfter;
         private List<String> serveiceDes;
         private String promotionsBefore;
+
+        public int getIs_gotm() {
+            return is_gotm;
+        }
+
+        public void setIs_gotm(int is_gotm) {
+            this.is_gotm = is_gotm;
+        }
+
+        public String getTm_price() {
+            return tm_price;
+        }
+
+        public void setTm_price(String tm_price) {
+            this.tm_price = tm_price;
+        }
+
+        public int getIs_gojd() {
+            return is_gojd;
+        }
+
+        public void setIs_gojd(int is_gojd) {
+            this.is_gojd = is_gojd;
+        }
+
+        public String getJd_url() {
+            return jd_url;
+        }
+
+        public void setJd_url(String jd_url) {
+            this.jd_url = jd_url;
+        }
+
+        public String getJd_price() {
+            return jd_price;
+        }
+
+        public void setJd_price(String jd_price) {
+            this.jd_price = jd_price;
+        }
 
         public String getPromotionsBefore() {
             return promotionsBefore;
@@ -253,7 +299,7 @@ public class GoodsInfo {
             this.promotionsAfter = promotionsAfter;
         }
 
-        public static class PromotionsafterBean{
+        public static class PromotionsafterBean {
             private String title;
             private String url;
 
@@ -478,7 +524,7 @@ public class GoodsInfo {
         private double price;
         private int stock_num;
         private int lv;
-        private boolean isSelect ;
+        private boolean isSelect;
         private List<SkuCateBean> value;
 
         public int getStock_num() {

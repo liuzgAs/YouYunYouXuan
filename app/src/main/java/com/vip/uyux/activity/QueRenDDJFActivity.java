@@ -249,9 +249,9 @@ public class QueRenDDJFActivity extends ZjbBaseActivity implements View.OnClickL
                         Intent intent = new Intent();
                         intent.setAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
                         sendBroadcast(intent);
-//                        intent.setClass(QueRenDDJFActivity.this, LiJiZFActivity.class);
-//                        startActivity(intent);
-                        MyDialog.dialogFinish(QueRenDDJFActivity.this,"兑换成功");
+                        intent.setClass(QueRenDDJFActivity.this, DuiHuanJLActivity.class);
+                        startActivity(intent);
+                        finish();
                     } else if (cartNeworder.getStatus() == 3) {
                         MyDialog.showReLoginDialog(QueRenDDJFActivity.this);
                     } else {

@@ -1,6 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -86,6 +89,17 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
     private IWXAPI api;
     private TextView textStock_numD;
     private int stock_num;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                case Constant.BroadcastCode.SHUA_XIN_U_BI:
+                    finish();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -692,7 +706,16 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
+        registerReceiver(reciver,filter);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(reciver);
     }
 }
