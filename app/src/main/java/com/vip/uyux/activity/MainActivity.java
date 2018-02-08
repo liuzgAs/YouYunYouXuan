@@ -127,13 +127,13 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 startActivity(intent);
                 break;
             case "app_goods_pcate":
-                intent.setClass(this, ChanPinLBActivity.class);
+                intent.setClass(this, ChanPinLBTabActivity.class);
                 intent.putExtra(Constant.IntentKey.TITLE, advsBean.getTitle());
                 intent.putExtra(Constant.IntentKey.PCATE, advsBean.getItem_id());
                 startActivity(intent);
                 break;
             case "app_goods_cate":
-                intent.setClass(this, ChanPinLBActivity.class);
+                intent.setClass(this, ChanPinLBTabActivity.class);
                 intent.putExtra(Constant.IntentKey.TITLE, advsBean.getTitle());
                 intent.putExtra(Constant.IntentKey.CATE, advsBean.getItem_id());
                 startActivity(intent);

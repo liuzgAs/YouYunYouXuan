@@ -19,6 +19,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinLBActivity;
+import com.vip.uyux.activity.ChanPinLBTabActivity;
 import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.base.MyDialog;
@@ -287,7 +288,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(mContext, ChanPinLBActivity.class);
+                        intent.setClass(mContext, ChanPinLBTabActivity.class);
                         intent.putExtra(Constant.IntentKey.TITLE, name);
                         intent.putExtra(Constant.IntentKey.PCATE, id);
                         startActivity(intent);
@@ -311,7 +312,7 @@ public class FenLeiFragment extends ZjbBaseFragment implements View.OnClickListe
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
-                intent.setClass(mContext, ChanPinLBActivity.class);
+                intent.setClass(mContext, ChanPinLBTabActivity.class);
                 intent.putExtra(Constant.IntentKey.TITLE, adapter.getItem(position).getName());
                 intent.putExtra(Constant.IntentKey.CATE, adapter.getItem(position).getId());
                 startActivity(intent);

@@ -17,7 +17,34 @@ public class GoodsIndex {
 
     private int status;
     private String info;
+    private String title;
     private List<GoodBean> data;
+    private int is_cate;
+    private List<CateBean> cate;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getIs_cate() {
+        return is_cate;
+    }
+
+    public void setIs_cate(int is_cate) {
+        this.is_cate = is_cate;
+    }
+
+    public List<CateBean> getCate() {
+        return cate;
+    }
+
+    public void setCate(List<CateBean> cate) {
+        this.cate = cate;
+    }
 
     public int getStatus() {
         return status;
@@ -43,4 +70,34 @@ public class GoodsIndex {
         this.data = data;
     }
 
+
+    public static class CateBean{
+        private int id;
+        private String name;
+        private int act;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAct() {
+            return act;
+        }
+
+        public void setAct(int act) {
+            this.act = act;
+        }
+    }
 }
