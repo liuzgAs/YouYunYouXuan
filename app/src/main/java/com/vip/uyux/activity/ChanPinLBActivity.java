@@ -22,6 +22,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.model.GoodsIndex;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
@@ -36,7 +37,7 @@ import java.util.List;
 public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<GoodsIndex.DataBean> adapter;
+    private RecyclerArrayAdapter<GoodBean> adapter;
     private int cate;
     private String title;
     private int pcate;
@@ -172,7 +173,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
         itemDecoration1 = new SpaceDecoration((int) DpUtils.convertDpToPixel(10f, ChanPinLBActivity.this));
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsIndex.DataBean>(ChanPinLBActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodBean>(ChanPinLBActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout;
@@ -203,7 +204,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                             GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
                             int status = goodsIndex.getStatus();
                             if (status == 1) {
-                                List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
+                                List<GoodBean> dataBeanList = goodsIndex.getData();
                                 if (isDuoLie) {
                                     for (int i = 0; i < dataBeanList.size(); i++) {
                                         dataBeanList.get(i).setViewType(1);
@@ -431,7 +432,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
                     page++;
                     GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
                     if (goodsIndex.getStatus() == 1) {
-                        List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
+                        List<GoodBean> dataBeanList = goodsIndex.getData();
                         if (isDuoLie) {
                             for (int i = 0; i < dataBeanList.size(); i++) {
                                 dataBeanList.get(i).setViewType(1);

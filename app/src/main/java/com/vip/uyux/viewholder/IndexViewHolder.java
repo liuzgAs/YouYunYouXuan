@@ -16,6 +16,7 @@ import com.vip.uyux.activity.ChanPinLBActivity;
 import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.MyEasyRecyclerView;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.util.DpUtils;
 
@@ -27,7 +28,7 @@ import java.util.List;
 public class IndexViewHolder extends BaseViewHolder<IndexHome.DataBean> {
 
     private final MyEasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<IndexHome.DataBean.GoodsBean> adapter;
+    private RecyclerArrayAdapter<GoodBean> adapter;
     private final TextView textTitle;
     private final View viewMore;
     private float downX;
@@ -56,7 +57,7 @@ public class IndexViewHolder extends BaseViewHolder<IndexHome.DataBean> {
      */
     private void initRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter = new RecyclerArrayAdapter<IndexHome.DataBean.GoodsBean>(getContext()) {
+        recyclerView.setAdapter(adapter = new RecyclerArrayAdapter<GoodBean>(getContext()) {
 
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
@@ -109,7 +110,7 @@ public class IndexViewHolder extends BaseViewHolder<IndexHome.DataBean> {
         super.setData(data);
         this.data = data;
         textTitle.setText(data.getName());
-        List<IndexHome.DataBean.GoodsBean> goodsBeanList = data.getGoods();
+        List<GoodBean> goodsBeanList = data.getGoods();
         adapter.clear();
         adapter.addAll(goodsBeanList);
     }

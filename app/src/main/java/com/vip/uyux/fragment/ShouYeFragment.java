@@ -34,6 +34,7 @@ import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.AdvsBean;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.model.IndexHome;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
@@ -64,7 +65,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private String num2;
     private String num3;
     private String num4;
-    private List<IndexHome.RecomBean> recomBeanList;
+    private List<GoodBean> recomBeanList;
     private boolean isScroll = false;
     private float downX;
     private float upX;
@@ -137,7 +138,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             private LinearLayout viewNum2;
             private LinearLayout viewNum;
             private View viewViewPager;
-            private RecyclerArrayAdapter<IndexHome.RecomBean> adapterZiYin;
+            private RecyclerArrayAdapter<GoodBean> adapterZiYin;
             private EasyRecyclerView recyclerZiYinView;
             private TextView textZhiShiQi;
             private ConvenientBanner banner;
@@ -208,7 +209,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
              */
             private void initZiYinRecycler() {
                 recyclerZiYinView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                recyclerZiYinView.setAdapter(adapterZiYin = new RecyclerArrayAdapter<IndexHome.RecomBean>(getContext()) {
+                recyclerZiYinView.setAdapter(adapterZiYin = new RecyclerArrayAdapter<GoodBean>(getContext()) {
 
                     @Override
                     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {

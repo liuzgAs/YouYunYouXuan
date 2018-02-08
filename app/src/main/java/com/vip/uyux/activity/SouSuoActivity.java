@@ -28,6 +28,7 @@ import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.customview.OnTagClickListener;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.model.GoodsIndex;
 import com.vip.uyux.model.GoodsSearch;
 import com.vip.uyux.model.OkObject;
@@ -47,7 +48,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private TagHotAdapter tagHotAdapter01;
     private TagHotAdapter tagHotAdapter02;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<GoodsIndex.DataBean> adapter;
+    private RecyclerArrayAdapter<GoodBean> adapter;
     private int page = 0;
     private String keywords;
     private EditText editSouSuo;
@@ -116,7 +117,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         recyclerView.addItemDecoration(itemDecoration);
         int red = getResources().getColor(R.color.basic_color);
         recyclerView.setRefreshingColor(red);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsIndex.DataBean>(SouSuoActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodBean>(SouSuoActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_chanpin;
@@ -135,7 +136,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                             GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
                             int status = goodsIndex.getStatus();
                             if (status == 1) {
-                                List<GoodsIndex.DataBean> dataBeanList = goodsIndex.getData();
+                                List<GoodBean> dataBeanList = goodsIndex.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(SouSuoActivity.this);
@@ -385,7 +386,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                     page++;
                     GoodsIndex goodsIndex = GsonUtils.parseJSON(s, GoodsIndex.class);
                     if (goodsIndex.getStatus() == 1) {
-                        List<GoodsIndex.DataBean> indexGoodsData = goodsIndex.getData();
+                        List<GoodBean> indexGoodsData = goodsIndex.getData();
                         adapter.clear();
                         adapter.addAll(indexGoodsData);
                     } else if (goodsIndex.getStatus() == 3) {

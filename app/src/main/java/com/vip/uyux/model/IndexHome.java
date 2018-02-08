@@ -32,7 +32,7 @@ public class IndexHome {
     private List<AdvsBean> banner;
     private List<AdvsBean> banner2;
     private List<DataBean> data;
-    private List<RecomBean> recom;
+    private List<GoodBean> recom;
 
     public String getInfo() {
         return info;
@@ -106,11 +106,11 @@ public class IndexHome {
         this.data = data;
     }
 
-    public List<RecomBean> getRecom() {
+    public List<GoodBean> getRecom() {
         return recom;
     }
 
-    public void setRecom(List<RecomBean> recom) {
+    public void setRecom(List<GoodBean> recom) {
         this.recom = recom;
     }
 
@@ -126,7 +126,7 @@ public class IndexHome {
         private int id;
         private String key;
         private String name;
-        private List<GoodsBean> goods;
+        private List<GoodBean> goods;
 
         public int getId() {
             return id;
@@ -152,204 +152,14 @@ public class IndexHome {
             this.name = name;
         }
 
-        public List<GoodsBean> getGoods() {
+        public List<GoodBean> getGoods() {
             return goods;
         }
 
-        public void setGoods(List<GoodsBean> goods) {
+        public void setGoods(List<GoodBean> goods) {
             this.goods = goods;
         }
 
-        public static class GoodsBean {
-            /**
-             * des : 前凸后凹 碎粒少
-             * id : 1123
-             * img : http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg
-             * oldPrice : ￥28.80
-             * price : ￥22.60
-             * saleNum : 5869
-             * title : 有机小薏米
-             * type : 1
-             * vipDes : 五星会员省8元
-             */
-
-            private String des;
-            private int id;
-            private String img;
-            private String oldPrice;
-            private String price;
-            private int saleNum;
-            private String title;
-            private int type;
-            private String vipDes;
-
-            public String getDes() {
-                return des;
-            }
-
-            public void setDes(String des) {
-                this.des = des;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getImg() {
-                return img;
-            }
-
-            public void setImg(String img) {
-                this.img = img;
-            }
-
-            public String getOldPrice() {
-                return oldPrice;
-            }
-
-            public void setOldPrice(String oldPrice) {
-                this.oldPrice = oldPrice;
-            }
-
-            public String getPrice() {
-                return price;
-            }
-
-            public void setPrice(String price) {
-                this.price = price;
-            }
-
-            public int getSaleNum() {
-                return saleNum;
-            }
-
-            public void setSaleNum(int saleNum) {
-                this.saleNum = saleNum;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
-            }
-
-            public String getVipDes() {
-                return vipDes;
-            }
-
-            public void setVipDes(String vipDes) {
-                this.vipDes = vipDes;
-            }
-        }
     }
 
-    public static class RecomBean {
-        /**
-         * des : 前凸后凹 碎粒少
-         * id : 1123
-         * img : http://www.uyux.vip/attachment/images/1604/2017/12/TLl0pMGbPm8rZHQXojzeYCHhj9hBll.jpg
-         * oldPrice : ￥28.80
-         * price : ￥22.60
-         * saleNum : 5869
-         * title : 有机小薏米
-         * type : 1
-         * vipDes : 五星会员省8元
-         */
-
-        private String des;
-        private int id;
-        private String img;
-        private String oldPrice;
-        private String price;
-        private int saleNum;
-        private String title;
-        private int type;
-        private String vipDes;
-
-        public String getDes() {
-            return des;
-        }
-
-        public void setDes(String des) {
-            this.des = des;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
-        }
-
-        public String getOldPrice() {
-            return oldPrice;
-        }
-
-        public void setOldPrice(String oldPrice) {
-            this.oldPrice = oldPrice;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public int getSaleNum() {
-            return saleNum;
-        }
-
-        public void setSaleNum(int saleNum) {
-            this.saleNum = saleNum;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public String getVipDes() {
-            return vipDes;
-        }
-
-        public void setVipDes(String vipDes) {
-            this.vipDes = vipDes;
-        }
-    }
 }

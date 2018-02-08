@@ -10,14 +10,14 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.customview.YuanJiaoImageView;
-import com.vip.uyux.model.IndexHome;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class IndexItemViewHolder extends BaseViewHolder<IndexHome.DataBean.GoodsBean> {
+public class IndexItemViewHolder extends BaseViewHolder<GoodBean> {
 
     private final TextView textCutPrice;
     private final YuanJiaoImageView imageImg;
@@ -44,7 +44,7 @@ public class IndexItemViewHolder extends BaseViewHolder<IndexHome.DataBean.Goods
     }
 
     @Override
-    public void setData(IndexHome.DataBean.GoodsBean data) {
+    public void setData(GoodBean data) {
         super.setData(data);
         GlideApp.with(getContext())
                 .load(data.getImg())

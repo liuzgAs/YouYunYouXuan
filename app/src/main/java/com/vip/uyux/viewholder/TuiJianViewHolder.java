@@ -12,14 +12,14 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.customview.MyIm;
-import com.vip.uyux.model.IndexRecom;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class TuiJianViewHolder extends BaseViewHolder<IndexRecom.DataBean> {
+public class TuiJianViewHolder extends BaseViewHolder<GoodBean> {
 
     private final ImageView imageImg;
     private final ImageView imageDianZan;
@@ -42,7 +42,7 @@ public class TuiJianViewHolder extends BaseViewHolder<IndexRecom.DataBean> {
     }
 
     @Override
-    public void setData(IndexRecom.DataBean data) {
+    public void setData(GoodBean data) {
         super.setData(data);
         GlideApp.with(getContext())
                 .asBitmap()

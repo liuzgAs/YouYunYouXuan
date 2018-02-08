@@ -10,14 +10,14 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.customview.YuanJiaoImageView;
-import com.vip.uyux.model.GoodsIndex;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class ChanPinLBViewHolder extends BaseViewHolder<GoodsIndex.DataBean> {
+public class ChanPinLBViewHolder extends BaseViewHolder<GoodBean> {
 
     private final YuanJiaoImageView imageImg;
     private final TextView textTitle;
@@ -48,7 +48,7 @@ public class ChanPinLBViewHolder extends BaseViewHolder<GoodsIndex.DataBean> {
     }
 
     @Override
-    public void setData(GoodsIndex.DataBean data) {
+    public void setData(GoodBean data) {
         super.setData(data);
         if (viewType==1){
             GlideApp.with(getContext())

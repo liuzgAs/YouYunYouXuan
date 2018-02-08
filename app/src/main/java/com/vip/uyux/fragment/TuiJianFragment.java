@@ -27,6 +27,7 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.AdvsBean;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.model.IndexRecom;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
@@ -35,7 +36,7 @@ import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
-import com.vip.uyux.viewholder.TuiJianViewHolder;
+import com.vip.uyux.viewholder.ChanPinLBViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +51,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private ImageView imageBack;
     private View viewBar;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<IndexRecom.DataBean> adapter;
+    private RecyclerArrayAdapter<GoodBean> adapter;
     private List<AdvsBean> bannerBeanList;
     private List<AdvsBean> banner2BeanList;
 
@@ -111,11 +112,11 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexRecom.DataBean>(mContext) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_tuijian;
-                return new TuiJianViewHolder(parent, layout, viewType);
+                int layout = R.layout.item_chanpin;
+                return new ChanPinLBViewHolder(parent, layout, viewType);
             }
 
             @Override
@@ -224,7 +225,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                             IndexRecom indexRecom = GsonUtils.parseJSON(s, IndexRecom.class);
                             int status = indexRecom.getStatus();
                             if (status == 1) {
-                                List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
+                                List<GoodBean> dataBeanList = indexRecom.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(mContext);
@@ -328,7 +329,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     if (indexRecom.getStatus() == 1) {
                         bannerBeanList = indexRecom.getBanner();
                         banner2BeanList = indexRecom.getBanner2();
-                        List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
+                        List<GoodBean> dataBeanList = indexRecom.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (indexRecom.getStatus() == 3) {

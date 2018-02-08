@@ -21,7 +21,7 @@ public class IndexRecom {
     private String info;
     private List<AdvsBean> banner;
     private List<AdvsBean> banner2;
-    private List<DataBean> data;
+    private List<GoodBean> data;
 
     public int getStatus() {
         return status;
@@ -55,108 +55,13 @@ public class IndexRecom {
         this.banner2 = banner2;
     }
 
-    public List<DataBean> getData() {
+    public List<GoodBean> getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(List<GoodBean> data) {
         this.data = data;
     }
 
 
-    public static class DataBean {
-        /**
-         * id : 632
-         * img : http://www.uyux.vip/attachment/images/1604/2017/09/uz1CR5f5Wi33iyzYd3Ew8YzCivEAWf.jpg
-         * title : 优云 高清无感气垫bb
-         * des : 秒速上妆 一拍即合  超纳米研磨分解技术  高清无感 完美遮瑕  轻盈质地 美白滋养 防水防晒 持久不脱妆
-         * price : ￥179.00
-         * oldPrice : ￥269.00
-         * vipDes : 五星会员省8元
-         * type : 1
-         * saleNum : 5869
-         */
-
-        private int id;
-        private String img;
-        private String title;
-        private String des;
-        private String price;
-        private String oldPrice;
-        private String vipDes;
-        private int type;
-        private int saleNum;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getDes() {
-            return des;
-        }
-
-        public void setDes(String des) {
-            this.des = des;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public String getOldPrice() {
-            return oldPrice;
-        }
-
-        public void setOldPrice(String oldPrice) {
-            this.oldPrice = oldPrice;
-        }
-
-        public String getVipDes() {
-            return vipDes;
-        }
-
-        public void setVipDes(String vipDes) {
-            this.vipDes = vipDes;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public int getSaleNum() {
-            return saleNum;
-        }
-
-        public void setSaleNum(int saleNum) {
-            this.saleNum = saleNum;
-        }
-    }
 }

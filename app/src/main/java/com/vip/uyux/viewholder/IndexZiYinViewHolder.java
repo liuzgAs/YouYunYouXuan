@@ -10,14 +10,14 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.customview.YuanJiaoImageView;
-import com.vip.uyux.model.IndexHome;
+import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class IndexZiYinViewHolder extends BaseViewHolder<IndexHome.RecomBean> {
+public class IndexZiYinViewHolder extends BaseViewHolder<GoodBean> {
 
     private final TextView textCutPrice;
     private final YuanJiaoImageView imageImg;
@@ -44,7 +44,7 @@ public class IndexZiYinViewHolder extends BaseViewHolder<IndexHome.RecomBean> {
     }
 
     @Override
-    public void setData(IndexHome.RecomBean data) {
+    public void setData(GoodBean data) {
         super.setData(data);
         ViewGroup.LayoutParams layoutParams = imageZiYin.getLayoutParams();
         imageZiYin.setVisibility(View.VISIBLE);
