@@ -21,6 +21,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.interfacepage.OnNotifyItemChangeListener;
 import com.vip.uyux.interfacepage.OnPictureListener;
 import com.vip.uyux.model.BonusSuperioritybefore;
 import com.vip.uyux.model.OkObject;
@@ -95,6 +96,12 @@ public class TuiJianSPActivity extends ZjbBaseActivity implements View.OnClickLi
                     @Override
                     public void showPicture(List<LocalMedia> localMediaList, int position) {
                         TuiJianSPActivity.this.showPicture(localMediaList, position);
+                    }
+                });
+                tuiJianShangPinViewHolder.setOnNotifyItemChangeListener(new OnNotifyItemChangeListener() {
+                    @Override
+                    public void notify(int position) {
+                        adapter.notifyItemChanged(0);
                     }
                 });
                 return tuiJianShangPinViewHolder;
@@ -202,7 +209,7 @@ public class TuiJianSPActivity extends ZjbBaseActivity implements View.OnClickLi
                         picZhuTu.add(new Picture(0, localMediaList.get(i)));
                     }
                     picZhuTu.add(new Picture(1, new LocalMedia()));
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyItemChanged(0);
                     break;
                 default:
                     break;
@@ -220,6 +227,7 @@ public class TuiJianSPActivity extends ZjbBaseActivity implements View.OnClickLi
                 .openGallery(PictureMimeType.ofImage())
                 /* 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE*/
                 .selectionMode(PictureConfig.MULTIPLE)
+                .maxSelectNum(50)
                 /*是否显示拍照按钮 true or false*/
                 .isCamera(true)
                 /*拍照保存图片格式后缀,默认jpeg*/

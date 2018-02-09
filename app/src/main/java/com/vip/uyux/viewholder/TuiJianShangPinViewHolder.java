@@ -20,6 +20,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.vip.uyux.R;
 import com.vip.uyux.customview.EditDialog;
+import com.vip.uyux.interfacepage.OnNotifyItemChangeListener;
 import com.vip.uyux.interfacepage.OnPictureListener;
 import com.vip.uyux.model.BonusSuperioritybefore;
 import com.vip.uyux.model.Picture;
@@ -40,6 +41,7 @@ public class TuiJianShangPinViewHolder extends BaseViewHolder<BonusSuperioritybe
     private final EasyRecyclerView recyclerViewZhuTu;
     private RecyclerArrayAdapter<Picture> adapterZhuTu;
     private OnPictureListener onPictureListener;
+    private OnNotifyItemChangeListener onNotifyItemChangeListener;
 
     public TuiJianShangPinViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -137,6 +139,8 @@ public class TuiJianShangPinViewHolder extends BaseViewHolder<BonusSuperioritybe
                     @Override
                     public void remove(int position) {
                         adapterZhuTu.remove(position);
+                        data.getPicZhuTu().remove(position);
+                        onNotifyItemChangeListener.notify(0);
                     }
                 });
                 return pictureViewHolder;
@@ -188,4 +192,7 @@ public class TuiJianShangPinViewHolder extends BaseViewHolder<BonusSuperioritybe
         this.onPictureListener = onPictureListener;
     }
 
+    public void setOnNotifyItemChangeListener(OnNotifyItemChangeListener onNotifyItemChangeListener) {
+        this.onNotifyItemChangeListener = onNotifyItemChangeListener;
+    }
 }

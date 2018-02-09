@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="15dp"
+            android:text="产品相关资质文件"
+            android:textSize="@dimen/normal_textsize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="例如：第三方资质报告，生产许可证，委托加工，工业设计版权证明"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/litterText" />
+
+        <com.jude.easyrecyclerview.EasyRecyclerView
+            android:id="@+id/recyclerViewWenJian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:scrollbarStyle="insideOverlay" />
+    </LinearLayout>
+
+</LinearLayout>
