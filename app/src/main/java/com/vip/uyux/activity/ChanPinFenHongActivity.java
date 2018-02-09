@@ -181,7 +181,7 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
         switch (view.getId()) {
             case R.id.btnTuiJian:
                 Intent intent = new Intent();
-                intent.setClass(this,TuiJianSPActivity.class);
+                intent.setClass(this,TuiJianSPCZActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageBack:

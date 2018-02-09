@@ -29,33 +29,15 @@ public class BonusSuperioritybefore {
     private List<Picture> picZhuTu;
     private List<Picture> picChanPinZiZhi;
     private List<Picture> picHuoYuanZiZhi;
-//    private RecyclerArrayAdapter<Picture> adapterZhuTu;
-//    private RecyclerArrayAdapter<Picture> adapterChanPinZiZhi;
-//    private RecyclerArrayAdapter<Picture> adapterHuoYuanZiZhi;
-//
-//    public RecyclerArrayAdapter<Picture> getAdapterZhuTu() {
-//        return adapterZhuTu;
-//    }
-//
-//    public void setAdapterZhuTu(RecyclerArrayAdapter<Picture> adapterZhuTu) {
-//        this.adapterZhuTu = adapterZhuTu;
-//    }
-//
-//    public RecyclerArrayAdapter<Picture> getAdapterChanPinZiZhi() {
-//        return adapterChanPinZiZhi;
-//    }
-//
-//    public void setAdapterChanPinZiZhi(RecyclerArrayAdapter<Picture> adapterChanPinZiZhi) {
-//        this.adapterChanPinZiZhi = adapterChanPinZiZhi;
-//    }
-//
-//    public RecyclerArrayAdapter<Picture> getAdapterHuoYuanZiZhi() {
-//        return adapterHuoYuanZiZhi;
-//    }
-//
-//    public void setAdapterHuoYuanZiZhi(RecyclerArrayAdapter<Picture> adapterHuoYuanZiZhi) {
-//        this.adapterHuoYuanZiZhi = adapterHuoYuanZiZhi;
-//    }
+    private int viewType;
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
 
     public List<Picture> getPicZhuTu() {
         return picZhuTu;

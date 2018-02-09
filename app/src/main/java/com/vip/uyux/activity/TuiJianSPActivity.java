@@ -1,7 +1,6 @@
 package com.vip.uyux.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -26,10 +24,15 @@ import com.vip.uyux.interfacepage.OnPictureListener;
 import com.vip.uyux.model.BonusSuperioritybefore;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.Picture;
+import com.vip.uyux.model.TuiJianSP;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
-import com.vip.uyux.viewholder.TuiJianShangPinViewHolder;
+import com.vip.uyux.viewholder.TuiJianShangPinViewHolder00;
+import com.vip.uyux.viewholder.TuiJianShangPinViewHolder01;
+import com.vip.uyux.viewholder.TuiJianShangPinViewHolder02;
+import com.vip.uyux.viewholder.TuiJianShangPinViewHolder03;
+import com.vip.uyux.viewholder.TuiJianShangPinViewHolder04;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,9 +41,10 @@ import java.util.List;
 public class TuiJianSPActivity extends ZjbBaseActivity implements View.OnClickListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<BonusSuperioritybefore> adapter;
+    private RecyclerArrayAdapter<TuiJianSP> adapter;
     private BonusSuperioritybefore bonusSuperioritybefore;
-    private int type;
+    private TuiJianShangPinViewHolder01 tuiJianShangPinViewHolder01;
+    //    private TuiJianShangPinViewHolder00 tuiJianShangPinViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,36 +79,55 @@ public class TuiJianSPActivity extends ZjbBaseActivity implements View.OnClickLi
      */
     private void initRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
-        itemDecoration.setDrawLastItem(false);
-        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<BonusSuperioritybefore>(TuiJianSPActivity.this) {
-
-            private TuiJianShangPinViewHolder tuiJianShangPinViewHolder;
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<TuiJianSP>(TuiJianSPActivity.this) {
 
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.view_tuijianshangpin;
-                tuiJianShangPinViewHolder = new TuiJianShangPinViewHolder(parent, layout);
-                tuiJianShangPinViewHolder.setOnPictureListener(new OnPictureListener() {
-                    @Override
-                    public void addPicture(List<LocalMedia> localMediaList, int type) {
-                        TuiJianSPActivity.this.addPicture(localMediaList, type);
-                    }
+                int layout;
+                switch (viewType) {
+                    case 0:
+                        layout = R.layout.item_tuijianshangpin00;
+                        return new TuiJianShangPinViewHolder00(parent, layout);
+                    case 1:
+                        layout = R.layout.item_tuijianshangpin01;
+                        tuiJianShangPinViewHolder01 = new TuiJianShangPinViewHolder01(parent, layout);
+                        tuiJianShangPinViewHolder01.setOnPictureListener(new OnPictureListener() {
+                            @Override
+                            public void addPicture(List<LocalMedia> localMediaList, int type) {
+                                TuiJianSPActivity.this.addPicture(localMediaList, type);
+                            }
 
-                    @Override
-                    public void showPicture(List<LocalMedia> localMediaList, int position) {
-                        TuiJianSPActivity.this.showPicture(localMediaList, position);
-                    }
-                });
-                tuiJianShangPinViewHolder.setOnNotifyItemChangeListener(new OnNotifyItemChangeListener() {
-                    @Override
-                    public void notify(int position) {
-                        adapter.notifyItemChanged(0);
-                    }
-                });
-                return tuiJianShangPinViewHolder;
+                            @Override
+                            public void showPicture(List<LocalMedia> localMediaList, int position) {
+                                TuiJianSPActivity.this.showPicture(localMediaList, position);
+                            }
+                        });
+                        tuiJianShangPinViewHolder01.setOnNotifyItemChangeListener(new OnNotifyItemChangeListener() {
+                            @Override
+                            public void notify(int position) {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                        return tuiJianShangPinViewHolder01;
+                    case 2:
+                        layout = R.layout.item_tuijianshangpin02;
+                        return new TuiJianShangPinViewHolder02(parent, layout);
+                    case 3:
+                        layout = R.layout.item_tuijianshangpin03;
+                        return new TuiJianShangPinViewHolder03(parent, layout);
+                    case 4:
+                        layout = R.layout.item_tuijianshangpin04;
+                        return new TuiJianShangPinViewHolder04(parent, layout);
+                    default:
+                        layout = R.layout.item_tuijianshangpin00;
+                        return new TuiJianShangPinViewHolder00(parent, layout);
+                }
+            }
+
+            @Override
+            public int getViewType(int position) {
+                return getItem(position).getViewType();
             }
         });
     }
@@ -138,11 +161,17 @@ public class TuiJianSPActivity extends ZjbBaseActivity implements View.OnClickLi
                 try {
                     bonusSuperioritybefore = GsonUtils.parseJSON(s, BonusSuperioritybefore.class);
                     if (bonusSuperioritybefore.getStatus() == 1) {
-                        List<Picture> pictureList = new ArrayList<>();
-                        pictureList.add(new Picture(1, new LocalMedia()));
-                        bonusSuperioritybefore.setPicZhuTu(pictureList);
                         adapter.clear();
-                        adapter.add(bonusSuperioritybefore);
+                        TuiJianSP tuiJianSP00 = new TuiJianSP(bonusSuperioritybefore, 0);
+                        adapter.add(tuiJianSP00);
+                        TuiJianSP tuiJianSP01 = new TuiJianSP(bonusSuperioritybefore, 1);
+                        adapter.add(tuiJianSP01);
+                        TuiJianSP tuiJianSP02 = new TuiJianSP(bonusSuperioritybefore, 2);
+                        adapter.add(tuiJianSP02);
+                        TuiJianSP tuiJianSP03 = new TuiJianSP(bonusSuperioritybefore, 3);
+                        adapter.add(tuiJianSP03);
+                        TuiJianSP tuiJianSP04 = new TuiJianSP(bonusSuperioritybefore, 4);
+                        adapter.add(tuiJianSP04);
                         adapter.notifyDataSetChanged();
                     } else if (bonusSuperioritybefore.getStatus() == 3) {
                         MyDialog.showReLoginDialog(TuiJianSPActivity.this);
@@ -203,19 +232,28 @@ public class TuiJianSPActivity extends ZjbBaseActivity implements View.OnClickLi
                 case PictureConfig.CHOOSE_REQUEST:
                     // 图片选择结果回调
                     List<LocalMedia> localMediaList = PictureSelector.obtainMultipleResult(data);
-                    List<Picture> picZhuTu = adapter.getItem(0).getPicZhuTu();
+                    List<Picture> picZhuTu = new ArrayList<>();
                     picZhuTu.clear();
                     for (int i = 0; i < localMediaList.size(); i++) {
                         picZhuTu.add(new Picture(0, localMediaList.get(i)));
                     }
                     picZhuTu.add(new Picture(1, new LocalMedia()));
-                    adapter.notifyItemChanged(0);
+                    switch (type) {
+                        case 1:
+                            tuiJianShangPinViewHolder01.adapterZhuTu.clear();
+                            tuiJianShangPinViewHolder01.adapterZhuTu.addAll(picZhuTu);
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;
             }
         }
     }
+
+    int type;
 
     /**
      * 添加照片

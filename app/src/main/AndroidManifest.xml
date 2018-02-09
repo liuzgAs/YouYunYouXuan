@@ -426,9 +426,18 @@
         <activity
             android:name=".activity.FuWuDanXQActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.ZhiTuiFenHongActivity" />
-        <activity android:name=".activity.ChanPinLBTabActivity" />
-        <activity android:name=".activity.TuiJianSPActivity"></activity>
+        <activity
+            android:name=".activity.ZhiTuiFenHongActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.ChanPinLBTabActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.TuiJianSPActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.TuiJianSPCZActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
