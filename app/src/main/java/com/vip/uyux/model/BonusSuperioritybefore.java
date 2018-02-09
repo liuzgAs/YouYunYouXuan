@@ -26,6 +26,60 @@ public class BonusSuperioritybefore {
     private String huoYuanXingZhi;
     private List<DataBean> data;
     private List<NatureBean> nature;
+    private List<Picture> picZhuTu;
+    private List<Picture> picChanPinZiZhi;
+    private List<Picture> picHuoYuanZiZhi;
+//    private RecyclerArrayAdapter<Picture> adapterZhuTu;
+//    private RecyclerArrayAdapter<Picture> adapterChanPinZiZhi;
+//    private RecyclerArrayAdapter<Picture> adapterHuoYuanZiZhi;
+//
+//    public RecyclerArrayAdapter<Picture> getAdapterZhuTu() {
+//        return adapterZhuTu;
+//    }
+//
+//    public void setAdapterZhuTu(RecyclerArrayAdapter<Picture> adapterZhuTu) {
+//        this.adapterZhuTu = adapterZhuTu;
+//    }
+//
+//    public RecyclerArrayAdapter<Picture> getAdapterChanPinZiZhi() {
+//        return adapterChanPinZiZhi;
+//    }
+//
+//    public void setAdapterChanPinZiZhi(RecyclerArrayAdapter<Picture> adapterChanPinZiZhi) {
+//        this.adapterChanPinZiZhi = adapterChanPinZiZhi;
+//    }
+//
+//    public RecyclerArrayAdapter<Picture> getAdapterHuoYuanZiZhi() {
+//        return adapterHuoYuanZiZhi;
+//    }
+//
+//    public void setAdapterHuoYuanZiZhi(RecyclerArrayAdapter<Picture> adapterHuoYuanZiZhi) {
+//        this.adapterHuoYuanZiZhi = adapterHuoYuanZiZhi;
+//    }
+
+    public List<Picture> getPicZhuTu() {
+        return picZhuTu;
+    }
+
+    public void setPicZhuTu(List<Picture> picZhuTu) {
+        this.picZhuTu = picZhuTu;
+    }
+
+    public List<Picture> getPicChanPinZiZhi() {
+        return picChanPinZiZhi;
+    }
+
+    public void setPicChanPinZiZhi(List<Picture> picChanPinZiZhi) {
+        this.picChanPinZiZhi = picChanPinZiZhi;
+    }
+
+    public List<Picture> getPicHuoYuanZiZhi() {
+        return picHuoYuanZiZhi;
+    }
+
+    public void setPicHuoYuanZiZhi(List<Picture> picHuoYuanZiZhi) {
+        this.picHuoYuanZiZhi = picHuoYuanZiZhi;
+    }
 
     public String getHuoYuanXingZhi() {
         return huoYuanXingZhi;
