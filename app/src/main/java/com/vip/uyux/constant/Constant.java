@@ -402,6 +402,10 @@ public class Constant {
          * 购物车推荐商品
          */
         public static final String CART_RECOM = "/Cart/recom";
+        /**
+         * 推荐商品前请求
+         */
+        public static final String BONUS_SUPERIORITYBEFORE = "/Bonus/superiorityBefore";
 
     }
 

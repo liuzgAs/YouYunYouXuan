@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -167,6 +168,7 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.btnTuiJian).setOnClickListener(this);
     }
 
     @Override
@@ -177,6 +179,11 @@ public class ChanPinFenHongActivity extends ZjbBaseActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btnTuiJian:
+                Intent intent = new Intent();
+                intent.setClass(this,TuiJianSPActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageBack:
                 finish();
                 break;

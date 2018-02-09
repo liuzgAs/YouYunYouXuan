@@ -427,7 +427,8 @@
             android:name=".activity.FuWuDanXQActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activity.ZhiTuiFenHongActivity" />
-        <activity android:name=".activity.ChanPinLBTabActivity"></activity>
+        <activity android:name=".activity.ChanPinLBTabActivity" />
+        <activity android:name=".activity.TuiJianSPActivity"></activity>
     </application>
 
 </manifest>
