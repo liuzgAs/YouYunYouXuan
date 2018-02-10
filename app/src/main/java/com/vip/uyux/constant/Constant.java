@@ -441,6 +441,7 @@ public class Constant {
         public static final int IMAGE_PICKER = 2029;
         public static final int KAI_SHI_CE_SHI = 2030;
         public static final int CITY = 2033;
+        public static final int YOU_HUI_QUAN = 2034;
     }
 
     public static class Acache {
@@ -479,6 +480,7 @@ public class Constant {
         public static final String SHUA_XIN_PING_JIA = "shua_xin_ping_jia";
         public static final String SHUA_XIN_SHOW_HOU = "shuaXinShouHou";
         public static final String SHUA_XIN_U_BI = "shuaXinUBI";
+        public static final String SET_MAIN_TAB = "set_main_tab";
     }
 
 

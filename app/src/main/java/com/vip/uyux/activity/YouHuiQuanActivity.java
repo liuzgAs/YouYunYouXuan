@@ -1,36 +1,36 @@
 package com.vip.uyux.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.jude.easyrecyclerview.EasyRecyclerView;
-import com.jude.easyrecyclerview.adapter.BaseViewHolder;
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
-import com.vip.uyux.base.ZjbBaseActivity;
+import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.fragment.YouHuiQuanFragment;
 import com.vip.uyux.model.CouponIndex;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
-import com.vip.uyux.viewholder.YouHuiQuanViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class YouHuiQuanActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class YouHuiQuanActivity extends ZjbBaseNotLeftActivity implements View.OnClickListener {
 
-    private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<CouponIndex.DataBean> adapter;
+
+    private TabLayout tablayout;
+    private ViewPager viewPager;
+    private List<CouponIndex.TypeBean> typeBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,119 +51,20 @@ public class YouHuiQuanActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     protected void findID() {
-        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+        tablayout = (TabLayout) findViewById(R.id.tablayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
     }
 
     @Override
     protected void initViews() {
         ((TextView)findViewById(R.id.textViewTitle)).setText("优惠券");
-        initRecycler();
     }
 
-    /**
-     * 初始化recyclerview
-     */
-    private void initRecycler() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
-        itemDecoration.setDrawLastItem(false);
-        recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CouponIndex.DataBean>(YouHuiQuanActivity.this) {
-            @Override
-            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_youhuiquan;
-                return new YouHuiQuanViewHolder(parent, layout);
-            }
-        });
-        adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
-            @Override
-            public void onMoreShow() {
-                ApiClient.post(YouHuiQuanActivity.this, getOkObject(), new ApiClient.CallBack() {
-                    @Override
-                    public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
-                        try {
-                            page++;
-                            CouponIndex couponIndex = GsonUtils.parseJSON(s, CouponIndex.class);
-                            int status = couponIndex.getStatus();
-                            if (status == 1) {
-                                List<CouponIndex.DataBean> dataBeanList = couponIndex.getData();
-                                adapter.addAll(dataBeanList);
-                            } else if (status == 3) {
-                                MyDialog.showReLoginDialog(YouHuiQuanActivity.this);
-                            } else {
-                                adapter.pauseMore();
-                            }
-                        } catch (Exception e) {
-                            adapter.pauseMore();
-                        }
-                    }
-
-                    @Override
-                    public void onError() {
-                        adapter.pauseMore();
-                    }
-                });
-
-            }
-
-            @Override
-            public void onMoreClick() {
-
-            }
-        });
-        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
-            @Override
-            public void onNoMoreShow() {
-
-            }
-
-            @Override
-            public void onNoMoreClick() {
-            }
-        });
-        adapter.setError(R.layout.view_error, new RecyclerArrayAdapter.OnErrorListener() {
-            @Override
-            public void onErrorShow() {
-                adapter.resumeMore();
-            }
-
-            @Override
-            public void onErrorClick() {
-                adapter.resumeMore();
-            }
-        });
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-            }
-        });
-        recyclerView.setRefreshListener(this);
-    }
 
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
     }
-
-    @Override
-    protected void initData() {
-        onRefresh();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.imageBack:
-                finish();
-                break;
-            default:
-                break;
-        }
-    }
-
-    int page =1;
 
     /**
      * des： 网络请求参数
@@ -177,59 +78,74 @@ public class YouHuiQuanActivity extends ZjbBaseActivity implements View.OnClickL
             params.put("uid", userInfo.getUid());
             params.put("tokenTime",tokenTime);
         }
-        params.put("p",String.valueOf(page));
         return new OkObject(params, url);
     }
 
     @Override
-    public void onRefresh() {
-      page =1;
-      ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
-          @Override
-          public void onSuccess(String s) {
-              LogUtil.LogShitou("", s);
-              try {
-                  page++;
-                  CouponIndex couponIndex = GsonUtils.parseJSON(s, CouponIndex.class);
-                  if (couponIndex.getStatus() == 1) {
-                      List<CouponIndex.DataBean> dataBeanList = couponIndex.getData();
-                      adapter.clear();
-                      adapter.addAll(dataBeanList);
-                  } else if (couponIndex.getStatus()== 3) {
-                      MyDialog.showReLoginDialog(YouHuiQuanActivity.this);
-                  } else {
-                      showError(couponIndex.getInfo());
-                  }
-              } catch (Exception e) {
-                  showError("数据出错");
-              }
-          }
+    protected void initData() {
+        ApiClient.post(YouHuiQuanActivity.this, getOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("YouHuiQuanActivity--onSuccess",s+ "");
+                try {
+                    CouponIndex couponIndex = GsonUtils.parseJSON(s, CouponIndex.class);
+                    if (couponIndex.getStatus()==1){
+                        typeBeanList = couponIndex.getType();
+                        viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
+                        tablayout.setupWithViewPager(viewPager);
+                        tablayout.removeAllTabs();
+                        for (int i = 0; i < typeBeanList.size(); i++) {
+                            View view = LayoutInflater.from(YouHuiQuanActivity.this).inflate(R.layout.item_tablayout, null);
+                            TextView textTitle = view.findViewById(R.id.textTitle);
+                            textTitle.setText(typeBeanList.get(i).getN());
+                            if (i == 0) {
+                                tablayout.addTab(tablayout.newTab().setCustomView(view), true);
+                            } else {
+                                tablayout.addTab(tablayout.newTab().setCustomView(view), false);
+                            }
+                        }
+                    }else if (couponIndex.getStatus()==3){
+                        MyDialog.showReLoginDialog(YouHuiQuanActivity.this);
+                    }else {
+                        Toast.makeText(YouHuiQuanActivity.this, couponIndex.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(YouHuiQuanActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-          @Override
-          public void onError() {
-              showError("网络出错");
-          }
-          /**
-           * 错误显示
-           * @param msg
-           */
-          private void showError(String msg) {
-              try {
-                  View viewLoader = LayoutInflater.from(YouHuiQuanActivity.this).inflate(R.layout.view_loaderror, null);
-                  TextView textMsg = viewLoader.findViewById(R.id.textMsg);
-                  textMsg.setText(msg);
-                  viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
-                      @Override
-                      public void onClick(View v) {
-                          recyclerView.showProgress();
-                          initData();
-                      }
-                  });
-                  recyclerView.setErrorView(viewLoader);
-                  recyclerView.showError();
-              } catch (Exception e) {
-              }
-          }
-      });
+            @Override
+            public void onError() {
+                Toast.makeText(YouHuiQuanActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imageBack:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
+
+    class MyPageAdapter extends FragmentPagerAdapter {
+
+        public MyPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new YouHuiQuanFragment(typeBeanList.get(position).getV());
+        }
+
+        @Override
+        public int getCount() {
+            return typeBeanList.size();
+        }
     }
 }

@@ -20,10 +20,10 @@ import android.widget.Toast;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.FenXiangZXActivity;
 import com.vip.uyux.activity.GeRenXXActivity;
-import com.vip.uyux.activity.UbiSCActivity;
 import com.vip.uyux.activity.PingJiaGLActivity;
 import com.vip.uyux.activity.SheZhiActivity;
 import com.vip.uyux.activity.ShouHouFWActivity;
+import com.vip.uyux.activity.UbiSCActivity;
 import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
@@ -484,7 +484,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             case R.id.viewYouHuiQuan:
                 if (isLogin) {
                     intent.setClass(mContext, YouHuiQuanActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,Constant.RequestResultCode.YOU_HUI_QUAN);
                 } else {
                     ToLoginActivity.toLoginActivity(mContext);
                 }
@@ -533,4 +533,5 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         super.onDestroy();
         getActivity().unregisterReceiver(reciver);
     }
+
 }

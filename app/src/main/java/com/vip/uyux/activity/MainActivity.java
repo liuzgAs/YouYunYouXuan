@@ -68,6 +68,10 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 case Constant.BroadcastCode.SHUA_XIN_CAR:
                     initData();
                     break;
+                case Constant.BroadcastCode.SET_MAIN_TAB:
+                    int position = intent.getIntExtra(Constant.IntentKey.POSITION, 0);
+                    mTabHost.setCurrentTab(position);
+                    break;
                 default:
                     break;
             }
@@ -164,7 +168,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
         tabsItem[4] = "我的";
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtab);
         for (int i = 0; i < tabsItem.length; i++) {
-            View inflate ;
+            View inflate;
             if (i == 3) {
                 inflate3 = getLayoutInflater().inflate(R.layout.tabs_item, null);
                 TextView tabsText = inflate3.findViewById(R.id.tabs_text);
@@ -172,7 +176,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 tabsImg.setImageResource(imgRes[i]);
                 tabsText.setText(tabsItem[i]);
                 mTabHost.addTab(mTabHost.newTabSpec(tabsItem[i]).setIndicator(inflate3), fragment[i], null);
-            }else {
+            } else {
                 inflate = getLayoutInflater().inflate(R.layout.tabs_item, null);
                 TextView tabsText = inflate.findViewById(R.id.tabs_text);
                 ImageView tabsImg = inflate.findViewById(R.id.tabs_img);
@@ -197,9 +201,9 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("did",did);
+        params.put("did", did);
         return new OkObject(params, url);
     }
 
@@ -208,19 +212,19 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
         ApiClient.post(MainActivity.this, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                LogUtil.LogShitou("MainActivity--onSuccess",s+ "");
+                LogUtil.LogShitou("MainActivity--onSuccess", s + "");
                 try {
                     CartNum cartNum = GsonUtils.parseJSON(s, CartNum.class);
-                    if (cartNum.getStatus()==1){
+                    if (cartNum.getStatus() == 1) {
                         badge.setBadgeNumber(cartNum.getNum())
                                 .bindTarget(inflate3);
-                    }else if (cartNum.getStatus()==3){
+                    } else if (cartNum.getStatus() == 3) {
                         MyDialog.showReLoginDialog(MainActivity.this);
-                    }else {
+                    } else {
                         Toast.makeText(MainActivity.this, cartNum.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(MainActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -257,6 +261,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.ADV);
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+        filter.addAction(Constant.BroadcastCode.SET_MAIN_TAB);
         registerReceiver(reciver, filter);
     }
 
