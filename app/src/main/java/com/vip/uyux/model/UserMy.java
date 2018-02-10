@@ -27,6 +27,8 @@ public class UserMy {
     private String id;
     private String nickname;
     private String qc_url;
+    private String vip_url_title;
+    private String vip_url;
     private String headimg;
     private int lv;
     private String money;
@@ -38,6 +40,22 @@ public class UserMy {
     private int status;
     private String info;
     private List<Integer> orderNum ;
+
+    public String getVip_url_title() {
+        return vip_url_title;
+    }
+
+    public void setVip_url_title(String vip_url_title) {
+        this.vip_url_title = vip_url_title;
+    }
+
+    public String getVip_url() {
+        return vip_url;
+    }
+
+    public void setVip_url(String vip_url) {
+        this.vip_url = vip_url;
+    }
 
     public String getQc_url() {
         return qc_url;

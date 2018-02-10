@@ -111,6 +111,8 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
     private View text0101;
     private View text0100;
     private View text0102;
+    private String vip_url;
+    private String vip_url_title;
 
     public WoDeFragment() {
         // Required empty public constructor
@@ -215,6 +217,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewGuanYuWM).setOnClickListener(this);
         mInflate.findViewById(R.id.viewPingJiaGL).setOnClickListener(this);
         mInflate.findViewById(R.id.viewTuiHuanHuo).setOnClickListener(this);
+        mInflate.findViewById(R.id.image0100).setOnClickListener(this);
         btnShengJi.setOnClickListener(this);
     }
 
@@ -291,6 +294,8 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                             textJiFen.setText(String.valueOf(userMy.getScore()));
                             textCouponNum.setText(userMy.getCouponNum() + "张");
                             badge.setBadgeNumber(userMy.getTipsNum()).bindTarget(imageXiaoXi);
+                            vip_url = userMy.getVip_url();
+                            vip_url_title = userMy.getVip_url_title();
                             if (userMy.getLv() > 0) {
                                 viewDiBu.setBackgroundColor(Color.TRANSPARENT);
                                 btnShengJi.setVisibility(View.GONE);
@@ -378,6 +383,12 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 } else {
                     ToLoginActivity.toLoginActivity(mContext);
                 }
+                break;
+            case R.id.image0100:
+                intent.setClass(mContext, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, vip_url_title);
+                intent.putExtra(Constant.IntentKey.URL, vip_url);
+                startActivity(intent);
                 break;
             case R.id.viewGuanYuWM:
                 intent.setClass(mContext, WebActivity.class);
@@ -484,7 +495,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             case R.id.viewYouHuiQuan:
                 if (isLogin) {
                     intent.setClass(mContext, YouHuiQuanActivity.class);
-                    startActivityForResult(intent,Constant.RequestResultCode.YOU_HUI_QUAN);
+                    startActivityForResult(intent, Constant.RequestResultCode.YOU_HUI_QUAN);
                 } else {
                     ToLoginActivity.toLoginActivity(mContext);
                 }
