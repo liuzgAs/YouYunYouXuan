@@ -45,12 +45,15 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
 
 
     private BonusSuperioritybefore bonusSuperioritybefore;
-    private  TextView textHuoYuanXingZhi;
-    private  EasyRecyclerView recyclerViewHuoYuan;
+    private TextView textHuoYuanXingZhi;
+    private EasyRecyclerView recyclerViewHuoYuan;
     private RecyclerArrayAdapter<BonusSuperioritybefore.DataBean> adapterHuoYuanXingZhi;
     private EasyRecyclerView recyclerViewZhuTu;
     private RecyclerArrayAdapter<Picture> adapterZhuTu;
     private EasyRecyclerView recyclerViewWenJian;
+    private RecyclerArrayAdapter<Picture> adapterWenJian;
+    private EasyRecyclerView recyclerViewHuoYuanZiZHi;
+    private RecyclerArrayAdapter<Picture> adapterHuoYuan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,7 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
         recyclerViewZhuTu = (EasyRecyclerView) findViewById(R.id.recyclerViewZhuTu);
         recyclerViewHuoYuan = (EasyRecyclerView) findViewById(R.id.recyclerViewHuoYuan);
         recyclerViewWenJian = (EasyRecyclerView) findViewById(R.id.recyclerViewWenJian);
+        recyclerViewHuoYuanZiZHi = (EasyRecyclerView) findViewById(R.id.recyclerViewHuoYuanZiZHi);
 
     }
 
@@ -84,6 +88,8 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
         findViewById(R.id.viewHuoYuanXZ).setOnClickListener(this);
         initHuoYuanYouShiRecycler();
         initZhuTuRecycler();
+        initWenJianRecycler();
+        initHuoYuanRecycler();
     }
 
     /**
@@ -145,7 +151,7 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
                             localMediaList.add(adapterZhuTu.getItem(i).getLocalMedia());
                         }
                     }
-                    addPicture(localMediaList,1);
+                    addPicture(localMediaList, 1);
                 } else {
                     LogUtil.LogShitou("PingJiaActivity--onItemClick", "预览");
                     LocalMedia media = adapterZhuTu.getItem(position).getLocalMedia();
@@ -161,7 +167,7 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
                         case 1:
                             // 预览图片 可自定长按保存路径
                             //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file", selectList);
-                            showPicture(localMediaList,position);
+                            showPicture(localMediaList, position);
                             break;
                         default:
                             break;
@@ -170,7 +176,145 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
             }
         });
         adapterZhuTu.clear();
-        adapterZhuTu.add(new Picture(1,new LocalMedia()));
+        adapterZhuTu.add(new Picture(1, new LocalMedia()));
+    }
+
+    /**
+     * 初始化recyclerview
+     */
+    private void initWenJianRecycler() {
+        GridLayoutManager manager = new GridLayoutManager(this, 4);
+        recyclerViewWenJian.setLayoutManager(manager);
+        SpaceDecoration itemDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(12f, this));
+        recyclerViewWenJian.addItemDecoration(itemDecoration);
+        recyclerViewWenJian.setRefreshingColorResources(R.color.basic_color);
+        recyclerViewWenJian.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewWenJian.setAdapterWithProgress(adapterWenJian = new RecyclerArrayAdapter<Picture>(TuiJianSPCZActivity.this) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.gv_filter_image;
+                PictureViewHolder pictureViewHolder = new PictureViewHolder(parent, layout, viewType);
+                pictureViewHolder.setOnRemoveListener(new PictureViewHolder.OnRemoveListener() {
+                    @Override
+                    public void remove(int position) {
+                        adapterWenJian.remove(position);
+                        adapterWenJian.notifyDataSetChanged();
+                    }
+                });
+                return pictureViewHolder;
+            }
+
+            @Override
+            public int getViewType(int position) {
+                return getItem(position).getType();
+            }
+        });
+        manager.setSpanSizeLookup(adapterWenJian.obtainGridSpanSizeLookUp(4));
+        adapterWenJian.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (adapterWenJian.getItem(position).getType() == 1) {
+                    List<LocalMedia> localMediaList = new ArrayList<>();
+                    for (int i = 0; i < adapterWenJian.getAllData().size(); i++) {
+                        if (adapterWenJian.getItem(i).getType() == 0) {
+                            localMediaList.add(adapterWenJian.getItem(i).getLocalMedia());
+                        }
+                    }
+                    addPicture(localMediaList, 2);
+                } else {
+                    LogUtil.LogShitou("PingJiaActivity--onItemClick", "预览");
+                    LocalMedia media = adapterWenJian.getItem(position).getLocalMedia();
+                    String pictureType = media.getPictureType();
+                    int mediaType = PictureMimeType.pictureToVideo(pictureType);
+                    List<LocalMedia> localMediaList = new ArrayList<>();
+                    for (int i = 0; i < adapterWenJian.getAllData().size(); i++) {
+                        if (adapterWenJian.getItem(i).getType() == 0) {
+                            localMediaList.add(adapterWenJian.getItem(i).getLocalMedia());
+                        }
+                    }
+                    switch (mediaType) {
+                        case 1:
+                            // 预览图片 可自定长按保存路径
+                            //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file", selectList);
+                            showPicture(localMediaList, position);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
+        adapterWenJian.clear();
+        adapterWenJian.add(new Picture(1, new LocalMedia()));
+    }
+
+    /**
+     * 初始化recyclerview
+     */
+    private void initHuoYuanRecycler() {
+        GridLayoutManager manager = new GridLayoutManager(this, 4);
+        recyclerViewHuoYuanZiZHi.setLayoutManager(manager);
+        SpaceDecoration itemDecoration = new SpaceDecoration((int) DpUtils.convertDpToPixel(12f, this));
+        recyclerViewHuoYuanZiZHi.addItemDecoration(itemDecoration);
+        recyclerViewHuoYuanZiZHi.setRefreshingColorResources(R.color.basic_color);
+        recyclerViewHuoYuanZiZHi.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewHuoYuanZiZHi.setAdapterWithProgress(adapterHuoYuan = new RecyclerArrayAdapter<Picture>(TuiJianSPCZActivity.this) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.gv_filter_image;
+                PictureViewHolder pictureViewHolder = new PictureViewHolder(parent, layout, viewType);
+                pictureViewHolder.setOnRemoveListener(new PictureViewHolder.OnRemoveListener() {
+                    @Override
+                    public void remove(int position) {
+                        adapterHuoYuan.remove(position);
+                        adapterHuoYuan.notifyDataSetChanged();
+                    }
+                });
+                return pictureViewHolder;
+            }
+
+            @Override
+            public int getViewType(int position) {
+                return getItem(position).getType();
+            }
+        });
+        manager.setSpanSizeLookup(adapterHuoYuan.obtainGridSpanSizeLookUp(4));
+        adapterHuoYuan.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (adapterHuoYuan.getItem(position).getType() == 1) {
+                    List<LocalMedia> localMediaList = new ArrayList<>();
+                    for (int i = 0; i < adapterHuoYuan.getAllData().size(); i++) {
+                        if (adapterHuoYuan.getItem(i).getType() == 0) {
+                            localMediaList.add(adapterHuoYuan.getItem(i).getLocalMedia());
+                        }
+                    }
+                    addPicture(localMediaList, 3);
+                } else {
+                    LogUtil.LogShitou("PingJiaActivity--onItemClick", "预览");
+                    LocalMedia media = adapterHuoYuan.getItem(position).getLocalMedia();
+                    String pictureType = media.getPictureType();
+                    int mediaType = PictureMimeType.pictureToVideo(pictureType);
+                    List<LocalMedia> localMediaList = new ArrayList<>();
+                    for (int i = 0; i < adapterHuoYuan.getAllData().size(); i++) {
+                        if (adapterHuoYuan.getItem(i).getType() == 0) {
+                            localMediaList.add(adapterHuoYuan.getItem(i).getLocalMedia());
+                        }
+                    }
+                    switch (mediaType) {
+                        case 1:
+                            // 预览图片 可自定长按保存路径
+                            //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file", selectList);
+                            showPicture(localMediaList, position);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
+        adapterHuoYuan.clear();
+        adapterHuoYuan.add(new Picture(1, new LocalMedia()));
     }
 
 
@@ -247,18 +391,18 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.viewHuoYuanXZ:
                 List<BonusSuperioritybefore.NatureBean> natureBeanList = bonusSuperioritybefore.getNature();
-                final String[] strings = new String[natureBeanList.size()+1];
+                final String[] strings = new String[natureBeanList.size() + 1];
                 for (int i = 0; i < natureBeanList.size(); i++) {
-                    strings[i]=natureBeanList.get(i).getName();
+                    strings[i] = natureBeanList.get(i).getName();
                 }
-                strings[strings.length-1] = "其他";
+                strings[strings.length - 1] = "其他";
                 new AlertDialog.Builder(this)
                         .setItems(strings, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, final int i) {
-                                if (i<strings.length-1){
+                                if (i < strings.length - 1) {
                                     textHuoYuanXingZhi.setText(strings[i]);
-                                }else {
+                                } else {
                                     final EditDialog editDialog = new EditDialog(TuiJianSPCZActivity.this, "货源性质", "请输入货源性质", "确认", "取消");
                                     editDialog.setClicklistener(new EditDialog.ClickListenerInterface() {
                                         @Override
@@ -305,6 +449,14 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
                         case 1:
                             adapterZhuTu.clear();
                             adapterZhuTu.addAll(picZhuTu);
+                            break;
+                        case 2:
+                            adapterWenJian.clear();
+                            adapterWenJian.addAll(picZhuTu);
+                            break;
+                        case 3:
+                            adapterHuoYuan.clear();
+                            adapterHuoYuan.addAll(picZhuTu);
                             break;
                         default:
                             break;
