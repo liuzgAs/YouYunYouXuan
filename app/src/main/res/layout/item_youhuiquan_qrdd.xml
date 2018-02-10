@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_selector_white_system_gray">
+
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="15dp"
+        android:text="年货促销"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/normal_textsize" />
+    <TextView
+        android:id="@+id/textMoney"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:textColor="@color/light_black"
+        android:textSize="@dimen/normal_textsize"
+        android:text="¥2.00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

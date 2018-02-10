@@ -7,10 +7,18 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +27,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.adapter.YouHuiQuanAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
@@ -30,6 +39,7 @@ import com.vip.uyux.model.QueRenDD;
 import com.vip.uyux.model.UserAddress;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.Arith;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.QueRenDDViewHolder;
@@ -63,6 +73,9 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
             }
         }
     };
+    private List<OrderConfirmbefore.CouponBean> couponBeanList;
+    private String youHuiQuan;
+    private Integer couponId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,33 +174,53 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
         });
         adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
 
+            private View viewYouHuiQuan;
+            private TextView textYouHuiQuan;
             private TextView textVipKey;
             private TextView textShipKey;
             private TextView textShipDes;
             private TextView textVipDes;
             private TextView textVip;
-            private TextView textSum1;
 
             @Override
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(QueRenDDActivity.this).inflate(R.layout.foot_queren_dd, null);
-                textSum1 = view.findViewById(R.id.textSum);
                 textVip = view.findViewById(R.id.textVip);
                 textVipDes = view.findViewById(R.id.textVipDes);
                 textShipKey = view.findViewById(R.id.textShipKey);
                 textShipDes = view.findViewById(R.id.textShipDes);
                 textVipKey = view.findViewById(R.id.textVipKey);
+                textYouHuiQuan = view.findViewById(R.id.textYouHuiQuan);
+                viewYouHuiQuan = view.findViewById(R.id.viewYouHuiQuan);
+                viewYouHuiQuan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showYouHuiQuanDialog();
+                    }
+                });
                 return view;
             }
 
             @Override
             public void onBindView(View headerView) {
-//                textSum1.setText("¥"+ sum);
                 textVip.setText("LV" + vipLv);
                 textVipDes.setText(vipDes);
                 textVipKey.setText(vipKey);
                 textShipKey.setText(shipKey);
                 textShipDes.setText(shipDes);
+                if (couponBeanList!=null){
+                    if (couponBeanList.size()>0){
+                        viewYouHuiQuan.setVisibility(View.VISIBLE);
+                        textYouHuiQuan.setHint(couponBeanList.size()+"张优惠券");
+                        if (!TextUtils.isEmpty(youHuiQuan)){
+                            textYouHuiQuan.setText(youHuiQuan);
+                        }
+                    }else {
+                        viewYouHuiQuan.setVisibility(View.GONE);
+                    }
+                }else {
+                    viewYouHuiQuan.setVisibility(View.GONE);
+                }
             }
         });
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
@@ -253,9 +286,9 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
         String did = aCache.getAsString(Constant.Acache.DID);
         OrderTiJiao orderTiJiao;
         if (isLogin) {
-            orderTiJiao = new OrderTiJiao(1, "android", userInfo.getUid(), tokenTime, jieSuan.getIntegerList(), String.valueOf(sum), did, orderConfirmbeforeAd.getId());
+            orderTiJiao = new OrderTiJiao(1, "android", userInfo.getUid(), tokenTime, jieSuan.getIntegerList(), String.valueOf(sum), did, orderConfirmbeforeAd.getId(),couponId);
         } else {
-            orderTiJiao = new OrderTiJiao(1, "android", jieSuan.getIntegerList(), sum, did, orderConfirmbeforeAd.getId());
+            orderTiJiao = new OrderTiJiao(1, "android", jieSuan.getIntegerList(), sum, did, orderConfirmbeforeAd.getId(),couponId);
         }
         return GsonUtils.parseObject(orderTiJiao);
     }
@@ -335,6 +368,8 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                         vipDes = orderConfirmbefore.getVipDes();
                         shipKey = orderConfirmbefore.getShipKey();
                         shipDes = orderConfirmbefore.getShipDes();
+                        couponBeanList = orderConfirmbefore.getCoupon();
+                        youHuiQuan = orderConfirmbefore.getYouHuiQuan();
                         List<OrderConfirmbefore.CartBean> cartBeanList = orderConfirmbefore.getCart();
                         adapter.clear();
                         adapter.addAll(cartBeanList);
@@ -375,6 +410,48 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                 }
             }
         });
+    }
+
+    /**
+     * 促销dialog
+     */
+    private void showYouHuiQuanDialog() {
+        View dialog_tu_pian = LayoutInflater.from(this).inflate(R.layout.dialog_chuciao, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(this, R.style.dialog)
+                .setView(dialog_tu_pian)
+                .create();
+        alertDialog.show();
+        TextView textTitle = dialog_tu_pian.findViewById(R.id.textTitle);
+        textTitle.setText("优惠券");
+        ListView listView = dialog_tu_pian.findViewById(R.id.listView);
+        listView.setAdapter(new YouHuiQuanAdapter(this, couponBeanList));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String couponMoney = couponBeanList.get(i).getMoney();
+                double sumX = Arith.mul(Double.parseDouble(sum) ,Double.parseDouble(couponMoney));
+                sum = String.valueOf(sumX);
+                textSum.setText("¥" + sum);
+                youHuiQuan="¥"+ couponMoney;
+                couponId = couponBeanList.get(i).getId();
+                adapter.notifyDataSetChanged();
+                alertDialog.dismiss();
+            }
+        });
+        dialog_tu_pian.findViewById(R.id.textQuXiao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        Window dialogWindow = alertDialog.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.dialogFenXiang);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        DisplayMetrics d = getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+        lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
+        lp.height = (int) (d.heightPixels * 0.5f); // 高度设置为屏幕的0.6
+        dialogWindow.setAttributes(lp);
     }
 
     @Override

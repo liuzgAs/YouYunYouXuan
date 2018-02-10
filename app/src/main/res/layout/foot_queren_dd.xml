@@ -134,6 +134,49 @@
     <RelativeLayout
         android:layout_marginTop="1dp"
         android:background="@drawable/layout_selector_white_system_gray"
+        android:id="@+id/viewYouHuiQuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/textPromotionsBefore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:text="优惠券"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/normal_textsize" />
+
+        <ImageView
+            android:id="@+id/image0400"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:src="@mipmap/right" />
+
+        <TextView
+            android:gravity="right"
+            android:id="@+id/textYouHuiQuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/image0400"
+            android:hint="2张"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/normal_textsize" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:background="@drawable/layout_selector_white_system_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

@@ -33,7 +33,25 @@ public class OrderConfirmbefore {
     private String shipDes;
     private int status;
     private String info;
+    private String youHuiQuan;
     private List<CartBean> cart;
+    private List<CouponBean> coupon;
+
+    public String getYouHuiQuan() {
+        return youHuiQuan;
+    }
+
+    public void setYouHuiQuan(String youHuiQuan) {
+        this.youHuiQuan = youHuiQuan;
+    }
+
+    public List<CouponBean> getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(List<CouponBean> coupon) {
+        this.coupon = coupon;
+    }
 
     public int getIs_address() {
         return is_address;
@@ -312,6 +330,36 @@ public class OrderConfirmbefore {
 
         public void setGoods_title(String goods_title) {
             this.goods_title = goods_title;
+        }
+    }
+
+    public static class CouponBean{
+        private String name;
+        private Integer id;
+        private String money;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getMoney() {
+            return money;
+        }
+
+        public void setMoney(String money) {
+            this.money = money;
         }
     }
 }

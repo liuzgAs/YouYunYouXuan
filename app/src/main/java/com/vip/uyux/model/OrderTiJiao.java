@@ -17,17 +17,19 @@ public class OrderTiJiao {
     private String orderAmount;
     private String did;
     private String aid;
+    private int coupon;
 
-    public OrderTiJiao(int loginType, String platform, List<Integer> cart, String orderAmount, String did, String aid) {
+    public OrderTiJiao(int loginType, String platform, List<Integer> cart, String orderAmount, String did, String aid,int coupon) {
         this.loginType = loginType;
         this.platform = platform;
         this.cart = cart;
         this.orderAmount = orderAmount;
         this.did = did;
         this.aid = aid;
+        this.coupon = coupon;
     }
 
-    public OrderTiJiao(int loginType, String platform, String uid, String tokenTime, List<Integer> cart, String orderAmount, String did, String aid) {
+    public OrderTiJiao(int loginType, String platform, String uid, String tokenTime, List<Integer> cart, String orderAmount, String did, String aid,int coupon) {
         this.loginType = loginType;
         this.platform = platform;
         this.uid = uid;
@@ -36,6 +38,7 @@ public class OrderTiJiao {
         this.orderAmount = orderAmount;
         this.did = did;
         this.aid = aid;
+        this.coupon = coupon;
     }
 
     public int getLoginType() {
