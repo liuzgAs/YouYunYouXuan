@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,8 +33,10 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.SingleBtnDialog;
+import com.vip.uyux.model.CouponIndex;
 import com.vip.uyux.model.GoodsShareimgs;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShareBean;
@@ -524,6 +527,73 @@ public class MyDialog {
                 api.sendReq(req);
             }
         }).start();
+    }
+
+    public static void shareYouHuiQuan(final Context context, final IWXAPI api, final CouponIndex.DataBean dataBean) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialog_shengji = inflater.inflate(R.layout.dianlog_you_hui_quan, null);
+        TextView textMoney = dialog_shengji.findViewById(R.id.textMoney);
+        TextView textLimit_money = dialog_shengji.findViewById(R.id.textLimit_money);
+        TextView textName = dialog_shengji.findViewById(R.id.textName);
+        TextView textSendDes = dialog_shengji.findViewById(R.id.textSendDes);
+        TextView textUse_time = dialog_shengji.findViewById(R.id.textUse_time);
+        TextView textShareDes = dialog_shengji.findViewById(R.id.textShareDes);
+        TextView textGuiZe = dialog_shengji.findViewById(R.id.textGuiZe);
+        TextView textShareTitle = dialog_shengji.findViewById(R.id.textShareTitle);
+        SpannableString span = new SpannableString("¥"+dataBean.getMoney());
+        span.setSpan(new RelativeSizeSpan(0.4f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textMoney.setText(span);
+        textLimit_money.setText(dataBean.getLimit_money());
+        textName.setText(dataBean.getName());
+        textSendDes.setText(dataBean.getSendDes());
+        textUse_time.setText(dataBean.getUse_time());
+        textShareDes.setText(dataBean.getShare().getDes());
+        textShareTitle.setText(dataBean.getShare().getTitle());
+        final AlertDialog alertDialog1 = new AlertDialog.Builder(context, R.style.dialog)
+                .setView(dialog_shengji)
+                .create();
+        alertDialog1.show();
+        textGuiZe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(context, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, dataBean.getUrl_title());
+                intent.putExtra(Constant.IntentKey.URL, dataBean.getUrl());
+                context.startActivity(intent);
+            }
+        });
+        dialog_shengji.findViewById(R.id.weixin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkIsSupportedWeachatPay(api)) {
+                    Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Constant.source= "wxw";
+                wxShare1(context, api, 0, dataBean.getShare().getShareUrl(), dataBean.getShare().getShareImg(),dataBean.getShare().getShareTitle(),dataBean.getShare().getShareDes());
+                alertDialog1.dismiss();
+            }
+        });
+        dialog_shengji.findViewById(R.id.pengyouquan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkIsSupportedWeachatPay(api)) {
+                    Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Constant.source ="wxp";
+                wxShare1(context, api, 1,  dataBean.getShare().getShareUrl(), dataBean.getShare().getShareImg(),dataBean.getShare().getShareTitle(),dataBean.getShare().getShareDes());
+                alertDialog1.dismiss();
+            }
+        });
+        Window dialogWindow = alertDialog1.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.dialogFenXiang);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+        lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
+        dialogWindow.setAttributes(lp);
     }
 }
 

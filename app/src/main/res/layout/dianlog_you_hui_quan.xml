@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textShareTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:text="赠送给好友"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/normal_textsize" />
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/viewBg"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@color/basic_color"
+                android:gravity="center">
+
+                <com.vip.uyux.customview.MyFontTextView
+                    android:id="@+id/textMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="50"
+                    android:textColor="@color/white"
+                    android:textSize="50dp" />
+
+                <TextView
+                    android:id="@+id/textLimit_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textMoney"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="满129元可用"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/normal_textsize" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/textName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="@dimen/leftAndRight"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="仅可购买优选优购指定商品"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/bigText" />
+
+                    <RelativeLayout
+                        android:id="@+id/viewKeZengSong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textName"
+                        android:layout_marginTop="5dp">
+
+                        <ImageView
+                            android:id="@+id/image0000"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+                            android:src="@mipmap/kezengsong" />
+
+                        <TextView
+                            android:id="@+id/textSendDes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_toRightOf="@+id/image0000"
+                            android:text="可赠送"
+                            android:textSize="@dimen/litterText" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/background" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:id="@+id/textUse_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="2018.01.22-2018.02.22"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/litterText" />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+    
+    <TextView
+        android:id="@+id/textShareDes"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:text="赠送出的券在您的账户不能使用了哦。"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/normal_textsize"
+        android:textColor="@color/light_black"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textGuiZe"
+        android:text="优惠券赠送规则>"
+        android:textColor="@color/basic_color"
+        android:textSize="@dimen/litterText"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/weixin"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="12dp"
+                android:src="@mipmap/weixin_youhuiquan"
+                android:id="@+id/image0200"
+                android:layout_width="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="35dp" />
+            <TextView
+                android:layout_below="@+id/image0200"
+                android:layout_marginTop="5dp"
+                android:text="微信好友"
+                android:textSize="@dimen/moreLitterText"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/pengyouquan"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="12dp"
+                android:src="@mipmap/pengyouquan_youhuiquan"
+                android:id="@+id/image0201"
+                android:layout_width="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="35dp" />
+            <TextView
+                android:layout_below="@+id/image0201"
+                android:layout_marginTop="5dp"
+                android:text="朋友圈"
+                android:textSize="@dimen/moreLitterText"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

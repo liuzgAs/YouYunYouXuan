@@ -38,6 +38,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
     private IWXAPI api;
     private boolean isShare = false;
     ShareBean shareBeanX;
+    int shareType;
     private BroadcastReceiver reciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -74,13 +75,13 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
             params.put("uid", userInfo.getUid());
             params.put("tokenTime",tokenTime);
         }
-        params.put("shareType",String.valueOf(0));
+        params.put("shareType",String.valueOf(shareType));
         params.put("source",Constant.source);
         params.put("shareTitle",shareBeanX.getShareTitle());
         params.put("shareImg",shareBeanX.getShareImg());
         params.put("shareDes",shareBeanX.getShareDes());
         params.put("url",shareBeanX.getShareUrl());
-        params.put("id",String.valueOf(0));
+        params.put("id",userInfo.getUid());
         return new OkObject(params, url);
     }
 
@@ -157,7 +158,8 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                 FenXiangZXViewHolder fenXiangZXViewHolder = new FenXiangZXViewHolder(parent, layout);
                 fenXiangZXViewHolder.setOnShareListener(new FenXiangZXViewHolder.OnShareListener() {
                     @Override
-                    public void share(ShareBean shareBean) {
+                    public void share(ShareBean shareBean,int shareType) {
+                        FenXiangZXActivity.this.shareType =shareType;
                         shareBeanX = shareBean;
                         isShare=true;
                         MyDialog.share01(getContext(), api, shareBean.getShareUrl(), shareBean.getShareImg(), shareBean.getShareTitle(), shareBean.getShareDes());

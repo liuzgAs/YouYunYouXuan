@@ -127,12 +127,12 @@ public class FenXiangZXViewHolder extends BaseViewHolder<ShareIndex> implements 
                 break;
             case R.id.viewVip:
                 if (teamShare != null) {
-                    onShareListener.share(vipShare);
+                    onShareListener.share(vipShare,1);
                 }
                 break;
             case R.id.viewTuanDui:
                 if (vipShare != null) {
-                    onShareListener.share(teamShare);
+                    onShareListener.share(teamShare,2);
                 }
                 break;
             case R.id.textLiJiSJ:
@@ -194,6 +194,6 @@ public class FenXiangZXViewHolder extends BaseViewHolder<ShareIndex> implements 
     }
 
     public interface OnShareListener{
-        void share(ShareBean shareBean);
+        void share(ShareBean shareBean,int shareType);
     }
 }

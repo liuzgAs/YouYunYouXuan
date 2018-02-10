@@ -2,7 +2,10 @@ package com.vip.uyux.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,18 +15,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.interfacepage.OnFinishListener;
+import com.vip.uyux.interfacepage.OnShareYouHuiQuanListener;
 import com.vip.uyux.model.CouponIndex;
 import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.ShareBean;
+import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -42,6 +51,87 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
     private String value;
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<CouponIndex.DataBean> adapter;
+    private IWXAPI api;
+    private boolean isShare = false;
+    ShareBean shareBeanX;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.WX_SHARE:
+                    if (isShare) {
+                        MyDialog.showTipDialog(mContext, "分享成功");
+                        isShare = false;
+                        shareHuiDiao();
+                    }
+                    break;
+                case Constant.BroadcastCode.WX_SHARE_FAIL:
+                    if (isShare) {
+                        MyDialog.showTipDialog(mContext, "取消分享");
+                        isShare = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    private int id;
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getHDOkObject() {
+        String url = Constant.HOST + Constant.Url.SHARE_SHAREAFTER;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("shareType",String.valueOf(3));
+        params.put("source",Constant.source);
+        params.put("shareTitle",shareBeanX.getShareTitle());
+        params.put("shareImg",shareBeanX.getShareImg());
+        params.put("shareDes",shareBeanX.getShareDes());
+        params.put("url",shareBeanX.getShareUrl());
+        params.put("id",String.valueOf(id));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 分享回调
+     */
+    private void shareHuiDiao() {
+        showLoadingDialog();
+        ApiClient.post(mContext, getHDOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess",s+ "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus()==1){
+                        LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "回调成功");
+                    }else if (simpleInfo.getStatus()==3){
+                        MyDialog.showReLoginDialog(mContext);
+                    }else {
+                        Toast.makeText(mContext, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     public YouHuiQuanFragment() {
         // Required empty public constructor
@@ -59,6 +149,7 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
         // Inflate the layout for this fragment
         if (mInflate == null) {
             mInflate = inflater.inflate(R.layout.fragment_you_hui_quan, container, false);
+            api = WXAPIFactory.createWXAPI(mContext, Constant.WXAPPID, true);
             init();
         }
         //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -111,6 +202,14 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
                         intent.putExtra(Constant.IntentKey.POSITION,2);
                         getActivity().sendBroadcast(intent);
                         getActivity().finish();
+                    }
+                });
+                youHuiQuanViewHolder.setOnShareYouHuiQuanListener(new OnShareYouHuiQuanListener() {
+                    @Override
+                    public void share(CouponIndex.DataBean dataBean) {
+                        isShare=true;
+                        id = dataBean.getId();
+                        MyDialog.shareYouHuiQuan(mContext,api,dataBean);
                     }
                 });
                 return youHuiQuanViewHolder;
@@ -191,6 +290,11 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
 
     @Override
     protected void initData() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         onRefresh();
     }
 
@@ -267,5 +371,20 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.WX_SHARE);
+        filter.addAction(Constant.BroadcastCode.WX_SHARE_FAIL);
+        getActivity().registerReceiver(reciver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(reciver);
     }
 }

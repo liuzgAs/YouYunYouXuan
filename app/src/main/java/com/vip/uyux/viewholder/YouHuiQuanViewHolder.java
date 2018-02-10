@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.interfacepage.OnFinishListener;
+import com.vip.uyux.interfacepage.OnShareYouHuiQuanListener;
 import com.vip.uyux.model.CouponIndex;
 
 /**
@@ -32,6 +33,7 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
     private final View viewZengSong;
     CouponIndex.DataBean data;
     OnFinishListener onFinishListener;
+    OnShareYouHuiQuanListener OnShareYouHuiQuanListener;
 
     public YouHuiQuanViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -61,6 +63,12 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
             @Override
             public void onClick(View view) {
                 onFinishListener.toFinish();
+            }
+        });
+        viewZengSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnShareYouHuiQuanListener.share(data);
             }
         });
     }
@@ -101,5 +109,9 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
 
     public void setOnFinishListener(OnFinishListener onFinishListener) {
         this.onFinishListener = onFinishListener;
+    }
+
+    public void setOnShareYouHuiQuanListener(com.vip.uyux.interfacepage.OnShareYouHuiQuanListener onShareYouHuiQuanListener) {
+        OnShareYouHuiQuanListener = onShareYouHuiQuanListener;
     }
 }
