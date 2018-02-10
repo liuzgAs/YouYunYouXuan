@@ -406,6 +406,10 @@ public class Constant {
          * 推荐商品前请求
          */
         public static final String BONUS_SUPERIORITYBEFORE = "/Bonus/superiorityBefore";
+        /**
+         * 推荐商品前提交
+         */
+        public static final String BONUS_SUPERIORITYSUBMIT = "/Bonus/superioritySubmit";
 
     }
 

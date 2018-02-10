@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,10 +9,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
@@ -30,9 +36,13 @@ import com.vip.uyux.customview.EditDialog;
 import com.vip.uyux.model.BonusSuperioritybefore;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.Picture;
+import com.vip.uyux.model.RespondAppimgadd;
+import com.vip.uyux.model.SimpleInfo;
+import com.vip.uyux.model.TuiJianTiJiao;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.ImgToBase64;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.PictureViewHolder;
 import com.vip.uyux.viewholder.ZiZhiZMViewHolder;
@@ -54,6 +64,17 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
     private RecyclerArrayAdapter<Picture> adapterWenJian;
     private EasyRecyclerView recyclerViewHuoYuanZiZHi;
     private RecyclerArrayAdapter<Picture> adapterHuoYuan;
+    List<Integer> imgsList = new ArrayList<>();
+    List<Integer> imgsList1 = new ArrayList<>();
+    List<Integer> imgsList2 = new ArrayList<>();
+    private ProgressDialog progressDialog;
+    private EditText editName;
+    private EditText editBrand;
+    private EditText editSn;
+    private EditText editPrice;
+    private EditText editManufacturer;
+    private EditText editIntro;
+    private CheckBox checkbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +100,13 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
         recyclerViewHuoYuan = (EasyRecyclerView) findViewById(R.id.recyclerViewHuoYuan);
         recyclerViewWenJian = (EasyRecyclerView) findViewById(R.id.recyclerViewWenJian);
         recyclerViewHuoYuanZiZHi = (EasyRecyclerView) findViewById(R.id.recyclerViewHuoYuanZiZHi);
-
+        editName = (EditText) findViewById(R.id.editName);
+        editBrand = (EditText) findViewById(R.id.editBrand);
+        editSn = (EditText) findViewById(R.id.editSn);
+        editPrice = (EditText) findViewById(R.id.editPrice);
+        editManufacturer = (EditText) findViewById(R.id.editManufacturer);
+        editIntro = (EditText) findViewById(R.id.editIntro);
+        checkbox = (CheckBox) findViewById(R.id.checkbox);
     }
 
     @Override
@@ -321,6 +348,7 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.btnTiJiao).setOnClickListener(this);
     }
 
     /**
@@ -386,9 +414,122 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
         });
     }
 
+    int imgSum;
+    boolean isBreak = false;
+    int imgSumX = 0;
+    int count = 0;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btnTiJiao:
+                if (TextUtils.isEmpty(editName.getText().toString().trim())) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "请输入商品名称", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(editBrand.getText().toString().trim())) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "请输入品牌名称", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(editSn.getText().toString().trim())) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "请输入供货货号", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(editPrice.getText().toString().trim())) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "请输入供货价格", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(editManufacturer.getText().toString().trim())) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "请输入生产商", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(textHuoYuanXingZhi.getText().toString().trim())) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "请选择货源性质", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(editIntro.getText().toString().trim())) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "请输入产品特色", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!checkbox.isChecked()) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "阅读并同意《合作协议》", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (adapterZhuTu.getAllData().size() < 4) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "主图至少传三张", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                imgsList.clear();
+                imgsList1.clear();
+                imgsList2.clear();
+                imgSum = 0;
+                isBreak = false;
+                imgSumX = 0;
+                count = 0;
+                imgSumX = adapterZhuTu.getAllData().size() + adapterWenJian.getAllData().size() + adapterHuoYuan.getAllData().size() - 3;
+                if (adapterZhuTu.getAllData().size() > 1) {
+                    for (int i = 0; i < adapterZhuTu.getAllData().size(); i++) {
+                        if (isBreak) {
+                            break;
+                        }
+                        if (adapterZhuTu.getItem(i).getType() == 0) {
+                            imgSum++;
+                            upImg(adapterZhuTu.getItem(i).getLocalMedia().getCompressPath(), 1);
+                        }
+                    }
+                }
+                if (adapterWenJian.getAllData().size() > 1) {
+                    for (int i = 0; i < adapterWenJian.getAllData().size(); i++) {
+                        if (isBreak) {
+                            break;
+                        }
+                        if (adapterWenJian.getItem(i).getType() == 0) {
+                            imgSum++;
+                            upImg(adapterWenJian.getItem(i).getLocalMedia().getCompressPath(), 2);
+                        }
+                    }
+                }
+                if (adapterHuoYuan.getAllData().size() > 1) {
+                    for (int i = 0; i < adapterHuoYuan.getAllData().size(); i++) {
+                        if (isBreak) {
+                            break;
+                        }
+                        if (adapterHuoYuan.getItem(i).getType() == 0) {
+                            imgSum++;
+                            upImg(adapterHuoYuan.getItem(i).getLocalMedia().getCompressPath(), 3);
+                        }
+                    }
+                }
+
+                progressDialog = new ProgressDialog(TuiJianSPCZActivity.this);
+                progressDialog.setTitle("上传图片");
+                progressDialog.setMessage("已上传0/" + imgSumX);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.setMax(imgSumX);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                progressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                            new AlertDialog.Builder(TuiJianSPCZActivity.this)
+                                    .setTitle("是否取消上传")
+                                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            isBreak = true;
+                                            progressDialog.dismiss();
+                                        }
+                                    }).setNegativeButton("否", null)
+                                    .create()
+                                    .show();
+                        }
+                        return false;
+                    }
+                });
+
+                break;
             case R.id.viewHuoYuanXZ:
                 List<BonusSuperioritybefore.NatureBean> natureBeanList = bonusSuperioritybefore.getNature();
                 final String[] strings = new String[natureBeanList.size() + 1];
@@ -428,6 +569,138 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
             default:
                 break;
         }
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getTPOkObject(String path) {
+        String url = Constant.WEB_HOST + Constant.Url.RESPOND_APPIMGADD;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("code", "headimg");
+        params.put("img", ImgToBase64.toBase64(path));
+        params.put("type", "png");
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 上传图片
+     */
+    private void upImg(String path, final int typePic) {
+        showLoadingDialog();
+        ApiClient.post(TuiJianSPCZActivity.this, getTPOkObject(path), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("GeRenXXActivity--上传图片", s + "");
+                try {
+                    RespondAppimgadd respondAppimgadd = GsonUtils.parseJSON(s, RespondAppimgadd.class);
+                    if (respondAppimgadd.getStatus() == 1) {
+                        count++;
+                        progressDialog.setProgress(count);
+                        progressDialog.setMessage("已上传" + count + "/" + imgSumX);
+                        switch (typePic) {
+                            case 1:
+                                imgsList.add(respondAppimgadd.getImgId());
+                                break;
+                            case 2:
+                                imgsList1.add(respondAppimgadd.getImgId());
+                                break;
+                            case 3:
+                                imgsList2.add(respondAppimgadd.getImgId());
+                                break;
+                            default:
+                                break;
+                        }
+                        if (count == imgSum) {
+                            progressDialog.dismiss();
+                            tiJiao();
+                        }
+                    } else if (respondAppimgadd.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(TuiJianSPCZActivity.this);
+                    } else {
+                        Toast.makeText(TuiJianSPCZActivity.this, respondAppimgadd.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(TuiJianSPCZActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private String getTJOkObject() {
+        List<Integer> high_quality = new ArrayList<>();
+        for (int i = 0; i < adapterHuoYuanXingZhi.getAllData().size(); i++) {
+            if (adapterHuoYuanXingZhi.getItem(i).isCheck()) {
+                high_quality.add(adapterHuoYuanXingZhi.getItem(i).getId());
+            }
+        }
+        TuiJianTiJiao tuiJianTiJiao = new TuiJianTiJiao(1,
+                "android",
+                userInfo.getUid(),
+                tokenTime, editName.getText().toString().trim(),
+                editSn.getText().toString().trim(),
+                editBrand.getText().toString().trim(),
+                editPrice.getText().toString().trim(),
+                editManufacturer.getText().toString().trim(),
+                textHuoYuanXingZhi.getText().toString().trim(),
+                editIntro.getText().toString().trim(),
+                high_quality,
+                imgsList,
+                imgsList1,
+                imgsList2
+                );
+        return GsonUtils.parseObject(tuiJianTiJiao);
+    }
+
+    /**
+     * 提交
+     */
+    private void tiJiao() {
+        showLoadingDialog();
+        String url = Constant.HOST + Constant.Url.BONUS_SUPERIORITYSUBMIT;
+        ApiClient.postJson(TuiJianSPCZActivity.this, url, getTJOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("TuiJianSPCZActivity--onSuccess", s + "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus() == 1) {
+                        MyDialog.dialogFinish(TuiJianSPCZActivity.this,"推荐成功");
+                    } else if (simpleInfo.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(TuiJianSPCZActivity.this);
+                    } else {
+                        Toast.makeText(TuiJianSPCZActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(TuiJianSPCZActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(TuiJianSPCZActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -507,5 +780,15 @@ public class TuiJianSPCZActivity extends ZjbBaseActivity implements View.OnClick
 
     private void showPicture(List<LocalMedia> localMediaList, int position) {
         PictureSelector.create(this).externalPicturePreview(position, localMediaList);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progressDialog != null) {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
     }
 }
