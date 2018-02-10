@@ -162,7 +162,7 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
 
             }
         });
-        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
+        adapter.setNoMore(R.layout.view_nomore_ubi, new RecyclerArrayAdapter.OnNoMoreListener() {
             @Override
             public void onNoMoreShow() {
 
