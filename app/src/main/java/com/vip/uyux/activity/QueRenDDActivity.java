@@ -429,7 +429,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String couponMoney = couponBeanList.get(i).getMoney();
-                double sumX = Arith.mul(Double.parseDouble(sum) ,Double.parseDouble(couponMoney));
+                double sumX = Arith.sub(Double.parseDouble(sum) ,Double.parseDouble(couponMoney));
                 sum = String.valueOf(sumX);
                 textSum.setText("¥" + sum);
                 youHuiQuan="¥"+ couponMoney;
