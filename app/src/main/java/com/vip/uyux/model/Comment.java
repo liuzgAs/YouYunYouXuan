@@ -135,10 +135,19 @@ public class Comment {
         private String create_time;
         private String evaluate;
         private int star;
+        private int go_evaluation;
         private String headimg;
         private String nickname;
         private String spe_name;
         private List<ImgsBean> imgs;
+
+        public int getGo_evaluation() {
+            return go_evaluation;
+        }
+
+        public void setGo_evaluation(int go_evaluation) {
+            this.go_evaluation = go_evaluation;
+        }
 
         public int getId() {
             return id;

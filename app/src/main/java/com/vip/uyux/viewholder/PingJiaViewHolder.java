@@ -12,6 +12,7 @@ import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.LiJiCePingActivity;
 import com.vip.uyux.activity.PingJiaActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.Comment;
@@ -34,6 +35,7 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
     private final View viewPingJia;
     private final EasyRecyclerView recyclerView;
     private final TextView textSpe_name;
+    private final View viewQuCePing;
 
     public PingJiaViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -49,13 +51,32 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
         viewPingJia = $(R.id.viewPingJia);
         recyclerView = $(R.id.recyclerView);
         textSpe_name = $(R.id.textSpe_name);
+        viewQuCePing = $(R.id.viewQuCePing);
         viewPingJia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), PingJiaActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,data.getId());
+                intent.putExtra(Constant.IntentKey.ID, data.getId());
                 getContext().startActivity(intent);
+            }
+        });
+        viewQuCePing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (data.getGo_evaluation()) {
+                    case 1:
+                        /*去立即测评页面*/
+                        Intent intent = new Intent();
+                        intent.setClass(getContext(), LiJiCePingActivity.class);
+                        getContext().startActivity(intent);
+                        break;
+                    case 2:
+                        /*去官方推荐*/
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -103,6 +124,11 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
         textPrice.setText("¥" + data.getGoods_price());
         textDate.setText(data.getCreate_time());
         textSpe_name.setText(data.getSpe_name());
+        if (data.getGo_evaluation() == 0) {
+            viewQuCePing.setVisibility(View.GONE);
+        } else {
+            viewQuCePing.setVisibility(View.VISIBLE);
+        }
     }
 
 }

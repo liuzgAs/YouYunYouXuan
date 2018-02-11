@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.vip.uyux.customview.ResizableImageView
+            android:src="@mipmap/ic_empty"
+            android:id="@+id/imageImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:hint="请输入测评文字"
+            android:background="@color/white"
+            android:gravity="left|top"
+            android:textSize="@dimen/normal_textsize"
+            android:padding="@dimen/leftAndRight"
+            android:layout_below="@+id/imageImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</LinearLayout>
