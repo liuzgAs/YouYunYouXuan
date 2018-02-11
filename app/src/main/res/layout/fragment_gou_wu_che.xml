@@ -169,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/background"
                     android:orientation="vertical"
-                    app:layout_scrollFlags="scroll">
+                    app:layout_scrollFlags="scroll|snap">
                     <ImageView
                         android:id="@+id/imageView186"
                         android:layout_width="200dp"

@@ -23,7 +23,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/imageView83"
+            android:id="@+id/imageSearch"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_alignParentLeft="true"
@@ -38,9 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/imageView83"
-            android:layout_toRightOf="@+id/imageView83"
-            android:text="输入商品名称"
+            android:layout_toEndOf="@+id/imageSearch"
+            android:layout_toRightOf="@+id/imageSearch"
+            android:hint="输入商品名称"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/normal_edittextsize" />
     </RelativeLayout>

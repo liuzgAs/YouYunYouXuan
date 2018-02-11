@@ -7,9 +7,14 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +58,13 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
             }
         }
     };
+    private TextView textDuiHuanJL;
+    private TextView textScore;
+    private ImageView imageImg;
+    private EditText editSearch;
+    private View viewTouch;
+    private View coordinator;
+    private String keywords="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +86,12 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
     @Override
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+        imageImg = (ImageView) findViewById(R.id.imageImg);
+        textScore = (TextView) findViewById(R.id.textScore);
+        textDuiHuanJL = (TextView) findViewById(R.id.textDuiHuanJL);
+        editSearch = (EditText) findViewById(R.id.editSearch);
+        viewTouch = findViewById(R.id.viewTouch);
+        coordinator = findViewById(R.id.coordinator);
     }
 
     @Override
@@ -98,32 +116,6 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_jifensc;
                 return new JiFenSCViewHolder(parent, layout);
-            }
-        });
-        adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
-
-            private TextView textDuiHuanJL;
-            private TextView textScore;
-            private ImageView imageImg;
-
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                View view = LayoutInflater.from(UbiSCActivity.this).inflate(R.layout.header_jifen_sc, null);
-                imageImg = view.findViewById(R.id.imageImg);
-                textScore = view.findViewById(R.id.textScore);
-                textDuiHuanJL = view.findViewById(R.id.textDuiHuanJL);
-                return view;
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-                GlideApp.with(UbiSCActivity.this)
-                        .load(top_img)
-                        .centerCrop()
-                        .placeholder(R.mipmap.ic_empty)
-                        .into(imageImg);
-                textScore.setText(String.valueOf(my_integral));
-                textDuiHuanJL.setText(String.valueOf(exchange_recode));
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
@@ -198,6 +190,66 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.viewSearch).setOnClickListener(this);
+        editSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    ViewGroup.LayoutParams layoutParams = editSearch.getLayoutParams();
+                    layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    editSearch.setLayoutParams(layoutParams);
+                } else {
+                    ViewGroup.LayoutParams layoutParams = editSearch.getLayoutParams();
+                    layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    editSearch.setLayoutParams(layoutParams);
+                }
+            }
+        });
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                keywords = editable.toString().trim();
+                onRefresh();
+            }
+        });
+        viewTouch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                viewTouch.setFocusable(true);
+                viewTouch.setFocusableInTouchMode(true);
+                viewTouch.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                            0);
+                }
+                return false;
+            }
+        });
+        coordinator.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                coordinator.setFocusable(true);
+                coordinator.setFocusableInTouchMode(true);
+                coordinator.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                            0);
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -208,6 +260,11 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.viewSearch:
+                if (!editSearch.isFocused()) {
+                    editSearch.requestFocus();
+                }
+                break;
             case R.id.imageBack:
                 finish();
                 break;
@@ -231,6 +288,7 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
             params.put("tokenTime", tokenTime);
         }
         params.put("p", String.valueOf(page));
+        params.put("keywords", keywords);
         return new OkObject(params, url);
     }
 
@@ -248,6 +306,13 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
                         top_img = customerGetintegralshop.getTop_img();
                         my_integral = customerGetintegralshop.getMy_integral();
                         exchange_recode = customerGetintegralshop.getExchange_recode();
+                        GlideApp.with(UbiSCActivity.this)
+                                .load(top_img)
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_empty)
+                                .into(imageImg);
+                        textScore.setText(String.valueOf(my_integral));
+                        textDuiHuanJL.setText(String.valueOf(exchange_recode));
                         List<CustomerGetintegralshop.DataBean> dataBeanList = customerGetintegralshop.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
@@ -303,4 +368,5 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
         super.onDestroy();
         unregisterReceiver(reciver);
     }
+
 }
