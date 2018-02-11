@@ -75,7 +75,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
     };
     private List<OrderConfirmbefore.CouponBean> couponBeanList;
     private String youHuiQuan;
-    private Integer couponId;
+    private int couponId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
