@@ -7,11 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.vip.uyux.customview.ResizableImageView
-            android:src="@mipmap/ic_empty"
             android:id="@+id/imageImg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:hint="请输入测评文字"
             android:background="@color/white"
             android:gravity="left|top"

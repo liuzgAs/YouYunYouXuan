@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/viewHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/viewHeadBg"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/image0000"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ceping_jia" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image0000"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="添加封面" />
+
+        </RelativeLayout>
+
+        <com.vip.uyux.customview.ResizableImageView
+            android:id="@+id/imageHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:hint="请输入标题"
+        android:paddingBottom="15dp"
+        android:paddingLeft="@dimen/leftAndRight"
+        android:paddingTop="15dp"
+        android:textSize="@dimen/normal_textsize" />
+</LinearLayout>

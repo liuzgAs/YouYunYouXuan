@@ -414,6 +414,10 @@ public class Constant {
          * 推荐商品申请进度
          */
         public static final String BONUS_SUPERIORITYLOGS = "/Bonus/superiorityLogs";
+        /**
+         * 测评提交
+         */
+        public static final String EVALUATION_ADDSUBMIT = "/Evaluation/addSubmit";
 
     }
 

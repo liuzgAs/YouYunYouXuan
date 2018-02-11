@@ -191,16 +191,6 @@
             android:paddingRight="5dp"
             android:textColor="@color/light_black"
             android:textSize="@dimen/normal_textsize" />
-
-        <com.jude.easyrecyclerview.EasyRecyclerView
-            android:id="@+id/recyclerViewHuoYuanZiZhi"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="276dp"
-            app:scrollbarStyle="insideOverlay" />
     </RelativeLayout>
 
     <LinearLayout
