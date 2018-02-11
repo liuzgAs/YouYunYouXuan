@@ -154,72 +154,102 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background">
-
-
-        <ImageView
-            android:id="@+id/imageView186"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:src="@mipmap/ic_empty_kong" />
-
-        <RelativeLayout
-            android:id="@+id/viewDes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView186"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/textView381"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:text="暂无内容！"
-                android:textSize="@dimen/normal_textsize" />
-
-            <TextView
-                android:id="@+id/textShuaXin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/textView381"
-                android:layout_toRightOf="@+id/textView381"
-                android:text="刷新试试"
-                android:textColor="@color/basic_color"
-                android:textSize="@dimen/normal_textsize"
-                android:visibility="gone" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/viewTuiJian11"
-            android:layout_below="@+id/viewDes"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/gouwuchetuijian"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp" />
-        </RelativeLayout>
-        <com.jude.easyrecyclerview.EasyRecyclerView
-            android:background="@color/white"
-            android:layout_below="@+id/viewTuiJian11"
-            android:id="@+id/recyclerViewTuiJian"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_empty="@layout/view_empty_tuijian"
-            app:layout_progress="@layout/view_progress"
-            app:scrollbarStyle="insideOverlay" />
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                    android:orientation="vertical"
+                    app:layout_scrollFlags="scroll">
+                    <ImageView
+                        android:id="@+id/imageView186"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:src="@mipmap/ic_empty_kong" />
+
+                    <RelativeLayout
+                        android:id="@+id/viewDes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView186"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textView381"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:text="暂无内容！"
+                            android:textSize="@dimen/normal_textsize" />
+
+                        <TextView
+                            android:id="@+id/textShuaXin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toEndOf="@+id/textView381"
+                            android:layout_toRightOf="@+id/textView381"
+                            android:text="刷新试试"
+                            android:textColor="@color/basic_color"
+                            android:textSize="@dimen/normal_textsize"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/viewTuiJian11"
+                    android:layout_below="@+id/viewDes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@mipmap/gouwuchetuijian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+                </RelativeLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <com.jude.easyrecyclerview.EasyRecyclerView
+                    android:background="@color/white"
+                    android:id="@+id/recyclerViewTuiJian"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_empty="@layout/view_empty_tuijian"
+                    app:layout_progress="@layout/view_progress"
+                    app:scrollbarStyle="insideOverlay" />
+
+            </RelativeLayout>
+        </android.support.design.widget.CoordinatorLayout>
+
+
+
     </RelativeLayout>
 </RelativeLayout>
