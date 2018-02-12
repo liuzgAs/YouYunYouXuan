@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class QueRenDDJFActivity extends ZjbBaseActivity implements View.OnClickL
     private String shipDes;
     private int id;
     private String num;
+    private EditText editPayMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +155,7 @@ public class QueRenDDJFActivity extends ZjbBaseActivity implements View.OnClickL
                 textSum1 = view.findViewById(R.id.textSum);
                 textShipKey = view.findViewById(R.id.textShipKey);
                 textShipDes = view.findViewById(R.id.textShipDes);
+                editPayMsg = view.findViewById(R.id.editPayMsg);
                 return view;
             }
 
@@ -229,6 +232,7 @@ public class QueRenDDJFActivity extends ZjbBaseActivity implements View.OnClickL
         }
         params.put("aid",orderConfirmbeforeAd.getId());
         params.put("num",num);
+        params.put("payMsg",editPayMsg.getText().toString().trim());
         params.put("id",String.valueOf(id));
         return new OkObject(params, url);
     }
