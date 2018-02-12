@@ -475,7 +475,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalItemHeight"
                 android:background="@drawable/layout_selector_white_system_gray"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/image0500"

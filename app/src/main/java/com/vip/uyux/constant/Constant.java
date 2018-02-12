@@ -418,6 +418,10 @@ public class Constant {
          * 测评提交
          */
         public static final String EVALUATION_ADDSUBMIT = "/Evaluation/addSubmit";
+        /**
+         * 我的测评
+         */
+        public static final String EVALUATION = "/Evaluation";
 
     }
 

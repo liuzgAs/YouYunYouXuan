@@ -95,7 +95,7 @@ public class PingJiaGLActivity extends ZjbBaseActivity implements View.OnClickLi
                             View view = LayoutInflater.from(PingJiaGLActivity.this).inflate(R.layout.item_tablayout, null);
                             TextView textTitle = view.findViewById(R.id.textTitle);
                             textTitle.setText(typeBeanList.get(i).getN());
-                            if (i == 0) {
+                            if (typeBeanList.get(i).getAct() == 1) {
                                 tablayout.addTab(tablayout.newTab().setCustomView(view), true);
                             } else {
                                 tablayout.addTab(tablayout.newTab().setCustomView(view), false);

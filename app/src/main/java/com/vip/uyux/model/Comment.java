@@ -297,7 +297,7 @@ public class Comment {
 
         private String n;
         private String v;
-        private String act;
+        private int act;
 
         public String getN() {
             return n;
@@ -315,11 +315,11 @@ public class Comment {
             this.v = v;
         }
 
-        public String getAct() {
+        public int getAct() {
             return act;
         }
 
-        public void setAct(String act) {
+        public void setAct(int act) {
             this.act = act;
         }
     }

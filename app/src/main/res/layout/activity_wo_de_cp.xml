@@ -9,7 +9,31 @@
     tools:context="com.vip.uyux.activity.WoDeCPActivity">
 
     <include layout="@layout/view_bar_white" />
-
+    <RelativeLayout
+        android:id="@+id/viewDes"
+        android:background="@color/gray_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textDes"
+            android:text="已买了9件商品，快去写用后感受吧！"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/light_black"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="去测评>"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/basic_color"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
