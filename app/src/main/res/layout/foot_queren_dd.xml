@@ -214,7 +214,7 @@
 
     </RelativeLayout>
     <TextView
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginTop="1dp"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -226,8 +226,8 @@
         android:textColor="@color/light_black"
         android:textSize="@dimen/normal_textsize" />
     <EditText
-        android:visibility="gone"
-        android:id="@+id/edit"
+        android:visibility="visible"
+        android:id="@+id/editPayMsg"
         android:hint="有什么要交代的么？"
         android:textSize="@dimen/normal_textsize"
         android:gravity="top|left"

@@ -17,9 +17,10 @@ public class OrderTiJiao {
     private String orderAmount;
     private String did;
     private String aid;
+    private String payMsg;
     private int coupon;
 
-    public OrderTiJiao(int loginType, String platform, List<Integer> cart, String orderAmount, String did, String aid,int coupon) {
+    public OrderTiJiao(int loginType, String platform, List<Integer> cart, String orderAmount, String did, String aid,int coupon,String payMsg) {
         this.loginType = loginType;
         this.platform = platform;
         this.cart = cart;
@@ -27,9 +28,10 @@ public class OrderTiJiao {
         this.did = did;
         this.aid = aid;
         this.coupon = coupon;
+        this.payMsg = payMsg;
     }
 
-    public OrderTiJiao(int loginType, String platform, String uid, String tokenTime, List<Integer> cart, String orderAmount, String did, String aid,int coupon) {
+    public OrderTiJiao(int loginType, String platform, String uid, String tokenTime, List<Integer> cart, String orderAmount, String did, String aid,int coupon,String payMsg) {
         this.loginType = loginType;
         this.platform = platform;
         this.uid = uid;
@@ -38,6 +40,23 @@ public class OrderTiJiao {
         this.orderAmount = orderAmount;
         this.did = did;
         this.aid = aid;
+        this.coupon = coupon;
+        this.payMsg = payMsg;
+    }
+
+    public String getPayMsg() {
+        return payMsg;
+    }
+
+    public void setPayMsg(String payMsg) {
+        this.payMsg = payMsg;
+    }
+
+    public int getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(int coupon) {
         this.coupon = coupon;
     }
 

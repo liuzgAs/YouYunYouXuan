@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,6 +77,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
     private List<OrderConfirmbefore.CouponBean> couponBeanList;
     private String youHuiQuan;
     private int couponId = 0;
+    private EditText editPayMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +200,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                         showYouHuiQuanDialog();
                     }
                 });
+                editPayMsg = view.findViewById(R.id.editPayMsg);
                 return view;
             }
 
@@ -286,9 +289,9 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
         String did = aCache.getAsString(Constant.Acache.DID);
         OrderTiJiao orderTiJiao;
         if (isLogin) {
-            orderTiJiao = new OrderTiJiao(1, "android", userInfo.getUid(), tokenTime, jieSuan.getIntegerList(), String.valueOf(sum), did, orderConfirmbeforeAd.getId(),couponId);
+            orderTiJiao = new OrderTiJiao(1, "android", userInfo.getUid(), tokenTime, jieSuan.getIntegerList(), String.valueOf(sum), did, orderConfirmbeforeAd.getId(),couponId,editPayMsg.getText().toString().trim());
         } else {
-            orderTiJiao = new OrderTiJiao(1, "android", jieSuan.getIntegerList(), sum, did, orderConfirmbeforeAd.getId(),couponId);
+            orderTiJiao = new OrderTiJiao(1, "android", jieSuan.getIntegerList(), sum, did, orderConfirmbeforeAd.getId(),couponId,editPayMsg.getText().toString().trim());
         }
         return GsonUtils.parseObject(orderTiJiao);
     }
