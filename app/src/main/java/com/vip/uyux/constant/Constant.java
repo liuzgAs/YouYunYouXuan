@@ -494,6 +494,7 @@ public class Constant {
         public static final String SHUA_XIN_SHOW_HOU = "shuaXinShouHou";
         public static final String SHUA_XIN_U_BI = "shuaXinUBI";
         public static final String SET_MAIN_TAB = "set_main_tab";
+        public static final String SHUA_XIN_CE_PING = "shua_xin_ce_ping";
     }
 
 

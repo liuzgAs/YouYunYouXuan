@@ -32,6 +32,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.customview.SingleBtnDialog;
 import com.vip.uyux.interfacepage.OnAddPictureListener;
 import com.vip.uyux.model.CePingTiJiao;
 import com.vip.uyux.model.EvaluationAddbefore;
@@ -468,6 +469,42 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
                     if (simpleInfo.getStatus() == 1) {
+                        Intent intent1 = new Intent();
+                        intent1.setAction(Constant.BroadcastCode.SHUA_XIN_CE_PING);
+                        sendBroadcast(intent1);
+                        final SingleBtnDialog singleBtnDialog = new SingleBtnDialog(LiJiCePingActivity.this, "发布成功", "确认");
+                        singleBtnDialog.show();
+                        singleBtnDialog.setClicklistener(new SingleBtnDialog.ClickListenerInterface() {
+                            @Override
+                            public void doWhat() {
+                                singleBtnDialog.dismiss();
+                                if (id==0){
+                                    Intent intent = new Intent();
+                                    intent.setClass(LiJiCePingActivity.this,WoDeCPActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }else {
+                                    finish();
+                                }
+                            }
+                        });
+                        singleBtnDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                                    dialog.dismiss();
+                                    if (id==0){
+                                        Intent intent = new Intent();
+                                        intent.setClass(LiJiCePingActivity.this,WoDeCPActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else {
+                                        finish();
+                                    }
+                                }
+                                return false;
+                            }
+                        });
                     } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(LiJiCePingActivity.this);
                     } else {
