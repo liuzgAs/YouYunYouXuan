@@ -464,21 +464,6 @@ public class GoodsInfo {
             this.imgs2 = imgs2;
         }
 
-        public static class ImgsBean {
-            /**
-             * img : http://www.wanhuaxin.com/attachment/images/1604/2017/12/I6eh7fb7hWeJxh7Ff2BaA6K3xwj4a7.jpg
-             */
-
-            private String img;
-
-            public String getImg() {
-                return img;
-            }
-
-            public void setImg(String img) {
-                this.img = img;
-            }
-        }
 
     }
 

@@ -252,6 +252,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 intent.setClass(mContext, CePingXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
                 startActivity(intent);
             }
         });

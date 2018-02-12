@@ -46,6 +46,7 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.FlowTagLayout;
 import com.vip.uyux.customview.OnTagSelectListener;
 import com.vip.uyux.model.CustomerIntegragoodsinfo;
+import com.vip.uyux.model.ImgsBean;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShouCangShanChu;
 import com.vip.uyux.model.SimpleInfo;
@@ -65,12 +66,12 @@ import java.util.List;
 public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean> adapter;
+    private RecyclerArrayAdapter<ImgsBean> adapter;
     private List<String> goodsInfoBanner;
     private int id;
     private CustomerIntegragoodsinfo.DataBean goodsInfoData;
-    private List<CustomerIntegragoodsinfo.DataBean.ImgsBean> imgs;
-    private List<CustomerIntegragoodsinfo.DataBean.ImgsBean> imgs2;
+    private List<ImgsBean> imgs;
+    private List<ImgsBean> imgs2;
     private List<CustomerIntegragoodsinfo.SkuCateBean> skuCate;
     private AlertDialog alertDialogGouWu;
     private TagAdapter02 tagAdapter;
@@ -144,7 +145,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CustomerIntegragoodsinfo.DataBean.ImgsBean>(ChanPinJFXQActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<ImgsBean>(ChanPinJFXQActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_image;

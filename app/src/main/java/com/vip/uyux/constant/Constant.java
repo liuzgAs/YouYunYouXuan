@@ -426,6 +426,10 @@ public class Constant {
          * 测评发布请求
          */
         public static final String EVALUATION_ADDBEFORE = "/Evaluation/addBefore";
+        /**
+         * 测评详情
+         */
+        public static final String EVALUATION_INFO = "/Evaluation/info";
 
     }
 

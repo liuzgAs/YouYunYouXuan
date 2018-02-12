@@ -257,23 +257,6 @@ public class CustomerIntegragoodsinfo {
             this.imgs2 = imgs2;
         }
 
-
-        public static class ImgsBean {
-            /**
-             * img : http://www.wanhuaxin.com/attachment/images/1604/2017/12/d4YEuQ07jUKlvkJ3U0MKmXZ04lnNpa.jpeg
-             */
-
-            private String img;
-
-            public String getImg() {
-                return img;
-            }
-
-            public void setImg(String img) {
-                this.img = img;
-            }
-        }
-
     }
 
     public static class SkuLvBean {

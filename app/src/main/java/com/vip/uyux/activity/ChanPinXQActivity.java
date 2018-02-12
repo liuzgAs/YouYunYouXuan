@@ -53,6 +53,7 @@ import com.vip.uyux.customview.WrapHeightGridView;
 import com.vip.uyux.model.CartAddcart;
 import com.vip.uyux.model.CartNum;
 import com.vip.uyux.model.GoodsInfo;
+import com.vip.uyux.model.ImgsBean;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShouCangShanChu;
@@ -81,14 +82,14 @@ import q.rorbin.badgeview.QBadgeView;
 public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean> adapter;
+    private RecyclerArrayAdapter<ImgsBean> adapter;
     private List<String> goodsInfoBanner;
     private int id;
     private GoodsInfo.DataBean goodsInfoData;
     private int countdown;
     private Timer timer;
-    private List<GoodsInfo.DataBean.ImgsBean> imgs;
-    private List<GoodsInfo.DataBean.ImgsBean> imgs2;
+    private List<ImgsBean> imgs;
+    private List<ImgsBean> imgs2;
     private List<GoodsInfo.SkuCateBean> skuCate;
     private AlertDialog alertDialogGouWu;
     private TagAdapter01 tagAdapter;
@@ -259,7 +260,7 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodsInfo.DataBean.ImgsBean>(ChanPinXQActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<ImgsBean>(ChanPinXQActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_image;

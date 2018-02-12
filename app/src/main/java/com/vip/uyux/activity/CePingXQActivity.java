@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,17 +9,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
+import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
+import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.EvaluationInfo;
+import com.vip.uyux.model.OkObject;
+import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.GsonUtils;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.RecycleViewDistancaUtil;
 import com.vip.uyux.viewholder.CePingViewHolder;
 import com.vip.uyux.viewholder.MyBaseViewHolder;
+
+import java.util.HashMap;
 
 public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -26,6 +37,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     private RecyclerArrayAdapter<Integer> adapter;
     private View viewBar;
     private float guangGaoHeight;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +53,8 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
 
     @Override
     protected void initIntent() {
-
+        Intent intent = getIntent();
+        id = intent.getIntExtra(Constant.IntentKey.ID, 0);
     }
 
     @Override
@@ -148,12 +161,66 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getOkObject() {
+        String url = Constant.HOST + Constant.Url.EVALUATION_INFO;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("id",String.valueOf(id));
+        return new OkObject(params, url);
+    }
+
     @Override
     public void onRefresh() {
-        adapter.clear();
-        adapter.add(1);
-        adapter.add(1);
-        adapter.add(1);
-        adapter.notifyDataSetChanged();
+     ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
+         @Override
+         public void onSuccess(String s) {
+             LogUtil.LogShitou("", s);
+             try {
+                 EvaluationInfo evaluationInfo = GsonUtils.parseJSON(s, EvaluationInfo.class);
+                 if (evaluationInfo.getStatus() == 1) {
+                 } else if (evaluationInfo.getStatus()== 3) {
+                     MyDialog.showReLoginDialog(CePingXQActivity.this);
+                 } else {
+                     showError(evaluationInfo.getInfo());
+                 }
+             } catch (Exception e) {
+                 showError("数据出错");
+             }
+         }
+
+         @Override
+         public void onError() {
+             showError("网络出错");
+         }
+         /**
+          * 错误显示
+          * @param msg
+          */
+         private void showError(String msg) {
+             try {
+                 View viewLoader = LayoutInflater.from(CePingXQActivity.this).inflate(R.layout.view_loaderror, null);
+                 TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                 textMsg.setText(msg);
+                 viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         recyclerView.showProgress();
+                         initData();
+                     }
+                 });
+                 recyclerView.setErrorView(viewLoader);
+                 recyclerView.showError();
+             } catch (Exception e) {
+             }
+         }
+     });
     }
 }
