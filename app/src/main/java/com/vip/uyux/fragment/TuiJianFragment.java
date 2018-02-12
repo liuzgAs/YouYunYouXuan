@@ -22,7 +22,6 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.rd.PageIndicatorView;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
-import com.vip.uyux.activity.ChanPinXQActivity;
 import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -148,7 +147,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.putExtra(Constant.IntentKey.BEAN,banner2BeanList.get(0));
+                        intent.putExtra(Constant.IntentKey.BEAN, banner2BeanList.get(0));
                         intent.setAction(Constant.BroadcastCode.ADV);
                         mContext.sendBroadcast(intent);
                     }
@@ -166,9 +165,9 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                         BannerTuiJianAdapter adapter = new BannerTuiJianAdapter(mContext, bannerBeanList);
                         id_viewpager.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-                        if (bannerBeanList.size()>1){
+                        if (bannerBeanList.size() > 1) {
                             pageIndicatorView.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             pageIndicatorView.setVisibility(View.GONE);
                         }
                     } else {
@@ -183,10 +182,10 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
                                 .load(banner2BeanList.get(0).getImg())
                                 .into(image0300);
-                    }else {
+                    } else {
                         viewRecom.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
                     viewRecom.setVisibility(View.GONE);
                 }
             }
@@ -251,16 +250,9 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                if (adapter.getViewType(position) == 1) {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, ChanPinXQActivity.class);
-                    intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, CePingXQActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent();
+                intent.setClass(mContext, CePingXQActivity.class);
+                startActivity(intent);
             }
         });
         recyclerView.setRefreshListener(this);

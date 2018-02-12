@@ -1,39 +1,55 @@
 package com.vip.uyux.viewholder;
 
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
-import com.vip.uyux.util.DpUtils;
-import com.vip.uyux.util.GlideApp;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
 public class CePingViewHolder extends BaseViewHolder<Integer> {
 
-    private final ImageView imageImg;
-    private final TextView textDes;
+    private final EasyRecyclerView recyclerView;
+    private RecyclerArrayAdapter<Integer> adapter;
 
     public CePingViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
-        imageImg = $(R.id.imageImg);
-        textDes = $(R.id.textDes);
+        recyclerView = $(R.id.recyclerView);
+        initRecycler();
     }
 
     @Override
     public void setData(Integer data) {
         super.setData(data);
-        GlideApp.with(getContext())
-                .asBitmap()
-                .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
-                .load(R.mipmap.shangpin)
-                .into(imageImg);
+        adapter.add(1);
+        adapter.add(1);
+        adapter.add(1);
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 初始化recyclerview
+     */
+    private void initRecycler() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getContext().getResources().getDimension(R.dimen.line_width), 0, 0);
+        itemDecoration.setDrawLastItem(false);
+        recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setRefreshingColorResources(R.color.basic_color);
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Integer>(getContext()) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.item_pingce_pinglun;
+                return new MyBaseViewHolder(parent, layout);
+            }
+        });
     }
 
 }

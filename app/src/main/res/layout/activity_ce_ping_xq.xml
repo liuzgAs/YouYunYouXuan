@@ -1,20 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
     tools:context="com.vip.uyux.activity.CePingXQActivity">
 
-    <include layout="@layout/view_bar_white" />
 
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_empty="@layout/view_empty"
+        android:layout_above="@+id/viewDiBu"
         app:layout_progress="@layout/view_progress"
         app:scrollbarStyle="insideOverlay" />
-</LinearLayout>
+    <include layout="@layout/view_bar_ceping" />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/viewDiBu"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:background="@color/white"
+            android:layout_marginBottom="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/liuyan"
+                android:id="@+id/imageLiuYan"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_width="15dp"
+                android:layout_alignTop="@+id/editLiuYan"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="15dp" />
+            <EditText
+                android:lineSpacingMultiplier="1.2"
+                android:id="@+id/editLiuYan"
+                android:gravity="left|top"
+                android:layout_toRightOf="@+id/imageLiuYan"
+                android:paddingLeft="5dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="32dp"
+                android:background="@null"
+                android:hint="请输入您的留言"
+                android:textSize="@dimen/moreLitterText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginBottom="2dp"
+                android:src="@mipmap/fasong"
+                android:layout_width="40dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_alignBottom="@+id/editLiuYan"
+                android:layout_alignRight="@+id/editLiuYan"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <LinearLayout
+
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normalItemHeight">
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@mipmap/dinazan"
+                        android:layout_width="15dp"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imageShouCang"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_toRightOf="@+id/imageShouCang"
+                        android:layout_marginLeft="4dp"
+                        android:text="收藏(23)"
+                        android:textSize="@dimen/moreLitterText"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@mipmap/fuzhi"
+                        android:layout_width="15dp"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imageFuZhi"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_toRightOf="@+id/imageFuZhi"
+                        android:layout_marginLeft="5dp"
+                        android:text="采用"
+                        android:textSize="@dimen/normal_textsize"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
+            <Button
+                android:text="¥299购买 >"
+                android:textSize="@dimen/normal_textsize"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_marginRight="@dimen/leftAndRight"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/shape_basic_5dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

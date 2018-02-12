@@ -1,70 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    android:layout_height="wrap_content">
     <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:background="@drawable/layout_selector_white_system_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/imageImg"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="@dimen/leftAndRight"
-            android:layout_marginTop="15dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/shangpin" />
+        <com.vip.uyux.customview.ResizableImageView
+            android:id="@+id/imageTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/wodejifen_bg" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageImg"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="@dimen/leftAndRight"
-            android:layout_toRightOf="@+id/imageImg"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="一品轩皇家有机食用油调和一品轩皇家有机食用油调和"
-            android:textColor="@color/light_black"
+            android:layout_alignBottom="@+id/imageTop"
+            android:layout_margin="@dimen/leftAndRight"
+            android:text="只用3块钱的星巴克"
+            android:textColor="@color/white"
             android:textSize="@dimen/normal_textsize" />
-
-        <TextView
-            android:id="@+id/textPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageImg"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/imageImg"
-            android:text="¥79"
-            android:textColor="@color/basic_color"
-            android:textSize="@dimen/bigText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textPrice"
-            android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@+id/textPrice"
-            android:text="绿色XL"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/moreLitterText" />
-
     </RelativeLayout>
-    <TextView
+
+
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:scrollbarStyle="insideOverlay" />
+    <RelativeLayout
         android:layout_marginBottom="1dp"
         android:layout_width="match_parent"
-        android:textColor="@color/light_black"
-        android:textSize="@dimen/normal_textsize"
-        android:text="测评详情"
-        android:paddingLeft="@dimen/leftAndRight"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
         android:background="@color/white"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="留言区"
+            android:textSize="@dimen/normal_textsize"
+            android:textColor="@color/light_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="查看全部"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/litterText"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 </LinearLayout>
