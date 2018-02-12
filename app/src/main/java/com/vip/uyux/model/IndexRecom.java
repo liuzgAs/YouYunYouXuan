@@ -21,7 +21,7 @@ public class IndexRecom {
     private String info;
     private List<AdvsBean> banner;
     private List<AdvsBean> banner2;
-    private List<GoodBean> data;
+    private List<DataBean> data;
 
     public int getStatus() {
         return status;
@@ -55,13 +55,69 @@ public class IndexRecom {
         this.banner2 = banner2;
     }
 
-    public List<GoodBean> getData() {
+    public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(List<GoodBean> data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
 
+    public static class DataBean {
+        private int id;
+        private String title;
+        private String img;
+        private int type;
+        private String nickname;
+        private int collectNum;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public int getCollectNum() {
+            return collectNum;
+        }
+
+        public void setCollectNum(int collectNum) {
+            this.collectNum = collectNum;
+        }
+    }
 
 }

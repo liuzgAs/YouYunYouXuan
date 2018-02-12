@@ -19,6 +19,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.rd.PageIndicatorView;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
 import com.vip.uyux.activity.ChanPinXQActivity;
@@ -27,7 +28,6 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.AdvsBean;
-import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.model.IndexRecom;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
@@ -36,7 +36,7 @@ import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
-import com.vip.uyux.viewholder.ChanPinLBViewHolder;
+import com.vip.uyux.viewholder.TuiJianViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +51,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private ImageView imageBack;
     private View viewBar;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<GoodBean> adapter;
+    private RecyclerArrayAdapter<IndexRecom.DataBean> adapter;
     private List<AdvsBean> bannerBeanList;
     private List<AdvsBean> banner2BeanList;
 
@@ -112,20 +112,18 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<GoodBean>(mContext) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexRecom.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_chanpin;
-                return new ChanPinLBViewHolder(parent, layout, viewType);
+                int layout = R.layout.item_tuijian;
+                return new TuiJianViewHolder(parent, layout);
             }
 
-            @Override
-            public int getViewType(int position) {
-                return 1;
-            }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
+            private PageIndicatorView pageIndicatorView;
+            private View viewRecom;
             //            private ImageView image0000;
 //            private ImageView image0003;
 //            private ImageView image0004;
@@ -155,48 +153,24 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                         mContext.sendBroadcast(intent);
                     }
                 });
+                viewRecom = view.findViewById(R.id.viewRecom);
+                pageIndicatorView = view.findViewById(R.id.pageIndicatorView);
                 return view;
             }
 
             @Override
             public void onBindView(View headerView) {
-//                GlideApp.with(mContext)
-//                        .asBitmap()
-//                        .circleCrop()
-//                        .load(R.mipmap.tuijiantouxiang)
-//                        .placeholder(R.mipmap.ic_empty)
-//                        .into(image0000);
-//                GlideApp.with(getContext())
-//                        .asBitmap()
-//                        .centerCrop()
-//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
-//                        .load(R.mipmap.youxuantuijian_tuijian)
-//                        .into(image0003);
-//                GlideApp.with(mContext)
-//                        .asBitmap()
-//                        .circleCrop()
-//                        .load(R.mipmap.tuijiantouxiang)
-//                        .placeholder(R.mipmap.ic_empty)
-//                        .into(image0400);
-
-//                GlideApp.with(getContext())
-//                        .asBitmap()
-//                        .centerCrop()
-//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
-//                        .load(R.mipmap.youxuantuijian_tuijian)
-//                        .into(image0004);
-//                GlideApp.with(getContext())
-//                        .asBitmap()
-//                        .centerCrop()
-//                        .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(4, getContext())))
-//                        .load(R.mipmap.youxuantuijian_tuijian)
-//                        .into(image0005);
-
                 if (bannerBeanList != null) {
                     if (bannerBeanList.size() > 0) {
                         viewViewPager.setVisibility(View.VISIBLE);
-                        id_viewpager.setAdapter(new BannerTuiJianAdapter(mContext, bannerBeanList));
-                        id_viewpager.setCurrentItem(50);
+                        BannerTuiJianAdapter adapter = new BannerTuiJianAdapter(mContext, bannerBeanList);
+                        id_viewpager.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        if (bannerBeanList.size()>1){
+                            pageIndicatorView.setVisibility(View.VISIBLE);
+                        }else {
+                            pageIndicatorView.setVisibility(View.GONE);
+                        }
                     } else {
                         viewViewPager.setVisibility(View.GONE);
                     }
@@ -209,7 +183,11 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
                                 .load(banner2BeanList.get(0).getImg())
                                 .into(image0300);
+                    }else {
+                        viewRecom.setVisibility(View.GONE);
                     }
+                }else {
+                    viewRecom.setVisibility(View.GONE);
                 }
             }
         });
@@ -225,7 +203,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                             IndexRecom indexRecom = GsonUtils.parseJSON(s, IndexRecom.class);
                             int status = indexRecom.getStatus();
                             if (status == 1) {
-                                List<GoodBean> dataBeanList = indexRecom.getData();
+                                List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(mContext);
@@ -329,7 +307,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     if (indexRecom.getStatus() == 1) {
                         bannerBeanList = indexRecom.getBanner();
                         banner2BeanList = indexRecom.getBanner2();
-                        List<GoodBean> dataBeanList = indexRecom.getData();
+                        List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (indexRecom.getStatus() == 3) {

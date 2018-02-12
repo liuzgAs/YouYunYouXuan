@@ -439,7 +439,8 @@
             android:name=".activity.TuiJianSPCZActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activity.ShenQingJinDuActivity" />
-        <activity android:name=".activity.LiJiCePingActivity"></activity>
+        <activity android:name=".activity.LiJiCePingActivity" />
+        <activity android:name=".activity.WoDeSCCZActivity"></activity>
     </application>
 
 </manifest>

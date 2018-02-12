@@ -96,6 +96,7 @@
             />
 
         <com.rd.PageIndicatorView
+            android:visibility="gone"
             app:piv_viewPager="@+id/id_viewpager"
             app:piv_selectedColor="@color/basic_color"
             app:piv_unselectedColor="@color/background"
@@ -135,11 +136,13 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/viewRecom"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_marginBottom="15dp"
             android:src="@mipmap/viewpagerindex"
             android:scaleType="centerCrop"
             android:layout_marginLeft="@dimen/leftAndRight"
@@ -187,9 +190,4 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <TextView
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="1dp"
-        android:layout_height="15dp" />
 </LinearLayout>

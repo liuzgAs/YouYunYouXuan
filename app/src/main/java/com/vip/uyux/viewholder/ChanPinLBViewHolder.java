@@ -2,6 +2,7 @@ package com.vip.uyux.viewholder;
 
 import android.graphics.Paint;
 import android.support.annotation.LayoutRes;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -70,6 +71,37 @@ public class ChanPinLBViewHolder extends BaseViewHolder<GoodBean> {
         textHuiYuan.setText(data.getVipDes());
         textDes.setText(data.getDes());
         textSale.setText("已售" + data.getSaleNum() + "件");
+        ViewGroup.LayoutParams layoutParams = imageZiYin.getLayoutParams();
+        imageZiYin.setVisibility(View.VISIBLE);
+        switch (data.getType()) {
+            case 1:
+                layoutParams.width= (int)DpUtils.convertDpToPixel(30,getContext());
+                layoutParams.height= (int)DpUtils.convertDpToPixel(20,getContext());
+                imageZiYin.setLayoutParams(layoutParams);
+                imageZiYin.setImageResource(R.mipmap.ziyin);
+                break;
+            case 2:
+                layoutParams.width= (int)DpUtils.convertDpToPixel(50,getContext());
+                layoutParams.height= (int)DpUtils.convertDpToPixel(20,getContext());
+                imageZiYin.setLayoutParams(layoutParams);
+                imageZiYin.setImageResource(R.mipmap.ziyinpinpai);
+                break;
+            case 3:
+                layoutParams.width= (int)DpUtils.convertDpToPixel(30,getContext());
+                layoutParams.height= (int)DpUtils.convertDpToPixel(20,getContext());
+                imageZiYin.setLayoutParams(layoutParams);
+                imageZiYin.setImageResource(R.mipmap.haowu);
+                break;
+            case 4:
+                layoutParams.width= (int)DpUtils.convertDpToPixel(30,getContext());
+                layoutParams.height= (int)DpUtils.convertDpToPixel(20,getContext());
+                imageZiYin.setLayoutParams(layoutParams);
+                imageZiYin.setImageResource(R.mipmap.ceping);
+                break;
+            default:
+                imageZiYin.setVisibility(View.GONE);
+                break;
+        }
     }
 
 }
