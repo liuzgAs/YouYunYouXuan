@@ -68,6 +68,7 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
                     case 1:
                         /*去立即测评页面*/
                         Intent intent = new Intent();
+                        intent.putExtra(Constant.IntentKey.OGID,data.getId());
                         intent.setClass(getContext(), LiJiCePingActivity.class);
                         getContext().startActivity(intent);
                         break;

@@ -12,14 +12,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vip.uyux.R;
-import com.vip.uyux.base.ZjbBaseActivity;
+import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.fragment.DDFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WoDeDDActivity extends ZjbBaseActivity implements View.OnClickListener {
+public class WoDeDDActivity extends ZjbBaseNotLeftActivity implements View.OnClickListener {
     private TabLayout tablayout;
     public ViewPager viewPager;
     List<String> list = new ArrayList<>();

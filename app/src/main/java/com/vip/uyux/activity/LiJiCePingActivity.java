@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.interfacepage.OnAddPictureListener;
+import com.vip.uyux.model.CePingTiJiao;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.RespondAppimgadd;
 import com.vip.uyux.model.SimpleInfo;
@@ -59,6 +61,8 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
     List<Integer> imgsList = new ArrayList<>();
     private String compressPathHead;
     private int imageHeadID;
+    private int ogID;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,9 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     protected void initIntent() {
-
+        Intent intent = getIntent();
+        ogID = intent.getIntExtra(Constant.IntentKey.OGID, 0);
+        id = intent.getIntExtra(Constant.IntentKey.ID, 0);
     }
 
     @Override
@@ -118,6 +124,8 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
 
+            private EditText editTitle;
+
             @Override
             public View onCreateView(ViewGroup parent) {
                 View view = LayoutInflater.from(LiJiCePingActivity.this).inflate(R.layout.header_lijiceping, null);
@@ -130,6 +138,7 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                         addPictureSingle();
                     }
                 });
+                editTitle = view.findViewById(R.id.editTitle);
                 return view;
             }
 
@@ -255,11 +264,8 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                         new Handler().post(new Runnable() {
                             @Override
                             public void run() {
-                                LogUtil.LogShitou("LiJiCePingActivity--onActivityResulttype", localMedia.getCompressPath() + "");
                                 adapter.update(localMedia, type);
-                                LogUtil.LogShitou("LiJiCePingActivity--run", "111111");
                                 adapter.notifyDataSetChanged();
-                                LogUtil.LogShitou("LiJiCePingActivity--run", "22222222");
                             }
                         });
                     }
@@ -337,22 +343,23 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
      * author： ZhangJieBo
      * date： 2017/8/28 0028 上午 9:55
      */
-    private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.EVALUATION_ADDSUBMIT;
-        HashMap<String, String> params = new HashMap<>();
-        if (isLogin) {
-            params.put("uid", userInfo.getUid());
-            params.put("tokenTime", tokenTime);
+    private String getOkObject() {
+        List<CePingTiJiao.ImgBean> list = new ArrayList<>();
+        for (int i = 0; i < imgsList.size(); i++) {
+            CePingTiJiao.ImgBean imgBean = new CePingTiJiao.ImgBean(imgsList.get(i), "内容");
+            list.add(imgBean);
         }
-        return new OkObject(params, url);
+        CePingTiJiao cePingTiJiao = new CePingTiJiao(1,"android",userInfo.getUid(),tokenTime,id,ogID,"测一测",imageHeadID,list);
+        return GsonUtils.parseObject(cePingTiJiao);
     }
 
     /**
      * 发布
      */
     private void faBu() {
+        String url = Constant.HOST + Constant.Url.EVALUATION_ADDSUBMIT;
         showLoadingDialog();
-        ApiClient.post(LiJiCePingActivity.this, getOkObject(), new ApiClient.CallBack() {
+        ApiClient.postJson(LiJiCePingActivity.this,url, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
@@ -424,7 +431,7 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                         }
                         if (count == imgSum) {
                             progressDialog.dismiss();
-//                            faBu();
+                            faBu();
                             LogUtil.LogShitou("LiJiCePingActivity--imageHeadID", ""+imageHeadID);
                             LogUtil.LogShitou("LiJiCePingActivity--imgsList", ""+GsonUtils.parseObject(imgsList));
                         }
