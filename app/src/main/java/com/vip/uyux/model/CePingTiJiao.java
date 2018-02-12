@@ -13,13 +13,13 @@ public class CePingTiJiao {
     private String platform;
     private String uid;
     private String tokenTime;
-    private int id;
+    private String id;
     private int og_id;
     private String title;
-    private int img;
+    private String img;
     private List<ImgBean> imgs;
 
-    public CePingTiJiao(int loginType, String platform, String uid, String tokenTime, int id, int og_id, String title, int img, List<ImgBean> imgs) {
+    public CePingTiJiao(int loginType, String platform, String uid, String tokenTime, String id, int og_id, String title, String img, List<ImgBean> imgs) {
         this.loginType = loginType;
         this.platform = platform;
         this.uid = uid;
@@ -89,11 +89,11 @@ public class CePingTiJiao {
         this.tokenTime = tokenTime;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -113,11 +113,11 @@ public class CePingTiJiao {
         this.title = title;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

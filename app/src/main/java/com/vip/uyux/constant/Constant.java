@@ -422,6 +422,10 @@ public class Constant {
          * 我的测评
          */
         public static final String EVALUATION = "/Evaluation";
+        /**
+         * 测评发布请求
+         */
+        public static final String EVALUATION_ADDBEFORE = "/Evaluation/addBefore";
 
     }
 

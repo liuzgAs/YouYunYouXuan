@@ -3,12 +3,13 @@ package com.vip.uyux.activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -34,6 +34,7 @@ import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.interfacepage.OnAddPictureListener;
 import com.vip.uyux.model.CePingTiJiao;
+import com.vip.uyux.model.EvaluationAddbefore;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.RespondAppimgadd;
 import com.vip.uyux.model.SimpleInfo;
@@ -52,17 +53,13 @@ import java.util.List;
 public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickListener {
 
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<LocalMedia> adapter;
+    private RecyclerArrayAdapter<EvaluationAddbefore.ImgsBean> adapter;
     private TextView textViewRight;
     int type = 0;
-    private ImageView imageHead;
-    private View viewHeadBg;
     private ProgressDialog progressDialog;
-    List<Integer> imgsList = new ArrayList<>();
-    private String compressPathHead;
-    private int imageHeadID;
     private int ogID;
     private int id;
+    private EvaluationAddbefore evaluationAddbefore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +84,13 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         textViewRight = (TextView) findViewById(R.id.textViewRight);
-
     }
 
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("立即评测");
         textViewRight.setText("发布");
+        textViewRight.setVisibility(View.GONE);
         initRecycler();
     }
 
@@ -102,11 +99,8 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
      */
     private void initRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
-        itemDecoration.setDrawLastItem(false);
-        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<LocalMedia>(LiJiCePingActivity.this) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<EvaluationAddbefore.ImgsBean>(LiJiCePingActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_lijipingce;
@@ -123,7 +117,8 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
-
+            private ImageView imageHead;
+            private View viewHeadBg;
             private EditText editTitle;
 
             @Override
@@ -139,12 +134,59 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                     }
                 });
                 editTitle = view.findViewById(R.id.editTitle);
+                editTitle.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        evaluationAddbefore.setTitle(editable.toString().trim());
+                    }
+                });
                 return view;
             }
 
             @Override
             public void onBindView(View headerView) {
-
+                if (evaluationAddbefore!=null){
+                    if (evaluationAddbefore.getImgBean() != null) {
+                        viewHeadBg.setVisibility(View.GONE);
+                        String compressPathHead = evaluationAddbefore.getImgBean().getCompressPath();
+                        ImageWidthHeight.WidthHeight imgWidthHeigth = ImageWidthHeight.getImgWidthHeigth(compressPathHead);
+                        GlideApp.with(LiJiCePingActivity.this)
+                                .load(compressPathHead)
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_empty)
+                                .into(new SimpleTarget<Drawable>(imgWidthHeigth.getWidth(), imgWidthHeigth.getHeigth()) {
+                                    @Override
+                                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                                        imageHead.setImageDrawable(resource);
+                                    }
+                                });
+                    } else {
+                        if (!TextUtils.isEmpty(evaluationAddbefore.getImg_url())) {
+                            viewHeadBg.setVisibility(View.GONE);
+                            GlideApp.with(LiJiCePingActivity.this)
+                                    .load(evaluationAddbefore.getImg_url())
+                                    .centerCrop()
+                                    .placeholder(R.mipmap.ic_empty)
+                                    .into(new SimpleTarget<Drawable>(evaluationAddbefore.getImg_w(), evaluationAddbefore.getImg_h()) {
+                                        @Override
+                                        public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                                            imageHead.setImageDrawable(resource);
+                                        }
+                                    });
+                        }
+                    }
+                    editTitle.setText(evaluationAddbefore.getTitle());
+                }
             }
         });
 
@@ -228,8 +270,72 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
         textViewRight.setOnClickListener(this);
     }
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getInitOkObject() {
+        String url = Constant.HOST + Constant.Url.EVALUATION_ADDBEFORE;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("id", String.valueOf(id));
+        return new OkObject(params, url);
+    }
+
     @Override
     protected void initData() {
+        ApiClient.post(this, getInitOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("", s);
+                try {
+                    evaluationAddbefore = GsonUtils.parseJSON(s, EvaluationAddbefore.class);
+                    if (evaluationAddbefore.getStatus() == 1) {
+                        textViewRight.setVisibility(View.VISIBLE);
+                        adapter.clear();
+                        List<EvaluationAddbefore.ImgsBean> imgsBeanList = evaluationAddbefore.getImgs();
+                        adapter.addAll(imgsBeanList);
+                    } else if (evaluationAddbefore.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(LiJiCePingActivity.this);
+                    } else {
+                        showError(evaluationAddbefore.getInfo());
+                    }
+                } catch (Exception e) {
+                    showError("数据出错");
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError("网络出错");
+            }
+
+            /**
+             * 错误显示
+             * @param msg
+             */
+            private void showError(String msg) {
+                try {
+                    View viewLoader = LayoutInflater.from(LiJiCePingActivity.this).inflate(R.layout.view_loaderror, null);
+                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
+                    recyclerView.setErrorView(viewLoader);
+                    recyclerView.showError();
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 
     @Override
@@ -241,33 +347,19 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                     // 图片选择结果回调
                     List<LocalMedia> localMediaList = PictureSelector.obtainMultipleResult(data);
                     if (type == -1) {
-                        viewHeadBg.setVisibility(View.GONE);
                         LocalMedia localMedia = localMediaList.get(0);
-                        LogUtil.LogShitou("LiJiCePingActivity--onActivityResult", "" + localMedia.getWidth());
-                        LogUtil.LogShitou("LiJiCePingActivity--onActivityResult", "" + localMedia.getHeight());
-                        compressPathHead = localMedia.getCompressPath();
-                        ImageWidthHeight.WidthHeight imgWidthHeigth = ImageWidthHeight.getImgWidthHeigth(compressPathHead);
-                        GlideApp.with(LiJiCePingActivity.this)
-                                .load(compressPathHead)
-                                .centerCrop()
-                                .placeholder(R.mipmap.ic_empty)
-                                .into(new SimpleTarget<Drawable>(imgWidthHeigth.getWidth(), imgWidthHeigth.getHeigth()) {
-                                    @Override
-                                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                                        imageHead.setImageDrawable(resource);
-                                    }
-                                });
+                        evaluationAddbefore.setImgBean(localMedia);
+                        adapter.notifyDataSetChanged();
                     } else if (type == -2) {
-                        adapter.addAll(localMediaList);
+                        for (int i = 0; i < localMediaList.size(); i++) {
+                            EvaluationAddbefore.ImgsBean imgsBean = new EvaluationAddbefore.ImgsBean(0, "", localMediaList.get(i));
+                            adapter.add(imgsBean);
+                        }
+                        adapter.notifyDataSetChanged();
                     } else {
                         final LocalMedia localMedia = localMediaList.get(0);
-                        new Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.update(localMedia, type);
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
+                        adapter.getItem(type).setImgBean(localMedia);
+                        adapter.notifyDataSetChanged();
                     }
                     break;
                 default:
@@ -278,57 +370,66 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
 
     int imgSum;
     boolean isBreak = false;
-    int imgSumX = 0;
     int count = 0;
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.textViewRight:
-                imgsList.clear();
+                if (TextUtils.isEmpty(evaluationAddbefore.getImg()) && evaluationAddbefore.getImgBean() == null) {
+                    Toast.makeText(LiJiCePingActivity.this, "请上传封面", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 imgSum = 0;
                 isBreak = false;
-                imgSumX = 0;
                 count = 0;
-                imgSumX = adapter.getAllData().size() + 1;
                 if (adapter.getAllData().size() > 1) {
                     for (int i = 0; i < adapter.getAllData().size(); i++) {
                         if (isBreak) {
                             break;
                         }
-                        imgSum++;
-                        upImg(adapter.getItem(i).getCompressPath(), 1);
+                        if (adapter.getItem(i).getImgBean()!=null){
+                            imgSum++;
+                            upImg(adapter.getItem(i).getImgBean().getCompressPath(), 1,i);
+                        }
                     }
                 }
-                imgSum++;
-                upImg(compressPathHead, 2);
-                progressDialog = new ProgressDialog(LiJiCePingActivity.this);
-                progressDialog.setTitle("上传图片");
-                progressDialog.setMessage("已上传0/" + imgSumX);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setMax(imgSumX);
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                progressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (evaluationAddbefore.getImgBean() != null) {
+                    imgSum++;
+                    upImg(evaluationAddbefore.getImgBean().getCompressPath(), 2,0);
+                }
+                if (imgSum>0){
+                    progressDialog = new ProgressDialog(LiJiCePingActivity.this);
+                    progressDialog.setTitle("上传图片");
+                    progressDialog.setMessage("已上传0/" + imgSum);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressDialog.setMax(imgSum);
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    progressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                        @Override
+                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
 
-                        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-                            new AlertDialog.Builder(LiJiCePingActivity.this)
-                                    .setTitle("是否取消上传")
-                                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            isBreak = true;
-                                            progressDialog.dismiss();
-                                        }
-                                    }).setNegativeButton("否", null)
-                                    .create()
-                                    .show();
+                            if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                                new AlertDialog.Builder(LiJiCePingActivity.this)
+                                        .setTitle("是否取消上传")
+                                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                isBreak = true;
+                                                progressDialog.dismiss();
+                                            }
+                                        }).setNegativeButton("否", null)
+                                        .create()
+                                        .show();
+                            }
+                            return false;
                         }
-                        return false;
-                    }
-                });
+                    });
+                }else {
+                   faBu();
+                }
+
                 break;
             case R.id.imageBack:
                 finish();
@@ -345,11 +446,11 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
      */
     private String getOkObject() {
         List<CePingTiJiao.ImgBean> list = new ArrayList<>();
-        for (int i = 0; i < imgsList.size(); i++) {
-            CePingTiJiao.ImgBean imgBean = new CePingTiJiao.ImgBean(imgsList.get(i), "内容");
+        for (int i = 0; i < adapter.getAllData().size(); i++) {
+            CePingTiJiao.ImgBean imgBean = new CePingTiJiao.ImgBean(adapter.getItem(i).getImg(), adapter.getItem(i).getContent());
             list.add(imgBean);
         }
-        CePingTiJiao cePingTiJiao = new CePingTiJiao(1,"android",userInfo.getUid(),tokenTime,id,ogID,"测一测",imageHeadID,list);
+        CePingTiJiao cePingTiJiao = new CePingTiJiao(1, "android", userInfo.getUid(), tokenTime, evaluationAddbefore.getId(), ogID, "测一测", evaluationAddbefore.getImg(), list);
         return GsonUtils.parseObject(cePingTiJiao);
     }
 
@@ -359,7 +460,7 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
     private void faBu() {
         String url = Constant.HOST + Constant.Url.EVALUATION_ADDSUBMIT;
         showLoadingDialog();
-        ApiClient.postJson(LiJiCePingActivity.this,url, getOkObject(), new ApiClient.CallBack() {
+        ApiClient.postJson(LiJiCePingActivity.this, url, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
@@ -406,7 +507,7 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
     /**
      * 上传图片
      */
-    private void upImg(String path, final int typePic) {
+    private void upImg(String path, final int typePic, final int position) {
         showLoadingDialog();
         ApiClient.post(LiJiCePingActivity.this, getTPOkObject(path), new ApiClient.CallBack() {
             @Override
@@ -418,13 +519,13 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                     if (respondAppimgadd.getStatus() == 1) {
                         count++;
                         progressDialog.setProgress(count);
-                        progressDialog.setMessage("已上传" + count + "/" + imgSumX);
+                        progressDialog.setMessage("已上传" + count + "/" + imgSum);
                         switch (typePic) {
                             case 1:
-                                imgsList.add(respondAppimgadd.getImgId());
+                                adapter.getItem(position).setImg(respondAppimgadd.getImgId());
                                 break;
                             case 2:
-                                imageHeadID=respondAppimgadd.getImgId();
+                                evaluationAddbefore.setImg(String.valueOf(respondAppimgadd.getImgId()));
                                 break;
                             default:
                                 break;
@@ -432,8 +533,6 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
                         if (count == imgSum) {
                             progressDialog.dismiss();
                             faBu();
-                            LogUtil.LogShitou("LiJiCePingActivity--imageHeadID", ""+imageHeadID);
-                            LogUtil.LogShitou("LiJiCePingActivity--imgsList", ""+GsonUtils.parseObject(imgsList));
                         }
                     } else if (respondAppimgadd.getStatus() == 3) {
                         MyDialog.showReLoginDialog(LiJiCePingActivity.this);

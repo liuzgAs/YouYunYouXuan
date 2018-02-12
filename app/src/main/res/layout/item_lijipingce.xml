@@ -7,12 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.vip.uyux.customview.ResizableImageView
+            android:src="@mipmap/ic_empty"
             android:id="@+id/imageImg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:id="@+id/editContent"
             android:hint="请输入测评文字"
             android:background="@color/white"
             android:gravity="left|top"
@@ -20,6 +20,15 @@
             android:padding="@dimen/leftAndRight"
             android:layout_below="@+id/imageImg"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/imageDelete"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignRight="@+id/imageImg"
+            android:layout_alignTop="@+id/imageImg"
+            android:src="@mipmap/cepingtupiandel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 

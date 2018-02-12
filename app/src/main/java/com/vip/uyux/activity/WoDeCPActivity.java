@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -140,6 +141,10 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                Intent intent =new Intent();
+                intent.setClass(WoDeCPActivity.this,LiJiCePingActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
+                startActivity(intent);
             }
         });
         recyclerView.setRefreshListener(this);
@@ -148,6 +153,7 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.viewDes).setOnClickListener(this);
     }
 
     @Override
@@ -158,6 +164,11 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.viewDes:
+                Intent intent = new Intent();
+                intent.setClass(this,PingJiaGLActivity.class);
+                startActivity(intent);
+                break;
             case R.id.imageBack:
                 finish();
                 break;
