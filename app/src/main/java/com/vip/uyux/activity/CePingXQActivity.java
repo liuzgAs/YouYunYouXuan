@@ -27,11 +27,14 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
+import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.interfacepage.OnPingLunListenert;
 import com.vip.uyux.model.EvaluationInfo;
+import com.vip.uyux.model.GoodsCollect;
 import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.ShouCangShanChu;
 import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
@@ -62,6 +65,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     private View viewDiBu;
     private EditText editLiuYan;
     private ImageView imageFaSong;
+    private ImageView imageShouCang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         viewDiBu = findViewById(R.id.viewDiBu);
         editLiuYan = (EditText) findViewById(R.id.editLiuYan);
         imageFaSong = (ImageView) findViewById(R.id.imageFaSong);
+        imageShouCang = (ImageView) findViewById(R.id.imageShouCang);
     }
 
     @Override
@@ -189,6 +194,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.viewShouCang).setOnClickListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -210,15 +216,122 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         onRefresh();
     }
 
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getSCOkObject() {
+        String url = Constant.HOST + Constant.Url.GOODS_COLLECT;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("item_id", String.valueOf(id));
+        params.put("type", String.valueOf(2));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 收藏
+     */
+    private void shouCang() {
+        showLoadingDialog();
+        ApiClient.post(CePingXQActivity.this, getSCOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess", s + "");
+                try {
+                    GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
+                    Toast.makeText(CePingXQActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                    if (goodsCollect.getStatus() == 1) {
+                        evaluationInfo.setIsc(1);
+                        evaluationInfo.setCollectNum(goodsCollect.getCollectNum());
+                        textCollectNum.setText("收藏(" + goodsCollect.getCollectNum()+ ")");
+                        imageShouCang.setImageResource(R.mipmap.dianzan_shixin);
+                    } else if (goodsCollect.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(CePingXQActivity.this);
+                    } else {
+                        Toast.makeText(CePingXQActivity.this, goodsCollect.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(CePingXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(CePingXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void quXiaoSC() {
+        String url = Constant.HOST + Constant.Url.GOODS_CANCLECOLLECT;
+        ShouCangShanChu shouCangShanChu = new ShouCangShanChu(1, "android", userInfo.getUid(), tokenTime, id, 2);
+        showLoadingDialog();
+        ApiClient.postJson(CePingXQActivity.this, url, GsonUtils.parseObject(shouCangShanChu), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess", s + "");
+                try {
+                    GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
+                    if (goodsCollect.getStatus() == 1) {
+                        Toast.makeText(CePingXQActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
+                        evaluationInfo.setIsc(0);
+                        evaluationInfo.setCollectNum(goodsCollect.getCollectNum());
+                        textCollectNum.setText("收藏(" + goodsCollect.getCollectNum()+ ")");
+                        imageShouCang.setImageResource(R.mipmap.dinazan);
+                    } else if (goodsCollect.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(CePingXQActivity.this);
+                    } else {
+                        Toast.makeText(CePingXQActivity.this, goodsCollect.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(CePingXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(CePingXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageFaSong:
-                if (TextUtils.isEmpty(editLiuYan.getText().toString().trim())) {
-                    Toast.makeText(CePingXQActivity.this, "请输入留言信息", Toast.LENGTH_SHORT).show();
-                    return;
+            case R.id.viewShouCang:
+                if (isLogin){
+                    if (evaluationInfo.getIsc()==1){
+                        quXiaoSC();
+                    }else {
+                        shouCang();
+                    }
+                }else {
+                    ToLoginActivity.toLoginActivity(this);
                 }
-                liuYan();
+                break;
+            case R.id.imageFaSong:
+                if (isLogin){
+                    if (TextUtils.isEmpty(editLiuYan.getText().toString().trim())) {
+                        Toast.makeText(CePingXQActivity.this, "请输入留言信息", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    liuYan();
+                }else {
+                    ToLoginActivity.toLoginActivity(this);
+                }
                 break;
             case R.id.imageBack:
                 finish();
@@ -324,6 +437,11 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                         List<EvaluationInfo.DataBean> dataBeanList = evaluationInfo.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
+                        if (evaluationInfo.getIsc()==1){
+                            imageShouCang.setImageResource(R.mipmap.dianzan_shixin);
+                        }else {
+                            imageShouCang.setImageResource(R.mipmap.dinazan);
+                        }
                     } else if (evaluationInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(CePingXQActivity.this);
                     } else {

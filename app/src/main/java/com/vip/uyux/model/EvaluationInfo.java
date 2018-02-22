@@ -39,9 +39,18 @@ public class EvaluationInfo {
     private String btnDes;
     private ShareBean share;
     private int status;
+    private int isc;
     private String info;
     private List<ImgsBean> imgs;
     private List<DataBean> data;
+
+    public int getIsc() {
+        return isc;
+    }
+
+    public void setIsc(int isc) {
+        this.isc = isc;
+    }
 
     public int getImg_w() {
         return img_w;
