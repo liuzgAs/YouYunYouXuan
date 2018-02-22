@@ -1,6 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -34,6 +37,19 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
     private RecyclerArrayAdapter<Evaluation.DataBean> adapter;
     private TextView textDes;
     private View viewDes;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_CE_PING:
+                    onRefresh();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +103,7 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
                 ApiClient.post(WoDeCPActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
                         try {
                             page++;
                             Evaluation evaluation = GsonUtils.parseJSON(s, Evaluation.class);
@@ -141,9 +157,9 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent =new Intent();
-                intent.setClass(WoDeCPActivity.this,LiJiCePingActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
+                Intent intent = new Intent();
+                intent.setClass(WoDeCPActivity.this, LiJiCePingActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
                 startActivity(intent);
             }
         });
@@ -166,7 +182,7 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.viewDes:
                 Intent intent = new Intent();
-                intent.setClass(this,PingJiaGLActivity.class);
+                intent.setClass(this, PingJiaGLActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageBack:
@@ -189,9 +205,9 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("p",String.valueOf(page));
+        params.put("p", String.valueOf(page));
         return new OkObject(params, url);
     }
 
@@ -206,9 +222,9 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
                     page++;
                     Evaluation evaluation = GsonUtils.parseJSON(s, Evaluation.class);
                     if (evaluation.getStatus() == 1) {
-                        if (evaluation.getIs_des()==1){
+                        if (evaluation.getIs_des() == 1) {
                             viewDes.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             viewDes.setVisibility(View.GONE);
                         }
                         textDes.setText(evaluation.getDes());
@@ -252,5 +268,19 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_CE_PING);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(reciver);
     }
 }

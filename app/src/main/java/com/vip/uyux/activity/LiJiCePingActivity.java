@@ -378,7 +378,11 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.textViewRight:
                 if (TextUtils.isEmpty(evaluationAddbefore.getImg()) && evaluationAddbefore.getImgBean() == null) {
-                    Toast.makeText(LiJiCePingActivity.this, "请上传封面", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LiJiCePingActivity.this, "请选择封面", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(evaluationAddbefore.getTitle())){
+                    Toast.makeText(LiJiCePingActivity.this, "请输入标题", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 imgSum = 0;
@@ -451,7 +455,7 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
             CePingTiJiao.ImgBean imgBean = new CePingTiJiao.ImgBean(adapter.getItem(i).getImg(), adapter.getItem(i).getContent());
             list.add(imgBean);
         }
-        CePingTiJiao cePingTiJiao = new CePingTiJiao(1, "android", userInfo.getUid(), tokenTime, evaluationAddbefore.getId(), ogID, "测一测", evaluationAddbefore.getImg(), list);
+        CePingTiJiao cePingTiJiao = new CePingTiJiao(1, "android", userInfo.getUid(), tokenTime, evaluationAddbefore.getId(), ogID, evaluationAddbefore.getTitle(), evaluationAddbefore.getImg(), list);
         return GsonUtils.parseObject(cePingTiJiao);
     }
 
