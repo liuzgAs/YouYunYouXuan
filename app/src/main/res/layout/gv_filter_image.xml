@@ -19,13 +19,15 @@
 
         <LinearLayout
             android:id="@+id/ll_del"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="right"
             android:orientation="vertical">
 
             <ImageView
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/iv_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

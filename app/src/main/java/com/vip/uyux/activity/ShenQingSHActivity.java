@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -83,7 +84,7 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     protected void initViews() {
-        ((TextView)findViewById(R.id.textViewTitle)).setText("申请售后");
+        ((TextView) findViewById(R.id.textViewTitle)).setText("申请售后");
         initRecycler();
     }
 
@@ -126,7 +127,6 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
 
             private TextView textLength;
             private TextView textGoods_name;
-            private TextView textDes2;
             private TextView textGoods_price;
             private TextView textSpe_name;
             private ImageView imageImg;
@@ -145,7 +145,6 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
                 textSpe_name = view.findViewById(R.id.textSpe_name);
                 textGoods_price = view.findViewById(R.id.textGoods_price);
                 editDes = view.findViewById(R.id.editDes);
-                textDes2 = view.findViewById(R.id.textDes2);
                 textLength = view.findViewById(R.id.textLength);
                 flowTagLayout.setOnTagSelectListener(new OnTagSelectListener() {
                     @Override
@@ -171,7 +170,7 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
 
                     @Override
                     public void afterTextChanged(Editable editable) {
-                        textLength.setText(editable.toString().length()+"/400");
+                        textLength.setText(editable.toString().length() + "/400");
                     }
                 });
                 return view;
@@ -179,24 +178,41 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
 
             @Override
             public void onBindView(View headerView) {
-                if (aftersAddbefore!=null){
+                if (aftersAddbefore != null) {
                     List<AftersAddbefore.TagBean> tagBeanList = aftersAddbefore.getTag();
                     tagSHAdapter.clearAndAddAll(tagBeanList);
                     for (int i = 0; i < tagBeanList.size(); i++) {
-                        if (tagBeanList.get(i).isSelect()){
+                        if (tagBeanList.get(i).isSelect()) {
                             flowTagLayout.setSelect(i);
                         }
                     }
-
-                    GlideApp.with(ShenQingSHActivity.this)
-                            .load(aftersAddbefore.getImg())
-                            .centerCrop()
-                            .placeholder(R.mipmap.ic_empty)
-                            .into(imageImg);
                     textSpe_name.setText(aftersAddbefore.getSpe_name());
-                    textGoods_price.setText("¥"+aftersAddbefore.getGoods_price());
+                    GlideApp.with(ShenQingSHActivity.this)
+                            .asBitmap()
+                            .centerCrop()
+                            .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, ShenQingSHActivity.this)))
+                            .load(aftersAddbefore.getImg())
+                            .into(imageImg);
+                    textGoods_price.setText("¥" + aftersAddbefore.getGoods_price());
                     textGoods_name.setText(aftersAddbefore.getGoods_name());
                     editDes.setHint(aftersAddbefore.getDes());
+
+                }
+            }
+        });
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+            private TextView textDes2;
+
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                View view = LayoutInflater.from(ShenQingSHActivity.this).inflate(R.layout.foot_shenqingshouhou, null);
+                textDes2 = view.findViewById(R.id.textDes2);
+                return view;
+            }
+
+            @Override
+            public void onBindView(View headerView) {
+                if (aftersAddbefore != null) {
                     textDes2.setText(aftersAddbefore.getDes2());
                 }
             }
@@ -288,9 +304,9 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime",tokenTime);
+            params.put("tokenTime", tokenTime);
         }
-        params.put("id",String.valueOf(id));
+        params.put("id", String.valueOf(id));
         return new OkObject(params, url);
     }
 
@@ -307,7 +323,7 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
                         adapter.clear();
                         adapter.add(new Picture(1, new LocalMedia()));
                         adapter.notifyDataSetChanged();
-                    } else if (aftersAddbefore.getStatus()== 3) {
+                    } else if (aftersAddbefore.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ShenQingSHActivity.this);
                     } else {
                         showError(aftersAddbefore.getInfo());
@@ -321,6 +337,7 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
             public void onError() {
                 showError("网络出错");
             }
+
             /**
              * 错误显示
              * @param msg
@@ -372,7 +389,7 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnTiJiao:
                 imgsList.clear();
                 imgSum = 0;
@@ -427,7 +444,7 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
                     RespondAppimgadd respondAppimgadd = GsonUtils.parseJSON(s, RespondAppimgadd.class);
                     if (respondAppimgadd.getStatus() == 1) {
                         imgsList.add(respondAppimgadd.getImgId());
-                        if (imgsList.size()==imgSum){
+                        if (imgsList.size() == imgSum) {
                             tiJiao();
                         }
                     } else if (respondAppimgadd.getStatus() == 3) {
@@ -452,41 +469,41 @@ public class ShenQingSHActivity extends ZjbBaseActivity implements View.OnClickL
         List<AftersAddbefore.TagBean> tag = aftersAddbefore.getTag();
         int tagId = -1;
         for (int i = 0; i < tag.size(); i++) {
-            if (tag.get(i).isSelect()){
+            if (tag.get(i).isSelect()) {
                 tagId = tag.get(i).getId();
                 break;
             }
         }
-        if (tagId==-1){
+        if (tagId == -1) {
             Toast.makeText(ShenQingSHActivity.this, "请选择服务类型", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(editDes.getText().toString().trim())){
+        if (TextUtils.isEmpty(editDes.getText().toString().trim())) {
             Toast.makeText(ShenQingSHActivity.this, "请输入问题描述", Toast.LENGTH_SHORT).show();
             return;
         }
-        ShouHouTiJiao shouHouTiJiao = new ShouHouTiJiao(1, "android", userInfo.getUid(), tokenTime, id,tagId,imgsList,editDes.getText().toString().trim());
+        ShouHouTiJiao shouHouTiJiao = new ShouHouTiJiao(1, "android", userInfo.getUid(), tokenTime, id, tagId, imgsList, editDes.getText().toString().trim());
         showLoadingDialog();
         String url = Constant.HOST + Constant.Url.AFTERS_ADDSUBMIT;
         ApiClient.postJson(ShenQingSHActivity.this, url, GsonUtils.parseObject(shouHouTiJiao), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
-                LogUtil.LogShitou("ShenQingSHActivity--onSuccess",s+ "");
+                LogUtil.LogShitou("ShenQingSHActivity--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                    if (simpleInfo.getStatus()==1){
+                    if (simpleInfo.getStatus() == 1) {
                         Intent intent = new Intent();
                         intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOW_HOU);
                         sendBroadcast(intent);
-                        MyDialog.dialogFinish(ShenQingSHActivity.this,simpleInfo.getInfo());
-                    }else if (simpleInfo.getStatus()==3){
+                        MyDialog.dialogFinish(ShenQingSHActivity.this, simpleInfo.getInfo());
+                    } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ShenQingSHActivity.this);
-                    }else {
+                    } else {
                         Toast.makeText(ShenQingSHActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(ShenQingSHActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShenQingSHActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -21,6 +22,7 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.AftersLogsinfo;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -104,9 +106,10 @@ public class FuWuDanXQActivity extends ZjbBaseActivity implements View.OnClickLi
             public void onBindView(View headerView) {
                 if (aftersLogsinfo != null) {
                     GlideApp.with(FuWuDanXQActivity.this)
-                            .load(aftersLogsinfo.getGoods().getImg())
+                            .asBitmap()
                             .centerCrop()
-                            .placeholder(R.mipmap.ic_empty)
+                            .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, FuWuDanXQActivity.this)))
+                            .load(aftersLogsinfo.getGoods().getImg())
                             .into(imageImg);
                     textFuWuDanHao.setText(aftersLogsinfo.getTitle().get(0));
                     textShenQingSJ.setText(aftersLogsinfo.getTitle().get(1));
