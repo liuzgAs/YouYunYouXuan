@@ -217,8 +217,8 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         mInflate.findViewById(R.id.viewGuanYuWM).setOnClickListener(this);
         mInflate.findViewById(R.id.viewPingJiaGL).setOnClickListener(this);
         mInflate.findViewById(R.id.viewTuiHuanHuo).setOnClickListener(this);
-        mInflate.findViewById(R.id.image0100).setOnClickListener(this);
         btnShengJi.setOnClickListener(this);
+        viewDiBu.setOnClickListener(this);
     }
 
     /**
@@ -384,7 +384,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                     ToLoginActivity.toLoginActivity(mContext);
                 }
                 break;
-            case R.id.image0100:
+            case R.id.viewDiBu:
                 intent.setClass(mContext, WebActivity.class);
                 intent.putExtra(Constant.IntentKey.TITLE, vip_url_title);
                 intent.putExtra(Constant.IntentKey.URL, vip_url);

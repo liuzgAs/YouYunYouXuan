@@ -8,11 +8,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.FuWuDanXQActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.AftersLogs;
+import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
 
 /**
@@ -41,7 +43,7 @@ public class ShenQingShViewHolder extends BaseViewHolder<AftersLogs.DataBean> {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), FuWuDanXQActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,data.getId());
+                intent.putExtra(Constant.IntentKey.ID, data.getId());
                 getContext().startActivity(intent);
             }
         });
@@ -50,21 +52,22 @@ public class ShenQingShViewHolder extends BaseViewHolder<AftersLogs.DataBean> {
     @Override
     public void setData(AftersLogs.DataBean data) {
         super.setData(data);
-        this.data=data;
+        this.data = data;
         GlideApp.with(getContext())
-                .load(data.getImg())
+                .asBitmap()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_empty)
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
+                .load(data.getImg())
                 .into(imageImg);
         textOrder_sn.setText(data.getOrder_sn());
         textSpe_name.setText(data.getSpe_name());
-        textQuantity.setText("×"+data.getQuantity());
+        textQuantity.setText("×" + data.getQuantity());
         textDes.setText(data.getDes());
-        if (data.getIs_view()==1){
+        if (data.getIs_view() == 1) {
             btnIs_view.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             btnIs_view.setVisibility(View.GONE);
         }
     }
-    
+
 }

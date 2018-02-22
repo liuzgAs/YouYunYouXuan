@@ -7,6 +7,7 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
@@ -34,6 +35,7 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
     CouponIndex.DataBean data;
     OnFinishListener onFinishListener;
     OnShareYouHuiQuanListener OnShareYouHuiQuanListener;
+    private final ImageView imageKeZengSong;
 
     public YouHuiQuanViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -47,6 +49,7 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
         viewBg = $(R.id.viewBg);
         viewKeZengSong = $(R.id.viewKeZengSong);
         viewZengSong = $(R.id.viewZengSong);
+        imageKeZengSong = $(R.id.imageKeZengSong);
         viewKeZengSong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,8 +102,10 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
         }
         if (data.getIs_send()==1){
             viewKeZengSong.setEnabled(true);
+            imageKeZengSong.setVisibility(View.VISIBLE);
         }else {
             viewKeZengSong.setEnabled(false);
+            imageKeZengSong.setVisibility(View.GONE);
         }
         if (data.isZhanKai()){
             viewZengSong.setVisibility(View.VISIBLE);
