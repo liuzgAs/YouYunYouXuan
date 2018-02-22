@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/layout_selector_white_system_gray"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:text="提现到"
+        android:textSize="@dimen/bigText"
+        android:textColor="@color/light_black"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/viewWeiXin"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:src="@mipmap/tixian_weixin"
+            android:layout_width="25dp"
+            android:id="@+id/image0000"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="微信"
+            android:layout_toRightOf="@+id/image0000"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:src="@mipmap/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <RelativeLayout
+        android:id="@+id/viewZhiFuBao"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:src="@mipmap/tixian_zhifubao"
+            android:layout_width="25dp"
+            android:id="@+id/image0100"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="支付宝"
+            android:layout_toRightOf="@+id/image0100"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:src="@mipmap/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <RelativeLayout
+        android:id="@+id/viewYinHangKa"
+        android:background="@drawable/layout_selector_white_system_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:src="@mipmap/tixian_yinhangka"
+            android:layout_width="25dp"
+            android:id="@+id/image0200"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="银行卡"
+            android:layout_toRightOf="@+id/image0200"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:src="@mipmap/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

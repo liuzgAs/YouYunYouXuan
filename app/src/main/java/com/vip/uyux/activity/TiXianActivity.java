@@ -49,13 +49,14 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
     private Runnable mR;
     private int[] mI;
     private String mPhone_sms;
-//    private TextView textViewRight;
+    //    private TextView textViewRight;
     int bankID;
     private TextView textBank1;
     private View viewPhone;
     private View viewCode;
     private int type;
     //    private String mobile;
+    private int pay_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,9 +192,8 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
             params.put("tokenTime", tokenTime);
         }
         params.put("money", editJinE.getText().toString().trim());
-//        params.put("bank", String.valueOf(bankID));
-//        params.put("userName", editPhone.getText().toString().trim());
-//        params.put("code", editCode.getText().toString().trim());
+        params.put("bank", String.valueOf(bankID));
+        params.put("pay_id", String.valueOf(pay_id));
         return new OkObject(params, url);
     }
 
@@ -234,7 +234,8 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
 //                    return;
 //                }
 //                chooseBank();
-                tiXian();
+//                tiXian();
+                chooseType();
                 break;
             case R.id.imageBack:
                 finish();
@@ -242,6 +243,48 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    /**
+     * 选择提现方式
+     */
+    private void chooseType() {
+        View dialog_tu_pian = LayoutInflater.from(TiXianActivity.this).inflate(R.layout.dialog_tixian_type, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(TiXianActivity.this, R.style.dialog)
+                .setView(dialog_tu_pian)
+                .create();
+        dialog_tu_pian.findViewById(R.id.viewWeiXin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                pay_id = 2;
+                tiXian();
+            }
+        });
+        dialog_tu_pian.findViewById(R.id.viewZhiFuBao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                pay_id = 1;
+                tiXian();
+            }
+        });
+        dialog_tu_pian.findViewById(R.id.viewYinHangKa).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                pay_id = 0;
+                chooseBank();
+            }
+        });
+        alertDialog.show();
+        Window dialogWindow = alertDialog.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.dialogFenXiang);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        DisplayMetrics d = getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+        lp.width = (int) (d.widthPixels * 1); // 高度设置为屏幕的0.6
+        dialogWindow.setAttributes(lp);
     }
 
     /**
@@ -371,7 +414,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                                bankID = dataBeanList.get(i).getId();
+                                bankID = dataBeanList.get(i).getId();
 //                                textBank1.setText(dataBeanList.get(i).getBank() + "(" + dataBeanList.get(i).getBankCard() + ")");
 //                                viewPhone.setVisibility(View.VISIBLE);
 //                                viewCode.setVisibility(View.VISIBLE);
@@ -466,10 +509,11 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
                             @Override
                             public void doWhat() {
                                 singleBtnDialog.dismiss();
-                                Intent intent1 = new Intent();
-                                intent1.setClass(TiXianActivity.this, TiXianJLActivity.class);
-                                intent1.putExtra(Constant.IntentKey.TYPE,type);
-                                startActivity(intent1);
+//                                Intent intent1 = new Intent();
+//                                intent1.setClass(TiXianActivity.this, TiXianJLActivity.class);
+//                                intent1.putExtra(Constant.IntentKey.TYPE,type);
+//                                startActivity(intent1);
+                                finish();
                             }
                         });
                         singleBtnDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
