@@ -29,23 +29,45 @@ public class ChanPinFootViewHolder extends BaseViewHolder<ImgsBean> {
     @Override
     public void setData(final ImgsBean data) {
         super.setData(data);
-        GlideApp.with(getContext())
-                .asBitmap()
-                .load(data.getImg())
-                .placeholder(R.mipmap.ic_empty_h)
-                .dontAnimate()
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        imageImg.setImageBitmap(resource);
-                    }
+        if (data.getWidth()!=0&&data.getHeigth()!=0){
+            GlideApp.with(getContext())
+                    .asBitmap()
+                    .load(data.getImg())
+                    .into(new SimpleTarget<Bitmap>(data.getWidth(),data.getHeigth()) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageImg.setImageBitmap(resource);
+                        }
 
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                        super.onLoadFailed(errorDrawable);
-                        imageImg.setImageResource(R.mipmap.ic_empty_h);
-                    }
-                });
+                        @Override
+                        public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                            super.onLoadFailed(errorDrawable);
+                            imageImg.setImageResource(R.mipmap.ic_empty_h);
+                        }
+                    });
+        }else {
+            GlideApp.with(getContext())
+                    .asBitmap()
+                    .load(data.getImg())
+                    .placeholder(R.mipmap.ic_empty_h)
+                    .dontAnimate()
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            int width = resource.getWidth();
+                            int height = resource.getHeight();
+                            data.setWidth(width);
+                            data.setHeigth(height);
+                            imageImg.setImageBitmap(resource);
+                        }
+
+                        @Override
+                        public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                            super.onLoadFailed(errorDrawable);
+                            imageImg.setImageResource(R.mipmap.ic_empty_h);
+                        }
+                    });
+        }
     }
 
 }
