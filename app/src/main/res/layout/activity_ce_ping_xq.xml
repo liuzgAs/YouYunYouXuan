@@ -97,6 +97,7 @@
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/viewCaiYong"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"

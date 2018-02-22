@@ -539,8 +539,6 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                     int[] location = new int[2];
                     tablayout.getLocationInWindow(location);
                     int top = location[1] - viewTitleHeight;
-                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", "" + location[1]);
-                    LogUtil.LogShitou("ChanPinXQActivity--onScrolled", "" + top);
                     if (top <= 0) {
 //                        tablayoutX.setVisibility(View.VISIBLE);
                     } else {

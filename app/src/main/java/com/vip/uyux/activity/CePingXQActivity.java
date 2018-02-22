@@ -66,6 +66,8 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     private EditText editLiuYan;
     private ImageView imageFaSong;
     private ImageView imageShouCang;
+    private int viewType;
+    private View viewCaiYong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     protected void initIntent() {
         Intent intent = getIntent();
         id = intent.getIntExtra(Constant.IntentKey.ID, 0);
+        viewType = intent.getIntExtra(Constant.IntentKey.TYPE, 0);
     }
 
     @Override
@@ -97,6 +100,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         editLiuYan = (EditText) findViewById(R.id.editLiuYan);
         imageFaSong = (ImageView) findViewById(R.id.imageFaSong);
         imageShouCang = (ImageView) findViewById(R.id.imageShouCang);
+        viewCaiYong = findViewById(R.id.viewCaiYong);
     }
 
     @Override
@@ -195,6 +199,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
         findViewById(R.id.viewShouCang).setOnClickListener(this);
+        findViewById(R.id.viewCaiYong).setOnClickListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -209,6 +214,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
             }
         });
         imageFaSong.setOnClickListener(this);
+        btnBuy.setOnClickListener(this);
     }
 
     @Override
@@ -311,6 +317,22 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btnBuy:
+                Intent intent = new Intent();
+                intent.setClass(this, ChanPinXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, evaluationInfo.getGoods_id());
+                startActivity(intent);
+                break;
+            case R.id.viewCaiYong:
+                if (isLogin){
+//                    Intent intent = new Intent();
+//                    intent.putExtra(Constant.IntentKey.OGID,)
+//                    intent.setClass(this, LiJiCePingActivity.class);
+//                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(this);
+                }
+                break;
             case R.id.viewShouCang:
                 if (isLogin){
                     if (evaluationInfo.getIsc()==1){
@@ -441,6 +463,9 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                             imageShouCang.setImageResource(R.mipmap.dianzan_shixin);
                         }else {
                             imageShouCang.setImageResource(R.mipmap.dinazan);
+                        }
+                        if (viewType==0){
+                            viewCaiYong.setVisibility(View.GONE);
                         }
                     } else if (evaluationInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(CePingXQActivity.this);
