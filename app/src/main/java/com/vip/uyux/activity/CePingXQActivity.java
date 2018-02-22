@@ -256,6 +256,9 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                     GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
                     Toast.makeText(CePingXQActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                     if (goodsCollect.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);
+                        sendBroadcast(intent);
                         evaluationInfo.setIsc(1);
                         evaluationInfo.setCollectNum(goodsCollect.getCollectNum());
                         textCollectNum.setText("收藏(" + goodsCollect.getCollectNum()+ ")");
@@ -293,6 +296,9 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                 try {
                     GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
                     if (goodsCollect.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);
+                        sendBroadcast(intent);
                         Toast.makeText(CePingXQActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
                         evaluationInfo.setIsc(0);
                         evaluationInfo.setCollectNum(goodsCollect.getCollectNum());

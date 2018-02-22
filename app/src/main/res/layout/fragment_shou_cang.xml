@@ -1,13 +1,60 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.vip.uyux.fragment.ShouCangFragment">
+    android:background="@color/background"
+    tools:context="com.vip.uyux.activity.ZuJiActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_empty="@layout/view_empty"
+        app:layout_progress="@layout/view_progress"
+        android:layout_above="@+id/viewDiBu"
+        app:scrollbarStyle="insideOverlay" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/viewDiBu"
+        android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/normalItemHeight">
 
-</FrameLayout>
+        <RelativeLayout
+            android:id="@+id/viewQuanXuan"
+            android:background="@color/white"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="20dp"
+                android:src="@mipmap/xuanzhong"
+                android:layout_centerVertical="true"
+                android:id="@+id/imageQuanXuan"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_height="20dp" />
+            <TextView
+                android:textSize="@dimen/bigText"
+                android:text="全选"
+                android:textColor="@color/light_black"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/imageQuanXuan"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/textShanCHu"
+            android:textStyle="bold"
+            android:text="删除"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/basic_color"
+            android:textSize="@dimen/bigText"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

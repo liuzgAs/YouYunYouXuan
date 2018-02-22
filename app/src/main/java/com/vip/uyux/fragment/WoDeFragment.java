@@ -28,7 +28,7 @@ import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.activity.WoDeCPActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.activity.WoDeJFActivity;
-import com.vip.uyux.activity.WoDeSCActivity;
+import com.vip.uyux.activity.WoDeSCCZActivity;
 import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.activity.YouHuiQuanActivity;
 import com.vip.uyux.activity.YuEActivity;
@@ -470,7 +470,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 break;
             case R.id.viewShouCang:
                 if (isLogin) {
-                    intent.setClass(mContext, WoDeSCActivity.class);
+                    intent.setClass(mContext, WoDeSCCZActivity.class);
                     startActivity(intent);
                 } else {
                     ToLoginActivity.toLoginActivity(mContext);

@@ -15,7 +15,8 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.fragment.PingJiaFragment;
+import com.vip.uyux.fragment.ShouCangFragment;
+import com.vip.uyux.interfacepage.OnBianJiListener;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.UserCollect;
 import com.vip.uyux.util.ApiClient;
@@ -29,6 +30,10 @@ public class WoDeSCCZActivity extends ZjbBaseNotLeftActivity implements View.OnC
     private TabLayout tablayout;
     private ViewPager viewPager;
     private List<UserCollect.TypeBean> typeBeanList;
+    private TextView textViewRight;
+    private ShouCangFragment[] shouCangFragments;
+    private int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +55,40 @@ public class WoDeSCCZActivity extends ZjbBaseNotLeftActivity implements View.OnC
     protected void findID() {
         tablayout = (TabLayout) findViewById(R.id.tablayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        textViewRight = (TextView) findViewById(R.id.textViewRight);
     }
 
     @Override
     protected void initViews() {
+        textViewRight.setText("编辑");
         ((TextView) findViewById(R.id.textViewTitle)).setText("我的收藏");
     }
 
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        textViewRight.setOnClickListener(this);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                WoDeSCCZActivity.this.position = position;
+                if (shouCangFragments[position].isBianJi) {
+                    textViewRight.setText("取消");
+                } else {
+                    textViewRight.setText("编辑");
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     /**
@@ -87,6 +116,7 @@ public class WoDeSCCZActivity extends ZjbBaseNotLeftActivity implements View.OnC
                     UserCollect userCollect = GsonUtils.parseJSON(s, UserCollect.class);
                     if (userCollect.getStatus() == 1) {
                         typeBeanList = userCollect.getType();
+                        shouCangFragments = new ShouCangFragment[typeBeanList.size()];
                         viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
                         tablayout.setupWithViewPager(viewPager);
                         tablayout.removeAllTabs();
@@ -120,6 +150,9 @@ public class WoDeSCCZActivity extends ZjbBaseNotLeftActivity implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.textViewRight:
+                shouCangFragments[position].setBianJiBtn();
+                break;
             case R.id.imageBack:
                 finish();
                 break;
@@ -141,7 +174,14 @@ public class WoDeSCCZActivity extends ZjbBaseNotLeftActivity implements View.OnC
 
         @Override
         public Fragment getItem(int position) {
-            return new PingJiaFragment(typeBeanList.get(position).getV());
+            shouCangFragments[position] = new ShouCangFragment(typeBeanList.get(position).getV());
+            shouCangFragments[position].setOnBianJiListener(new OnBianJiListener() {
+                @Override
+                public void setBianJi(String bianJi) {
+                    textViewRight.setText(bianJi);
+                }
+            });
+            return shouCangFragments[position];
 
         }
 

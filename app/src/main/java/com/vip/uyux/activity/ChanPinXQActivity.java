@@ -709,6 +709,9 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
                     if (simpleInfo.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);
+                        sendBroadcast(intent);
                         Toast.makeText(ChanPinXQActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
                         goodsInfo.setIsc(0);
                         imageShouCang.setImageResource(R.mipmap.shoucang_xq);
@@ -759,10 +762,13 @@ public class ChanPinXQActivity extends ZjbBaseActivity implements View.OnClickLi
                 LogUtil.LogShitou("ChanPinXQActivity--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
-                    Toast.makeText(ChanPinXQActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
-                    goodsInfo.setIsc(1);
-                    imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
                     if (simpleInfo.getStatus() == 1) {
+                        Toast.makeText(ChanPinXQActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                        goodsInfo.setIsc(1);
+                        imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);
+                        sendBroadcast(intent);
                     } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQActivity.this);
                     } else {

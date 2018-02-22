@@ -303,6 +303,9 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
                     if (simpleInfo.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);
+                        sendBroadcast(intent);
                         Toast.makeText(ChanPinJFXQActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
                         goodsInfo.setIsc(0);
                         imageShouCang.setImageResource(R.mipmap.shoucang_xq);
@@ -357,6 +360,9 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                     goodsInfo.setIsc(1);
                     imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
                     if (simpleInfo.getStatus() == 1) {
+                        Intent intent = new Intent();
+                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);
+                        sendBroadcast(intent);
                     } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinJFXQActivity.this);
                     } else {
