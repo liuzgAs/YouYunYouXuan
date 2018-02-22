@@ -62,7 +62,9 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
         btnBtnDes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFinishListener.toFinish();
+                if (data.getUseState()==1){
+                    onFinishListener.toFinish();
+                }
             }
         });
         viewZengSong.setOnClickListener(new View.OnClickListener() {
