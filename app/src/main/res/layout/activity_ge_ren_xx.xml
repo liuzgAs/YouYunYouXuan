@@ -240,6 +240,31 @@
                 android:src="@mipmap/right" />
 
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/viewShiMing"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normalItemHeight"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="实名认证"
+                android:textSize="@dimen/normal_textsize" />
+
+            <ImageView
+                android:id="@+id/image0700"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/right" />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

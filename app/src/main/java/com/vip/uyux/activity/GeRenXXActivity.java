@@ -88,6 +88,7 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
         findViewById(R.id.viewBirthday).setOnClickListener(this);
         findViewById(R.id.viewAddress).setOnClickListener(this);
         findViewById(R.id.viewCard).setOnClickListener(this);
+        findViewById(R.id.viewShiMing).setOnClickListener(this);
     }
 
     /**
@@ -309,6 +310,10 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewShiMing:
+                intent.setClass(GeRenXXActivity.this,ShiMingRZActivity.class);
+                startActivity(intent);
+                break;
             case R.id.viewCard:
                 intent.setClass(GeRenXXActivity.this, GuanLiYHKActivity.class);
                 startActivity(intent);

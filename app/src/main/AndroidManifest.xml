@@ -441,7 +441,8 @@
         <activity android:name=".activity.ShenQingJinDuActivity" />
         <activity android:name=".activity.LiJiCePingActivity" />
         <activity android:name=".activity.WoDeSCCZActivity" />
-        <activity android:name=".activity.GuanFangTJActivity"></activity>
+        <activity android:name=".activity.GuanFangTJActivity" />
+        <activity android:name=".activity.ShiMingRZActivity"></activity>
     </application>
 
 </manifest>

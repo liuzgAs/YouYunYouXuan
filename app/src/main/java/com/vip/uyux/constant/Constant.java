@@ -438,6 +438,14 @@ public class Constant {
          * 官方推荐
          */
         public static final String EVALUATION_OFFICIAL = "/Evaluation/official";
+        /**
+         * 实名认证前请求
+         */
+        public static final String USER_REALBEFORE = "/User/realBefore";
+        /**
+         * 实名认证提交
+         */
+        public static final String USER_REALSUBMIT = "/User/realSubmit";
 
     }
 
