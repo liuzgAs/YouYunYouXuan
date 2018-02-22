@@ -74,6 +74,7 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
                         break;
                     case 2:
                         /*去官方推荐*/
+
                         break;
                     default:
                         break;
