@@ -68,6 +68,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     private ImageView imageShouCang;
     private int viewType;
     private View viewCaiYong;
+    private int ogId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         Intent intent = getIntent();
         id = intent.getIntExtra(Constant.IntentKey.ID, 0);
         viewType = intent.getIntExtra(Constant.IntentKey.TYPE, 0);
+        ogId = intent.getIntExtra(Constant.IntentKey.OGID, 0);
     }
 
     @Override
@@ -316,19 +318,19 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.btnBuy:
-                Intent intent = new Intent();
                 intent.setClass(this, ChanPinXQActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, evaluationInfo.getGoods_id());
                 startActivity(intent);
                 break;
             case R.id.viewCaiYong:
                 if (isLogin){
-//                    Intent intent = new Intent();
-//                    intent.putExtra(Constant.IntentKey.OGID,)
-//                    intent.setClass(this, LiJiCePingActivity.class);
-//                    startActivity(intent);
+                    intent.putExtra(Constant.IntentKey.ID,id);
+                    intent.putExtra(Constant.IntentKey.OGID,ogId);
+                    intent.setClass(this, LiJiCePingActivity.class);
+                    startActivity(intent);
                 }else {
                     ToLoginActivity.toLoginActivity(this);
                 }
@@ -466,6 +468,8 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                         }
                         if (viewType==0){
                             viewCaiYong.setVisibility(View.GONE);
+                        }else {
+                            viewCaiYong.setVisibility(View.VISIBLE);
                         }
                     } else if (evaluationInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(CePingXQActivity.this);

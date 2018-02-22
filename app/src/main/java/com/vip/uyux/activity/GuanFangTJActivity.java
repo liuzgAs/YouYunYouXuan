@@ -1,14 +1,11 @@
-package com.vip.uyux.fragment;
+package com.vip.uyux.activity;
 
-
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -22,37 +19,32 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
-import com.vip.uyux.base.ZjbBaseFragment;
+import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.model.Comment;
+import com.vip.uyux.model.EvaluationOfficial;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
-import com.vip.uyux.viewholder.PingJiaViewHolder;
+import com.vip.uyux.viewholder.GuanFangTJViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class GuanFangTJActivity extends ZjbBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private String v;
-    private View mInflate;
+    private int id;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Comment.DataBean> adapter;
+    private TextView textViewRight;
+    private RecyclerArrayAdapter<EvaluationOfficial.DataBean> adapter;
+    private int ogId;
     private BroadcastReceiver reciver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            switch (action) {
-                case Constant.BroadcastCode.SHUA_XIN_PING_JIA:
-                    onRefresh();
-                    break;
+            switch (action){
                 case Constant.BroadcastCode.SHUA_XIN_CE_PING:
-                    onRefresh();
+                    finish();
                     break;
                 default:
                     break;
@@ -60,36 +52,11 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         }
     };
 
-    public PingJiaFragment() {
-        // Required empty public constructor
-    }
-
-    @SuppressLint("ValidFragment")
-    public PingJiaFragment(String v) {
-        // Required empty public constructor
-        this.v = v;
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        if (mInflate == null) {
-            mInflate = inflater.inflate(R.layout.fragment_ping_jia, container, false);
-            init();
-        }
-        //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-        ViewGroup parent = (ViewGroup) mInflate.getParent();
-        if (parent != null) {
-            parent.removeView(mInflate);
-        }
-        return mInflate;
-    }
-
-    @Override
-    protected void initIntent() {
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_guan_fang_tj);
+        init();
     }
 
     @Override
@@ -98,12 +65,22 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     }
 
     @Override
+    protected void initIntent() {
+        Intent intent = getIntent();
+        id = intent.getIntExtra(Constant.IntentKey.ID, 0);
+        ogId = intent.getIntExtra(Constant.IntentKey.OGID, 0);
+    }
+
+    @Override
     protected void findID() {
-        recyclerView = mInflate.findViewById(R.id.recyclerView);
+        textViewRight = (TextView) findViewById(R.id.textViewRight);
+        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
     }
 
     @Override
     protected void initViews() {
+        ((TextView) findViewById(R.id.textViewTitle)).setText("官方推荐");
+        textViewRight.setText("自定义编辑");
         initRecycler();
     }
 
@@ -111,34 +88,41 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
      * 初始化recyclerview
      */
     private void initRecycler() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.top), 0, 0);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<Comment.DataBean>(mContext) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<EvaluationOfficial.DataBean>(GuanFangTJActivity.this) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_yipingjia;
-                return new PingJiaViewHolder(parent, layout);
+                int layout = R.layout.item_guanfang_tuijian;
+                GuanFangTJViewHolder guanFangTJViewHolder = new GuanFangTJViewHolder(parent, layout);
+                guanFangTJViewHolder.setOnGetOgId(new GuanFangTJViewHolder.OnGetOgId() {
+                    @Override
+                    public int getOgId() {
+                        return ogId;
+                    }
+                });
+                return guanFangTJViewHolder;
             }
         });
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+                ApiClient.post(GuanFangTJActivity.this, getOkObject(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
-                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
+                        LogUtil.LogShitou("DingDanGLActivity--加载更多", s+"");
                         try {
                             page++;
-                            Comment comment = GsonUtils.parseJSON(s, Comment.class);
-                            int status = comment.getStatus();
+                            EvaluationOfficial evaluationOfficial = GsonUtils.parseJSON(s, EvaluationOfficial.class);
+                            int status = evaluationOfficial.getStatus();
                             if (status == 1) {
-                                List<Comment.DataBean> dataBeanList = comment.getData();
+                                List<EvaluationOfficial.DataBean> dataBeanList = evaluationOfficial.getData();
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
-                                MyDialog.showReLoginDialog(mContext);
+                                MyDialog.showReLoginDialog(GuanFangTJActivity.this);
                             } else {
                                 adapter.pauseMore();
                             }
@@ -180,12 +164,24 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 adapter.resumeMore();
             }
         });
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(GuanFangTJActivity.this, CePingXQActivity.class);
+                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
+                intent.putExtra(Constant.IntentKey.OGID,ogId);
+                intent.putExtra(Constant.IntentKey.TYPE,1);
+                startActivity(intent);
+            }
+        });
         recyclerView.setRefreshListener(this);
     }
 
     @Override
     protected void setListeners() {
-
+        findViewById(R.id.imageBack).setOnClickListener(this);
+        textViewRight.setOnClickListener(this);
     }
 
     @Override
@@ -193,43 +189,60 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         onRefresh();
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.textViewRight:
+                Intent intent = new Intent();
+                intent.putExtra(Constant.IntentKey.OGID, ogId);
+                intent.setClass(this, LiJiCePingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageBack:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
+
+    int page =1;
+
     /**
      * des： 网络请求参数
      * author： ZhangJieBo
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getOkObject() {
-        String url = Constant.HOST + Constant.Url.COMMENT;
+        String url = Constant.HOST + Constant.Url.EVALUATION_OFFICIAL;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
-            params.put("tokenTime", tokenTime);
+            params.put("tokenTime",tokenTime);
         }
-        params.put("state", v);
-        params.put("p", String.valueOf(page));
+        params.put("p",String.valueOf(page));
+        params.put("goods_id",String.valueOf(id));
         return new OkObject(params, url);
     }
-
-    int page = 1;
 
     @Override
     public void onRefresh() {
         page = 1;
-        ApiClient.post(mContext, getOkObject(), new ApiClient.CallBack() {
+        ApiClient.post(this, getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                LogUtil.LogShitou("评价管理", s);
+                LogUtil.LogShitou("", s);
                 try {
                     page++;
-                    Comment comment = GsonUtils.parseJSON(s, Comment.class);
-                    if (comment.getStatus() == 1) {
-                        List<Comment.DataBean> dataBeanList = comment.getData();
+                    EvaluationOfficial evaluationOfficial = GsonUtils.parseJSON(s, EvaluationOfficial.class);
+                    if (evaluationOfficial.getStatus() == 1) {
+                        List<EvaluationOfficial.DataBean> dataBeanList = evaluationOfficial.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
-                    } else if (comment.getStatus() == 3) {
-                        MyDialog.showReLoginDialog(mContext);
+                    } else if (evaluationOfficial.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(GuanFangTJActivity.this);
                     } else {
-                        showError(comment.getInfo());
+                        showError(evaluationOfficial.getInfo());
                     }
                 } catch (Exception e) {
                     showError("数据出错");
@@ -247,7 +260,7 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(mContext).inflate(R.layout.view_loaderror, null);
+                    View viewLoader = LayoutInflater.from(GuanFangTJActivity.this).inflate(R.layout.view_loaderror, null);
                     TextView textMsg = viewLoader.findViewById(R.id.textMsg);
                     textMsg.setText(msg);
                     viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
@@ -269,14 +282,13 @@ public class PingJiaFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     public void onStart() {
         super.onStart();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Constant.BroadcastCode.SHUA_XIN_PING_JIA);
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_CE_PING);
-        mContext.registerReceiver(reciver, filter);
+        registerReceiver(reciver,filter);
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
-        mContext.unregisterReceiver(reciver);
+        unregisterReceiver(reciver);
     }
 }

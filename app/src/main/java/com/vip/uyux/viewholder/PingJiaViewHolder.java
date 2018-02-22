@@ -12,6 +12,7 @@ import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
+import com.vip.uyux.activity.GuanFangTJActivity;
 import com.vip.uyux.activity.LiJiCePingActivity;
 import com.vip.uyux.activity.PingJiaActivity;
 import com.vip.uyux.constant.Constant;
@@ -64,17 +65,20 @@ public class PingJiaViewHolder extends BaseViewHolder<Comment.DataBean> {
         viewQuCePing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
                 switch (data.getGo_evaluation()) {
                     case 1:
                         /*去立即测评页面*/
-                        Intent intent = new Intent();
                         intent.putExtra(Constant.IntentKey.OGID,data.getId());
                         intent.setClass(getContext(), LiJiCePingActivity.class);
                         getContext().startActivity(intent);
                         break;
                     case 2:
                         /*去官方推荐*/
-
+                        intent.setClass(getContext(), GuanFangTJActivity.class);
+                        intent.putExtra(Constant.IntentKey.OGID,data.getId());
+                        intent.putExtra(Constant.IntentKey.ID,data.getGoods_id());
+                        getContext().startActivity(intent);
                         break;
                     default:
                         break;

@@ -434,6 +434,10 @@ public class Constant {
          * 测评评论提交
          */
         public static final String EVALUATION_MSGSUBMIT = "/Evaluation/msgSubmit";
+        /**
+         * 官方推荐
+         */
+        public static final String EVALUATION_OFFICIAL = "/Evaluation/official";
 
     }
 

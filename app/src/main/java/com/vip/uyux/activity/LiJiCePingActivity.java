@@ -455,7 +455,12 @@ public class LiJiCePingActivity extends ZjbBaseActivity implements View.OnClickL
             CePingTiJiao.ImgBean imgBean = new CePingTiJiao.ImgBean(adapter.getItem(i).getImg(), adapter.getItem(i).getContent());
             list.add(imgBean);
         }
-        CePingTiJiao cePingTiJiao = new CePingTiJiao(1, "android", userInfo.getUid(), tokenTime, evaluationAddbefore.getId(), ogID, evaluationAddbefore.getTitle(), evaluationAddbefore.getImg(), list);
+        CePingTiJiao cePingTiJiao;
+        if (ogID!=0){
+            cePingTiJiao = new CePingTiJiao(1, "android", userInfo.getUid(), tokenTime, "0", ogID, evaluationAddbefore.getTitle(), evaluationAddbefore.getImg(), list);
+        }else {
+            cePingTiJiao = new CePingTiJiao(1, "android", userInfo.getUid(), tokenTime, evaluationAddbefore.getId(), ogID, evaluationAddbefore.getTitle(), evaluationAddbefore.getImg(), list);
+        }
         return GsonUtils.parseObject(cePingTiJiao);
     }
 
