@@ -1,5 +1,6 @@
 package com.vip.uyux.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -7,11 +8,16 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -23,8 +29,10 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.interfacepage.OnPingLunListenert;
 import com.vip.uyux.model.EvaluationInfo;
 import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
@@ -44,9 +52,16 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     private View viewBar;
     private float guangGaoHeight;
     private int id;
+    private int type;
+    private int fid;
     private EvaluationInfo evaluationInfo;
     private ImageView imageHead;
     private TextView textNickname;
+    private TextView textCollectNum;
+    private Button btnBuy;
+    private View viewDiBu;
+    private EditText editLiuYan;
+    private ImageView imageFaSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +87,16 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         viewBar = findViewById(R.id.viewBar);
         imageHead = (ImageView) findViewById(R.id.imageHead);
         textNickname = (TextView) findViewById(R.id.textNickname);
+        textCollectNum = (TextView) findViewById(R.id.textCollectNum);
+        btnBuy = (Button) findViewById(R.id.btnBuy);
+        viewDiBu = findViewById(R.id.viewDiBu);
+        editLiuYan = (EditText) findViewById(R.id.editLiuYan);
+        imageFaSong = (ImageView) findViewById(R.id.imageFaSong);
     }
 
     @Override
     protected void initViews() {
+        viewDiBu.setVisibility(View.GONE);
         guangGaoHeight = DpUtils.convertDpToPixel(150, this);
         viewBar.getBackground().mutate().setAlpha(0);
         initRecycler();
@@ -95,11 +116,23 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_ceping_pinglun;
-                return new CePingViewHolder(parent, layout);
+                CePingViewHolder cePingViewHolder = new CePingViewHolder(parent, layout);
+                cePingViewHolder.setOnPingLunListenert(new OnPingLunListenert() {
+                    @Override
+                    public void pingLun(int type, int fid, String name) {
+                        CePingXQActivity.this.type = type;
+                        CePingXQActivity.this.fid = fid;
+                        editLiuYan.setText("");
+                        editLiuYan.setHint("回复 "+name);
+                        editLiuYan.requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(editLiuYan,InputMethodManager.SHOW_FORCED);
+                    }
+                });
+                return cePingViewHolder;
             }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
-
             private TextView textContent;
             private ImageView imageTop;
             private RecyclerArrayAdapter<EvaluationInfo.ImgsBean> adapterImg;
@@ -122,7 +155,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                             .load(evaluationInfo.getImg_url())
                             .centerCrop()
                             .placeholder(R.mipmap.ic_empty)
-                            .into(new SimpleTarget<Drawable>(evaluationInfo.getImg_w(),evaluationInfo.getImg_h()) {
+                            .into(new SimpleTarget<Drawable>(evaluationInfo.getImg_w(), evaluationInfo.getImg_h()) {
                                 @Override
                                 public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                                     imageTop.setImageDrawable(resource);
@@ -169,6 +202,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                 }
             }
         });
+        imageFaSong.setOnClickListener(this);
     }
 
     @Override
@@ -179,12 +213,77 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.imageFaSong:
+                if (TextUtils.isEmpty(editLiuYan.getText().toString().trim())) {
+                    Toast.makeText(CePingXQActivity.this, "请输入留言信息", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                liuYan();
+                break;
             case R.id.imageBack:
                 finish();
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getPLOkObject() {
+        String url = Constant.HOST + Constant.Url.EVALUATION_MSGSUBMIT;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("id", String.valueOf(id));
+        params.put("type", String.valueOf(type));
+        params.put("fid", String.valueOf(fid));
+        params.put("content", editLiuYan.getText().toString().trim());
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 留言
+     */
+    private void liuYan() {
+        showLoadingDialog();
+        ApiClient.post(CePingXQActivity.this, getPLOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("CePingXQActivity--onSuccess", s + "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus() == 1) {
+                        editLiuYan.setText("");
+                        editLiuYan.setHint("请输入您的留言");
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (imm != null) {
+                            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                                    0);
+                        }
+                        onRefresh();
+                    } else if (simpleInfo.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(CePingXQActivity.this);
+                    } else {
+                        Toast.makeText(CePingXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(CePingXQActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(CePingXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -212,7 +311,10 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                 try {
                     evaluationInfo = GsonUtils.parseJSON(s, EvaluationInfo.class);
                     if (evaluationInfo.getStatus() == 1) {
+                        viewDiBu.setVisibility(View.VISIBLE);
                         textNickname.setText(evaluationInfo.getNickname());
+                        textCollectNum.setText("收藏(" + evaluationInfo.getCollectNum() + ")");
+                        btnBuy.setText(evaluationInfo.getBtnDes() + " >");
                         GlideApp.with(CePingXQActivity.this)
                                 .load(evaluationInfo.getHeadimg())
                                 .centerCrop()

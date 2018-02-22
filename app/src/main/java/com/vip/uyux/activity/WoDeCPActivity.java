@@ -78,6 +78,7 @@ public class WoDeCPActivity extends ZjbBaseActivity implements View.OnClickListe
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("我的测评");
+        viewDes.setVisibility(View.GONE);
         initRecycler();
     }
 

@@ -28,6 +28,15 @@
             android:layout_toRightOf="@+id/imageHead"
             android:text="手里乾坤"
             android:textSize="@dimen/litterText" />
+        <ImageView
+            android:id="@+id/imageLiuYan"
+            android:paddingLeft="15dp"
+            android:paddingRight="@dimen/leftAndRight"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/pinglun"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <TextView

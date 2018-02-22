@@ -430,6 +430,10 @@ public class Constant {
          * 测评详情
          */
         public static final String EVALUATION_INFO = "/Evaluation/info";
+        /**
+         * 测评评论提交
+         */
+        public static final String EVALUATION_MSGSUBMIT = "/Evaluation/msgSubmit";
 
     }
 
