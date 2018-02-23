@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.vip.uyux.fragment.FenLeiFragment">
+
+    <LinearLayout
+        android:id="@+id/viewBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tranblack"
+        android:fitsSystemWindows="true"
+        android:gravity="bottom"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titleHeight"
+            android:background="@color/white">
+
+
+            <ImageView
+                android:id="@+id/imageXiaoXi"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="5dp"
+                android:paddingRight="@dimen/leftAndRight"
+                android:src="@mipmap/mine_xinxi" />
+
+            <RelativeLayout
+                android:id="@+id/viewSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_toLeftOf="@+id/imageXiaoXi"
+                android:layout_toStartOf="@+id/imageXiaoXi"
+                android:background="@drawable/shape_background_25dp">
+
+                <ImageView
+                    android:id="@+id/imageView83"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/ic_search" />
+
+                <TextView
+                    android:id="@+id/textBgDes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/imageView83"
+                    android:layout_toRightOf="@+id/imageView83"
+                    android:text="装修材料大放送，买四送一"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/normal_edittextsize" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/viewBar"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal">
+
+        <q.rorbin.verticaltablayout.VerticalTabLayout
+            android:id="@+id/verticalTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/white"
+            app:indicator_color="@color/background"
+            app:indicator_gravity="fill"
+            app:tab_height="50dp"
+            app:tab_mode="scrollable" />
+
+        <com.vip.uyux.customview.VerticalViewPager
+            android:id="@+id/viewPager"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>
