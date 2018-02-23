@@ -82,12 +82,12 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
 
     private String did;
     private int id;
-//    private EasyRecyclerView recyclerView;
+    //    private EasyRecyclerView recyclerView;
     private ImageView imageShouCang;
     private View viewDiBu;
     private View imageGouWuChe;
     private View viewGouWuChe;
-//    private RecyclerArrayAdapter<ImgsBean> adapter;
+    //    private RecyclerArrayAdapter<ImgsBean> adapter;
     private GoodsInfo goodsInfo;
     private List<ImgsBean> imgs;
     private List<ImgsBean> imgs2;
@@ -252,8 +252,8 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                 .setBadgeTextSize(10f, true)
                 .setBadgeBackgroundColor(getResources().getColor(R.color.basic_color))
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setBadgePadding(2f, true)
-                .setGravityOffset(5f, 3f, true);
+                .setBadgePadding(3f, true)
+                .setGravityOffset(8f, 6f, true);
     }
 
     /**
@@ -442,7 +442,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                         countdown = goodsInfoData.getCountdown();
                         imgs = goodsInfoData.getImgs();
                         imgs2 = goodsInfoData.getImgs2();
-                        viewPager.setAdapter(new ChanPinXQTP(getSupportFragmentManager(),imgs,imgs2));
+                        viewPager.setAdapter(new ChanPinXQTP(getSupportFragmentManager(), imgs, imgs2));
                         tablayout.setupWithViewPager(viewPager);
                         tablayout.removeAllTabs();
                         for (int i = 0; i < 2; i++) {
@@ -657,8 +657,12 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                 try {
                     CartNum cartNum = GsonUtils.parseJSON(s, CartNum.class);
                     if (cartNum.getStatus() == 1) {
-                        badge.setBadgeNumber(cartNum.getNum())
-                                .bindTarget(imageGouWuChe);
+                        if (cartNum.getNum() > 0) {
+                            badge.setBadgeText("")
+                                    .bindTarget(imageGouWuChe);
+                        } else {
+                            badge.hide(true);
+                        }
                     } else if (cartNum.getStatus() == 3) {
                         MyDialog.showReLoginDialog(ChanPinXQCZActivity.this);
                     } else {

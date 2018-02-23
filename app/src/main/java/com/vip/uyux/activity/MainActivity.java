@@ -156,8 +156,8 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 .setBadgeTextSize(10f, true)
                 .setBadgeBackgroundColor(getResources().getColor(R.color.basic_color))
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setBadgePadding(2f, true)
-                .setGravityOffset(14f, 1f, true);
+                .setBadgePadding(3f, true)
+                .setGravityOffset(20f, 2f, true);
     }
 
     @Override
@@ -217,8 +217,12 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 try {
                     CartNum cartNum = GsonUtils.parseJSON(s, CartNum.class);
                     if (cartNum.getStatus() == 1) {
-                        badge.setBadgeNumber(cartNum.getNum())
-                                .bindTarget(inflate3);
+                        if (cartNum.getNum()>0){
+                            badge.setBadgeText("")
+                                    .bindTarget(inflate3);
+                        }else {
+                            badge.hide(true);
+                        }
                     } else if (cartNum.getStatus() == 3) {
                         MyDialog.showReLoginDialog(MainActivity.this);
                     } else {
