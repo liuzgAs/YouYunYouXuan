@@ -167,7 +167,7 @@ public class WoDeSCActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                     adapter.notifyDataSetChanged();
                 } else {
                     Intent intent = new Intent();
-                    intent.setClass(WoDeSCActivity.this, ChanPinXQActivity.class);
+                    intent.setClass(WoDeSCActivity.this, ChanPinXQCZActivity.class);
                     intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getGoods_id());
                     startActivity(intent);
                 }

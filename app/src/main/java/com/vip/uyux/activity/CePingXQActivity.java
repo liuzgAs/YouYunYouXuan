@@ -251,7 +251,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
-                LogUtil.LogShitou("ChanPinXQActivity--onSuccess", s + "");
+                LogUtil.LogShitou("ChanPinXQCZActivity--onSuccess", s + "");
                 try {
                     GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
                     Toast.makeText(CePingXQActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
@@ -292,7 +292,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(String s) {
                 cancelLoadingDialog();
-                LogUtil.LogShitou("ChanPinXQActivity--onSuccess", s + "");
+                LogUtil.LogShitou("ChanPinXQCZActivity--onSuccess", s + "");
                 try {
                     GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
                     if (goodsCollect.getStatus() == 1) {
@@ -327,7 +327,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.btnBuy:
-                intent.setClass(this, ChanPinXQActivity.class);
+                intent.setClass(this, ChanPinXQCZActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, evaluationInfo.getGoods_id());
                 startActivity(intent);
                 break;

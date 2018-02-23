@@ -267,7 +267,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageFenXiang:
-                MyDialog.share(this,"ChanPinXQActivity",api,String.valueOf(id),goodsInfo.getData().getShare());
+                MyDialog.share(this,"ChanPinJFXQActivity",api,String.valueOf(id),goodsInfo.getData().getShare());
                 break;
             case R.id.imageShouCang:
                 if (goodsInfo.getIsc() == 0) {

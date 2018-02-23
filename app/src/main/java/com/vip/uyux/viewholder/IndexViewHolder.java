@@ -13,7 +13,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinLBTabActivity;
-import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.activity.ChanPinXQCZActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.MyEasyRecyclerView;
 import com.vip.uyux.model.GoodBean;
@@ -72,7 +72,7 @@ public class IndexViewHolder extends BaseViewHolder<IndexHome.DataBean> {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), ChanPinXQActivity.class);
+                intent.setClass(getContext(), ChanPinXQCZActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
                 getContext().startActivity(intent);
             }

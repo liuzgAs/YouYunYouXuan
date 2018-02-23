@@ -262,7 +262,7 @@ public class ChanPinLBActivity extends ZjbBaseActivity implements View.OnClickLi
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
-                intent.setClass(ChanPinLBActivity.this, ChanPinXQActivity.class);
+                intent.setClass(ChanPinLBActivity.this, ChanPinXQCZActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
                 startActivity(intent);
             }

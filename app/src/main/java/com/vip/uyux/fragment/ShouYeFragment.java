@@ -25,7 +25,7 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinLBActivity;
-import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.activity.ChanPinXQCZActivity;
 import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.adapter.BannerAdapter;
@@ -224,7 +224,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                     @Override
                     public void onItemClick(int position) {
                         Intent intent = new Intent();
-                        intent.setClass(mContext, ChanPinXQActivity.class);
+                        intent.setClass(mContext, ChanPinXQCZActivity.class);
                         intent.putExtra(Constant.IntentKey.ID, adapterZiYin.getItem(position).getId());
                         getContext().startActivity(intent);
                     }

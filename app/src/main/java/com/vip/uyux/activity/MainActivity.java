@@ -122,7 +122,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
             case "app_i":
                 break;
             case "app_goods_info":
-                intent.setClass(this, ChanPinXQActivity.class);
+                intent.setClass(this, ChanPinXQCZActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, advsBean.getItem_id());
                 startActivity(intent);
                 break;

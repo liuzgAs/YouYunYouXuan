@@ -32,7 +32,7 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.vip.uyux.R;
-import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.activity.ChanPinXQCZActivity;
 import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.SingleBtnDialog;
@@ -292,9 +292,9 @@ public class MyDialog {
     private static OkObject getOkObject(Context mContext, String id) {
         String url = Constant.HOST + Constant.Url.GOODS_SHAREIMGS;
         HashMap<String, String> params = new HashMap<>();
-        if (((ChanPinXQActivity) mContext).isLogin) {
-            params.put("uid", ((ChanPinXQActivity) mContext).userInfo.getUid());
-            params.put("tokenTime", ((ChanPinXQActivity) mContext).tokenTime);
+        if (((ChanPinXQCZActivity) mContext).isLogin) {
+            params.put("uid", ((ChanPinXQCZActivity) mContext).userInfo.getUid());
+            params.put("tokenTime", ((ChanPinXQCZActivity) mContext).tokenTime);
         }
         params.put("id", id);
         return new OkObject(params, url);
@@ -305,8 +305,8 @@ public class MyDialog {
      */
     private static void duoTuPengYouQuan(final Context mContext, String activity, String id, final int flag) {
         switch (activity) {
-            case "ChanPinXQActivity":
-                ((ChanPinXQActivity) mContext).showLoadingDialog();
+            case "ChanPinXQCZActivity":
+                ((ChanPinXQCZActivity) mContext).showLoadingDialog();
                 ApiClient.post(mContext, getOkObject(mContext, id), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
@@ -345,10 +345,10 @@ public class MyDialog {
                                                     }
                                                     intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
                                                     mContext.startActivity(intent);
-                                                    ((ChanPinXQActivity) mContext).runOnUiThread(new Runnable() {
+                                                    ((ChanPinXQCZActivity) mContext).runOnUiThread(new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            ((ChanPinXQActivity) mContext).cancelLoadingDialog();
+                                                            ((ChanPinXQCZActivity) mContext).cancelLoadingDialog();
                                                         }
                                                     });
                                                 } catch (Exception e) {
@@ -368,7 +368,7 @@ public class MyDialog {
 
                     @Override
                     public void onError() {
-                        ((ChanPinXQActivity) mContext).cancelLoadingDialog();
+                        ((ChanPinXQCZActivity) mContext).cancelLoadingDialog();
                         Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
                     }
                 });

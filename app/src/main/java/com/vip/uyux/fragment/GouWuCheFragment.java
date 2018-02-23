@@ -27,7 +27,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
-import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.activity.ChanPinXQCZActivity;
 import com.vip.uyux.activity.QueRenDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ToLoginActivity;
@@ -236,7 +236,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
-                intent.setClass(mContext, ChanPinXQActivity.class);
+                intent.setClass(mContext, ChanPinXQCZActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getGoods_id());
                 startActivity(intent);
             }
@@ -324,7 +324,7 @@ public class GouWuCheFragment extends ZjbBaseFragment implements View.OnClickLis
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
-                intent.setClass(mContext, ChanPinXQActivity.class);
+                intent.setClass(mContext, ChanPinXQCZActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, adapterTuiJian.getItem(position).getId());
                 startActivity(intent);
             }

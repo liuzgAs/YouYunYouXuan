@@ -193,7 +193,7 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                     adapter.notifyDataSetChanged();
                 } else {
                     Intent intent = new Intent();
-                    intent.setClass(ZuJiActivity.this, ChanPinXQActivity.class);
+                    intent.setClass(ZuJiActivity.this, ChanPinXQCZActivity.class);
                     intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getGoods_id());
                     startActivity(intent);
                 }

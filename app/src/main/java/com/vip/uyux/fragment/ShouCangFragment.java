@@ -23,7 +23,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
-import com.vip.uyux.activity.ChanPinXQActivity;
+import com.vip.uyux.activity.ChanPinXQCZActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
@@ -210,7 +210,7 @@ public class ShouCangFragment extends ZjbBaseFragment implements View.OnClickLis
                     adapter.notifyDataSetChanged();
                 } else {
                     Intent intent = new Intent();
-                    intent.setClass(mContext, ChanPinXQActivity.class);
+                    intent.setClass(mContext, ChanPinXQCZActivity.class);
                     intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getGoods_id());
                     startActivity(intent);
                 }
