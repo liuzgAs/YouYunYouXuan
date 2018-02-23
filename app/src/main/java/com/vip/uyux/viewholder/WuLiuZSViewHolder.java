@@ -39,11 +39,12 @@ public class WuLiuZSViewHolder extends BaseViewHolder<MassageWuliu.DataBean> {
                 .asBitmap()
                 .centerCrop()
                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
-                .load(data.getGoods_img())
+                .load(data.getImg())
                 .into(imageImg);
         textCreate_time.setText(data.getCreate_time());
-        textTitle.setText(data.getGoods_name());
+        textTitle.setText(data.getTitle());
         textExpress_no.setText(data.getExpress_no());
+        textGoods_name.setText(data.getDes());
     }
 
 }

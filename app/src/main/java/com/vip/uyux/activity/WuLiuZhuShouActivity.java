@@ -1,9 +1,11 @@
 package com.vip.uyux.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,7 +138,14 @@ public class WuLiuZhuShouActivity extends ZjbBaseActivity implements View.OnClic
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
+                MassageWuliu.DataBean dataBean = adapter.getItem(position);
+                if (!TextUtils.isEmpty(dataBean.getUrl())){
+                    Intent intent = new Intent();
+                    intent.setClass(WuLiuZhuShouActivity.this,WebActivity.class);
+                    intent.putExtra(Constant.IntentKey.URL,dataBean.getUrl());
+                    intent.putExtra(Constant.IntentKey.TITLE,dataBean.getUrl_title());
+                    startActivity(intent);
+                }
             }
         });
         recyclerView.setRefreshListener(this);

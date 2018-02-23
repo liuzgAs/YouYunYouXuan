@@ -112,11 +112,45 @@ public class MassageWuliu {
 
         private int id;
         private String title;
-        private String goods_name;
-        private String goods_img;
-        private String express_no;
         private int state;
         private String create_time;
+        private String express_no;
+        private String des;
+        private String img;
+        private String url;
+        private String url_title;
+
+        public String getDes() {
+            return des;
+        }
+
+        public void setDes(String des) {
+            this.des = des;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getUrl_title() {
+            return url_title;
+        }
+
+        public void setUrl_title(String url_title) {
+            this.url_title = url_title;
+        }
 
         public int getId() {
             return id;
@@ -132,22 +166,6 @@ public class MassageWuliu {
 
         public void setTitle(String title) {
             this.title = title;
-        }
-
-        public String getGoods_name() {
-            return goods_name;
-        }
-
-        public void setGoods_name(String goods_name) {
-            this.goods_name = goods_name;
-        }
-
-        public String getGoods_img() {
-            return goods_img;
-        }
-
-        public void setGoods_img(String goods_img) {
-            this.goods_img = goods_img;
         }
 
         public String getExpress_no() {
