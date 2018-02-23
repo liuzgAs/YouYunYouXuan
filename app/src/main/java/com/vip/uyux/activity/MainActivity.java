@@ -92,6 +92,7 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
 
     @Override
     protected void initSP() {
+        Constant.MainActivityAlive = 1;
         ACache aCache = ACache.get(this, Constant.Acache.LOCATION);
         did = aCache.getAsString(Constant.Acache.DID);
     }
@@ -269,5 +270,6 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(reciver);
+        Constant.MainActivityAlive = 0;
     }
 }

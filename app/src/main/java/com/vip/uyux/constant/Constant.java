@@ -13,6 +13,7 @@ public class Constant {
     public static int changeControl = 2017;
     public static String source = "";
     public static boolean isLogin = false;
+    public static int MainActivityAlive = 0;
     /**
      * 微信appid
      */

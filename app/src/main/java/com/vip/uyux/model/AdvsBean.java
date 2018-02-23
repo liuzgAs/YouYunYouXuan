@@ -15,6 +15,24 @@ public class AdvsBean implements Serializable{
     private int item_id;
     private String url;
     private String title;
+    private String summary;
+
+    public AdvsBean(String img, String code, int item_id, String url, String title, String summary) {
+        this.img = img;
+        this.code = code;
+        this.item_id = item_id;
+        this.url = url;
+        this.title = title;
+        this.summary = summary;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     public String getTitle() {
         return title;
