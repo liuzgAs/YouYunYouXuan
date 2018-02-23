@@ -100,9 +100,7 @@ public class ChanPinLBFragment extends ZjbBaseFragment implements SwipeRefreshLa
                 int layout;
                 if (viewType == 1) {
                     layout = R.layout.item_lb_duolie;
-                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", "" + viewType);
                 } else {
-                    LogUtil.LogShitou("ChanPinLBActivity--OnCreateViewHolder", "" + viewType);
                     layout = R.layout.item_chanpin;
                 }
                 return new ChanPinLBViewHolder(parent, layout, viewType);
