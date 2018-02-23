@@ -18,6 +18,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.model.ImgsBean;
 import com.vip.uyux.viewholder.ChanPinFootViewHolder;
+import com.vip.uyux.viewholder.MyBaseViewHolder;
 
 import java.util.List;
 
@@ -28,8 +29,9 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
     List<ImgsBean> imgsBeanList;
     private View mInflate;
     private EasyRecyclerView recyclerView;
+    private EasyRecyclerView recyclerViewEmpty;
     private RecyclerArrayAdapter<ImgsBean> adapter;
-    private View viewEmpty;
+    private RecyclerArrayAdapter<Integer> adapterEmpty;
 
     @SuppressLint("ValidFragment")
     public ChanPinXqTuPianFragment(List<ImgsBean> imgsBeanList) {
@@ -70,13 +72,16 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
     @Override
     protected void findID() {
         recyclerView =  mInflate.findViewById(R.id.recyclerView);
-        viewEmpty = mInflate.findViewById(R.id.viewEmpty);
+        recyclerViewEmpty =  mInflate.findViewById(R.id.recyclerViewEmpty);
     }
 
     @Override
     protected void initViews() {
-        viewEmpty.setVisibility(View.GONE);
+        recyclerViewEmpty.setVisibility(View.GONE);
         initRecycler();
+        initRecyclerEmpty();
+        adapterEmpty.add(1);
+        adapterEmpty.notifyDataSetChanged();
     }
 
         /**
@@ -97,6 +102,24 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
         });
     }
 
+    /**
+     * 初始化recyclerview
+     */
+    private void initRecyclerEmpty() {
+        recyclerViewEmpty.setLayoutManager(new LinearLayoutManager(mContext));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
+        itemDecoration.setDrawLastItem(false);
+        recyclerViewEmpty.addItemDecoration(itemDecoration);
+        recyclerViewEmpty.setRefreshingColorResources(R.color.basic_color);
+        recyclerViewEmpty.setAdapterWithProgress(adapterEmpty = new RecyclerArrayAdapter<Integer>(mContext) {
+            @Override
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.view_empty;
+                return new MyBaseViewHolder(parent, layout);
+            }
+        });
+    }
+
     @Override
     protected void setListeners() {
 
@@ -107,10 +130,10 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
         adapter.clear();
         adapter.addAll(imgsBeanList);
         if (imgsBeanList.size()==0){
-            viewEmpty.setVisibility(View.VISIBLE);
+            recyclerViewEmpty.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }else {
-            viewEmpty.setVisibility(View.GONE);
+            recyclerViewEmpty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
     }

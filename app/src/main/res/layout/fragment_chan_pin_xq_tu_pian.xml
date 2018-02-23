@@ -1,16 +1,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.vip.uyux.fragment.ChanPinXqTuPianFragment">
 
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
-        app:scrollbarStyle="insideOverlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <include
-        android:id="@+id/viewEmpty"
-        layout="@layout/view_empty"/>
+        android:layout_height="match_parent"
+        app:scrollbarStyle="insideOverlay" />
+
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerViewEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:scrollbarStyle="insideOverlay" />
+
 </RelativeLayout>

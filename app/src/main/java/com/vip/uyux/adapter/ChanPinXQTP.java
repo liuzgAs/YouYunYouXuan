@@ -38,7 +38,7 @@ public class ChanPinXQTP extends FragmentPagerAdapter {
             case 1:
                 return new ChanPinXqTuPianFragment(imgsBeanList1);
             default:
-                return new ChanPinXqTuPianFragment();
+                return new ChanPinXqTuPianFragment(imgsBeanList);
         }
 
     }
