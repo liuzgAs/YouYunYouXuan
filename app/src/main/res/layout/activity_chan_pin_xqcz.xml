@@ -11,6 +11,7 @@
         layout="@layout/view_bar_chanpin_xq" />
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/viewTop"
         android:layout_below="@+id/includeBar"
         android:layout_above="@+id/viewDiBu"
         android:layout_width="match_parent"
@@ -444,6 +445,23 @@
             </android.support.v4.view.ViewPager>
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
+    <include
+        android:visibility="gone"
+        android:layout_below="@+id/includeBar"
+        android:layout_above="@+id/viewDiBu"
+        android:id="@+id/viewError"
+        layout="@layout/view_error"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_below="@+id/includeBar"
+        android:layout_above="@+id/viewDiBu"
+        android:id="@+id/viewProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/view_progress" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/viewDiBu"

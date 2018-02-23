@@ -167,6 +167,9 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     private TextView textStock_numD;
     private int sku_id;
     private ViewPager viewPager;
+    private View viewError;
+    private View viewTop;
+    private View viewProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +194,10 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     @Override
     protected void findID() {
 //        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+        viewError = findViewById(R.id.viewError);
+        viewTop = findViewById(R.id.viewTop);
+        viewProgress = findViewById(R.id.viewProgress);
+
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         imageShouCang = (ImageView) findViewById(R.id.imageShouCang);
         viewDiBu = findViewById(R.id.viewDiBu);
@@ -234,6 +241,9 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     @Override
     protected void initViews() {
 //        initRecycler();
+        viewTop.setVisibility(View.GONE);
+        viewError.setVisibility(View.GONE);
+        viewProgress.setVisibility(View.VISIBLE);
         initFootRecycler();
         ((TextView) findViewById(R.id.textViewTitle)).setText("产品详情");
         viewDiBu.setVisibility(View.GONE);
@@ -423,6 +433,10 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                 try {
                     goodsInfo = GsonUtils.parseJSON(s, GoodsInfo.class);
                     if (goodsInfo.getStatus() == 1) {
+                        viewTop.setVisibility(View.VISIBLE);
+                        viewError.setVisibility(View.GONE);
+                        viewProgress.setVisibility(View.GONE);
+
                         goodsInfoBanner = goodsInfo.getBanner();
                         goodsInfoData = goodsInfo.getData();
                         countdown = goodsInfoData.getCountdown();
@@ -599,18 +613,20 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
              */
             private void showError(String msg) {
                 try {
-//                    View viewLoader = LayoutInflater.from(ChanPinXQCZActivity.this).inflate(R.layout.view_loaderror, null);
-//                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
-//                    textMsg.setText(msg);
-//                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-////                            recyclerView.showProgress();
-//                            initData();
-//                        }
-//                    });
-//                    recyclerView.setErrorView(viewLoader);
-//                    recyclerView.showError();
+
+                    viewTop.setVisibility(View.GONE);
+                    viewError.setVisibility(View.VISIBLE);
+                    viewProgress.setVisibility(View.GONE);
+
+                    TextView textMsg = viewError.findViewById(R.id.textMsg);
+                    textMsg.setText(msg);
+                    viewError.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            recyclerView.showProgress();
+                            initData();
+                        }
+                    });
                 } catch (Exception e) {
                 }
             }

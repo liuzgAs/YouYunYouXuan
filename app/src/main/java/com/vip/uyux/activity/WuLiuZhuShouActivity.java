@@ -136,6 +136,7 @@ public class WuLiuZhuShouActivity extends ZjbBaseActivity implements View.OnClic
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+
             }
         });
         recyclerView.setRefreshListener(this);
