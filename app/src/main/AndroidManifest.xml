@@ -74,10 +74,10 @@
         <!--正式推送 -->
         <meta-data
         android:name="com.alibaba.app.appkey"
-        android:value="24769263" /> <!-- 请填写你自己的- appKey -->
+        android:value="24772026" /> <!-- 请填写你自己的- appKey -->
         <meta-data
         android:name="com.alibaba.app.appsecret"
-        android:value="4a960b53bb8056dd9006a79f18b99f03" /> <!-- 请填写你自己的appSecret -->
+        android:value="218f4fc4e9361da567d66547eabc9923" /> <!-- 请填写你自己的appSecret -->
         <!--测试推送 -->
         <!--<meta-data-->
             <!--android:name="com.alibaba.app.appkey"-->
