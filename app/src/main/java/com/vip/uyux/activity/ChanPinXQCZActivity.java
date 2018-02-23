@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,10 +37,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
+import com.vip.uyux.adapter.ChanPinXQTP;
 import com.vip.uyux.adapter.MyChuXiaoAdapter;
 import com.vip.uyux.adapter.TagAdapter01;
 import com.vip.uyux.base.MyDialog;
@@ -65,7 +66,6 @@ import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.util.StringUtil;
-import com.vip.uyux.viewholder.ChanPinFootViewHolder;
 import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
 import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
 
@@ -82,12 +82,12 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
 
     private String did;
     private int id;
-    private EasyRecyclerView recyclerView;
+//    private EasyRecyclerView recyclerView;
     private ImageView imageShouCang;
     private View viewDiBu;
     private View imageGouWuChe;
     private View viewGouWuChe;
-    private RecyclerArrayAdapter<ImgsBean> adapter;
+//    private RecyclerArrayAdapter<ImgsBean> adapter;
     private GoodsInfo goodsInfo;
     private List<ImgsBean> imgs;
     private List<ImgsBean> imgs2;
@@ -166,6 +166,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     private TextView textGuiGe;
     private TextView textStock_numD;
     private int sku_id;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +190,8 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
 
     @Override
     protected void findID() {
-        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+//        recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         imageShouCang = (ImageView) findViewById(R.id.imageShouCang);
         viewDiBu = findViewById(R.id.viewDiBu);
         imageGouWuChe = findViewById(R.id.imageGouWuChe);
@@ -231,19 +233,8 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
 
     @Override
     protected void initViews() {
-        initRecycler();
+//        initRecycler();
         initFootRecycler();
-        for (int i = 0; i < 2; i++) {
-            View item_tablayout = LayoutInflater.from(ChanPinXQCZActivity.this).inflate(R.layout.item_tablayout, null);
-            TextView textTitle = item_tablayout.findViewById(R.id.textTitle);
-            if (i == 0) {
-                textTitle.setText("宝贝详情");
-                tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
-            } else {
-                textTitle.setText("规格参数");
-                tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
-            }
-        }
         ((TextView) findViewById(R.id.textViewTitle)).setText("产品详情");
         viewDiBu.setVisibility(View.GONE);
         badge = new QBadgeView(ChanPinXQCZActivity.this)
@@ -311,23 +302,23 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
         });
     }
 
-    /**
-     * 初始化recyclerview
-     */
-    private void initRecycler() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
-        itemDecoration.setDrawLastItem(false);
-        recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<ImgsBean>(ChanPinXQCZActivity.this) {
-            @Override
-            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_image;
-                return new ChanPinFootViewHolder(parent, layout);
-            }
-        });
-    }
+//    /**
+//     * 初始化recyclerview
+//     */
+//    private void initRecycler() {
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
+//        itemDecoration.setDrawLastItem(false);
+//        recyclerView.addItemDecoration(itemDecoration);
+//        recyclerView.setRefreshingColorResources(R.color.basic_color);
+//        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<ImgsBean>(ChanPinXQCZActivity.this) {
+//            @Override
+//            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+//                int layout = R.layout.item_image;
+//                return new ChanPinFootViewHolder(parent, layout);
+//            }
+//        });
+//    }
 
     @Override
     protected void setListeners() {
@@ -351,33 +342,33 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                 startActivity(intent);
             }
         });
-        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                if (position == 0) {
-                    if (imgs != null) {
-                        adapter.clear();
-                        adapter.addAll(imgs);
-                    }
-                } else {
-                    if (imgs2 != null) {
-                        adapter.clear();
-                        adapter.addAll(imgs2);
-                    }
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                int position = tab.getPosition();
+//                if (position == 0) {
+//                    if (imgs != null) {
+//                        adapter.clear();
+//                        adapter.addAll(imgs);
+//                    }
+//                } else {
+//                    if (imgs2 != null) {
+//                        adapter.clear();
+//                        adapter.addAll(imgs2);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
         viewChuXiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -437,6 +428,20 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                         countdown = goodsInfoData.getCountdown();
                         imgs = goodsInfoData.getImgs();
                         imgs2 = goodsInfoData.getImgs2();
+                        viewPager.setAdapter(new ChanPinXQTP(getSupportFragmentManager(),imgs,imgs2));
+                        tablayout.setupWithViewPager(viewPager);
+                        tablayout.removeAllTabs();
+                        for (int i = 0; i < 2; i++) {
+                            View item_tablayout = LayoutInflater.from(ChanPinXQCZActivity.this).inflate(R.layout.item_tablayout, null);
+                            TextView textTitle = item_tablayout.findViewById(R.id.textTitle);
+                            if (i == 0) {
+                                textTitle.setText("宝贝详情");
+                                tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), true);
+                            } else {
+                                textTitle.setText("规格参数");
+                                tablayout.addTab(tablayout.newTab().setCustomView(item_tablayout), false);
+                            }
+                        }
                         skuCate = goodsInfo.getSkuCate();
                         skuLv = goodsInfo.getSkuLv();
                         stock_num = goodsInfo.getData().getStockNum();
@@ -449,10 +454,10 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                         } else {
                             imageShouCang.setImageResource(R.mipmap.shoucang_xq);
                         }
-                        if (imgs != null) {
-                            adapter.clear();
-                            adapter.addAll(imgs);
-                        }
+//                        if (imgs != null) {
+//                            adapter.clear();
+//                            adapter.addAll(imgs);
+//                        }
                         promotionsAfter = goodsInfo.getData().getPromotionsAfter();
                         comment = goodsInfo.getComment();
                         if (comment != null) {
@@ -594,18 +599,18 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
              */
             private void showError(String msg) {
                 try {
-                    View viewLoader = LayoutInflater.from(ChanPinXQCZActivity.this).inflate(R.layout.view_loaderror, null);
-                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
-                    textMsg.setText(msg);
-                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            recyclerView.showProgress();
-                            initData();
-                        }
-                    });
-                    recyclerView.setErrorView(viewLoader);
-                    recyclerView.showError();
+//                    View viewLoader = LayoutInflater.from(ChanPinXQCZActivity.this).inflate(R.layout.view_loaderror, null);
+//                    TextView textMsg = viewLoader.findViewById(R.id.textMsg);
+//                    textMsg.setText(msg);
+//                    viewLoader.findViewById(R.id.buttonReLoad).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+////                            recyclerView.showProgress();
+//                            initData();
+//                        }
+//                    });
+//                    recyclerView.setErrorView(viewLoader);
+//                    recyclerView.showError();
                 } catch (Exception e) {
                 }
             }
