@@ -26,12 +26,12 @@
 
             <ImageView
                 android:id="@+id/imageXiaoXi"
-                android:layout_width="40dp"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:paddingLeft="5dp"
+                android:paddingLeft="13dp"
                 android:paddingRight="@dimen/leftAndRight"
                 android:src="@mipmap/mine_xinxi" />
 
@@ -42,7 +42,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="@dimen/leftAndRight"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="8dp"
                 android:layout_toLeftOf="@+id/imageXiaoXi"
                 android:layout_toStartOf="@+id/imageXiaoXi"
