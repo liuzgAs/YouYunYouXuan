@@ -16,6 +16,7 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.DingDanXqActivity;
 import com.vip.uyux.activity.PingJiaGLActivity;
+import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
@@ -41,12 +42,14 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
     private final TextView textText;
     Order.DataBean.ListBeanX data;
     String id;
+    private final TextView textShip;
 
     public DDCangKuViewHolder(ViewGroup parent, @LayoutRes int res,String id) {
         super(parent, res);
         this.id=id;
         textSupplier = $(R.id.textSupplier);
         textText = $(R.id.textText);
+        textShip = $(R.id.textShip);
         recyclerView = $(R.id.recyclerView);
         textText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,16 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
                     default:
                         break;
                 }
+            }
+        });
+        textShip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE,"物流信息");
+                intent.putExtra(Constant.IntentKey.URL,data.getShip_url());
+                getContext().startActivity(intent);
             }
         });
         initRecycler();
@@ -168,6 +181,11 @@ public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX>
             textText.setText(data.getText());
         } else {
             textText.setVisibility(View.GONE);
+        }
+        if (data.getIs_ship()==1){
+            textShip.setVisibility(View.VISIBLE);
+        }else {
+            textShip.setVisibility(View.GONE);
         }
         List<Order.DataBean.ListBeanX.ListBean> listBeanList = data.getList();
         adapter.clear();

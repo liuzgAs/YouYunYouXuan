@@ -274,9 +274,27 @@ public class Order {
             private String supplier;
             private int state;
             private int is_btn;
+            private int is_ship;
+            private String ship_url;
             private String code;
             private String text;
             private List<ListBean> list;
+
+            public int getIs_ship() {
+                return is_ship;
+            }
+
+            public void setIs_ship(int is_ship) {
+                this.is_ship = is_ship;
+            }
+
+            public String getShip_url() {
+                return ship_url;
+            }
+
+            public void setShip_url(String ship_url) {
+                this.ship_url = ship_url;
+            }
 
             public int getId() {
                 return id;
