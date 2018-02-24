@@ -32,7 +32,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/3/28 0028.
+ *
+ * @author Administrator
+ * @date 2017/3/28 0028
  */
 public class DDCangKuViewHolder extends BaseViewHolder<Order.DataBean.ListBeanX> {
 
