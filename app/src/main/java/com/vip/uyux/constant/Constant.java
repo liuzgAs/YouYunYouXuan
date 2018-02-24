@@ -447,6 +447,10 @@ public class Constant {
          * 实名认证提交
          */
         public static final String USER_REALSUBMIT = "/User/realSubmit";
+        /**
+         * 消息数量
+         */
+        public static final String MASSAGE_NUM = "/Massage/num";
 
     }
 
@@ -516,6 +520,7 @@ public class Constant {
         public static final String SET_MAIN_TAB = "set_main_tab";
         public static final String SHUA_XIN_CE_PING = "shua_xin_ce_ping";
         public static final String SHUA_XIN_SHOU_CANG = "shuaXinShouCang";
+        public static final String SHUA_XIN_TIPS = "shuaXinTips";
     }
 
 

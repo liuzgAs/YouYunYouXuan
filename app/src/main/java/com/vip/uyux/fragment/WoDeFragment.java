@@ -37,6 +37,7 @@ import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.MassageNum;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.UserMy;
 import com.vip.uyux.util.ApiClient;
@@ -72,6 +73,12 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_TIPS:
+                    setTips();
+                    break;
+                case Constant.BroadcastCode.SHUAXINDD:
+                    initData();
+                    break;
                 case Constant.BroadcastCode.USERINFO:
                     initData();
                     break;
@@ -293,7 +300,6 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                             textYuE.setText(userMy.getMoney());
                             textJiFen.setText(String.valueOf(userMy.getScore()));
                             textCouponNum.setText(userMy.getCouponNum() + "张");
-                            badge.setBadgeNumber(userMy.getTipsNum()).bindTarget(imageXiaoXi);
                             vip_url = userMy.getVip_url();
                             vip_url_title = userMy.getVip_url_title();
                             if (userMy.getLv() > 0) {
@@ -364,6 +370,51 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
             image0101.setImageResource(R.mipmap.mine_che_b);
             image0103.setImageResource(R.mipmap.mine_shandian_b);
         }
+        setTips();
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getTipOkObject() {
+        String url = Constant.HOST + Constant.Url.MASSAGE_NUM;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 显示消息数
+     */
+    private void setTips() {
+        ApiClient.post(mContext, getTipOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("WoDeFragment--onSuccess", s + "");
+                try {
+                    MassageNum massageNum = GsonUtils.parseJSON(s, MassageNum.class);
+                    if (massageNum.getStatus() == 1) {
+                        badge.setBadgeNumber(massageNum.getNum()).bindTarget(imageXiaoXi);
+                    } else if (massageNum.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(mContext);
+                    } else {
+                        Toast.makeText(mContext, massageNum.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -534,8 +585,10 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.USERINFO);
+        filter.addAction(Constant.BroadcastCode.SHUAXINDD);
         filter.addAction(Constant.BroadcastCode.TIXIAN);
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_TIPS);
         getActivity().registerReceiver(reciver, filter);
     }
 

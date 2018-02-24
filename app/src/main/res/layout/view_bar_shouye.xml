@@ -23,8 +23,9 @@
             android:src="@mipmap/youyunyouxuan" />
 
         <ImageView
+            android:paddingLeft="5dp"
             android:id="@+id/imageSearch"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -33,10 +34,10 @@
 
         <ImageView
             android:id="@+id/imageTip"
-            android:layout_width="30dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
+            android:paddingRight="10dp"
             android:layout_toLeftOf="@+id/imageSearch"
             android:paddingLeft="10dp"
             android:src="@mipmap/xiaoxi_index" />

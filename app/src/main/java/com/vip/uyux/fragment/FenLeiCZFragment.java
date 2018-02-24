@@ -1,14 +1,20 @@
 package com.vip.uyux.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vip.uyux.R;
 import com.vip.uyux.activity.SouSuoActivity;
@@ -21,6 +27,7 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.DefaultTransformer;
 import com.vip.uyux.customview.VerticalViewPager;
 import com.vip.uyux.model.IndexCate;
+import com.vip.uyux.model.MassageNum;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
@@ -31,6 +38,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
 import q.rorbin.verticaltablayout.adapter.TabAdapter;
 import q.rorbin.verticaltablayout.widget.ITabView;
@@ -52,6 +61,21 @@ public class FenLeiCZFragment extends ZjbBaseFragment implements View.OnClickLis
     private String name;
     private TextView textBgDes;
     private VerticalViewPager viewPager;
+    private Badge badge;
+    private ImageView imageXiaoXi;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_TIPS:
+                    setTips();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public FenLeiCZFragment() {
         // Required empty public constructor
@@ -90,6 +114,7 @@ public class FenLeiCZFragment extends ZjbBaseFragment implements View.OnClickLis
         viewBar = mInflate.findViewById(R.id.viewBar);
         textBgDes = mInflate.findViewById(R.id.textBgDes);
         viewPager = mInflate.findViewById(R.id.viewPager);
+        imageXiaoXi = mInflate.findViewById(R.id.imageXiaoXi);
     }
 
     @Override
@@ -99,6 +124,13 @@ public class FenLeiCZFragment extends ZjbBaseFragment implements View.OnClickLis
         viewBar.setLayoutParams(layoutParams);
         viewPager.setPageTransformer(false, new DefaultTransformer());
         verticalTabLayout.setVisibility(View.GONE);
+        badge = new QBadgeView(mContext)
+                .setBadgeTextColor(Color.WHITE)
+                .setBadgeTextSize(10f, true)
+                .setBadgeBackgroundColor(getResources().getColor(R.color.basic_color))
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setBadgePadding(2f, true)
+                .setGravityOffset(5f, 5f, true);
 //        tabString.add("推荐分类");
 //        tabString.add("美食");
 //        tabString.add("酒店");
@@ -184,8 +216,52 @@ public class FenLeiCZFragment extends ZjbBaseFragment implements View.OnClickLis
     @Override
     protected void initData() {
         onRefresh();
+        setTips();
     }
 
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getTipOkObject() {
+        String url = Constant.HOST + Constant.Url.MASSAGE_NUM;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 显示消息数
+     */
+    private void setTips() {
+        ApiClient.post(mContext, getTipOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("WoDeFragment--onSuccess", s + "");
+                try {
+                    MassageNum massageNum = GsonUtils.parseJSON(s, MassageNum.class);
+                    if (massageNum.getStatus() == 1) {
+                        badge.setBadgeNumber(massageNum.getNum()).bindTarget(imageXiaoXi);
+                    } else if (massageNum.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(mContext);
+                    } else {
+                        Toast.makeText(mContext, massageNum.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     /**
      * des： 网络请求参数
@@ -298,5 +374,19 @@ public class FenLeiCZFragment extends ZjbBaseFragment implements View.OnClickLis
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_TIPS);
+        getActivity().registerReceiver(reciver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(reciver);
     }
 }

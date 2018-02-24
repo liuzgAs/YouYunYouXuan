@@ -1,7 +1,10 @@
 package com.vip.uyux.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +13,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -36,6 +42,7 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.model.GoodBean;
 import com.vip.uyux.model.IndexHome;
+import com.vip.uyux.model.MassageNum;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
@@ -48,6 +55,9 @@ import com.vip.uyux.viewholder.IndexZiYinViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
+
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,6 +79,21 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     private boolean isScroll = false;
     private float downX;
     private float upX;
+    private Badge badge;
+    private ImageView imageXiaoXi;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.SHUA_XIN_TIPS:
+                    setTips();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public ShouYeFragment() {
         // Required empty public constructor
@@ -105,6 +130,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     protected void findID() {
         viewBar = mInflate.findViewById(R.id.viewBar);
         recyclerView = mInflate.findViewById(R.id.recyclerView);
+        imageXiaoXi = mInflate.findViewById(R.id.imageTip);
     }
 
     @Override
@@ -112,6 +138,13 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
         layoutParams.height = ScreenUtils.getStatusBarHeight(mContext) + (int) DpUtils.convertDpToPixel(50, mContext);
         viewBar.setLayoutParams(layoutParams);
+        badge = new QBadgeView(mContext)
+                .setBadgeTextColor(Color.WHITE)
+                .setBadgeTextSize(10f, true)
+                .setBadgeBackgroundColor(getResources().getColor(R.color.basic_color))
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setBadgePadding(2f, true)
+                .setGravityOffset(2f, 0f, true);
         initRecycler();
     }
 
@@ -314,6 +347,51 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
     @Override
     protected void initData() {
         onRefresh();
+        setTips();
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getTipOkObject() {
+        String url = Constant.HOST + Constant.Url.MASSAGE_NUM;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 显示消息数
+     */
+    private void setTips() {
+        ApiClient.post(mContext, getTipOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                LogUtil.LogShitou("WoDeFragment--onSuccess", s + "");
+                try {
+                    MassageNum massageNum = GsonUtils.parseJSON(s, MassageNum.class);
+                    if (massageNum.getStatus() == 1) {
+                        badge.setBadgeNumber(massageNum.getNum()).bindTarget(imageXiaoXi);
+                    } else if (massageNum.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(mContext);
+                    } else {
+                        Toast.makeText(mContext, massageNum.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -408,5 +486,19 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.SHUA_XIN_TIPS);
+        getActivity().registerReceiver(reciver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(reciver);
     }
 }

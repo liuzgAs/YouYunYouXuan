@@ -201,6 +201,9 @@ public class WuLiuZhuShouActivity extends ZjbBaseActivity implements View.OnClic
                  page++;
                  MassageWuliu massageWuliu = GsonUtils.parseJSON(s, MassageWuliu.class);
                  if (massageWuliu.getStatus() == 1) {
+                     Intent intent = new Intent();
+                     intent.setAction(Constant.BroadcastCode.SHUA_XIN_TIPS);
+                     sendBroadcast(intent);
                      List<MassageWuliu.DataBean> dataBeanList = massageWuliu.getData();
                      adapter.clear();
                      adapter.addAll(dataBeanList);
