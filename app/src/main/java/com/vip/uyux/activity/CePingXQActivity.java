@@ -1,7 +1,9 @@
 package com.vip.uyux.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,6 +27,8 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ToLoginActivity;
@@ -69,11 +73,94 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     private int viewType;
     private View viewCaiYong;
     private int ogId;
+    private ImageView imageShare;
+    private EvaluationInfo.ShareBean share;
+    private IWXAPI api;
+    private boolean isShare = false;
+    int shareType;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.WX_SHARE:
+                    if (isShare) {
+                        MyDialog.showTipDialog(CePingXQActivity.this, "分享成功");
+                        isShare = false;
+                        shareHuiDiao();
+                    }
+                    break;
+                case Constant.BroadcastCode.WX_SHARE_FAIL:
+                    if (isShare) {
+                        MyDialog.showTipDialog(CePingXQActivity.this, "取消分享");
+                        isShare = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getHDOkObject() {
+        String url = Constant.HOST + Constant.Url.SHARE_SHAREAFTER;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime",tokenTime);
+        }
+        params.put("shareType",String.valueOf(shareType));
+        params.put("source",Constant.source);
+        params.put("shareTitle",share.getShareTitle());
+        params.put("shareImg",share.getShareImg());
+        params.put("shareDes",share.getShareDes());
+        params.put("url",share.getShareUrl());
+        params.put("id",userInfo.getUid());
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 分享回调
+     */
+    private void shareHuiDiao() {
+        showLoadingDialog();
+        ApiClient.post(CePingXQActivity.this, getHDOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQActivity--onSuccess",s+ "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus()==1){
+                        LogUtil.LogShitou("ChanPinXQActivity--onSuccess", "回调成功");
+                    }else if (simpleInfo.getStatus()==3){
+                        MyDialog.showReLoginDialog(CePingXQActivity.this);
+                    }else {
+                        Toast.makeText(CePingXQActivity.this, simpleInfo.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(CePingXQActivity.this,"数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(CePingXQActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ce_ping_xq);
+        api = WXAPIFactory.createWXAPI(this, Constant.WXAPPID, true);
         init();
     }
 
@@ -103,6 +190,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         imageFaSong = (ImageView) findViewById(R.id.imageFaSong);
         imageShouCang = (ImageView) findViewById(R.id.imageShouCang);
         viewCaiYong = findViewById(R.id.viewCaiYong);
+        imageShare = (ImageView) findViewById(R.id.imageShare);
     }
 
     @Override
@@ -217,6 +305,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         });
         imageFaSong.setOnClickListener(this);
         btnBuy.setOnClickListener(this);
+        imageShare.setOnClickListener(this);
     }
 
     @Override
@@ -326,6 +415,10 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.imageShare:
+                isShare=true;
+                MyDialog.share01(this, api, share.getShareUrl(), share.getShareImg(), share.getShareTitle(), share.getShareDes());
+                break;
             case R.id.btnBuy:
                 intent.setClass(this, ChanPinXQCZActivity.class);
                 intent.putExtra(Constant.IntentKey.ID, evaluationInfo.getGoods_id());
@@ -464,6 +557,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                                 .circleCrop()
                                 .placeholder(R.mipmap.ic_empty)
                                 .into(imageHead);
+                        share = evaluationInfo.getShare();
                         List<EvaluationInfo.DataBean> dataBeanList = evaluationInfo.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);
@@ -514,5 +608,20 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.WX_SHARE);
+        filter.addAction(Constant.BroadcastCode.WX_SHARE_FAIL);
+        registerReceiver(reciver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(reciver);
     }
 }
