@@ -196,6 +196,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     protected void initViews() {
         viewDiBu.setVisibility(View.GONE);
+        imageShare.setEnabled(false);
         guangGaoHeight = DpUtils.convertDpToPixel(150, this);
         viewBar.getBackground().mutate().setAlpha(0);
         initRecycler();
@@ -547,6 +548,7 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
                 try {
                     evaluationInfo = GsonUtils.parseJSON(s, EvaluationInfo.class);
                     if (evaluationInfo.getStatus() == 1) {
+                        imageShare.setEnabled(true);
                         viewDiBu.setVisibility(View.VISIBLE);
                         textNickname.setText(evaluationInfo.getNickname());
                         textCollectNum.setText("收藏(" + evaluationInfo.getCollectNum() + ")");
