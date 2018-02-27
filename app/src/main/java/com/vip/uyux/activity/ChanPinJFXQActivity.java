@@ -94,9 +94,11 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            switch (action){
+            switch (action) {
                 case Constant.BroadcastCode.SHUA_XIN_U_BI:
                     finish();
+                    break;
+                default:
                     break;
             }
         }
@@ -267,7 +269,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageFenXiang:
-                MyDialog.share(this,"ChanPinJFXQActivity",api,String.valueOf(id),goodsInfo.getData().getShare());
+                MyDialog.share(this, "ChanPinJFXQActivity", api, String.valueOf(id), goodsInfo.getData().getShare());
                 break;
             case R.id.imageShouCang:
                 if (goodsInfo.getIsc() == 0) {
@@ -500,7 +502,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 .load(goodsInfoData.getThumb())
                 .into(imageImg);
         textDialogPrice = dialog_chan_pin.findViewById(R.id.textDialogPrice);
-        textDialogPrice.setText( goodsInfoData.getStockNum()+"U币");
+        textDialogPrice.setText(goodsInfoData.getStockNum() + "U币");
         textGuiGe = dialog_chan_pin.findViewById(R.id.textGuiGe);
         textStock_numD = dialog_chan_pin.findViewById(R.id.textStock_numD);
         textStock_numD.setText("库存" + stock_num + "件");
@@ -573,16 +575,16 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
-                if (goodsNum <=stock_num) {
+                if (goodsNum <= stock_num) {
                 } else {
                     Toast.makeText(ChanPinJFXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 alertDialogGouWu.dismiss();
                 Intent intent = new Intent();
-                intent.setClass(ChanPinJFXQActivity.this,QueRenDDJFActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,id);
-                intent.putExtra(Constant.IntentKey.VALUE,editNum.getText().toString().trim());
+                intent.setClass(ChanPinJFXQActivity.this, QueRenDDJFActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, id);
+                intent.putExtra(Constant.IntentKey.VALUE, editNum.getText().toString().trim());
                 startActivity(intent);
             }
         });
@@ -678,7 +680,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
             for (int i = 0; i < skuCateBeans1.size(); i++) {
                 CustomerIntegragoodsinfo.SkuCateBean skuCateBean = skuCateBeans1.get(i);
                 if (skuCateBean.isSelect()) {
-                    textDialogPrice.setText(skuCateBean.getPrice()+"U币");
+                    textDialogPrice.setText(skuCateBean.getPrice() + "U币");
                     sku_id = skuCateBean.getSku_id();
                 }
 
@@ -693,7 +695,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 }
             }
             textGuiGe.setText(name);
-            textStock_numD.setText("库存"+stock_num+"件");
+            textStock_numD.setText("库存" + stock_num + "件");
         }
     }
 
@@ -719,7 +721,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
-        registerReceiver(reciver,filter);
+        registerReceiver(reciver, filter);
     }
 
     @Override

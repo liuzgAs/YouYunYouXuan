@@ -42,9 +42,11 @@ public class XuanZeSHDZActivity extends ZjbBaseActivity implements View.OnClickL
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            switch (action){
+            switch (action) {
                 case Constant.BroadcastCode.address:
                     onRefresh();
+                    break;
+                default:
                     break;
             }
         }
@@ -117,8 +119,8 @@ public class XuanZeSHDZActivity extends ZjbBaseActivity implements View.OnClickL
             @Override
             public void onItemClick(int position) {
                 Intent data = new Intent();
-                data.putExtra(Constant.IntentKey.VALUE,adapter.getItem(position));
-                setResult(Constant.RequestResultCode.address,data);
+                data.putExtra(Constant.IntentKey.VALUE, adapter.getItem(position));
+                setResult(Constant.RequestResultCode.address, data);
                 finish();
             }
         });
@@ -132,8 +134,8 @@ public class XuanZeSHDZActivity extends ZjbBaseActivity implements View.OnClickL
     private OkObject getOkObject() {
         String url = Constant.HOST + Constant.Url.USER_ADDRESS;
         HashMap<String, String> params = new HashMap<>();
-        params.put("uid",userInfo.getUid());
-        params.put("tokenTime",tokenTime);
+        params.put("uid", userInfo.getUid());
+        params.put("tokenTime", tokenTime);
         return new OkObject(params, url);
     }
 
@@ -149,7 +151,7 @@ public class XuanZeSHDZActivity extends ZjbBaseActivity implements View.OnClickL
                         List<UserAddress.DataBean> userAddressData = userAddress.getData();
                         adapter.clear();
                         adapter.addAll(userAddressData);
-                    } else if (userAddress.getStatus()== 3) {
+                    } else if (userAddress.getStatus() == 3) {
                         MyDialog.showReLoginDialog(XuanZeSHDZActivity.this);
                     } else {
                         showError(userAddress.getInfo());
@@ -163,6 +165,7 @@ public class XuanZeSHDZActivity extends ZjbBaseActivity implements View.OnClickL
             public void onError() {
                 showError("网络出错");
             }
+
             public void showError(String msg) {
                 View view_loaderror = LayoutInflater.from(XuanZeSHDZActivity.this).inflate(R.layout.view_loaderror, null);
                 TextView textMsg = (TextView) view_loaderror.findViewById(R.id.textMsg);
@@ -185,15 +188,17 @@ public class XuanZeSHDZActivity extends ZjbBaseActivity implements View.OnClickL
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.textViewRight:
-                intent.setClass(this,DiZhiGLActivity.class);
+                intent.setClass(this, DiZhiGLActivity.class);
                 startActivity(intent);
                 break;
             case R.id.textXinZengSHDZ:
-                intent.setClass(this,XinZengDZActivity.class);
+                intent.setClass(this, XinZengDZActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageBack:
                 finish();
+                break;
+            default:
                 break;
         }
     }
@@ -203,7 +208,7 @@ public class XuanZeSHDZActivity extends ZjbBaseActivity implements View.OnClickL
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.address);
-        registerReceiver(reciver,filter);
+        registerReceiver(reciver, filter);
     }
 
     @Override
