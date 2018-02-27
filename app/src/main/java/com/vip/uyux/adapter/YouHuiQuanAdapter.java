@@ -12,6 +12,9 @@ import com.vip.uyux.model.OrderConfirmbefore;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class YouHuiQuanAdapter extends BaseAdapter {
     private Context context;
     List<OrderConfirmbefore.CouponBean> couponBeanList;
