@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:background="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardPreventCornerOverlap="false">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <com.luck.picture.lib.widget.SquareRelativeLayout
+            android:id="@+id/viewSquare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.vip.uyux.customview.YuanJiaoImageView
+                android:id="@+id/imageImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/shangpin" />
+        </com.luck.picture.lib.widget.SquareRelativeLayout>
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/textHuiYuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/viewSquare"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/shape_tranblack_5dp"
+            android:paddingBottom="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="3dp"
+            android:text="五星会员省8元"
+            android:textColor="@color/white"
+            android:textSize="@dimen/litterText" />
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewSquare"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="黑管双头口红黑管双头口红黑管双头口红黑管双头口红"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/bigText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textDes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textTitle"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="定制黑管双头口红刷头定制黑管双头口红刷头定制黑管双头口红刷头"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/litterText" />
+        <ImageView
+            android:id="@+id/imageBaoShui"
+            android:layout_below="@+id/textDes"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:src="@mipmap/baoshui"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textDes"
+            android:layout_alignStart="@+id/textDes"
+            android:layout_below="@+id/imageBaoShui"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="2dp"
+            android:text="¥69"
+            android:textColor="@color/basic_color"
+            android:textSize="18dp" />
+
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/textPrice"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="@dimen/leftAndRight"
+            android:id="@+id/textSale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="已售4535"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/moreLitterText" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

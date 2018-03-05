@@ -451,6 +451,14 @@ public class Constant {
          * 消息数量
          */
         public static final String MASSAGE_NUM = "/Massage/num";
+        /**
+         * 海淘列表分类
+         */
+        public static final String INDEX_SEAAMOYCATE = "/Index/seaAmoyCate";
+        /**
+         * 海淘列表
+         */
+        public static final String INDEX_SEAAMOY = "/Index/seaAmoy";
 
     }
 

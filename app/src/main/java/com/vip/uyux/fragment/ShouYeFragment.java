@@ -33,6 +33,7 @@ import com.jude.easyrecyclerview.decoration.SpaceDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.ChanPinLBActivity;
 import com.vip.uyux.activity.ChanPinXQCZActivity;
+import com.vip.uyux.activity.HaiTaoActivity;
 import com.vip.uyux.activity.SouSuoActivity;
 import com.vip.uyux.activity.XiaoXiZXActivity;
 import com.vip.uyux.adapter.BannerAdapter;
@@ -262,11 +263,15 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 viewHaiTao[1] = view.findViewById(R.id.viewHaiTao1);
                 viewHaiTao[2] = view.findViewById(R.id.viewHaiTao2);
                 viewHaiTao[3] = view.findViewById(R.id.viewHaiTao3);
-                for (int i = 0; i < seaAmoy.size(); i++) {
+                for (int i = 0; i < viewHaiTao.length; i++) {
+                    final int finalI = i;
                     viewHaiTao[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            
+                            Intent intent = new Intent();
+                            intent.setClass(mContext, HaiTaoActivity.class);
+                            intent.putExtra(Constant.IntentKey.PCATE,seaAmoy.get(finalI).getPcate());
+                            startActivity(intent);
                         }
                     });
                 }
