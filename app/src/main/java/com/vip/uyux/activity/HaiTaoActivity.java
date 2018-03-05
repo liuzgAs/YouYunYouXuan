@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
+import com.vip.uyux.base.ToLoginActivity;
 import com.vip.uyux.base.ZjbBaseNotLeftActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.ColorTrackTabLayout;
@@ -63,6 +64,7 @@ public class HaiTaoActivity extends ZjbBaseNotLeftActivity implements View.OnCli
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.viewSearch).setOnClickListener(this);
     }
 
     /**
@@ -121,6 +123,15 @@ public class HaiTaoActivity extends ZjbBaseNotLeftActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.viewSearch:
+                Intent intent = new Intent();
+                if (isLogin) {
+                    intent.setClass(HaiTaoActivity.this, XiaoXiZXActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToLoginActivity.toLoginActivity(HaiTaoActivity.this);
+                }
+                break;
             case R.id.imageBack:
                 finish();
                 break;
