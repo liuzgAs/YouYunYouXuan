@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -46,6 +47,7 @@ import com.vip.uyux.model.MassageNum;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
@@ -94,6 +96,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             }
         }
     };
+    private List<IndexHome.SeaAmoyBean> seaAmoy;
 
     public ShouYeFragment() {
         // Required empty public constructor
@@ -176,6 +179,11 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             private TextView textZhiShiQi;
             private ConvenientBanner banner;
             private ViewPager id_viewpager;
+            private TextView[] textHaiTaoTitle = new TextView[4];
+            private TextView[] textHaiTaoDes = new TextView[4];
+            private ImageView[] imageImg1 = new ImageView[4];
+            private ImageView[] imageImg2 = new ImageView[4];
+            private View[] viewHaiTao = new View[4];
 
             @Override
             public View onCreateView(ViewGroup parent) {
@@ -234,6 +242,34 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                         startActivity(intent);
                     }
                 });
+                textHaiTaoTitle[0] = view.findViewById(R.id.textHaiTaoTitle0);
+                textHaiTaoTitle[1] = view.findViewById(R.id.textHaiTaoTitle1);
+                textHaiTaoTitle[2] = view.findViewById(R.id.textHaiTaoTitle2);
+                textHaiTaoTitle[3] = view.findViewById(R.id.textHaiTaoTitle3);
+                textHaiTaoDes[0] = view.findViewById(R.id.textHaiTaoDes0);
+                textHaiTaoDes[1] = view.findViewById(R.id.textHaiTaoDes1);
+                textHaiTaoDes[2] = view.findViewById(R.id.textHaiTaoDes2);
+                textHaiTaoDes[3] = view.findViewById(R.id.textHaiTaoDes3);
+                imageImg1[0] = view.findViewById(R.id.imageHaiTaoImg0001);
+                imageImg1[1] = view.findViewById(R.id.imageHaiTaoImg0101);
+                imageImg1[2] = view.findViewById(R.id.imageHaiTaoImg0201);
+                imageImg1[3] = view.findViewById(R.id.imageHaiTaoImg0301);
+                imageImg2[0] = view.findViewById(R.id.imageHaiTaoImg0002);
+                imageImg2[1] = view.findViewById(R.id.imageHaiTaoImg0102);
+                imageImg2[2] = view.findViewById(R.id.imageHaiTaoImg0202);
+                imageImg2[3] = view.findViewById(R.id.imageHaiTaoImg0302);
+                viewHaiTao[0] = view.findViewById(R.id.viewHaiTao0);
+                viewHaiTao[1] = view.findViewById(R.id.viewHaiTao1);
+                viewHaiTao[2] = view.findViewById(R.id.viewHaiTao2);
+                viewHaiTao[3] = view.findViewById(R.id.viewHaiTao3);
+                for (int i = 0; i < seaAmoy.size(); i++) {
+                    viewHaiTao[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            
+                        }
+                    });
+                }
                 return view;
             }
 
@@ -315,6 +351,26 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 }
                 if (!TextUtils.isEmpty(num4)) {
                     textNum4.setText("共" + num4 + "件爆款推荐");
+                }
+                if (seaAmoy != null) {
+                    if (seaAmoy.size() >= 4) {
+                        for (int i = 0; i < seaAmoy.size(); i++) {
+                            textHaiTaoTitle[i].setText(seaAmoy.get(i).getTitle());
+                            textHaiTaoDes[i].setText(seaAmoy.get(i).getDes());
+                            GlideApp.with(ShouYeFragment.this)
+                                    .load(seaAmoy.get(i).getImg1())
+                                    .centerCrop()
+                                    .placeholder(R.mipmap.ic_empty)
+                                    .transition(new DrawableTransitionOptions().crossFade(500))
+                                    .into(imageImg1[i]);
+                            GlideApp.with(ShouYeFragment.this)
+                                    .load(seaAmoy.get(i).getImg2())
+                                    .centerCrop()
+                                    .placeholder(R.mipmap.ic_empty)
+                                    .transition(new DrawableTransitionOptions().crossFade(500))
+                                    .into(imageImg2[i]);
+                        }
+                    }
                 }
             }
         });
@@ -425,6 +481,7 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                         num3 = indexHome.getNum3();
                         num4 = indexHome.getNum4();
                         recomBeanList = indexHome.getRecom();
+                        seaAmoy = indexHome.getSeaAmoy();
                         List<IndexHome.DataBean> dataBeanList = indexHome.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);

@@ -71,20 +71,20 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5a682ad0f43e484fb5000055" />
-        <!--正式推送 -->
+        <!-- 正式推送 -->
         <meta-data
-        android:name="com.alibaba.app.appkey"
-        android:value="24772026" /> <!-- 请填写你自己的- appKey -->
+            android:name="com.alibaba.app.appkey"
+            android:value="24772026" /> <!-- 请填写你自己的- appKey -->
         <meta-data
-        android:name="com.alibaba.app.appsecret"
-        android:value="218f4fc4e9361da567d66547eabc9923" /> <!-- 请填写你自己的appSecret -->
-        <!--测试推送 -->
-        <!--<meta-data-->
-            <!--android:name="com.alibaba.app.appkey"-->
-            <!--android:value="24794089" /> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.alibaba.app.appsecret"-->
-            <!--android:value="2a074a67c87f9e76b46d8b9df164b472" /> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;-->
+            android:name="com.alibaba.app.appsecret"
+            android:value="218f4fc4e9361da567d66547eabc9923" /> <!-- 请填写你自己的appSecret -->
+        <!-- 测试推送 -->
+        <!-- <meta-data -->
+        <!-- android:name="com.alibaba.app.appkey" -->
+        <!-- android:value="24794089" /> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="com.alibaba.app.appsecret" -->
+        <!-- android:value="2a074a67c87f9e76b46d8b9df164b472" /> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt; -->
 
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
@@ -341,6 +341,7 @@
             android:name=".activity.ReciverActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Transparent" />
+        <activity android:name=".activity.HaiTaoActivity"></activity>
     </application>
 
 </manifest>
