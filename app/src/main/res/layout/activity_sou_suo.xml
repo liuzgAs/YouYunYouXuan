@@ -9,6 +9,7 @@
     tools:context=".activity.SouSuoActivity">
 
     <include
+        android:visibility="gone"
         android:id="@+id/include3"
         layout="@layout/view_bar_white" />
 
