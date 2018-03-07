@@ -68,8 +68,17 @@ public class IndexRecom {
         private String title;
         private String img;
         private int type;
+        private int isc;
         private String nickname;
         private int collectNum;
+
+        public int getIsc() {
+            return isc;
+        }
+
+        public void setIsc(int isc) {
+            this.isc = isc;
+        }
 
         public int getId() {
             return id;
