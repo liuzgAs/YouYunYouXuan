@@ -15,6 +15,7 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.PingJiaGLActivity;
+import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.activity.WoDeDDActivity;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.constant.Constant;
@@ -39,12 +40,14 @@ public class DDXQViewHolder extends BaseViewHolder<UserOrderinfo.DataBean.ListBe
     private final TextView textSupplier;
     private final TextView textText;
     UserOrderinfo.DataBean.ListBeanX data;
+    private final TextView textShip;
 
     public DDXQViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
         textSupplier = $(R.id.textSupplier);
         textText = $(R.id.textText);
         recyclerView = $(R.id.recyclerView);
+        textShip = $(R.id.textShip);
         textText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +78,16 @@ public class DDXQViewHolder extends BaseViewHolder<UserOrderinfo.DataBean.ListBe
                 }
             }
         });
+        textShip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE,"物流信息");
+                intent.putExtra(Constant.IntentKey.URL,data.getShip_url());
+                getContext().startActivity(intent);
+            }
+        });
         initRecycler();
     }
 
@@ -88,6 +101,11 @@ public class DDXQViewHolder extends BaseViewHolder<UserOrderinfo.DataBean.ListBe
             textText.setText(data.getText());
         } else {
             textText.setVisibility(View.GONE);
+        }
+        if (data.getIs_ship()==1){
+            textShip.setVisibility(View.VISIBLE);
+        }else {
+            textShip.setVisibility(View.GONE);
         }
         List<UserOrderinfo.DataBean.ListBeanX.ListBean> listBeanList = data.getList();
         adapter.clear();
