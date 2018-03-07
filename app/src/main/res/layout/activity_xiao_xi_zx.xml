@@ -23,6 +23,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp" />
         <TextView
+            android:id="@+id/textTitle00"
             android:text="系统通知"
             android:layout_toRightOf="@+id/image0000"
             android:textSize="@dimen/bigText"
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/textDes00"
             android:text="最新系统消息"
             android:textSize="@dimen/litterText"
             android:layout_alignBottom="@+id/image0000"
@@ -42,6 +44,18 @@
             android:layout_marginBottom="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textTipNum00"
+            android:background="@drawable/shape_basic1dp_20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="1"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="20dp" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_marginTop="1dp"
@@ -57,6 +71,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp" />
         <TextView
+            android:id="@+id/textTitle01"
             android:text="优选活动"
             android:layout_toRightOf="@+id/image0100"
             android:textSize="@dimen/bigText"
@@ -68,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/textDes01"
             android:text="最新优选活动消息"
             android:textSize="@dimen/litterText"
             android:layout_alignBottom="@+id/image0100"
@@ -76,6 +92,18 @@
             android:layout_marginBottom="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textTipNum01"
+            android:background="@drawable/shape_basic1dp_20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="1"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="20dp" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/viewWuLiuZhuShou"
@@ -92,6 +120,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp" />
         <TextView
+            android:id="@+id/textTitle02"
             android:text="物流助手"
             android:layout_toRightOf="@+id/image0200"
             android:textSize="@dimen/bigText"
@@ -103,6 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/textDes02"
             android:text="最新物流消息"
             android:textSize="@dimen/litterText"
             android:layout_alignBottom="@+id/image0200"
@@ -111,6 +141,18 @@
             android:layout_marginBottom="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textTipNum02"
+            android:background="@drawable/shape_basic1dp_20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="1"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="20dp" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_marginTop="1dp"
@@ -126,6 +168,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp" />
         <TextView
+            android:id="@+id/textTitle03"
             android:text="客服助手"
             android:layout_toRightOf="@+id/image0300"
             android:textSize="@dimen/bigText"
@@ -137,6 +180,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/textDes03"
             android:text="最新客服消息"
             android:textSize="@dimen/litterText"
             android:layout_alignBottom="@+id/image0300"
@@ -145,6 +189,18 @@
             android:layout_marginBottom="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textTipNum03"
+            android:background="@drawable/shape_basic1dp_20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="1"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="20dp" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_marginTop="1dp"
@@ -160,6 +216,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp" />
         <TextView
+            android:id="@+id/textTitle04"
             android:text="佣金消息"
             android:layout_toRightOf="@+id/image0400"
             android:textSize="@dimen/bigText"
@@ -171,6 +228,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/textDes04"
             android:text="最新佣金收入消息"
             android:textSize="@dimen/litterText"
             android:layout_alignBottom="@+id/image0400"
@@ -179,5 +237,17 @@
             android:layout_marginBottom="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textTipNum04"
+            android:background="@drawable/shape_basic1dp_20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/leftAndRight"
+            android:text="1"
+            android:textColor="@color/basic_color"
+            android:textSize="@dimen/normal_textsize"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="20dp" />
     </RelativeLayout>
 </LinearLayout>

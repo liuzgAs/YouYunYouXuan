@@ -459,6 +459,10 @@ public class Constant {
          * 海淘列表
          */
         public static final String INDEX_SEAAMOY = "/Index/seaAmoy";
+        /**
+         * 消息中心
+         */
+        public static final String MASSAGE_INDEX = "/Massage/index";
 
     }
 
