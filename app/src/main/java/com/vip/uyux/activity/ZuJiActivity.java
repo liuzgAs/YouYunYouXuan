@@ -47,6 +47,7 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
     private View viewDiBu;
     private View viewQuanXuan;
     private ImageView imageQuanXuan;
+    private List<GoodsViewlog.DataBean> beanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,32 +121,32 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                     @Override
                     public void onSuccess(String s) {
                         LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
-                        try {
+//                        try {
                             page++;
                             GoodsViewlog goodsViewlog = GsonUtils.parseJSON(s, GoodsViewlog.class);
                             int status = goodsViewlog.getStatus();
                             if (status == 1) {
                                 List<GoodsViewlog.DataBean> dataBeanList = goodsViewlog.getData();
-                                int position = 0;
                                 for (int i = 0; i < dataBeanList.size(); i++) {
                                     dataBeanList.get(i).setBianJi(false);
                                     dataBeanList.get(i).setSelect(false);
                                     if (dataBeanList.get(i).getType() == 0) {
-                                        position = i;
-                                        dataBeanList.get(i).setPosition(i);
+                                        position = adapter.getAllData().size()+i;
+                                        dataBeanList.get(i).setPosition(position);
                                     } else {
                                         dataBeanList.get(i).setPosition(position);
                                     }
                                 }
+                                beanList.addAll(dataBeanList);
                                 adapter.addAll(dataBeanList);
                             } else if (status == 3) {
                                 MyDialog.showReLoginDialog(ZuJiActivity.this);
                             } else {
                                 adapter.pauseMore();
                             }
-                        } catch (Exception e) {
-                            adapter.pauseMore();
-                        }
+//                        } catch (Exception e) {
+//                            adapter.pauseMore();
+//                        }
                     }
 
                     @Override
@@ -343,6 +344,8 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
         return new OkObject(params, url);
     }
 
+    int position = 0;
+
     @Override
     public void onRefresh() {
         page = 1;
@@ -355,17 +358,19 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                     GoodsViewlog goodsViewlog = GsonUtils.parseJSON(s, GoodsViewlog.class);
                     if (goodsViewlog.getStatus() == 1) {
                         List<GoodsViewlog.DataBean> dataBeanList = goodsViewlog.getData();
-                        int position = 0;
+                        position = 0;
                         for (int i = 0; i < dataBeanList.size(); i++) {
                             dataBeanList.get(i).setBianJi(false);
                             dataBeanList.get(i).setSelect(false);
                             if (dataBeanList.get(i).getType() == 0) {
                                 position = i;
-                                dataBeanList.get(i).setPosition(i);
+                                dataBeanList.get(i).setPosition(position);
                             } else {
                                 dataBeanList.get(i).setPosition(position);
                             }
                         }
+                        beanList.clear();
+                        beanList.addAll(dataBeanList);
                         adapter.clear();
                         adapter.addAll(dataBeanList);
                     } else if (goodsViewlog.getStatus() == 3) {
@@ -425,7 +430,7 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
             if (position < adapter.getAllData().size()) {
                 return adapter.getItem(position).getPosition();
             } else {
-                return position;
+                return position-1;
             }
         }
 
@@ -439,6 +444,7 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
         public void onBindHeaderViewHolder(HeaderHolder viewholder, final int position) {
             if (position < adapter.getAllData().size()) {
                 viewholder.textTitle.setText(adapter.getItem(position).getTitle());
+            }else {
             }
         }
 
