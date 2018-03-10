@@ -166,6 +166,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     private View viewError;
     private View viewTop;
     private View viewProgress;
+    private View viewDaoJiShi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,6 +200,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
         viewDiBu = findViewById(R.id.viewDiBu);
         imageGouWuChe = findViewById(R.id.imageGouWuChe);
         viewGouWuChe = findViewById(R.id.viewGouWuChe);
+        viewDaoJiShi = findViewById(R.id.viewDaoJiShi);
 
 
         banner = (ConvenientBanner) findViewById(R.id.banner);
@@ -503,6 +505,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                                         @Override
                                         public void run() {
                                             if (countdown >= 1) {
+                                                viewDaoJiShi.setVisibility(View.VISIBLE);
                                                 countdown--;
                                                 textCountdown.setText(StringUtil.TimeFormat(countdown));
 //                                        if (textDaoJiShi != null && viewKeGouMai != null) {
@@ -518,6 +521,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                                             } else {
                                                 textCountdown.setText("00:00:00");
                                                 timer.cancel();
+                                                viewDaoJiShi.setVisibility(View.GONE);
                                             }
                                         }
                                     });
