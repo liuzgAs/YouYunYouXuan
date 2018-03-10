@@ -463,7 +463,10 @@ public class Constant {
          * 消息中心
          */
         public static final String MASSAGE_INDEX = "/Massage/index";
-
+        /**
+         * 用户协议
+         */
+        public static final String YONG_HU_XIE_YI = "/Article/info/type/Reg";
     }
 
     public static class IntentKey {
