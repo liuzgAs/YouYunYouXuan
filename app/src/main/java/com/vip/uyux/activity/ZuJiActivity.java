@@ -121,7 +121,7 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                     @Override
                     public void onSuccess(String s) {
                         LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
-//                        try {
+                        try {
                             page++;
                             GoodsViewlog goodsViewlog = GsonUtils.parseJSON(s, GoodsViewlog.class);
                             int status = goodsViewlog.getStatus();
@@ -144,9 +144,9 @@ public class ZuJiActivity extends ZjbBaseActivity implements View.OnClickListene
                             } else {
                                 adapter.pauseMore();
                             }
-//                        } catch (Exception e) {
-//                            adapter.pauseMore();
-//                        }
+                        } catch (Exception e) {
+                            adapter.pauseMore();
+                        }
                     }
 
                     @Override

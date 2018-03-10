@@ -417,8 +417,12 @@ public class CePingXQActivity extends ZjbBaseActivity implements View.OnClickLis
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.imageShare:
-                isShare=true;
-                MyDialog.share01(this, api, share.getShareUrl(), share.getShareImg(), share.getShareTitle(), share.getShareDes());
+                if (isLogin){
+                    isShare=true;
+                    MyDialog.share01(this, api, share.getShareUrl(), share.getShareImg(), share.getShareTitle(), share.getShareDes());
+                }else {
+                    ToLoginActivity.toLoginActivity(this);
+                }
                 break;
             case R.id.btnBuy:
                 intent.setClass(this, ChanPinXQCZActivity.class);
