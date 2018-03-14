@@ -1,13 +1,16 @@
 package com.vip.uyux.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -21,10 +24,13 @@ import com.vip.uyux.constant.Constant;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.WithdrawNotwithdraw;
 import com.vip.uyux.util.ApiClient;
+import com.vip.uyux.util.DateTransforam;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.viewholder.XiaoFeiMXViewHolder;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,6 +39,10 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
     private EasyRecyclerView recyclerView;
     private RecyclerArrayAdapter<WithdrawNotwithdraw.DataBean> adapter;
     private TextView textShouYi;
+    private TextView textStart;
+    private TextView textEnd;
+    private String date_begin = "";
+    private String date_end = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,8 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         textShouYi = (TextView) findViewById(R.id.textShouYi);
+        textStart = (TextView) findViewById(R.id.textStart);
+        textEnd = (TextView) findViewById(R.id.textEnd);
     }
 
     @Override
@@ -148,6 +160,8 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
         findViewById(R.id.btnLiJiTX).setOnClickListener(this);
+        findViewById(R.id.viewStart).setOnClickListener(this);
+        findViewById(R.id.viewEnd).setOnClickListener(this);
     }
 
     @Override
@@ -166,6 +180,47 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
                 break;
             case R.id.imageBack:
                 finish();
+                break;
+            case R.id.viewStart:
+                Calendar c1 = Calendar.getInstance();
+                DatePickerDialog datePickerDialog1 = new DatePickerDialog(YuEActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        try {
+                            date_begin = DateTransforam.dateToStamp(year + "-" + (month + 1) + "-" + dayOfMonth);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        textStart.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                        onRefresh();
+                    }
+                }, c1.get(Calendar.YEAR), c1.get(Calendar.MONTH), c1.get(Calendar.DAY_OF_MONTH));
+                if (!TextUtils.isEmpty(date_end)) {
+                    datePickerDialog1.getDatePicker().setMaxDate(Long.parseLong(date_end) * 1000);
+                } else {
+                    datePickerDialog1.getDatePicker().setMaxDate(System.currentTimeMillis());
+                }
+                datePickerDialog1.show();
+                break;
+            case R.id.viewEnd:
+                Calendar c = Calendar.getInstance();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(YuEActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        try {
+                            date_end = DateTransforam.dateToStamp(year + "-" + (month + 1) + "-" + dayOfMonth);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        textEnd.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                        onRefresh();
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                if (!TextUtils.isEmpty(date_begin)) {
+                    datePickerDialog.getDatePicker().setMinDate(Long.parseLong(date_begin) * 1000);
+                }
+                datePickerDialog.show();
                 break;
             default:
                 break;
@@ -187,6 +242,8 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
             params.put("tokenTime", tokenTime);
         }
         params.put("p", String.valueOf(page));
+        params.put("date_begin", date_begin);
+        params.put("date_end", date_end);
         return new OkObject(params, url);
     }
 

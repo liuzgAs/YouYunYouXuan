@@ -27,6 +27,15 @@ public class CustomerGetintegralshop {
     private int my_integral;
     private int exchange_recode;
     private List<DataBean> data;
+    private List<AdvsBean> banner;
+
+    public List<AdvsBean> getBanner() {
+        return banner;
+    }
+
+    public void setBanner(List<AdvsBean> banner) {
+        this.banner = banner;
+    }
 
     public PageBean getPage() {
         return page;

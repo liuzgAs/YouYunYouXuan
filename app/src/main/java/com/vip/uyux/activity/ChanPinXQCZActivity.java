@@ -13,11 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -174,6 +170,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     private View viewError;
     private View viewTop;
     private View viewProgress;
+    private View viewDaoJiShi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,6 +204,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
         viewDiBu = findViewById(R.id.viewDiBu);
         imageGouWuChe = findViewById(R.id.imageGouWuChe);
         viewGouWuChe = findViewById(R.id.viewGouWuChe);
+        viewDaoJiShi = findViewById(R.id.viewDaoJiShi);
 
 
         banner = (ConvenientBanner) findViewById(R.id.banner);
@@ -512,6 +510,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                                         @Override
                                         public void run() {
                                             if (countdown >= 1) {
+                                                viewDaoJiShi.setVisibility(View.VISIBLE);
                                                 countdown--;
                                                 textCountdown.setText(StringUtil.TimeFormat(countdown));
 //                                        if (textDaoJiShi != null && viewKeGouMai != null) {
@@ -527,6 +526,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                                             } else {
                                                 textCountdown.setText("00:00:00");
                                                 timer.cancel();
+                                                viewDaoJiShi.setVisibility(View.GONE);
                                             }
                                         }
                                     });
@@ -1086,40 +1086,44 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                 }
             }
         });
-        editNum.setFilters(new InputFilter[]{new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if ((source.equals("0") && dest.toString().length() == 0)) {
-                    return "1";
-                }
-                return null;
-            }
-        }});
-        editNum.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (TextUtils.isEmpty(editable.toString())) {
-                    editNum.setText("1");
-                    editNum.setSelection(1);
-                }
-//                data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
-//                Double price = Arith.mul((double) data.getNum(), Double.parseDouble(data.getGoods_price()));
-//                ((QueRenDDActivity) getContext()).textSum.setText("¥" + price);
-            }
-        });
+//        editNum.setFilters(new InputFilter[]{new InputFilter() {
+//            @Override
+//            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+//                if ((source.equals("0") && dest.toString().length() == 0)) {
+//                    return "1";
+//                }
+//                return null;
+//            }
+//        }});
+//        editNum.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (TextUtils.isEmpty(editable.toString())) {
+//                    editNum.setText("1");
+//                    editNum.setSelection(1);
+//                }
+////                data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
+////                Double price = Arith.mul((double) data.getNum(), Double.parseDouble(data.getGoods_price()));
+////                ((QueRenDDActivity) getContext()).textSum.setText("¥" + price);
+//            }
+//        });
         dialog_chan_pin.findViewById(R.id.buttonSure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (TextUtils.isEmpty(editNum.getText().toString().trim())){
+                    Toast.makeText(ChanPinXQCZActivity.this, "商品数量必须大于等于一", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
                 if (goodsNum <= stock_num) {
                 } else {

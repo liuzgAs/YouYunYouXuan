@@ -42,9 +42,11 @@ public class DiZhiGLActivity extends ZjbBaseActivity implements SwipeRefreshLayo
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            switch (action){
+            switch (action) {
                 case Constant.BroadcastCode.address:
                     onRefresh();
+                    break;
+                default:
                     break;
             }
         }
@@ -132,8 +134,8 @@ public class DiZhiGLActivity extends ZjbBaseActivity implements SwipeRefreshLayo
     private OkObject getOkObject() {
         String url = Constant.HOST + Constant.Url.USER_ADDRESS;
         HashMap<String, String> params = new HashMap<>();
-        params.put("uid",userInfo.getUid());
-        params.put("tokenTime",tokenTime);
+        params.put("uid", userInfo.getUid());
+        params.put("tokenTime", tokenTime);
         return new OkObject(params, url);
     }
 
@@ -149,7 +151,7 @@ public class DiZhiGLActivity extends ZjbBaseActivity implements SwipeRefreshLayo
                         List<UserAddress.DataBean> userAddressData = userAddress.getData();
                         adapter.clear();
                         adapter.addAll(userAddressData);
-                    } else if (userAddress.getStatus()== 3) {
+                    } else if (userAddress.getStatus() == 3) {
                         MyDialog.showReLoginDialog(DiZhiGLActivity.this);
                     } else {
                         showError(userAddress.getInfo());
@@ -163,6 +165,7 @@ public class DiZhiGLActivity extends ZjbBaseActivity implements SwipeRefreshLayo
             public void onError() {
                 showError("网络出错");
             }
+
             public void showError(String msg) {
                 View view_loaderror = LayoutInflater.from(DiZhiGLActivity.this).inflate(R.layout.view_loaderror, null);
                 TextView textMsg = (TextView) view_loaderror.findViewById(R.id.textMsg);
@@ -185,7 +188,7 @@ public class DiZhiGLActivity extends ZjbBaseActivity implements SwipeRefreshLayo
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.textXinZengDZ:
-                intent.setClass(this,XinZengDZActivity.class);
+                intent.setClass(this, XinZengDZActivity.class);
                 startActivity(intent);
                 break;
             case R.id.imageBack:
@@ -199,7 +202,7 @@ public class DiZhiGLActivity extends ZjbBaseActivity implements SwipeRefreshLayo
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.address);
-        registerReceiver(reciver,filter);
+        registerReceiver(reciver, filter);
     }
 
     @Override

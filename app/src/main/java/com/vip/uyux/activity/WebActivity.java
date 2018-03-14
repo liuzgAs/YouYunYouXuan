@@ -1,6 +1,7 @@
 package com.vip.uyux.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -89,17 +90,45 @@ public class WebActivity extends ZjbBaseActivity implements View.OnClickListener
                 } else {
                     pb1.setVisibility(View.VISIBLE);
                 }
+
+            }
+
+
+        });
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if (url.contains("http://app.uyux.vip/mobile/goods/details/id/")) {
+                    String substring = url.substring(44, url.length());
+                    String replace = substring.replace(".", ",");
+                    String[] split = replace.split(",");
+                    LogUtil.LogShitou("WebActivity--onProgressChanged", "" + split[0]);
+                    Intent intent = new Intent();
+                    intent.setClass(WebActivity.this, ChanPinXQCZActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra(Constant.IntentKey.ID, split[0]);
+                    startActivity(intent);
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    }
+                }
             }
         });
         mWebView.addJavascriptInterface(new Object() {
             @JavascriptInterface
             public void closeActivity(final String value) {
-                LogUtil.LogShitou("WebActivity--closeActivity", ""+value);
+                LogUtil.LogShitou("WebActivity--closeActivity", "" + value);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         WebPay webPay = GsonUtils.parseJSON(value, WebPay.class);
-                        if (webPay.getStatus()==1){
+                        if (webPay.getStatus() == 1) {
                             Intent intent = new Intent();
                             intent.setAction(Constant.BroadcastCode.USERINFO);
                             sendBroadcast(intent);
@@ -108,8 +137,8 @@ public class WebActivity extends ZjbBaseActivity implements View.OnClickListener
                             intent.setClass(WebActivity.this, LiJiZFActivity.class);
                             startActivity(intent);
 //                            finish();
-                        }else {
-                            MyDialog.showTipDialog(WebActivity.this,webPay.getInfo());
+                        } else {
+                            MyDialog.showTipDialog(WebActivity.this, webPay.getInfo());
                         }
                     }
                 });

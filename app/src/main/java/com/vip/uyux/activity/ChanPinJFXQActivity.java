@@ -10,11 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -94,9 +90,11 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            switch (action){
+            switch (action) {
                 case Constant.BroadcastCode.SHUA_XIN_U_BI:
                     finish();
+                    break;
+                default:
                     break;
             }
         }
@@ -267,7 +265,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageFenXiang:
-                MyDialog.share(this,"ChanPinJFXQActivity",api,String.valueOf(id),goodsInfo.getData().getShare());
+                MyDialog.share(this, "ChanPinJFXQActivity", api, String.valueOf(id), goodsInfo.getData().getShare());
                 break;
             case R.id.imageShouCang:
                 if (goodsInfo.getIsc() == 0) {
@@ -500,7 +498,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 .load(goodsInfoData.getThumb())
                 .into(imageImg);
         textDialogPrice = dialog_chan_pin.findViewById(R.id.textDialogPrice);
-        textDialogPrice.setText( goodsInfoData.getStockNum()+"U币");
+        textDialogPrice.setText(goodsInfoData.getStockNum() + "U币");
         textGuiGe = dialog_chan_pin.findViewById(R.id.textGuiGe);
         textStock_numD = dialog_chan_pin.findViewById(R.id.textStock_numD);
         textStock_numD.setText("库存" + stock_num + "件");
@@ -538,51 +536,55 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 }
             }
         });
-        editNum.setFilters(new InputFilter[]{new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if ((source.equals("0") && dest.toString().length() == 0)) {
-                    return "1";
-                }
-                return null;
-            }
-        }});
-        editNum.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (TextUtils.isEmpty(editable.toString())) {
-                    editNum.setText("1");
-                    editNum.setSelection(1);
-                }
-//                data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
-//                Double price = Arith.mul((double) data.getNum(), Double.parseDouble(data.getGoods_price()));
-//                ((QueRenDDActivity) getContext()).textSum.setText("¥" + price);
-            }
-        });
+//        editNum.setFilters(new InputFilter[]{new InputFilter() {
+//            @Override
+//            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+//                if ((source.equals("0") && dest.toString().length() == 0)) {
+//                    return "1";
+//                }
+//                return null;
+//            }
+//        }});
+//        editNum.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (TextUtils.isEmpty(editable.toString())) {
+//                    editNum.setText("1");
+//                    editNum.setSelection(1);
+//                }
+////                data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
+////                Double price = Arith.mul((double) data.getNum(), Double.parseDouble(data.getGoods_price()));
+////                ((QueRenDDActivity) getContext()).textSum.setText("¥" + price);
+//            }
+//        });
         dialog_chan_pin.findViewById(R.id.buttonSure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (TextUtils.isEmpty(editNum.getText().toString().trim())){
+                    Toast.makeText(ChanPinJFXQActivity.this, "商品数量必须大于等于一", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int goodsNum = Integer.parseInt(editNum.getText().toString().trim());
-                if (goodsNum <=stock_num) {
+                if (goodsNum <= stock_num) {
                 } else {
                     Toast.makeText(ChanPinJFXQActivity.this, "库存不足", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 alertDialogGouWu.dismiss();
                 Intent intent = new Intent();
-                intent.setClass(ChanPinJFXQActivity.this,QueRenDDJFActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,id);
-                intent.putExtra(Constant.IntentKey.VALUE,editNum.getText().toString().trim());
+                intent.setClass(ChanPinJFXQActivity.this, QueRenDDJFActivity.class);
+                intent.putExtra(Constant.IntentKey.ID, id);
+                intent.putExtra(Constant.IntentKey.VALUE, editNum.getText().toString().trim());
                 startActivity(intent);
             }
         });
@@ -678,7 +680,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
             for (int i = 0; i < skuCateBeans1.size(); i++) {
                 CustomerIntegragoodsinfo.SkuCateBean skuCateBean = skuCateBeans1.get(i);
                 if (skuCateBean.isSelect()) {
-                    textDialogPrice.setText(skuCateBean.getPrice()+"U币");
+                    textDialogPrice.setText(skuCateBean.getPrice() + "U币");
                     sku_id = skuCateBean.getSku_id();
                 }
 
@@ -693,7 +695,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
                 }
             }
             textGuiGe.setText(name);
-            textStock_numD.setText("库存"+stock_num+"件");
+            textStock_numD.setText("库存" + stock_num + "件");
         }
     }
 
@@ -719,7 +721,7 @@ public class ChanPinJFXQActivity extends ZjbBaseActivity implements View.OnClick
         super.onStart();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
-        registerReceiver(reciver,filter);
+        registerReceiver(reciver, filter);
     }
 
     @Override

@@ -264,6 +264,46 @@
     </com.vip.uyux.customview.HorizontalView>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_shouye_jianbian"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="18dp"
+                android:id="@+id/imageHaiTao"
+                android:layout_width="55dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:src="@mipmap/haitao" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="15dp"
+                android:layout_alignBottom="@+id/imageHaiTao"
+                android:layout_toRightOf="@+id/imageHaiTao"
+                android:src="@mipmap/youyumeihaobuqieryu" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="@dimen/leftAndRight"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/reqiqiu" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/include_shouye_haitao" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/viewViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -276,19 +316,18 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/id_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            />
+            android:layout_height="100dp" />
 
         <com.rd.PageIndicatorView
-            app:piv_animationType="worm"
-            app:piv_viewPager="@id/id_viewpager"
             android:id="@+id/pageIndicatorView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            app:piv_animationType="worm"
             app:piv_radius="2dp"
             app:piv_selectedColor="@color/basic_color"
-            app:piv_unselectedColor="@color/background" />
+            app:piv_unselectedColor="@color/background"
+            app:piv_viewPager="@id/id_viewpager" />
     </LinearLayout>
 </LinearLayout>

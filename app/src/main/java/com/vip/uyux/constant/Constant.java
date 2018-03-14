@@ -451,7 +451,22 @@ public class Constant {
          * 消息数量
          */
         public static final String MASSAGE_NUM = "/Massage/num";
-
+        /**
+         * 海淘列表分类
+         */
+        public static final String INDEX_SEAAMOYCATE = "/Index/seaAmoyCate";
+        /**
+         * 海淘列表
+         */
+        public static final String INDEX_SEAAMOY = "/Index/seaAmoy";
+        /**
+         * 消息中心
+         */
+        public static final String MASSAGE_INDEX = "/Massage/index";
+        /**
+         * 用户协议
+         */
+        public static final String YONG_HU_XIE_YI = "/Article/info/type/Reg";
     }
 
     public static class IntentKey {

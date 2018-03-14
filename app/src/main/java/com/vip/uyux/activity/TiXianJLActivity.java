@@ -72,7 +72,7 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
     protected void initViews() {
         switch (type) {
             case 1:
-                ((TextView) findViewById(R.id.textViewTitle)).setVisibility(View.GONE);
+                ((TextView) findViewById(R.id.textViewTitle)).setText("余额提现记录");
                 break;
             case 2:
                 ((TextView) findViewById(R.id.textViewTitle)).setText("佣金提现记录");

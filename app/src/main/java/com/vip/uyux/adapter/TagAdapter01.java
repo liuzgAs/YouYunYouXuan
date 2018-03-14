@@ -16,7 +16,9 @@ import java.util.List;
 
 
 /**
- * Created by HanHailong on 15/10/19.
+ *
+ * @author HanHailong
+ * @date 15/10/19
  */
 public class TagAdapter01 extends BaseAdapter implements OnInitSelectedPosition {
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -26,9 +27,12 @@ import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.interfacepage.OnShouCangListener;
 import com.vip.uyux.model.AdvsBean;
+import com.vip.uyux.model.GoodsCollect;
 import com.vip.uyux.model.IndexRecom;
 import com.vip.uyux.model.OkObject;
+import com.vip.uyux.model.ShouCangShanChu;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
@@ -115,7 +119,19 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_tuijian;
-                return new TuiJianViewHolder(parent, layout);
+                TuiJianViewHolder tuiJianViewHolder = new TuiJianViewHolder(parent, layout);
+                tuiJianViewHolder.setOnShouCangListener(new OnShouCangListener() {
+                    @Override
+                    public void shouCang(int position) {
+                        shouCangX(position);
+                    }
+
+                    @Override
+                    public void qXShouCang(int position) {
+                        quXiaoSC(position);
+                    }
+                });
+                return tuiJianViewHolder;
             }
 
         });
@@ -338,6 +354,95 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     recyclerView.showError();
                 } catch (Exception e) {
                 }
+            }
+        });
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getSCOkObject(int position) {
+        String url = Constant.HOST + Constant.Url.GOODS_COLLECT;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("item_id", String.valueOf(adapter.getItem(position).getId()));
+        params.put("type", String.valueOf(2));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 收藏
+     */
+    private void shouCangX(final int position) {
+        showLoadingDialog();
+        ApiClient.post(mContext, getSCOkObject(position), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQCZActivity--onSuccess", s + "");
+                try {
+                    GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
+                    Toast.makeText(mContext, "收藏成功", Toast.LENGTH_SHORT).show();
+                    if (goodsCollect.getStatus() == 1) {
+                        adapter.getItem(position).setIsc(1);
+                        adapter.getItem(position).setCollectNum(goodsCollect.getCollectNum());
+                        adapter.notifyDataSetChanged();
+                    } else if (goodsCollect.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(mContext);
+                    } else {
+                        Toast.makeText(mContext, goodsCollect.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void quXiaoSC(final int position) {
+        String url = Constant.HOST + Constant.Url.GOODS_CANCLECOLLECT;
+        ShouCangShanChu shouCangShanChu = new ShouCangShanChu(1, "android", userInfo.getUid(), tokenTime, adapter.getItem(position).getId(), 2);
+        showLoadingDialog();
+        ApiClient.postJson(mContext, url, GsonUtils.parseObject(shouCangShanChu), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("ChanPinXQCZActivity--onSuccess", s + "");
+                try {
+                    GoodsCollect goodsCollect = GsonUtils.parseJSON(s, GoodsCollect.class);
+                    if (goodsCollect.getStatus() == 1) {
+                        Toast.makeText(mContext, "取消收藏", Toast.LENGTH_SHORT).show();
+                        adapter.getItem(position).setIsc(0);
+                        adapter.getItem(position).setCollectNum(goodsCollect.getCollectNum());
+                        adapter.notifyDataSetChanged();
+                    } else if (goodsCollect.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(mContext);
+                    } else {
+                        Toast.makeText(mContext, goodsCollect.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(mContext, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
     }

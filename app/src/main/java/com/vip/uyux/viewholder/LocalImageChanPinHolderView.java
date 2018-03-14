@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.vip.uyux.R;
 import com.vip.uyux.util.GlideApp;
 
@@ -25,9 +26,9 @@ public class LocalImageChanPinHolderView implements Holder<String> {
     @Override
     public void UpdateUI(final Context context, int position, final String data) {
         GlideApp.with(context)
-                .asBitmap()
                 .load(data)
                 .placeholder(R.mipmap.ic_empty)
+                .transition(new DrawableTransitionOptions().crossFade(500))
                 .into(imageView);
     }
 }

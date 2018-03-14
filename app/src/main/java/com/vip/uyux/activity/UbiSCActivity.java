@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
@@ -15,9 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -26,13 +28,14 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.model.CustomerGetintegralshop;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
-import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.viewholder.IndexBannerImgHolderView;
 import com.vip.uyux.viewholder.JiFenSCViewHolder;
 
 import java.util.HashMap;
@@ -60,11 +63,13 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
     };
     private TextView textDuiHuanJL;
     private TextView textScore;
-    private ImageView imageImg;
     private EditText editSearch;
     private View viewTouch;
     private View coordinator;
     private String keywords="";
+    private TextView textZhiShiQi;
+    private ConvenientBanner banner;
+    private List<AdvsBean> bannerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +91,31 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
     @Override
     protected void findID() {
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
-        imageImg = (ImageView) findViewById(R.id.imageImg);
         textScore = (TextView) findViewById(R.id.textScore);
         textDuiHuanJL = (TextView) findViewById(R.id.textDuiHuanJL);
         editSearch = (EditText) findViewById(R.id.editSearch);
         viewTouch = findViewById(R.id.viewTouch);
         coordinator = findViewById(R.id.coordinator);
+        banner = (ConvenientBanner) findViewById(R.id.banner);
+        banner.setScrollDuration(1000);
+        banner.startTurning(3000);
+        textZhiShiQi = (TextView) findViewById(R.id.textZhiShiQi);
+        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                textZhiShiQi.setText((position + 1) + "/" + bannerList.size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -304,15 +328,25 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
                     CustomerGetintegralshop customerGetintegralshop = GsonUtils.parseJSON(s, CustomerGetintegralshop.class);
                     if (customerGetintegralshop.getStatus() == 1) {
                         top_img = customerGetintegralshop.getTop_img();
+                        bannerList = customerGetintegralshop.getBanner();
                         my_integral = customerGetintegralshop.getMy_integral();
                         exchange_recode = customerGetintegralshop.getExchange_recode();
-                        GlideApp.with(UbiSCActivity.this)
-                                .load(top_img)
-                                .centerCrop()
-                                .placeholder(R.mipmap.ic_empty)
-                                .into(imageImg);
                         textScore.setText(String.valueOf(my_integral));
                         textDuiHuanJL.setText(String.valueOf(exchange_recode));
+                        if (bannerList != null) {
+                            if (bannerList.size() > 0) {
+                                banner.setPages(new CBViewHolderCreator() {
+                                    @Override
+                                    public Object createHolder() {
+                                        return new IndexBannerImgHolderView();
+                                    }
+                                }, bannerList);
+                            } else {
+                                textZhiShiQi.setText("0/0");
+                            }
+                        } else {
+                            textZhiShiQi.setText("0/0");
+                        }
                         List<CustomerGetintegralshop.DataBean> dataBeanList = customerGetintegralshop.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);

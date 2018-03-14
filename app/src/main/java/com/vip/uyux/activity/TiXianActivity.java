@@ -49,7 +49,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
     private Runnable mR;
     private int[] mI;
     private String mPhone_sms;
-    //    private TextView textViewRight;
+    private TextView textViewRight;
     int bankID;
     private TextView textBank1;
     private View viewPhone;
@@ -85,7 +85,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
         buttonSms = (TextView) findViewById(R.id.buttonSms);
         editPhone = (TextView) findViewById(R.id.editPhone);
         editCode = (EditText) findViewById(R.id.editCode);
-//        textViewRight = (TextView) findViewById(R.id.textViewRight);
+        textViewRight = (TextView) findViewById(R.id.textViewRight);
         textBank1 = (TextView) findViewById(R.id.textBank1);
         viewPhone = findViewById(R.id.viewPhone);
         viewCode = findViewById(R.id.viewCode);
@@ -105,7 +105,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
                 break;
         }
         MoneyInputFilter.init(editJinE);
-//        textViewRight.setText("提现记录");
+        textViewRight.setText("提现记录");
         viewPhone.setVisibility(View.GONE);
         viewCode.setVisibility(View.GONE);
 //        editPhone.setText(mobile);
@@ -117,7 +117,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
         findViewById(R.id.btnLiJiTX).setOnClickListener(this);
         findViewById(R.id.viewBank).setOnClickListener(this);
         buttonSms.setOnClickListener(this);
-//        textViewRight.setOnClickListener(this);
+        textViewRight.setOnClickListener(this);
     }
 
     /**
@@ -203,12 +203,12 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
             case R.id.viewBank:
 //                chooseBank();
                 break;
-//            case R.id.textViewRight:
-//                Intent intent = new Intent();
-//                intent.setClass(TiXianActivity.this, TiXianJLActivity.class);
-//                intent.putExtra(Constant.IntentKey.TYPE,type);
-//                startActivity(intent);
-//                break;
+            case R.id.textViewRight:
+                Intent intent = new Intent();
+                intent.setClass(TiXianActivity.this, TiXianJLActivity.class);
+                intent.putExtra(Constant.IntentKey.TYPE,type);
+                startActivity(intent);
+                break;
             case R.id.buttonSms:
                 sendSMS();
                 break;

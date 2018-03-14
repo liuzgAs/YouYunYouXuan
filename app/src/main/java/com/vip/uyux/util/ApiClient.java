@@ -200,17 +200,29 @@ public class ApiClient {
      * @param context
      * @param url
      */
-    public static void downLoadFile(final Context context, String url, String dir,String fileName,final CallBack callBack) throws Exception {
+    public static void downLoadFile(final Context context, String url, String dir,String fileName,final CallBack callBack) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            final String filePath = Environment.getExternalStorageDirectory().getCanonicalPath() + "/"+dir;
-            OkGo.<File>get(url)
-                    .tag(context)
-                    .execute(new FileCallback(filePath, fileName) {
-                        @Override
-                        public void onSuccess(Response<File> response) {
-                            callBack.onSuccess(response.body().toString());
-                        }
-                    });
+            try {
+                final String filePath = Environment.getExternalStorageDirectory().getCanonicalPath() + "/"+dir;
+                OkGo.<File>get(url)
+                        .tag(context)
+                        .execute(new FileCallback(filePath, fileName) {
+                            @Override
+                            public void onSuccess(Response<File> response) {
+                                callBack.onSuccess(response.body().toString());
+                            }
+                            @Override
+                            public void onError(Response<File> response) {
+                                super.onError(response);
+                                LogUtil.LogShitou("ApiClient--onErrorbody", ""+response.body());
+                                LogUtil.LogShitou("ApiClient--onErrorcode", ""+response.code());
+                                LogUtil.LogShitou("ApiClient--onErrormessage", ""+response.message());
+                                LogUtil.LogShitou("ApiClient--onErrorgetException", ""+response.getException().toString());
+                                callBack.onError();
+                            }
+                        });
+            } catch (Exception e) {
+            }
         } else {
             Toast.makeText(context, "SD卡不存在或者不可读写", Toast.LENGTH_SHORT).show();
         }

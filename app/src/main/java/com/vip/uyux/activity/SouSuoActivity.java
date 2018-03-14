@@ -54,7 +54,6 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private EditText editSouSuo;
     private ImageView imageSouSuo;
     private ScrollView scrollHot;
-    private View include3;
     private View viewSearch;
     private int[] shaiXuanArr = new int[3];
     private TextView textZongHe;
@@ -64,6 +63,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private ImageView sanJiaoDown;
     private ImageView sanJiaoUp1;
     private ImageView sanJiaoDown1;
+    private View relativeLayout2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,6 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
 
     @Override
     protected void findID() {
-        include3 = findViewById(R.id.include3);
         flowTagLayout01 = (FlowTagLayout) findViewById(R.id.flowTagLayout01);
         flowTagLayout02 = (FlowTagLayout) findViewById(R.id.flowTagLayout02);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
@@ -97,6 +96,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         sanJiaoDown = (ImageView) findViewById(R.id.sanJiaoDown);
         sanJiaoUp1 = (ImageView) findViewById(R.id.sanJiaoUp1);
         sanJiaoDown1 = (ImageView) findViewById(R.id.sanJiaoDown1);
+        relativeLayout2 = findViewById(R.id.relativeLayout2);
     }
 
     @Override
@@ -105,11 +105,10 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         shaiXuanArr[1] = 0;
         shaiXuanArr[2] = 0;
         setShaiXuan();
-        ((TextView) include3.findViewById(R.id.textViewTitle)).setText("搜索");
         viewSearch.setVisibility(View.GONE);
-        ViewGroup.LayoutParams layoutParams = include3.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = relativeLayout2.getLayoutParams();
         layoutParams.height = (int) (getResources().getDimension(R.dimen.titleHeight) + ScreenUtils.getStatusBarHeight(this));
-        include3.setLayoutParams(layoutParams);
+        relativeLayout2.setLayoutParams(layoutParams);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.top), 0, 0);
@@ -264,7 +263,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
             }
         });
         imageSouSuo.setOnClickListener(this);
-        include3.findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.imageBack1).setOnClickListener(this);
     }
 
     /**

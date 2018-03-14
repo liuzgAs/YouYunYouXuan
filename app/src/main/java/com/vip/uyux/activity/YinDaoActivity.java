@@ -86,21 +86,33 @@ public class YinDaoActivity extends ZjbBaseNotLeftActivity {
                                 public void run() {
                                     try {
                                         Thread.sleep(1000);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ACache aCache = ACache.get(YinDaoActivity.this, Constant.Acache.FRIST);
-                                            aCache.put(Constant.Acache.FRIST, "0");
-                                            Intent intent = new Intent(YinDaoActivity.this, MainActivity.class);
-                                            startActivity(intent);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ACache aCache = ACache.get(YinDaoActivity.this, Constant.Acache.FRIST);
+                                                aCache.put(Constant.Acache.FRIST, "0");
+                                                Intent intent = new Intent(YinDaoActivity.this, MainActivity.class);
+                                                startActivity(intent);
 //                mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-                                            finish();
-                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                                        }
-                                    });
+                                                finish();
+                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            }
+                                        });
+                                    } catch (Exception e) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ACache aCache = ACache.get(YinDaoActivity.this, Constant.Acache.FRIST);
+                                                aCache.put(Constant.Acache.FRIST, "0");
+                                                Intent intent = new Intent(YinDaoActivity.this, MainActivity.class);
+                                                startActivity(intent);
+//                mContext.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                                                finish();
+                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            }
+                                        });
+                                    }
+
                                 }
                             });
 

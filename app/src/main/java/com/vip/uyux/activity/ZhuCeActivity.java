@@ -81,6 +81,7 @@ public class ZhuCeActivity extends ZjbBaseActivity implements View.OnClickListen
     protected void setListeners() {
         findViewById(R.id.buttonZhuCe).setOnClickListener(this);
         findViewById(R.id.imageBack).setOnClickListener(this);
+        findViewById(R.id.textXieYi).setOnClickListener(this);
         /*下划线监听*/
         for (int i = 0; i < editView.length; i++) {
             final int finalI = i;
@@ -121,6 +122,13 @@ public class ZhuCeActivity extends ZjbBaseActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.textXieYi:
+                Intent intent = new Intent();
+                intent.setClass(ZhuCeActivity.this,WebActivity.class);
+                intent.putExtra(Constant.IntentKey.URL,Constant.WEB_HOST+Constant.Url.YONG_HU_XIE_YI);
+                intent.putExtra(Constant.IntentKey.TITLE,"用户协议");
+                startActivity(intent);
+                break;
             case R.id.imageAgreement:
                 isAgreement = !isAgreement;
                 setAgreement();

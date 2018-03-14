@@ -16,6 +16,7 @@ import com.vip.uyux.customview.TwoBtnDialog;
 import com.vip.uyux.util.DataCleanManager;
 import com.vip.uyux.util.DpUtils;
 import com.vip.uyux.util.GlideApp;
+import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.VersionUtils;
 
 
@@ -53,6 +54,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
         textHuanCun = (TextView) findViewById(R.id.textHuanCun);
         textBanben = (TextView) findViewById(R.id.textBanben);
         imageLogo = (ImageView) findViewById(R.id.imageLogo);
+        btnExit = findViewById(R.id.btnExit);
     }
 
     @Override
@@ -64,7 +66,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
         GlideApp.with(SheZhiActivity.this)
                 .asBitmap()
                 .centerCrop()
-                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(16,SheZhiActivity.this)))
+                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(16, SheZhiActivity.this)))
                 .load(R.mipmap.logo)
                 .into(imageLogo);
     }
@@ -77,15 +79,15 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
         findViewById(R.id.viewXiuGaiMM).setOnClickListener(this);
         findViewById(R.id.viewHuanCun).setOnClickListener(this);
         findViewById(R.id.viewAbout).setOnClickListener(this);
-        btnExit = findViewById(R.id.btnExit);
         btnExit.setOnClickListener(this);
+        imageLogo.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-        if (isLogin){
+        if (isLogin) {
             btnExit.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             btnExit.setVisibility(View.GONE);
         }
     }
@@ -94,29 +96,32 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.imageLogo:
+                LogUtil.isPrintLog = !LogUtil.isPrintLog;
+                break;
             case R.id.btnExit:
                 final TwoBtnDialog twoBtnDialog = new TwoBtnDialog(this, "您确定要退出登录吗？", "是", "否");
                 twoBtnDialog.setClicklistener(new TwoBtnDialog.ClickListenerInterface() {
-                            @Override
-                            public void doConfirm() {
-                                btnExit.setVisibility(View.GONE);
-                                twoBtnDialog.dismiss();
-                                Constant.changeControl++;
-                                ToLoginActivity.toLoginActivity(SheZhiActivity.this);
-                                finish();
-                            }
+                    @Override
+                    public void doConfirm() {
+                        btnExit.setVisibility(View.GONE);
+                        twoBtnDialog.dismiss();
+                        Constant.changeControl++;
+                        ToLoginActivity.toLoginActivity(SheZhiActivity.this);
+                        finish();
+                    }
 
-                            @Override
-                            public void doCancel() {
-                                twoBtnDialog.dismiss();
-                            }
-                        });
+                    @Override
+                    public void doCancel() {
+                        twoBtnDialog.dismiss();
+                    }
+                });
                 twoBtnDialog.show();
                 break;
             case R.id.viewAbout:
-                intent.setClass(SheZhiActivity.this,WebActivity.class);
-                intent.putExtra(Constant.IntentKey.TITLE,"关于我们");
-                intent.putExtra(Constant.IntentKey.URL,Constant.Url.ABOUT);
+                intent.setClass(SheZhiActivity.this, WebActivity.class);
+                intent.putExtra(Constant.IntentKey.TITLE, "关于我们");
+                intent.putExtra(Constant.IntentKey.URL, Constant.Url.ABOUT);
                 startActivity(intent);
                 break;
             case R.id.viewHuanCun:
@@ -134,7 +139,7 @@ public class SheZhiActivity extends ZjbBaseActivity implements View.OnClickListe
                 break;
             case R.id.viewChangJianWenTi:
                 intent.setClass(this, ChangJianWenTiActivity.class);
-                intent.putExtra(Constant.IntentKey.TYPE,1);
+                intent.putExtra(Constant.IntentKey.TYPE, 1);
                 startActivity(intent);
                 break;
             case R.id.viewYiJianFanKui:
