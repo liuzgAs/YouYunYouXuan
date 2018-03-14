@@ -1,11 +1,11 @@
 package com.vip.uyux.activity;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
@@ -38,7 +38,6 @@ import java.util.HashMap;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.CSCustomServiceInfo;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -221,10 +220,10 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 try {
                     CartNum cartNum = GsonUtils.parseJSON(s, CartNum.class);
                     if (cartNum.getStatus() == 1) {
-                        if (cartNum.getNum()>0){
+                        if (cartNum.getNum() > 0) {
                             badge.setBadgeText("")
                                     .bindTarget(inflate3);
-                        }else {
+                        } else {
                             badge.hide(true);
                         }
                     } else if (cartNum.getStatus() == 3) {
@@ -242,70 +241,55 @@ public class MainActivity extends ZjbBaseNotLeftActivity {
                 Toast.makeText(MainActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
-        if (isLogin){
-            RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
+        if (isLogin) {
+            if (getApplicationInfo().packageName.equals(getCurProcessName(MainActivity.this))) {
+                RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
 
-                /**
-                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-                 */
-                @Override
-                public void onTokenIncorrect() {
-                    LogUtil.LogShitou("CheLiangXQActivity--onTokenIncorrect", "1111");
-                }
-
-                /**
-                 * 连接融云成功
-                 *
-                 * @param userid 当前 token 对应的用户 id
-                 */
-                @Override
-                public void onSuccess(String userid) {
-                    LogUtil.LogShitou("CheLiangXQActivity--onSuccess", "userid" + userid);
-                    final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
-//                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-//                    @Override
-//                    public UserInfo getUserInfo(String s) {
-//                        return userInfoRongYun;
-//                    }
-//                },true);
-//                RongIM.getInstance().refreshUserInfoCache(userInfoRongYun);
                     /**
-                     * 设置当前用户信息，
-                     * @param userInfo 当前用户信息
+                     * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                     * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
                      */
-                    RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
-                    /**
-                     * 设置消息体内是否携带用户信息。
-                     * @param state 是否携带用户信息，true 携带，false 不携带。
-                     */
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    //首先需要构造使用客服者的用户信息
-                    CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
-                    CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+                    @Override
+                    public void onTokenIncorrect() {
+                        LogUtil.LogShitou("CheLiangXQActivity--onTokenIncorrect", "1111");
+                    }
 
                     /**
-                     * 启动客户服聊天界面。
+                     * 连接融云成功
                      *
-                     * @param context           应用上下文。
-                     * @param customerServiceId 要与之聊天的客服 Id。
-                     * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-                     * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+                     * @param userid 当前 token 对应的用户 id
                      */
-                    RongIM.getInstance().startCustomerServiceChat(MainActivity.this, userid, "在线客服", csInfo);
-                }
+                    @Override
+                    public void onSuccess(String userid) {
+                    }
 
-                /**
-                 * 连接融云失败
-                 *
-                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                 */
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-                    LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
-                }
-            });
+                    /**
+                     * 连接融云失败
+                     *
+                     * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                     */
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
+                    }
+                });
+            } else {
+                LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "111111111111");
+            }
         }
+    }
+
+    String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager mActivityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
+                .getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
 
     /**
