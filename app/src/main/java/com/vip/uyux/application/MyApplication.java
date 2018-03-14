@@ -14,6 +14,8 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.rong.imkit.RongIM;
+
 
 /**
  * 初始化
@@ -38,6 +40,7 @@ public class MyApplication extends MultiDexApplication {
             StrictMode.setVmPolicy(builder.build());
         }
         initCloudChannel(this);
+        RongIM.init(this);
     }
 
 

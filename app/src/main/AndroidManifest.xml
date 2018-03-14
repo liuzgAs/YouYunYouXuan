@@ -341,6 +341,22 @@
             android:name=".activity.ReciverActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Transparent" />
+        <!-- 会话界面 -->
+        <activity
+            android:name=".activity.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.vip.uyux"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
