@@ -310,13 +310,19 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                 try {
                     CartNeworder cartNeworder = GsonUtils.parseJSON(s, CartNeworder.class);
                     if (cartNeworder.getStatus() == 1) {
-                        Intent intent = new Intent();
-                        intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
-                        sendBroadcast(intent);
-                        intent.putExtra(Constant.IntentKey.ID, cartNeworder.getOid());
-                        intent.putExtra(Constant.IntentKey.VALUE, sum);
-                        intent.setClass(QueRenDDActivity.this, LiJiZFActivity.class);
-                        startActivity(intent);
+                        if (cartNeworder.getGoRealName()==1){
+                            Intent intent = new Intent();
+                            intent.setClass(QueRenDDActivity.this,ShiMingRZActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Intent intent = new Intent();
+                            intent.setAction(Constant.BroadcastCode.SHUA_XIN_CAR);
+                            sendBroadcast(intent);
+                            intent.putExtra(Constant.IntentKey.ID, cartNeworder.getOid());
+                            intent.putExtra(Constant.IntentKey.VALUE, sum);
+                            intent.setClass(QueRenDDActivity.this, LiJiZFActivity.class);
+                            startActivity(intent);
+                        }
                     } else if (cartNeworder.getStatus() == 3) {
                         MyDialog.showReLoginDialog(QueRenDDActivity.this);
                     } else {

@@ -337,6 +337,9 @@
             android:name=".activity.ChanPinXQCZActivity"
             android:launchMode="singleTop" />
         <activity
+            android:name=".activity.HaiTaoActivity"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".activity.ReciverActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Transparent" />

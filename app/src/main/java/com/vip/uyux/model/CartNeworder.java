@@ -6,7 +6,16 @@ package com.vip.uyux.model;
 public class CartNeworder {
     private String info;
     private int status;
+    private int goRealName;
     private String oid;
+
+    public int getGoRealName() {
+        return goRealName;
+    }
+
+    public void setGoRealName(int goRealName) {
+        this.goRealName = goRealName;
+    }
 
     public String getOid() {
         return oid;
