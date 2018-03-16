@@ -83,9 +83,9 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     private String did;
     private int id;
     //    private EasyRecyclerView recyclerView;
-    private ImageView imageShouCang;
+
     private View viewDiBu;
-    private View imageGouWuChe;
+    private View imageGouWuChe;private ImageView imageShouCang;
     private View viewGouWuChe;
     //    private RecyclerArrayAdapter<ImgsBean> adapter;
     private GoodsInfo goodsInfo;

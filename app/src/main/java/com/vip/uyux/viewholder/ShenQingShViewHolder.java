@@ -29,10 +29,12 @@ public class ShenQingShViewHolder extends BaseViewHolder<AftersLogs.DataBean> {
     private final TextView textDes;
     private final Button btnIs_view;
     AftersLogs.DataBean data;
+    private final TextView textGoods_name;
 
     public ShenQingShViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
         imageImg = $(R.id.imageImg);
+        textGoods_name = $(R.id.textGoods_name);
         textOrder_sn = $(R.id.textOrder_sn);
         textSpe_name = $(R.id.textSpe_name);
         textQuantity = $(R.id.textQuantity);
@@ -59,6 +61,7 @@ public class ShenQingShViewHolder extends BaseViewHolder<AftersLogs.DataBean> {
                 .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(10, getContext())))
                 .load(data.getImg())
                 .into(imageImg);
+        textGoods_name.setText(data.getGoods_name());
         textOrder_sn.setText(data.getOrder_sn());
         textSpe_name.setText(data.getSpe_name());
         textQuantity.setText("×" + data.getQuantity());
