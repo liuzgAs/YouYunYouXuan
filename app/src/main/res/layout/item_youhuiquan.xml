@@ -82,6 +82,15 @@
                         android:text="2018.01.22-2018.02.22"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/litterText" />
+                    <ImageView
+                        android:id="@+id/imageGou"
+                        android:visibility="gone"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/leftAndRight"
+                        android:src="@mipmap/gou"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
                 </RelativeLayout>
 
                 <TextView

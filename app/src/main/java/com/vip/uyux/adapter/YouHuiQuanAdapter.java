@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.vip.uyux.R;
-import com.vip.uyux.model.OrderConfirmbefore;
+import com.vip.uyux.model.YouHuiQuan;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class YouHuiQuanAdapter extends BaseAdapter {
     private Context context;
-    List<OrderConfirmbefore.CouponBean> couponBeanList;
+    List<YouHuiQuan> couponBeanList;
 
-    public YouHuiQuanAdapter(Context context, List<OrderConfirmbefore.CouponBean> couponBeanList) {
+    public YouHuiQuanAdapter(Context context, List<YouHuiQuan> couponBeanList) {
         this.context=context;
         this.couponBeanList=couponBeanList;
     }

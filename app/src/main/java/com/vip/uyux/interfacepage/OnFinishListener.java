@@ -7,5 +7,5 @@ package com.vip.uyux.interfacepage;
  */
 
 public interface OnFinishListener {
-    void toFinish();
+    void toFinish(int position);
 }

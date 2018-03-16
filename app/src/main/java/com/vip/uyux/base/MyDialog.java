@@ -36,10 +36,10 @@ import com.vip.uyux.activity.ChanPinXQCZActivity;
 import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.constant.Constant;
 import com.vip.uyux.customview.SingleBtnDialog;
-import com.vip.uyux.model.CouponIndex;
 import com.vip.uyux.model.GoodsShareimgs;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShareBean;
+import com.vip.uyux.model.YouHuiQuan;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
@@ -529,7 +529,7 @@ public class MyDialog {
         }).start();
     }
 
-    public static void shareYouHuiQuan(final Context context, final IWXAPI api, final CouponIndex.DataBean dataBean) {
+    public static void shareYouHuiQuan(final Context context, final IWXAPI api, final YouHuiQuan dataBean) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialog_shengji = inflater.inflate(R.layout.dianlog_you_hui_quan, null);
         TextView textMoney = dialog_shengji.findViewById(R.id.textMoney);

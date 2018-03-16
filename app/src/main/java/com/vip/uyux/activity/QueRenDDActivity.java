@@ -17,9 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +26,6 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.vip.uyux.R;
-import com.vip.uyux.adapter.YouHuiQuanAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
@@ -38,12 +35,15 @@ import com.vip.uyux.model.OrderConfirmbefore;
 import com.vip.uyux.model.OrderTiJiao;
 import com.vip.uyux.model.QueRenDD;
 import com.vip.uyux.model.UserAddress;
+import com.vip.uyux.model.YouHuiQuan;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.Arith;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
+import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.QueRenDDViewHolder;
+import com.vip.uyux.viewholder.YouHuiQuanViewHolder;
 
 import java.util.List;
 
@@ -74,7 +74,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
             }
         }
     };
-    private List<OrderConfirmbefore.CouponBean> couponBeanList;
+    private List<YouHuiQuan> couponBeanList;
     private String youHuiQuan;
     private int couponId = 0;
     private EditText editPayMsg;
@@ -211,17 +211,17 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                 textVipKey.setText(vipKey);
                 textShipKey.setText(shipKey);
                 textShipDes.setText(shipDes);
-                if (couponBeanList!=null){
-                    if (couponBeanList.size()>0){
+                if (couponBeanList != null) {
+                    if (couponBeanList.size() > 0) {
                         viewYouHuiQuan.setVisibility(View.VISIBLE);
-                        textYouHuiQuan.setHint(couponBeanList.size()+"张优惠券");
-                        if (!TextUtils.isEmpty(youHuiQuan)){
+                        textYouHuiQuan.setHint(couponBeanList.size() + "张优惠券");
+                        if (!TextUtils.isEmpty(youHuiQuan)) {
                             textYouHuiQuan.setText(youHuiQuan);
                         }
-                    }else {
+                    } else {
                         viewYouHuiQuan.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
                     viewYouHuiQuan.setVisibility(View.GONE);
                 }
             }
@@ -289,9 +289,9 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
         String did = aCache.getAsString(Constant.Acache.DID);
         OrderTiJiao orderTiJiao;
         if (isLogin) {
-            orderTiJiao = new OrderTiJiao(1, "android", userInfo.getUid(), tokenTime, jieSuan.getIntegerList(), String.valueOf(sum), did, orderConfirmbeforeAd.getId(),couponId,editPayMsg.getText().toString().trim());
+            orderTiJiao = new OrderTiJiao(1, "android", userInfo.getUid(), tokenTime, jieSuan.getIntegerList(), String.valueOf(sum), did, orderConfirmbeforeAd.getId(), couponId, editPayMsg.getText().toString().trim());
         } else {
-            orderTiJiao = new OrderTiJiao(1, "android", jieSuan.getIntegerList(), sum, did, orderConfirmbeforeAd.getId(),couponId,editPayMsg.getText().toString().trim());
+            orderTiJiao = new OrderTiJiao(1, "android", jieSuan.getIntegerList(), sum, did, orderConfirmbeforeAd.getId(), couponId, editPayMsg.getText().toString().trim());
         }
         return GsonUtils.parseObject(orderTiJiao);
     }
@@ -419,34 +419,61 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
      * 促销dialog
      */
     private void showYouHuiQuanDialog() {
-        View dialog_tu_pian = LayoutInflater.from(this).inflate(R.layout.dialog_chuciao, null);
+        View dialog_tu_pian = LayoutInflater.from(this).inflate(R.layout.dialog_youhuiquan, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(this, R.style.dialog)
                 .setView(dialog_tu_pian)
                 .create();
         alertDialog.show();
         TextView textTitle = dialog_tu_pian.findViewById(R.id.textTitle);
-        textTitle.setText("优惠券");
-        ListView listView = dialog_tu_pian.findViewById(R.id.listView);
-        listView.setAdapter(new YouHuiQuanAdapter(this, couponBeanList));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        textTitle.setText(couponBeanList.size()+"个优惠券");
+        EasyRecyclerView recyclerViewYouHuiQuan = dialog_tu_pian.findViewById(R.id.recyclerView);
+        recyclerViewYouHuiQuan.setLayoutManager(new LinearLayoutManager(this));
+        DividerDecoration itemDecoration = new DividerDecoration(Color.TRANSPARENT, (int) getResources().getDimension(R.dimen.line_width), 0, 0);
+        recyclerViewYouHuiQuan.addItemDecoration(itemDecoration);
+        RecyclerArrayAdapter<YouHuiQuan> adapterYouHuiQuan;
+        recyclerViewYouHuiQuan.setAdapterWithProgress(adapterYouHuiQuan = new RecyclerArrayAdapter<YouHuiQuan>(QueRenDDActivity.this) {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String couponMoney = couponBeanList.get(i).getMoney();
-                double sumX = Arith.sub(Double.parseDouble(sum) ,Double.parseDouble(couponMoney));
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                int layout = R.layout.item_youhuiquan;
+                YouHuiQuanViewHolder youHuiQuanViewHolder = new YouHuiQuanViewHolder(parent, layout);
+                return youHuiQuanViewHolder;
+            }
+        });
+        adapterYouHuiQuan.addFooter(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                View view = new View(QueRenDDActivity.this);
+                view.setBackgroundColor(Color.WHITE);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)(ScreenUtils.getScreenHeight(QueRenDDActivity.this)/2f)));
+                return view;
+            }
+
+            @Override
+            public void onBindView(View headerView) {
+
+            }
+        });
+        adapterYouHuiQuan.clear();
+        adapterYouHuiQuan.addAll(couponBeanList);
+
+        adapterYouHuiQuan.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                String couponMoney = couponBeanList.get(position).getMoney();
+                for (int i = 0; i < couponBeanList.size(); i++) {
+                    couponBeanList.get(i).setSelect(false);
+                }
+                couponBeanList.get(position).setSelect(true);
+                double sumX = Arith.sub(Double.parseDouble(sum), Double.parseDouble(couponMoney));
                 sum = String.valueOf(sumX);
                 textSum.setText("¥" + sum);
-                youHuiQuan="¥"+ couponMoney;
-                couponId = couponBeanList.get(i).getId();
+                youHuiQuan = "¥" + couponMoney;
+                couponId = couponBeanList.get(position).getId();
                 adapter.notifyDataSetChanged();
                 alertDialog.dismiss();
             }
         });
-        dialog_tu_pian.findViewById(R.id.textQuXiao).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+
         Window dialogWindow = alertDialog.getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
         dialogWindow.setWindowAnimations(R.style.dialogFenXiang);

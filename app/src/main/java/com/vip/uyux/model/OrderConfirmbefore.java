@@ -35,7 +35,7 @@ public class OrderConfirmbefore {
     private String info;
     private String youHuiQuan;
     private List<CartBean> cart;
-    private List<CouponBean> coupon;
+    private List<YouHuiQuan> coupon;
 
     public String getYouHuiQuan() {
         return youHuiQuan;
@@ -45,11 +45,11 @@ public class OrderConfirmbefore {
         this.youHuiQuan = youHuiQuan;
     }
 
-    public List<CouponBean> getCoupon() {
+    public List<YouHuiQuan> getCoupon() {
         return coupon;
     }
 
-    public void setCoupon(List<CouponBean> coupon) {
+    public void setCoupon(List<YouHuiQuan> coupon) {
         this.coupon = coupon;
     }
 
@@ -333,33 +333,4 @@ public class OrderConfirmbefore {
         }
     }
 
-    public static class CouponBean{
-        private String name;
-        private Integer id;
-        private String money;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public String getMoney() {
-            return money;
-        }
-
-        public void setMoney(String money) {
-            this.money = money;
-        }
-    }
 }

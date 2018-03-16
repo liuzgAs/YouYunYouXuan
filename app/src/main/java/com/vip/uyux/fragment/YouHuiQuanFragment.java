@@ -33,6 +33,7 @@ import com.vip.uyux.model.CouponIndex;
 import com.vip.uyux.model.OkObject;
 import com.vip.uyux.model.ShareBean;
 import com.vip.uyux.model.SimpleInfo;
+import com.vip.uyux.model.YouHuiQuan;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -50,7 +51,7 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
     private View mInflate;
     private String value;
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<CouponIndex.DataBean> adapter;
+    private RecyclerArrayAdapter<YouHuiQuan> adapter;
     private IWXAPI api;
     private boolean isShare = false;
     ShareBean shareBeanX;
@@ -189,14 +190,14 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setRefreshingColorResources(R.color.basic_color);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<CouponIndex.DataBean>(mContext) {
+        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<YouHuiQuan>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_youhuiquan;
                 YouHuiQuanViewHolder youHuiQuanViewHolder = new YouHuiQuanViewHolder(parent, layout);
                 youHuiQuanViewHolder.setOnFinishListener(new OnFinishListener() {
                     @Override
-                    public void toFinish() {
+                    public void toFinish(int position) {
                         Intent intent = new Intent();
                         intent.setAction(Constant.BroadcastCode.SET_MAIN_TAB);
                         intent.putExtra(Constant.IntentKey.POSITION,2);
@@ -206,7 +207,7 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
                 });
                 youHuiQuanViewHolder.setOnShareYouHuiQuanListener(new OnShareYouHuiQuanListener() {
                     @Override
-                    public void share(CouponIndex.DataBean dataBean) {
+                    public void share(YouHuiQuan dataBean) {
                         isShare=true;
                         id = dataBean.getId();
                         MyDialog.shareYouHuiQuan(mContext,api,dataBean);
@@ -227,7 +228,7 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
                             CouponIndex couponIndex = GsonUtils.parseJSON(s, CouponIndex.class);
                             int status = couponIndex.getStatus();
                             if (status == 1) {
-                                List<CouponIndex.DataBean> dataBeanList = couponIndex.getData();
+                                List<YouHuiQuan> dataBeanList = couponIndex.getData();
                                 for (int i = 0; i < dataBeanList.size(); i++) {
                                     dataBeanList.get(i).setZhanKai(false);
                                 }
@@ -328,7 +329,7 @@ public class YouHuiQuanFragment extends ZjbBaseFragment implements SwipeRefreshL
                     page++;
                     CouponIndex couponIndex = GsonUtils.parseJSON(s, CouponIndex.class);
                     if (couponIndex.getStatus() == 1) {
-                        List<CouponIndex.DataBean> dataBeanList = couponIndex.getData();
+                        List<YouHuiQuan> dataBeanList = couponIndex.getData();
                         for (int i = 0; i < dataBeanList.size(); i++) {
                             dataBeanList.get(i).setZhanKai(false);
                         }

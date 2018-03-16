@@ -20,6 +20,7 @@ import com.vip.uyux.model.ImgsBean;
 import com.vip.uyux.viewholder.ChanPinFootViewHolder;
 import com.vip.uyux.viewholder.MyBaseViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
 
     @SuppressLint("ValidFragment")
     public ChanPinXqTuPianFragment(List<ImgsBean> imgsBeanList) {
-        this.imgsBeanList=imgsBeanList;
+        this.imgsBeanList = imgsBeanList;
     }
 
     public ChanPinXqTuPianFragment() {
@@ -71,8 +72,8 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
 
     @Override
     protected void findID() {
-        recyclerView =  mInflate.findViewById(R.id.recyclerView);
-        recyclerViewEmpty =  mInflate.findViewById(R.id.recyclerViewEmpty);
+        recyclerView = mInflate.findViewById(R.id.recyclerView);
+        recyclerViewEmpty = mInflate.findViewById(R.id.recyclerViewEmpty);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
         adapterEmpty.notifyDataSetChanged();
     }
 
-        /**
+    /**
      * 初始化recyclerview
      */
     private void initRecycler() {
@@ -129,10 +130,13 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
     protected void initData() {
         adapter.clear();
         adapter.addAll(imgsBeanList);
-        if (imgsBeanList.size()==0){
+        if (imgsBeanList != null) {
+            imgsBeanList = new ArrayList<>();
+        }
+        if (imgsBeanList.size() == 0) {
             recyclerViewEmpty.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
-        }else {
+        } else {
             recyclerViewEmpty.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }

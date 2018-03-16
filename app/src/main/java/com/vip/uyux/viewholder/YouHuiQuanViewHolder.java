@@ -14,12 +14,12 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.vip.uyux.R;
 import com.vip.uyux.interfacepage.OnFinishListener;
 import com.vip.uyux.interfacepage.OnShareYouHuiQuanListener;
-import com.vip.uyux.model.CouponIndex;
+import com.vip.uyux.model.YouHuiQuan;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
-public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
+public class YouHuiQuanViewHolder extends BaseViewHolder<YouHuiQuan> {
 
 
     private final TextView textName;
@@ -32,10 +32,11 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
     private final View viewBg;
     private final View viewKeZengSong;
     private final View viewZengSong;
-    CouponIndex.DataBean data;
+    YouHuiQuan data;
     OnFinishListener onFinishListener;
     OnShareYouHuiQuanListener OnShareYouHuiQuanListener;
     private final ImageView imageKeZengSong;
+    private final ImageView imageGou;
 
     public YouHuiQuanViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(parent, res);
@@ -50,6 +51,7 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
         viewKeZengSong = $(R.id.viewKeZengSong);
         viewZengSong = $(R.id.viewZengSong);
         imageKeZengSong = $(R.id.imageKeZengSong);
+        imageGou = $(R.id.imageGou);
         viewKeZengSong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +68,7 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
             @Override
             public void onClick(View view) {
                 if (data.getUseState()==1){
-                    onFinishListener.toFinish();
+                    onFinishListener.toFinish(getDataPosition());
                 }
             }
         });
@@ -79,7 +81,7 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
     }
 
     @Override
-    public void setData(CouponIndex.DataBean data) {
+    public void setData(YouHuiQuan data) {
         super.setData(data);
         this.data=data;
         textName.setText(data.getName());
@@ -111,6 +113,11 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<CouponIndex.DataBean> {
             viewZengSong.setVisibility(View.VISIBLE);
         }else {
             viewZengSong.setVisibility(View.GONE);
+        }
+        if (data.isSelect()){
+            imageGou.setSelected(true);
+        }else {
+            imageGou.setSelected(false);
         }
     }
 
