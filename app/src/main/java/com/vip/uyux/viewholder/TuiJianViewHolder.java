@@ -40,9 +40,9 @@ public class TuiJianViewHolder extends BaseViewHolder<IndexRecom.DataBean> {
         $(R.id.viewDianZan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (data.getIsc()==1){
+                if (data.getIsc() == 1) {
                     onShouCangListener.qXShouCang(getDataPosition());
-                }else {
+                } else {
                     onShouCangListener.shouCang(getDataPosition());
                 }
             }
@@ -61,14 +61,19 @@ public class TuiJianViewHolder extends BaseViewHolder<IndexRecom.DataBean> {
                 .into(imageImg);
         SpannableString span = new SpannableString("i " + data.getTitle());
         MyIm imgspan;
-        imgspan = new MyIm(getContext(), R.mipmap.ceping);
-        span.setSpan(imgspan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        if (data.getType() == 4) {
+            imgspan = new MyIm(getContext(), R.mipmap.ceping);
+            span.setSpan(imgspan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        } else if (data.getType()==3) {
+            imgspan = new MyIm(getContext(), R.mipmap.haowu);
+            span.setSpan(imgspan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
         textTitle.setText(span);
         textDianZan.setText(String.valueOf(data.getCollectNum()));
         textName.setText(data.getNickname());
-        if (data.getIsc()==1){
+        if (data.getIsc() == 1) {
             imageDianZan.setImageResource(R.mipmap.dianzan_shixin);
-        }else {
+        } else {
             imageDianZan.setImageResource(R.mipmap.dinazan);
         }
     }

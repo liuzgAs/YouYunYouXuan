@@ -67,10 +67,19 @@ public class IndexRecom {
         private int id;
         private String title;
         private String img;
+        private String url;
         private int type;
         private int isc;
         private String nickname;
         private int collectNum;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public int getIsc() {
             return isc;

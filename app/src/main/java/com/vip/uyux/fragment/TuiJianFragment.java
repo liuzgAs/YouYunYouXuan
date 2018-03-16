@@ -23,6 +23,7 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.rd.PageIndicatorView;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
+import com.vip.uyux.activity.WebActivity;
 import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -266,10 +267,18 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, CePingXQActivity.class);
-                intent.putExtra(Constant.IntentKey.ID,adapter.getItem(position).getId());
-                startActivity(intent);
+                if (adapter.getItem(position).getType() == 4) {
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, CePingXQActivity.class);
+                    intent.putExtra(Constant.IntentKey.ID, adapter.getItem(position).getId());
+                    startActivity(intent);
+                } else if (adapter.getItem(position).getType() == 3) {
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, WebActivity.class);
+                    intent.putExtra(Constant.IntentKey.TITLE,adapter.getItem(position).getTitle());
+                    intent.putExtra(Constant.IntentKey.URL,adapter.getItem(position).getUrl());
+                    startActivity(intent);
+                }
             }
         });
         recyclerView.setRefreshListener(this);
