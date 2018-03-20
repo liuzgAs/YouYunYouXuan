@@ -130,7 +130,7 @@ public class ChanPinXqTuPianFragment extends ZjbBaseFragment {
     protected void initData() {
         adapter.clear();
         adapter.addAll(imgsBeanList);
-        if (imgsBeanList != null) {
+        if (imgsBeanList == null) {
             imgsBeanList = new ArrayList<>();
         }
         if (imgsBeanList.size() == 0) {

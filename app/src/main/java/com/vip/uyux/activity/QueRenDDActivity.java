@@ -29,6 +29,7 @@ import com.vip.uyux.R;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseActivity;
 import com.vip.uyux.constant.Constant;
+import com.vip.uyux.interfacepage.OnFinishListener;
 import com.vip.uyux.model.CartNeworder;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OrderConfirmbefore;
@@ -442,6 +443,23 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 int layout = R.layout.item_youhuiquan;
                 YouHuiQuanViewHolder youHuiQuanViewHolder = new YouHuiQuanViewHolder(parent, layout);
+                youHuiQuanViewHolder.setOnFinishListener(new OnFinishListener() {
+                    @Override
+                    public void toFinish(int position) {
+                        String couponMoney = couponBeanList.get(position).getMoney();
+                        for (int i = 0; i < couponBeanList.size(); i++) {
+                            couponBeanList.get(i).setSelect(false);
+                        }
+                        couponBeanList.get(position).setSelect(true);
+                        double sumX = Arith.sub(Double.parseDouble(sum), Double.parseDouble(couponMoney));
+                        sum = String.valueOf(sumX);
+                        textSum.setText("¥" + sum);
+                        youHuiQuan = "¥" + couponMoney;
+                        couponId = couponBeanList.get(position).getId();
+                        adapter.notifyDataSetChanged();
+                        alertDialog.dismiss();
+                    }
+                });
                 return youHuiQuanViewHolder;
             }
         });
