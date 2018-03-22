@@ -486,6 +486,7 @@ public class Constant {
         public static final String ISNEW = "isNew";
         public static final String ISHOT = "isHot";
         public static final String ISGRADE = "isGrade";
+        public static final String COUPON = "coupon";
     }
 
     public static class RequestResultCode {

@@ -321,6 +321,7 @@ public class QueRenDDActivity extends ZjbBaseActivity implements View.OnClickLis
                             sendBroadcast(intent);
                             intent.putExtra(Constant.IntentKey.ID, cartNeworder.getOid());
                             intent.putExtra(Constant.IntentKey.VALUE, sum);
+                            intent.putExtra(Constant.IntentKey.COUPON,couponId);
                             intent.setClass(QueRenDDActivity.this, LiJiZFActivity.class);
                             startActivity(intent);
                         }

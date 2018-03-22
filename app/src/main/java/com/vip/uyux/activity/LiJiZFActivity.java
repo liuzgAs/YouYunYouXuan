@@ -64,6 +64,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
     };
     private String oid;
     private OrderPay orderPay;
+    private int coupon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
         Intent intent = getIntent();
         oid = intent.getStringExtra(Constant.IntentKey.ID);
         price = intent.getStringExtra(Constant.IntentKey.VALUE);
+        coupon = intent.getIntExtra(Constant.IntentKey.COUPON, 0);
     }
 
     @Override
@@ -274,6 +276,7 @@ public class LiJiZFActivity extends ZjbBaseActivity implements View.OnClickListe
             params.put("tokenTime", tokenTime);
         }
         params.put("oid", oid + "");
+        params.put("coupon", coupon + "");
         return new OkObject(params, url);
     }
 
