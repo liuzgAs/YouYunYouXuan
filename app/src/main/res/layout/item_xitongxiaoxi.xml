@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textCreate_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="2018年1月27日"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/litterText" />
+
+    <android.support.v7.widget.CardView
+        android:layout_marginBottom="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/leftAndRight"
+        android:layout_marginRight="@dimen/leftAndRight">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_marginTop="15dp"
+                android:text="订单已发货"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/bigText" />
+
+
+            <TextView
+                android:layout_below="@+id/textTitle"
+                android:layout_marginBottom="15dp"
+                android:id="@+id/textdes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/leftAndRight"
+                android:layout_marginRight="@dimen/leftAndRight"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="男童秋裤男童秋裤男童秋裤男童秋裤男童秋裤男童秋裤男童秋裤男童秋裤"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/normal_textsize" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

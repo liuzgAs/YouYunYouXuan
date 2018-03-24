@@ -475,6 +475,10 @@ public class Constant {
          * 海报分享
          */
         public static final String GOODS_POSTER = "/Goods/poster";
+        /**
+         * 系统消息
+         */
+        public static final String MASSAGE_MSG = "/massage/msg";
     }
 
     public static class IntentKey {

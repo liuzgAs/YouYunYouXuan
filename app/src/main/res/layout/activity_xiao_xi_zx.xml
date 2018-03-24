@@ -10,6 +10,7 @@
 
     <include layout="@layout/view_bar_white" />
     <RelativeLayout
+        android:id="@+id/viewXiTongXiaoXi"
         android:layout_marginTop="5dp"
         android:background="@drawable/layout_selector_white_system_gray"
         android:layout_width="match_parent"
@@ -156,6 +157,7 @@
             android:layout_height="20dp" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/viewKeFu"
         android:layout_marginTop="1dp"
         android:background="@drawable/layout_selector_white_system_gray"
         android:layout_width="match_parent"
