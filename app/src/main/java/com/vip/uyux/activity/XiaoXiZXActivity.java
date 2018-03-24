@@ -87,6 +87,11 @@ public class XiaoXiZXActivity extends ZjbBaseActivity implements View.OnClickLis
         ((TextView) findViewById(R.id.textViewTitle)).setText("消息中心");
         dp20 = (int) DpUtils.convertDpToPixel(20f, this);
         dp10 = (int) DpUtils.convertDpToPixel(10f, this);
+        textTipNum[0].setVisibility(View.GONE);
+        textTipNum[1].setVisibility(View.GONE);
+        textTipNum[2].setVisibility(View.GONE);
+        textTipNum[3].setVisibility(View.GONE);
+        textTipNum[4].setVisibility(View.GONE);
     }
 
     @Override
@@ -130,6 +135,7 @@ public class XiaoXiZXActivity extends ZjbBaseActivity implements View.OnClickLis
                                 if (dataBeanList.get(i).getNum()==0){
                                     textTipNum[i].setVisibility(View.GONE);
                                 }else {
+                                    textTipNum[i].setVisibility(View.VISIBLE);
                                     ViewGroup.LayoutParams layoutParams = textTipNum[i].getLayoutParams();
                                     layoutParams.width = dp20;
                                     layoutParams.height = dp20;

@@ -487,7 +487,7 @@ public class MyDialog {
                 .setView(dialog_shengji)
                 .create();
         alertDialog1.show();
-        dialog_shengji.findViewById(R.id.textViewCancle).setOnClickListener(new View.OnClickListener() {
+        dialog_shengji.findViewById(R.id.imageCancle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog1.dismiss();

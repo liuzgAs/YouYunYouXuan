@@ -10,11 +10,12 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:textColor="@color/light_black"
             android:background="@color/white"
             android:textSize="16dp"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:text="选择分享平台"
             />
 
@@ -23,35 +24,54 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="80dp">
-
             <RelativeLayout
+                android:gravity="center"
                 android:id="@+id/weixin"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:src="@mipmap/umeng_socialize_wechat"
+                    android:src="@mipmap/weixinshare"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/imageView89" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/litterText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="微信"
+                    android:layout_below="@+id/imageView89"
+                    android:layout_centerHorizontal="true" />
             </RelativeLayout>
-
             <RelativeLayout
+                android:gravity="center"
                 android:id="@+id/pengyouquan"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" >
 
                 <ImageView
-                    android:src="@mipmap/umeng_socialize_wxcircle"
+                    android:src="@mipmap/pengyouquan"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/imageView124" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/litterText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="朋友圈"
+                    android:layout_below="@+id/imageView124"
+                    android:layout_centerHorizontal="true" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:visibility="gone"
                 android:id="@+id/relaShouCang"
@@ -70,14 +90,20 @@
         </LinearLayout>
 
 
-        <TextView
-            android:textSize="@dimen/normal_textsize"
-            android:background="@color/gray_white"
-            android:gravity="center"
+        <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="取消分享"
-            android:id="@+id/textViewCancle"/>
+            android:layout_height="60dp">
+
+            <ImageView
+                android:src="@drawable/cancle_selector"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageCancle"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 </LinearLayout>
