@@ -46,6 +46,8 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
     private TextView textSex;
     private TextView textBirthday;
     private UserProfile userProfile;
+    private TextView textZhiFuBaoNC;
+    private TextView textZhiFuBaoZH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
         textRealName = (TextView) findViewById(R.id.textRealName);
         textSex = (TextView) findViewById(R.id.textSex);
         textBirthday = (TextView) findViewById(R.id.textBirthday);
+        textZhiFuBaoNC = (TextView) findViewById(R.id.textZhiFuBaoNC);
+        textZhiFuBaoZH = (TextView) findViewById(R.id.textZhiFuBaoZH);
     }
 
     @Override
@@ -89,6 +93,8 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
         findViewById(R.id.viewAddress).setOnClickListener(this);
         findViewById(R.id.viewCard).setOnClickListener(this);
         findViewById(R.id.viewShiMing).setOnClickListener(this);
+        findViewById(R.id.viewZhiFuBao).setOnClickListener(this);
+        findViewById(R.id.viewZhiFuBaoZH).setOnClickListener(this);
     }
 
     /**
@@ -136,6 +142,8 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
                                 break;
                         }
                         textBirthday.setText(userProfile.getBirthday());
+                        textZhiFuBaoNC.setText(userProfile.getAlipayname());
+                        textZhiFuBaoZH.setText(userProfile.getAlipay());
                     } else if (userProfile.getStatus() == 3) {
                         MyDialog.showReLoginDialog(GeRenXXActivity.this);
                     } else {
@@ -310,6 +318,38 @@ public class GeRenXXActivity extends ZjbBaseActivity implements View.OnClickList
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewZhiFuBao:
+                final EditNameDialog editDialog2 = new EditNameDialog(this, "修改支付宝昵称", userProfile.getAlipayname(), "确认", "取消");
+                editDialog2.setClicklistener(new EditNameDialog.ClickListenerInterface() {
+                    @Override
+                    public void doConfirm(String intro) {
+                        editDialog2.dismiss();
+                        edit("alipayname", intro);
+                    }
+
+                    @Override
+                    public void doCancel() {
+                        editDialog2.dismiss();
+                    }
+                });
+                editDialog2.show();
+                break;
+            case R.id.viewZhiFuBaoZH:
+                final EditNameDialog editDialog3 = new EditNameDialog(this, "修改支付宝账号", userProfile.getAlipay(), "确认", "取消");
+                editDialog3.setClicklistener(new EditNameDialog.ClickListenerInterface() {
+                    @Override
+                    public void doConfirm(String intro) {
+                        editDialog3.dismiss();
+                        edit("alipay", intro);
+                    }
+
+                    @Override
+                    public void doCancel() {
+                        editDialog3.dismiss();
+                    }
+                });
+                editDialog3.show();
+                break;
             case R.id.viewShiMing:
                 intent.setClass(GeRenXXActivity.this,ShiMingRZActivity.class);
                 startActivity(intent);

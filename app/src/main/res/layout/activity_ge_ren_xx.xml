@@ -190,6 +190,74 @@
                 android:textSize="@dimen/normal_textsize" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/viewZhiFuBao"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normalItemHeight"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="支付宝昵称"
+                android:textSize="@dimen/normal_textsize" />
+
+            <ImageView
+                android:id="@+id/image0900"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/right" />
+
+            <TextView
+                android:id="@+id/textZhiFuBaoNC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image0900"
+                android:text="暂无"
+                android:textSize="@dimen/normal_textsize" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/viewZhiFuBaoZH"
+            android:background="@drawable/layout_selector_white_system_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normalItemHeight"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="支付宝账号"
+                android:textSize="@dimen/normal_textsize" />
+
+            <ImageView
+                android:id="@+id/image1000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/right" />
+
+            <TextView
+                android:id="@+id/textZhiFuBaoZH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image1000"
+                android:text="暂无"
+                android:textSize="@dimen/normal_textsize" />
+        </RelativeLayout>
+        <RelativeLayout
             android:id="@+id/viewAddress"
             android:background="@drawable/layout_selector_white_system_gray"
             android:layout_width="match_parent"

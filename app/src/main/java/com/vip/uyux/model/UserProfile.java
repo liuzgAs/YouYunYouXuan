@@ -23,8 +23,26 @@ public class UserProfile {
     private String real_name;
     private int sex;
     private String birthday;
+    private String alipay;
+    private String alipayname;
     private int status;
     private String info;
+
+    public String getAlipay() {
+        return alipay;
+    }
+
+    public void setAlipay(String alipay) {
+        this.alipay = alipay;
+    }
+
+    public String getAlipayname() {
+        return alipayname;
+    }
+
+    public void setAlipayname(String alipayname) {
+        this.alipayname = alipayname;
+    }
 
     public String getHeadImg() {
         return headimg;
