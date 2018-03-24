@@ -57,6 +57,8 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
     private int type;
     //    private String mobile;
     private int pay_id;
+    private TextView textAliDes;
+    private String alipayDes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +159,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
                 try {
                     WithdrawAddbefore withdrawAddbefore = GsonUtils.parseJSON(s, WithdrawAddbefore.class);
                     if (withdrawAddbefore.getStatus() == 1) {
+                        alipayDes = withdrawAddbefore.getAlipayDes();
 //                        editJinE.setText(withdrawAddbefore.getMoney() + "");
 //                        editJinE.setSelection((withdrawAddbefore.getMoney() + "").length());
                         textYuE.setText(withdrawAddbefore.getMoneyDes());
@@ -253,6 +256,8 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
         final AlertDialog alertDialog = new AlertDialog.Builder(TiXianActivity.this, R.style.dialog)
                 .setView(dialog_tu_pian)
                 .create();
+        TextView textAliDes = (TextView) dialog_tu_pian.findViewById(R.id.textAliDes);
+        textAliDes.setText(alipayDes);
         dialog_tu_pian.findViewById(R.id.viewWeiXin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
