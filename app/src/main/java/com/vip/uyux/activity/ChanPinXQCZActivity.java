@@ -1,10 +1,12 @@
 package com.vip.uyux.activity;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +34,8 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -51,6 +55,7 @@ import com.vip.uyux.customview.WrapHeightGridView;
 import com.vip.uyux.model.CartAddcart;
 import com.vip.uyux.model.CartNum;
 import com.vip.uyux.model.GoodsInfo;
+import com.vip.uyux.model.GoodsPoster;
 import com.vip.uyux.model.ImgsBean;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
@@ -59,6 +64,7 @@ import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.FileUtil;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -67,6 +73,7 @@ import com.vip.uyux.util.StringUtil;
 import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
 import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,10 +82,13 @@ import java.util.TimerTask;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.CSCustomServiceInfo;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     private String did;
     private int id;
@@ -1210,6 +1220,154 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
         });
     }
 
+    private static final int SOREAGE = 1991;
+
+    @AfterPermissionGranted(SOREAGE)
+    public void methodRequiresTwoPermission() {
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            // Already have permission, do the thing
+            haiBao();
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "需要开启定位权限",
+                    SOREAGE, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            haiBao();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        } else {
+            methodRequiresTwoPermission();
+        }
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getHaiBaoOkObject() {
+        String url = Constant.HOST + Constant.Url.GOODS_POSTER;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("id", String.valueOf(id));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 多图分享朋友圈
+     */
+    public void haiBao() {
+        showLoadingDialog();
+        ApiClient.post(ChanPinXQCZActivity.this, getHaiBaoOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("MyDialog--onSuccess", s + "");
+                try {
+                    final GoodsPoster goodsPoster = GsonUtils.parseJSON(s, GoodsPoster.class);
+                    if (goodsPoster.getStatus() == 1) {
+                        GlideApp.with(ChanPinXQCZActivity.this)
+                                .asBitmap()
+                                .load(goodsPoster.getImg())
+                                .placeholder(R.mipmap.ic_empty)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+                                        View dialog_fen_xiang_erm = LayoutInflater.from(ChanPinXQCZActivity.this).inflate(R.layout.dialog_fen_xiang_erm, null);
+                                        final ImageView imageImg = (ImageView) dialog_fen_xiang_erm.findViewById(R.id.imageImg);
+                                        ViewGroup.LayoutParams layoutParams = imageImg.getLayoutParams();
+                                        layoutParams.height = (int) ((ScreenUtils.getScreenWidth(ChanPinXQCZActivity.this) - DpUtils.convertDpToPixel(20, ChanPinXQCZActivity.this)) * (734f / 496f));
+                                        imageImg.setLayoutParams(layoutParams);
+
+                                        imageImg.setImageBitmap(resource);
+                                        final AlertDialog alertDialog = new AlertDialog.Builder(ChanPinXQCZActivity.this, R.style.dialog)
+                                                .setView(dialog_fen_xiang_erm)
+                                                .create();
+                                        dialog_fen_xiang_erm.findViewById(R.id.textWeiXin).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                alertDialog.dismiss();
+                                                MyDialog.shareImg(api, resource, 0);
+                                            }
+
+
+                                        });
+                                        dialog_fen_xiang_erm.findViewById(R.id.textPengYouQuan).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                alertDialog.dismiss();
+                                                MyDialog.shareImg(api, resource, 1);
+                                            }
+                                        });
+                                        alertDialog.show();
+                                        Window dialogWindow = alertDialog.getWindow();
+                                        dialogWindow.setGravity(Gravity.CENTER);
+                                        dialogWindow.setWindowAnimations(R.style.AnimFromTopToButtom);
+                                        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+                                        DisplayMetrics d = getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+                                        lp.width = (int) (d.widthPixels - DpUtils.convertDpToPixel(20, ChanPinXQCZActivity.this)); // 高度设置为屏幕的0.6
+                                        dialogWindow.setAttributes(lp);
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    FileUtil.saveMyBitmap(ChanPinXQCZActivity.this, "优云优选海报" + System.currentTimeMillis(), resource);
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            LogUtil.LogShitou("MyDialog--run", "海报保存在\"/优云优选/\"目录下");
+                                                            Toast.makeText(ChanPinXQCZActivity.this, "海报保存在\"/优云优选/\"目录下", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                    LogUtil.LogShitou("MyDialog--run", "保存失败");
+                                                }
+                                            }
+                                        }).start();
+                                    }
+                                });
+
+                    } else if (goodsPoster.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(ChanPinXQCZActivity.this);
+                    } else {
+                        Toast.makeText(ChanPinXQCZActivity.this, goodsPoster.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ChanPinXQCZActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(ChanPinXQCZActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     class MyAdapter extends BaseAdapter {
         class ViewHolder {
             public TextView title;
@@ -1344,6 +1502,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
             textGuiGe.setText(name);
             textStock_numD.setText("库存" + stock_num + "件");
         }
+
     }
 
     @Override

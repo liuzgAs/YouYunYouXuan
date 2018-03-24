@@ -471,6 +471,10 @@ public class Constant {
          * 好物分享
          */
         public static final String INDEX_SHAREINFO = "/Index/shareInfo";
+        /**
+         * 海报分享
+         */
+        public static final String GOODS_POSTER = "/Goods/poster";
     }
 
     public static class IntentKey {

@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.luoxudong.app.threadpool.ThreadPoolHelp;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -244,7 +245,7 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Constant.source="web";
+                Constant.source = "web";
                 wxShare(api, 0, share.getShareUrl(), share.getShareTitle(), share.getShareDes(), share.getShareImg());
                 alertDialog1.dismiss();
             }
@@ -256,7 +257,7 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Constant.source="wxp";
+                Constant.source = "wxp";
                 wxShare(api, 1, share.getShareUrl(), share.getShareTitle(), share.getShareDes(), share.getShareImg());
                 alertDialog1.dismiss();
             }
@@ -268,8 +269,20 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Constant.source="";
-                duoTuPengYouQuan(context, activity, id,1);
+                Constant.source = "";
+                duoTuPengYouQuan(context, activity, id, 1);
+                alertDialog1.dismiss();
+            }
+        });
+        dialog_shengji.findViewById(R.id.viewHaiBao).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkIsSupportedWeachatPay(api)) {
+                    Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ((ChanPinXQCZActivity)context).methodRequiresTwoPermission();
+                Constant.source = "";
                 alertDialog1.dismiss();
             }
         });
@@ -334,7 +347,7 @@ public class MyDialog {
                                                         comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
                                                     } else {
                                                         comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI");
-                                                        intent.putExtra("Kdescription", goodsShareimgs.getShareTitle()+"\n"+goodsShareimgs.getShareDes());
+                                                        intent.putExtra("Kdescription", goodsShareimgs.getShareTitle() + "\n" + goodsShareimgs.getShareDes());
                                                     }
                                                     intent.setComponent(comp);
                                                     intent.setAction(Intent.ACTION_SEND_MULTIPLE);
@@ -377,6 +390,30 @@ public class MyDialog {
                 break;
         }
 
+    }
+
+    public static void shareImg(IWXAPI api, Bitmap bitmap, int flag) {
+        //初始化
+        WXImageObject imgObj = new WXImageObject(bitmap);
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = imgObj;
+        //设置缩略图
+        Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+        bitmap.recycle();
+        msg.setThumbImage(bitmap);
+        //构造一个req
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("img");
+        req.message = msg;
+        switch (flag) {
+            case 0:
+                req.scene = SendMessageToWX.Req.WXSceneSession;
+                break;
+            case 1:
+                req.scene = SendMessageToWX.Req.WXSceneTimeline;
+                break;
+        }
+        api.sendReq(req);
     }
 
     private static void wxShare(final IWXAPI api, final int flag, String url, String title, String des, final String img) {
@@ -443,7 +480,7 @@ public class MyDialog {
         }
     }
 
-    public static void share01(final Context context, final IWXAPI api, final String url, final String img,final String title,final  String des) {
+    public static void share01(final Context context, final IWXAPI api, final String url, final String img, final String title, final String des) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialog_shengji = inflater.inflate(R.layout.dianlog_share1, null);
         final AlertDialog alertDialog1 = new AlertDialog.Builder(context, R.style.dialog)
@@ -463,8 +500,8 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Constant.source= "wxw";
-                wxShare1(context, api, 0, url, img,title,des);
+                Constant.source = "wxw";
+                wxShare1(context, api, 0, url, img, title, des);
                 alertDialog1.dismiss();
             }
         });
@@ -475,15 +512,15 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Constant.source ="wxp";
-                wxShare1(context, api, 1, url,img, title,des);
+                Constant.source = "wxp";
+                wxShare1(context, api, 1, url, img, title, des);
                 alertDialog1.dismiss();
             }
         });
         dialog_shengji.findViewById(R.id.relaShouCang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wxShare1(context, api, 2, url,img, title,des);
+                wxShare1(context, api, 2, url, img, title, des);
                 alertDialog1.dismiss();
             }
         });
@@ -540,7 +577,7 @@ public class MyDialog {
         TextView textShareDes = dialog_shengji.findViewById(R.id.textShareDes);
         TextView textGuiZe = dialog_shengji.findViewById(R.id.textGuiZe);
         TextView textShareTitle = dialog_shengji.findViewById(R.id.textShareTitle);
-        SpannableString span = new SpannableString("¥"+dataBean.getMoney());
+        SpannableString span = new SpannableString("¥" + dataBean.getMoney());
         span.setSpan(new RelativeSizeSpan(0.4f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textMoney.setText(span);
         textLimit_money.setText(dataBean.getLimit_money());
@@ -570,8 +607,8 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Constant.source= "wxw";
-                wxShare1(context, api, 0, dataBean.getShare().getShareUrl(), dataBean.getShare().getShareImg(),dataBean.getShare().getShareTitle(),dataBean.getShare().getShareDes());
+                Constant.source = "wxw";
+                wxShare1(context, api, 0, dataBean.getShare().getShareUrl(), dataBean.getShare().getShareImg(), dataBean.getShare().getShareTitle(), dataBean.getShare().getShareDes());
                 alertDialog1.dismiss();
             }
         });
@@ -582,8 +619,8 @@ public class MyDialog {
                     Toast.makeText(context, "您暂未安装微信,请下载安装最新版本的微信", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Constant.source ="wxp";
-                wxShare1(context, api, 1,  dataBean.getShare().getShareUrl(), dataBean.getShare().getShareImg(),dataBean.getShare().getShareTitle(),dataBean.getShare().getShareDes());
+                Constant.source = "wxp";
+                wxShare1(context, api, 1, dataBean.getShare().getShareUrl(), dataBean.getShare().getShareImg(), dataBean.getShare().getShareTitle(), dataBean.getShare().getShareDes());
                 alertDialog1.dismiss();
             }
         });
