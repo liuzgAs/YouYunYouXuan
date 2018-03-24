@@ -545,6 +545,7 @@ public class Constant {
         public static final String SHUA_XIN_CE_PING = "shua_xin_ce_ping";
         public static final String SHUA_XIN_SHOU_CANG = "shuaXinShouCang";
         public static final String SHUA_XIN_TIPS = "shuaXinTips";
+        public static final String GUANBIDENGLU = "guanBiDengLu";
     }
 
 

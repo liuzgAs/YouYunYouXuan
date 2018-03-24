@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.rong.imlib"
-    android:versionCode="2018022610"
-    android:versionName="2.8.28 Dev" >
+    android:versionCode="17122219"
+    android:versionName="2.8.25 Dev" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -23,15 +23,27 @@
 
     <application>
 
-        <!-- &lt;!&ndash; imlib config begin &ndash;&gt; -->
-        <!-- <meta-data -->
-        <!-- android:name="RONG_CLOUD_APP_KEY" -->
-        <!-- android:value="82hegw5u8dhmx" /> -->
-        <!-- imlib config begin -->
+        <!-- 融云开发环境： -->
+        <!-- App Key -->
+        <!-- 3argexb630c2e -->
+        <!-- App Secret -->
+        <!-- kDu3k9mcSbtW -->
+
+
+        <!-- 融云生产环境： -->
+        <!-- App Key -->
+        <!-- ik1qhw09ivmup -->
+        <!-- App Secret -->
+        <!-- LKA5u3T9Pl4JQ -->
+
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
             android:value="e0x9wycfetxaq" />
 
+        <service
+            android:name="io.rong.imlib.ipc.RongService"
+            android:exported="true"
+            android:process=":ipc" />
         <service
             android:name="io.rong.imlib.ipc.RongService"
             android:exported="true"

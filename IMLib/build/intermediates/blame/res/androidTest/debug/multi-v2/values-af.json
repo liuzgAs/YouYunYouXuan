@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "G:\\project\\YouYunYouXuan\\IMLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-af\\values-af.xml",
+            "outputFile": "G:\\project\\HaoChe666\\IMLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-af\\values-af.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f243d299e7951d2f761f12b2eb0be63d\\res\\values-af\\values-af.xml",
@@ -16,7 +16,7 @@
             ]
         },
         {
-            "outputFile": "D:\\project\\YouYunYouXuan\\IMLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-af\\values-af.xml",
+            "outputFile": "G:\\project\\HaoChe666\\IMLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-af\\values-af.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\f243d299e7951d2f761f12b2eb0be63d\\res\\values-af\\values-af.xml",

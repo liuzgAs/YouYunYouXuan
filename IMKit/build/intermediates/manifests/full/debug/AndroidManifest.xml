@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.rong.imkit"
-    android:versionCode="2018022610"
-    android:versionName="2.8.28 Dev" >
+    android:versionCode="17122219"
+    android:versionName="2.8.25 Dev" >
 
     <uses-sdk
         android:minSdkVersion="15"

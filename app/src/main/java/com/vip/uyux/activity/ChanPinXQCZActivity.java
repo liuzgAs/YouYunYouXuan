@@ -81,6 +81,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -832,78 +833,29 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
      * 融云
      */
     private void rongYun() {
-//        LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "cao");
-//        if (getApplicationInfo().packageName.equals(getCurProcessName(ChanPinXQCZActivity.this))) {
-//            LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "222222222222");
-//            RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
-//
-//                /**
-//                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-//                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-//                 */
-//                @Override
-//                public void onTokenIncorrect() {
-//                    LogUtil.LogShitou("CheLiangXQActivity--onTokenIncorrect", "1111");
-//                }
-//
-//                /**
-//                 * 连接融云成功
-//                 *
-//                 * @param userid 当前 token 对应的用户 id
-//                 */
-//                @Override
-//                public void onSuccess(String userid) {
-//                    LogUtil.LogShitou("CheLiangXQActivity--onSuccess", "userid" + userid);
-//                    final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
-////                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-////                    @Override
-////                    public UserInfo getUserInfo(String s) {
-////                        return userInfoRongYun;
-////                    }
-////                },true);
-////                RongIM.getInstance().refreshUserInfoCache(userInfoRongYun);
-//                    /**
-//                     * 设置当前用户信息，
-//                     * @param userInfo 当前用户信息
-//                     */
-//                    RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
-//                    /**
-//                     * 设置消息体内是否携带用户信息。
-//                     * @param state 是否携带用户信息，true 携带，false 不携带。
-//                     */
-//                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-//                    //首先需要构造使用客服者的用户信息
-//                    CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
-//                    CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
-//
-//                    /**
-//                     * 启动客户服聊天界面。
-//                     *
-//                     * @param context           应用上下文。
-//                     * @param customerServiceId 要与之聊天的客服 Id。
-//                     * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-//                     * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
-//                     */
-//                    RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, userid, "在线客服", csInfo);
-//                }
-//
-//                /**
-//                 * 连接融云失败
-//                 *
-//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-//                 */
-//                @Override
-//                public void onError(RongIMClient.ErrorCode errorCode) {
-//                    LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
-//                }
-//
-//
-//            });
-//
-//        }else {
-//            LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "111111111111");
-//        }
-        final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
+        LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "cao");
+        if (getApplicationInfo().packageName.equals(getCurProcessName(ChanPinXQCZActivity.this))) {
+            LogUtil.LogShitou("ChanPinXQCZActivity--getYunToken", userInfo.getYunToken());
+            RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    LogUtil.LogShitou("CheLiangXQActivity--onTokenIncorrect", "1111");
+                }
+
+                /**
+                 * 连接融云成功
+                 *
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    LogUtil.LogShitou("CheLiangXQActivity--onSuccess", "userid" + userid);
+                    final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
 //                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 //                    @Override
 //                    public UserInfo getUserInfo(String s) {
@@ -911,29 +863,71 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
 //                    }
 //                },true);
 //                RongIM.getInstance().refreshUserInfoCache(userInfoRongYun);
-        /**
-         * 设置当前用户信息，
-         * @param userInfo 当前用户信息
-         */
-        RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
-        /**
-         * 设置消息体内是否携带用户信息。
-         * @param state 是否携带用户信息，true 携带，false 不携带。
-         */
-        RongIM.getInstance().setMessageAttachedUserInfo(true);
-        //首先需要构造使用客服者的用户信息
-        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
-        CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+                    /**
+                     * 设置当前用户信息，
+                     * @param userInfo 当前用户信息
+                     */
+                    RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
+                    /**
+                     * 设置消息体内是否携带用户信息。
+                     * @param state 是否携带用户信息，true 携带，false 不携带。
+                     */
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    //首先需要构造使用客服者的用户信息
+                    CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+                    CSCustomServiceInfo csInfo = csBuilder.nickName("优云优选").build();
 
-        /**
-         * 启动客户服聊天界面。
-         *
-         * @param context           应用上下文。
-         * @param customerServiceId 要与之聊天的客服 Id。
-         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
-         */
-        RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, userInfo.getUid(), "在线客服", csInfo);
+                    /**
+                     * 启动客户服聊天界面。
+                     *
+                     * @param context           应用上下文。
+                     * @param customerServiceId 要与之聊天的客服 Id。
+                     * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+                     * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+                     */
+                    RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, "KEFU152119192578109", "在线客服", csInfo);
+                }
+
+                /**
+                 * 连接融云失败
+                 *
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
+                }
+
+
+            });
+
+        }else {
+            LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "111111111111");
+        }
+//        final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
+//        /**
+//         * 设置当前用户信息，
+//         * @param userInfo 当前用户信息
+//         */
+//        RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
+//        /**
+//         * 设置消息体内是否携带用户信息。
+//         * @param state 是否携带用户信息，true 携带，false 不携带。
+//         */
+//        RongIM.getInstance().setMessageAttachedUserInfo(true);
+//        //首先需要构造使用客服者的用户信息
+//        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+//        CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+//
+//        /**
+//         * 启动客户服聊天界面。
+//         *
+//         * @param context           应用上下文。
+//         * @param customerServiceId 要与之聊天的客服 Id。
+//         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+//         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+//         */
+//        RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, userInfo.getUid(), "在线客服", csInfo);
     }
 
     /**

@@ -92,20 +92,18 @@ public final class R {
         public static int rc_popup_dialog_prompt_ok_color = 0x7f060027;
         public static int rc_popup_dialog_text_color = 0x7f060028;
         public static int rc_read_receipt_status = 0x7f060029;
-        public static int rc_rich_content = 0x7f06002a;
-        public static int rc_rich_title = 0x7f06002b;
-        public static int rc_text_color_primary = 0x7f06002c;
-        public static int rc_text_color_primary_inverse = 0x7f06002d;
-        public static int rc_text_color_secondary = 0x7f06002e;
-        public static int rc_text_color_tertiary = 0x7f06002f;
-        public static int rc_text_voice = 0x7f060030;
-        public static int rc_voice_cancel = 0x7f060031;
-        public static int rc_voice_color = 0x7f060032;
-        public static int rc_voice_color_left = 0x7f060033;
-        public static int rc_voice_color_right = 0x7f060034;
-        public static int rc_web_progress_bar = 0x7f060035;
-        public static int ripple_material_light = 0x7f060036;
-        public static int secondary_text_default_material_light = 0x7f060037;
+        public static int rc_text_color_primary = 0x7f06002a;
+        public static int rc_text_color_primary_inverse = 0x7f06002b;
+        public static int rc_text_color_secondary = 0x7f06002c;
+        public static int rc_text_color_tertiary = 0x7f06002d;
+        public static int rc_text_voice = 0x7f06002e;
+        public static int rc_voice_cancel = 0x7f06002f;
+        public static int rc_voice_color = 0x7f060030;
+        public static int rc_voice_color_left = 0x7f060031;
+        public static int rc_voice_color_right = 0x7f060032;
+        public static int rc_web_progress_bar = 0x7f060033;
+        public static int ripple_material_light = 0x7f060034;
+        public static int secondary_text_default_material_light = 0x7f060035;
     }
     public static final class dimen {
         public static int compat_button_inset_horizontal_material = 0x7f080001;

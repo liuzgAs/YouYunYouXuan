@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "G:\\project\\YouYunYouXuan\\IMLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "outputFile": "G:\\project\\HaoChe666\\IMLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
             "map": [
                 {
-                    "source": "G:\\project\\YouYunYouXuan\\IMLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "source": "G:\\project\\HaoChe666\\IMLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,14,15,16,17,18,19,20,21,22,23,24,25,26",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -44,10 +44,10 @@
             ]
         },
         {
-            "outputFile": "D:\\project\\YouYunYouXuan\\IMLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "outputFile": "G:\\project\\HaoChe666\\IMLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "D:\\project\\YouYunYouXuan\\IMLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "source": "G:\\project\\HaoChe666\\IMLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,14,15,16,17,18,19,20,21,22,23,24,25,26",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
