@@ -36,18 +36,14 @@ public class MyEasyRecyclerView extends EasyRecyclerView {
 
                 break;
             case MotionEvent.ACTION_DOWN:
-                LogUtil.LogShitou("IndexViewHolder--onTouch", "11111");
                 isScroll = false;
                 //获取屏幕上点击的坐标
                 downX = ev.getX();
-                LogUtil.LogShitou("IndexViewHolder--onTouch", "downX"+ downX);
                 break;
             case MotionEvent.ACTION_UP:
                 upX = ev.getX();
-                LogUtil.LogShitou("IndexViewHolder--onTouch", "upX"+ upX);
                 if (!isScroll) {
                     if (downX - upX > 200) {
-                        LogUtil.LogShitou("MyEasyRecyclerView--dispatchTouchEvent", "到底了");
                         onDaoDiLeListener.daoDiLe();
                     }
                 }
