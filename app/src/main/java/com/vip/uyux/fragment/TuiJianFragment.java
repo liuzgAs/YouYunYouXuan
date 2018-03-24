@@ -23,7 +23,7 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.rd.PageIndicatorView;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
-import com.vip.uyux.activity.WebActivity;
+import com.vip.uyux.activity.WebHaoWuActivity;
 import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
@@ -276,9 +276,10 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     startActivity(intent);
                 } else if (adapter.getItem(position).getType() == 3) {
                     Intent intent = new Intent();
-                    intent.setClass(mContext, WebActivity.class);
+                    intent.setClass(mContext, WebHaoWuActivity.class);
                     intent.putExtra(Constant.IntentKey.TITLE, adapter.getItem(position).getTitle());
                     intent.putExtra(Constant.IntentKey.URL, adapter.getItem(position).getUrl());
+                    intent.putExtra(Constant.IntentKey.BEAN,adapter.getItem(position));
                     startActivity(intent);
                 }
             }

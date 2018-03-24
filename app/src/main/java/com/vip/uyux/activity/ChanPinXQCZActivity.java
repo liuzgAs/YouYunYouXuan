@@ -85,7 +85,8 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     //    private EasyRecyclerView recyclerView;
 
     private View viewDiBu;
-    private View imageGouWuChe;private ImageView imageShouCang;
+    private View imageGouWuChe;
+    private ImageView imageShouCang;
     private View viewGouWuChe;
     //    private RecyclerArrayAdapter<ImgsBean> adapter;
     private GoodsInfo goodsInfo;
@@ -758,9 +759,9 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageKeFu:
-                if (isLogin){
+                if (isLogin) {
                     rongYun();
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(ChanPinXQCZActivity.this);
                 }
                 break;
@@ -1120,7 +1121,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
         dialog_chan_pin.findViewById(R.id.buttonSure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(editNum.getText().toString().trim())){
+                if (TextUtils.isEmpty(editNum.getText().toString().trim())) {
                     Toast.makeText(ChanPinXQCZActivity.this, "商品数量必须大于等于一", Toast.LENGTH_SHORT).show();
                     return;
                 }

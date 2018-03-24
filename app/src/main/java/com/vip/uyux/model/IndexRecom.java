@@ -1,5 +1,6 @@
 package com.vip.uyux.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class IndexRecom {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         private int id;
         private String title;
         private String img;

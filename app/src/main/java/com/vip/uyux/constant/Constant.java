@@ -467,6 +467,10 @@ public class Constant {
          * 用户协议
          */
         public static final String YONG_HU_XIE_YI = "/Article/info/type/Reg";
+        /**
+         * 好物分享
+         */
+        public static final String INDEX_SHAREINFO = "/Index/shareInfo";
     }
 
     public static class IntentKey {
