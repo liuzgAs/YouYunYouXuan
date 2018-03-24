@@ -9,17 +9,39 @@
         android:layout_marginBottom="20dp"
         android:src="@mipmap/tuijianimg"
         android:scaleType="centerCrop"
-        android:layout_width="100dp"
+        android:layout_width="141dp"
         android:id="@+id/imageImg"
         android:layout_height="100dp" />
+    <RelativeLayout
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_alignTop="@+id/imageImg"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageHead"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/logo"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/light_black"
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:text="洗护组：汤汤"
+            android:textSize="@dimen/moreLitterText"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageHead"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <TextView
         android:id="@+id/textTitle"
         android:layout_marginRight="@dimen/leftAndRight"
         android:layout_toRightOf="@+id/imageImg"
         android:textSize="@dimen/bigText"
-        android:layout_alignTop="@+id/imageImg"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:textStyle="bold"
         android:textColor="@color/light_black"
         android:layout_marginTop="2dp"
         android:maxLines="2"
@@ -27,40 +49,17 @@
         android:text="黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美黑管双头口红刷美"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <RelativeLayout
-        android:id="@+id/viewDianZan"
-        android:layout_alignBottom="@+id/imageImg"
-        android:layout_toRightOf="@+id/imageImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="2dp"
-            android:src="@mipmap/dinazan"
-            android:layout_width="15dp"
-            android:id="@+id/imageDianZan"
-            android:layout_height="15dp" />
-        <TextView
-            android:id="@+id/textDianZan"
-            android:layout_width="wrap_content"
-            android:text="56"
-            android:layout_alignBottom="@+id/imageDianZan"
-            android:layout_toRightOf="@+id/imageDianZan"
-            android:layout_marginLeft="5dp"
-            android:textSize="@dimen/litterText"
-            android:textColor="@color/text_gray"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-
     <TextView
-        android:id="@+id/textName"
+        android:maxLines="1"
+        android:id="@+id/textDes"
+        android:text="定制黑管双头"
         android:layout_alignBottom="@+id/imageImg"
-        android:layout_marginBottom="2dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/leftAndRight"
-        android:textSize="@dimen/litterText"
-        android:text="虫大大"
+        android:textSize="@dimen/moreLitterText"
+        android:layout_toRightOf="@+id/imageImg"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/text_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 </RelativeLayout>
