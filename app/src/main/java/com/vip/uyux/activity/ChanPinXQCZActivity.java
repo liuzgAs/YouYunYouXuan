@@ -502,13 +502,17 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                             linePingLun.setVisibility(View.GONE);
                         }
                         if (goodsInfoBanner != null) {
+                            if (goodsInfoBanner.size()==1){
+                                banner.setCanLoop(false);
+                            }else {
+                                banner.setPageIndicator(new int[]{R.drawable.shape_indicator_normal, R.drawable.shape_indicator_selected});
+                            }
                             banner.setPages(new CBViewHolderCreator() {
                                 @Override
                                 public Object createHolder() {
                                     return new LocalImageChanPinHolderView();
                                 }
                             }, goodsInfoBanner);
-                            banner.setPageIndicator(new int[]{R.drawable.shape_indicator_normal, R.drawable.shape_indicator_selected});
                         }
                         if (goodsInfoData != null) {
                             if (timer != null) {
