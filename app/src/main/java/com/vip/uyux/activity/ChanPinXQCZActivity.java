@@ -1,10 +1,12 @@
 package com.vip.uyux.activity;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +34,8 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -51,6 +55,7 @@ import com.vip.uyux.customview.WrapHeightGridView;
 import com.vip.uyux.model.CartAddcart;
 import com.vip.uyux.model.CartNum;
 import com.vip.uyux.model.GoodsInfo;
+import com.vip.uyux.model.GoodsPoster;
 import com.vip.uyux.model.ImgsBean;
 import com.vip.uyux.model.JieSuan;
 import com.vip.uyux.model.OkObject;
@@ -59,6 +64,7 @@ import com.vip.uyux.model.SimpleInfo;
 import com.vip.uyux.util.ACache;
 import com.vip.uyux.util.ApiClient;
 import com.vip.uyux.util.DpUtils;
+import com.vip.uyux.util.FileUtil;
 import com.vip.uyux.util.GlideApp;
 import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
@@ -67,6 +73,7 @@ import com.vip.uyux.util.StringUtil;
 import com.vip.uyux.viewholder.ItemChanPinXQViewHolder;
 import com.vip.uyux.viewholder.LocalImageChanPinHolderView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,18 +81,23 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     private String did;
     private int id;
     //    private EasyRecyclerView recyclerView;
 
     private View viewDiBu;
-    private View imageGouWuChe;private ImageView imageShouCang;
+    private View imageGouWuChe;
+    private ImageView imageShouCang;
     private View viewGouWuChe;
     //    private RecyclerArrayAdapter<ImgsBean> adapter;
     private GoodsInfo goodsInfo;
@@ -490,13 +502,17 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                             linePingLun.setVisibility(View.GONE);
                         }
                         if (goodsInfoBanner != null) {
+                            if (goodsInfoBanner.size()==1){
+                                banner.setCanLoop(false);
+                            }else {
+                                banner.setPageIndicator(new int[]{R.drawable.shape_indicator_normal, R.drawable.shape_indicator_selected});
+                            }
                             banner.setPages(new CBViewHolderCreator() {
                                 @Override
                                 public Object createHolder() {
                                     return new LocalImageChanPinHolderView();
                                 }
                             }, goodsInfoBanner);
-                            banner.setPageIndicator(new int[]{R.drawable.shape_indicator_normal, R.drawable.shape_indicator_selected});
                         }
                         if (goodsInfoData != null) {
                             if (timer != null) {
@@ -758,9 +774,9 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageKeFu:
-                if (isLogin){
+                if (isLogin) {
                     rongYun();
-                }else {
+                } else {
                     ToLoginActivity.toLoginActivity(ChanPinXQCZActivity.this);
                 }
                 break;
@@ -821,78 +837,29 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
      * 融云
      */
     private void rongYun() {
-//        LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "cao");
-//        if (getApplicationInfo().packageName.equals(getCurProcessName(ChanPinXQCZActivity.this))) {
-//            LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "222222222222");
-//            RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
-//
-//                /**
-//                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-//                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-//                 */
-//                @Override
-//                public void onTokenIncorrect() {
-//                    LogUtil.LogShitou("CheLiangXQActivity--onTokenIncorrect", "1111");
-//                }
-//
-//                /**
-//                 * 连接融云成功
-//                 *
-//                 * @param userid 当前 token 对应的用户 id
-//                 */
-//                @Override
-//                public void onSuccess(String userid) {
-//                    LogUtil.LogShitou("CheLiangXQActivity--onSuccess", "userid" + userid);
-//                    final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
-////                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-////                    @Override
-////                    public UserInfo getUserInfo(String s) {
-////                        return userInfoRongYun;
-////                    }
-////                },true);
-////                RongIM.getInstance().refreshUserInfoCache(userInfoRongYun);
-//                    /**
-//                     * 设置当前用户信息，
-//                     * @param userInfo 当前用户信息
-//                     */
-//                    RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
-//                    /**
-//                     * 设置消息体内是否携带用户信息。
-//                     * @param state 是否携带用户信息，true 携带，false 不携带。
-//                     */
-//                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-//                    //首先需要构造使用客服者的用户信息
-//                    CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
-//                    CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
-//
-//                    /**
-//                     * 启动客户服聊天界面。
-//                     *
-//                     * @param context           应用上下文。
-//                     * @param customerServiceId 要与之聊天的客服 Id。
-//                     * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-//                     * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
-//                     */
-//                    RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, userid, "在线客服", csInfo);
-//                }
-//
-//                /**
-//                 * 连接融云失败
-//                 *
-//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-//                 */
-//                @Override
-//                public void onError(RongIMClient.ErrorCode errorCode) {
-//                    LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
-//                }
-//
-//
-//            });
-//
-//        }else {
-//            LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "111111111111");
-//        }
-        final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
+        LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "cao");
+        if (getApplicationInfo().packageName.equals(getCurProcessName(ChanPinXQCZActivity.this))) {
+            LogUtil.LogShitou("ChanPinXQCZActivity--getYunToken", userInfo.getYunToken());
+            RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    LogUtil.LogShitou("CheLiangXQActivity--onTokenIncorrect", "1111");
+                }
+
+                /**
+                 * 连接融云成功
+                 *
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    LogUtil.LogShitou("CheLiangXQActivity--onSuccess", "userid" + userid);
+                    final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
 //                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 //                    @Override
 //                    public UserInfo getUserInfo(String s) {
@@ -900,29 +867,71 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
 //                    }
 //                },true);
 //                RongIM.getInstance().refreshUserInfoCache(userInfoRongYun);
-        /**
-         * 设置当前用户信息，
-         * @param userInfo 当前用户信息
-         */
-        RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
-        /**
-         * 设置消息体内是否携带用户信息。
-         * @param state 是否携带用户信息，true 携带，false 不携带。
-         */
-        RongIM.getInstance().setMessageAttachedUserInfo(true);
-        //首先需要构造使用客服者的用户信息
-        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
-        CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+                    /**
+                     * 设置当前用户信息，
+                     * @param userInfo 当前用户信息
+                     */
+                    RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
+                    /**
+                     * 设置消息体内是否携带用户信息。
+                     * @param state 是否携带用户信息，true 携带，false 不携带。
+                     */
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    //首先需要构造使用客服者的用户信息
+                    CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+                    CSCustomServiceInfo csInfo = csBuilder.nickName("优云优选").build();
 
-        /**
-         * 启动客户服聊天界面。
-         *
-         * @param context           应用上下文。
-         * @param customerServiceId 要与之聊天的客服 Id。
-         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
-         */
-        RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, userInfo.getUid(), "在线客服", csInfo);
+                    /**
+                     * 启动客户服聊天界面。
+                     *
+                     * @param context           应用上下文。
+                     * @param customerServiceId 要与之聊天的客服 Id。
+                     * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+                     * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+                     */
+                    RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, "KEFU152119192578109", "在线客服", csInfo);
+                }
+
+                /**
+                 * 连接融云失败
+                 *
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
+                }
+
+
+            });
+
+        }else {
+            LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "111111111111");
+        }
+//        final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
+//        /**
+//         * 设置当前用户信息，
+//         * @param userInfo 当前用户信息
+//         */
+//        RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
+//        /**
+//         * 设置消息体内是否携带用户信息。
+//         * @param state 是否携带用户信息，true 携带，false 不携带。
+//         */
+//        RongIM.getInstance().setMessageAttachedUserInfo(true);
+//        //首先需要构造使用客服者的用户信息
+//        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+//        CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+//
+//        /**
+//         * 启动客户服聊天界面。
+//         *
+//         * @param context           应用上下文。
+//         * @param customerServiceId 要与之聊天的客服 Id。
+//         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+//         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+//         */
+//        RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, userInfo.getUid(), "在线客服", csInfo);
     }
 
     /**
@@ -1120,7 +1129,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
         dialog_chan_pin.findViewById(R.id.buttonSure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(editNum.getText().toString().trim())){
+                if (TextUtils.isEmpty(editNum.getText().toString().trim())) {
                     Toast.makeText(ChanPinXQCZActivity.this, "商品数量必须大于等于一", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -1195,6 +1204,154 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                         MyDialog.showReLoginDialog(ChanPinXQCZActivity.this);
                     } else {
                         Toast.makeText(ChanPinXQCZActivity.this, cartAddcart.getInfo(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ChanPinXQCZActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(ChanPinXQCZActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private static final int SOREAGE = 1991;
+
+    @AfterPermissionGranted(SOREAGE)
+    public void methodRequiresTwoPermission() {
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            // Already have permission, do the thing
+            haiBao();
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "需要开启定位权限",
+                    SOREAGE, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            haiBao();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        } else {
+            methodRequiresTwoPermission();
+        }
+    }
+
+    /**
+     * des： 网络请求参数
+     * author： ZhangJieBo
+     * date： 2017/8/28 0028 上午 9:55
+     */
+    private OkObject getHaiBaoOkObject() {
+        String url = Constant.HOST + Constant.Url.GOODS_POSTER;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("id", String.valueOf(id));
+        return new OkObject(params, url);
+    }
+
+    /**
+     * 多图分享朋友圈
+     */
+    public void haiBao() {
+        showLoadingDialog();
+        ApiClient.post(ChanPinXQCZActivity.this, getHaiBaoOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("MyDialog--onSuccess", s + "");
+                try {
+                    final GoodsPoster goodsPoster = GsonUtils.parseJSON(s, GoodsPoster.class);
+                    if (goodsPoster.getStatus() == 1) {
+                        GlideApp.with(ChanPinXQCZActivity.this)
+                                .asBitmap()
+                                .load(goodsPoster.getImg())
+                                .placeholder(R.mipmap.ic_empty)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+                                        View dialog_fen_xiang_erm = LayoutInflater.from(ChanPinXQCZActivity.this).inflate(R.layout.dialog_fen_xiang_erm, null);
+                                        final ImageView imageImg = (ImageView) dialog_fen_xiang_erm.findViewById(R.id.imageImg);
+                                        ViewGroup.LayoutParams layoutParams = imageImg.getLayoutParams();
+                                        layoutParams.height = (int) ((ScreenUtils.getScreenWidth(ChanPinXQCZActivity.this) - DpUtils.convertDpToPixel(20, ChanPinXQCZActivity.this)) * (734f / 496f));
+                                        imageImg.setLayoutParams(layoutParams);
+
+                                        imageImg.setImageBitmap(resource);
+                                        final AlertDialog alertDialog = new AlertDialog.Builder(ChanPinXQCZActivity.this, R.style.dialog)
+                                                .setView(dialog_fen_xiang_erm)
+                                                .create();
+                                        dialog_fen_xiang_erm.findViewById(R.id.textWeiXin).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                alertDialog.dismiss();
+                                                MyDialog.shareImg(api, resource, 0);
+                                            }
+
+
+                                        });
+                                        dialog_fen_xiang_erm.findViewById(R.id.textPengYouQuan).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                alertDialog.dismiss();
+                                                MyDialog.shareImg(api, resource, 1);
+                                            }
+                                        });
+                                        alertDialog.show();
+                                        Window dialogWindow = alertDialog.getWindow();
+                                        dialogWindow.setGravity(Gravity.CENTER);
+                                        dialogWindow.setWindowAnimations(R.style.AnimFromTopToButtom);
+                                        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+                                        DisplayMetrics d = getResources().getDisplayMetrics(); // 获取屏幕宽、高用
+                                        lp.width = (int) (d.widthPixels - DpUtils.convertDpToPixel(20, ChanPinXQCZActivity.this)); // 高度设置为屏幕的0.6
+                                        dialogWindow.setAttributes(lp);
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    FileUtil.saveMyBitmap(ChanPinXQCZActivity.this, "优云优选海报" + System.currentTimeMillis(), resource);
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            LogUtil.LogShitou("MyDialog--run", "海报保存在\"/优云优选/\"目录下");
+                                                            Toast.makeText(ChanPinXQCZActivity.this, "海报保存在\"/优云优选/\"目录下", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                    LogUtil.LogShitou("MyDialog--run", "保存失败");
+                                                }
+                                            }
+                                        }).start();
+                                    }
+                                });
+
+                    } else if (goodsPoster.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(ChanPinXQCZActivity.this);
+                    } else {
+                        Toast.makeText(ChanPinXQCZActivity.this, goodsPoster.getInfo(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     Toast.makeText(ChanPinXQCZActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
@@ -1343,6 +1500,7 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
             textGuiGe.setText(name);
             textStock_numD.setText("库存" + stock_num + "件");
         }
+
     }
 
     @Override

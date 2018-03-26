@@ -104,6 +104,9 @@ public class DengLuActivity extends ZjbBaseActivity implements View.OnClickListe
             if (TextUtils.equals(action, Constant.BroadcastCode.BANG_DING)) {
                 finish();
             }
+            if (TextUtils.equals(action, Constant.BroadcastCode.GUANBIDENGLU)) {
+                finish();
+            }
         }
     };
     private UserInfo userInfo;
@@ -455,7 +458,7 @@ public class DengLuActivity extends ZjbBaseActivity implements View.OnClickListe
             if (userInfo.getGoSms() == 1) {
                 Intent intent = new Intent();
                 intent.setClass(DengLuActivity.this, BangDingTelActivity.class);
-                intent.putExtra(Constant.IntentKey.BEAN,loginInfo1);
+                intent.putExtra(Constant.IntentKey.BEAN, loginInfo1);
                 startActivity(intent);
                 return;
             }
@@ -537,9 +540,11 @@ public class DengLuActivity extends ZjbBaseActivity implements View.OnClickListe
         params.put("tokenTime", tokenTime);
         return new OkObject(params, url);
     }
+
     LoginInfo loginInfo1;
+
     private void wxLogin(final LoginInfo loginInfo) {
-        loginInfo1 =loginInfo;
+        loginInfo1 = loginInfo;
         ApiClient.post(DengLuActivity.this, getWXOkObject(loginInfo), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
@@ -567,6 +572,7 @@ public class DengLuActivity extends ZjbBaseActivity implements View.OnClickListe
         filter.addAction(Constant.BroadcastCode.WX_SHARE);
         filter.addAction(Constant.BroadcastCode.WX_SHARE_FAIL);
         filter.addAction(Constant.BroadcastCode.BANG_DING);
+        filter.addAction(Constant.BroadcastCode.GUANBIDENGLU);
         registerReceiver(receiver, filter);
     }
 

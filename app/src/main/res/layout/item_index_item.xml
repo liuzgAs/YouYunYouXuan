@@ -8,8 +8,7 @@
         android:id="@+id/imageImg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/itemIndexWidth"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/shangpin" />
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/textVipDes"

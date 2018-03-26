@@ -23,12 +23,11 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.rd.PageIndicatorView;
 import com.vip.uyux.R;
 import com.vip.uyux.activity.CePingXQActivity;
-import com.vip.uyux.activity.WebActivity;
+import com.vip.uyux.activity.WebHaoWuActivity;
 import com.vip.uyux.adapter.BannerTuiJianAdapter;
 import com.vip.uyux.base.MyDialog;
 import com.vip.uyux.base.ZjbBaseFragment;
 import com.vip.uyux.constant.Constant;
-import com.vip.uyux.interfacepage.OnShouCangListener;
 import com.vip.uyux.model.AdvsBean;
 import com.vip.uyux.model.GoodsCollect;
 import com.vip.uyux.model.IndexRecom;
@@ -41,6 +40,7 @@ import com.vip.uyux.util.GsonUtils;
 import com.vip.uyux.util.LogUtil;
 import com.vip.uyux.util.ScreenUtils;
 import com.vip.uyux.viewholder.TuiJianViewHolder;
+import com.vip.uyux.viewholder.TuiJianViewXHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -119,22 +119,24 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
         recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<IndexRecom.DataBean>(mContext) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                int layout = R.layout.item_tuijian;
-                TuiJianViewHolder tuiJianViewHolder = new TuiJianViewHolder(parent, layout);
-                tuiJianViewHolder.setOnShouCangListener(new OnShouCangListener() {
-                    @Override
-                    public void shouCang(int position) {
-                        shouCangX(position);
-                    }
-
-                    @Override
-                    public void qXShouCang(int position) {
-                        quXiaoSC(position);
-                    }
-                });
-                return tuiJianViewHolder;
+                int layout;
+                switch (viewType) {
+                    case 3:
+                        layout = R.layout.item_tuijian_x;
+                        return new TuiJianViewXHolder(parent, layout);
+                    case 4:
+                        layout = R.layout.item_tuijian;
+                        return new TuiJianViewHolder(parent, layout);
+                    default:
+                        layout = R.layout.item_tuijian;
+                        return new TuiJianViewHolder(parent, layout);
+                }
             }
 
+            @Override
+            public int getViewType(int position) {
+                return getItem(position).getType();
+            }
         });
         adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
 
@@ -274,9 +276,10 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     startActivity(intent);
                 } else if (adapter.getItem(position).getType() == 3) {
                     Intent intent = new Intent();
-                    intent.setClass(mContext, WebActivity.class);
-                    intent.putExtra(Constant.IntentKey.TITLE,adapter.getItem(position).getTitle());
-                    intent.putExtra(Constant.IntentKey.URL,adapter.getItem(position).getUrl());
+                    intent.setClass(mContext, WebHaoWuActivity.class);
+                    intent.putExtra(Constant.IntentKey.TITLE, adapter.getItem(position).getTitle());
+                    intent.putExtra(Constant.IntentKey.URL, adapter.getItem(position).getUrl());
+                    intent.putExtra(Constant.IntentKey.BEAN,adapter.getItem(position));
                     startActivity(intent);
                 }
             }

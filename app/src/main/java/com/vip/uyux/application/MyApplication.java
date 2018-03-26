@@ -32,6 +32,8 @@ public class MyApplication extends MultiDexApplication {
     public void onCreate() {
         context = this.getApplicationContext();
         super.onCreate();
+        RongIM.init(this);
+        initCloudChannel(this);
         /**
          * 多图分享
          */
@@ -39,8 +41,6 @@ public class MyApplication extends MultiDexApplication {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         }
-        initCloudChannel(this);
-        RongIM.init(this);
     }
 
 

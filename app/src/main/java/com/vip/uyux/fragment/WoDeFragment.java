@@ -88,6 +88,9 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 case Constant.BroadcastCode.SHUA_XIN_U_BI:
                     initData();
                     break;
+                case Constant.BroadcastCode.ZHI_FU_CG:
+                    initData();
+                    break;
                 default:
                     break;
             }
@@ -589,6 +592,7 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
         filter.addAction(Constant.BroadcastCode.TIXIAN);
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_U_BI);
         filter.addAction(Constant.BroadcastCode.SHUA_XIN_TIPS);
+        filter.addAction(Constant.BroadcastCode.ZHI_FU_CG);
         getActivity().registerReceiver(reciver, filter);
     }
 

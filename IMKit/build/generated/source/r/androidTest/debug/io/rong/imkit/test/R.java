@@ -202,20 +202,18 @@ public final class R {
     public static final int rc_popup_dialog_prompt_ok_color=0x7f040026;
     public static final int rc_popup_dialog_text_color=0x7f040027;
     public static final int rc_read_receipt_status=0x7f040028;
-    public static final int rc_rich_content=0x7f040029;
-    public static final int rc_rich_title=0x7f04002a;
-    public static final int rc_text_color_primary=0x7f04002b;
-    public static final int rc_text_color_primary_inverse=0x7f04002c;
-    public static final int rc_text_color_secondary=0x7f04002d;
-    public static final int rc_text_color_tertiary=0x7f04002e;
-    public static final int rc_text_voice=0x7f04002f;
-    public static final int rc_voice_cancel=0x7f040030;
-    public static final int rc_voice_color=0x7f040031;
-    public static final int rc_voice_color_left=0x7f040032;
-    public static final int rc_voice_color_right=0x7f040033;
-    public static final int rc_web_progress_bar=0x7f040034;
-    public static final int ripple_material_light=0x7f040035;
-    public static final int secondary_text_default_material_light=0x7f040036;
+    public static final int rc_text_color_primary=0x7f040029;
+    public static final int rc_text_color_primary_inverse=0x7f04002a;
+    public static final int rc_text_color_secondary=0x7f04002b;
+    public static final int rc_text_color_tertiary=0x7f04002c;
+    public static final int rc_text_voice=0x7f04002d;
+    public static final int rc_voice_cancel=0x7f04002e;
+    public static final int rc_voice_color=0x7f04002f;
+    public static final int rc_voice_color_left=0x7f040030;
+    public static final int rc_voice_color_right=0x7f040031;
+    public static final int rc_web_progress_bar=0x7f040032;
+    public static final int ripple_material_light=0x7f040033;
+    public static final int secondary_text_default_material_light=0x7f040034;
   }
   public static final class dimen {
     public static final int compat_button_inset_horizontal_material=0x7f050000;

@@ -19,9 +19,18 @@ public class WithdrawAddbefore {
     private double money;
     private String moneyDes;
     private String min;
+    private String alipayDes;
     private String des;
     private int status;
     private String info;
+
+    public String getAlipayDes() {
+        return alipayDes;
+    }
+
+    public void setAlipayDes(String alipayDes) {
+        this.alipayDes = alipayDes;
+    }
 
     public double getMoney() {
         return money;

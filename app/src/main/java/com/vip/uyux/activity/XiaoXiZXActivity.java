@@ -1,9 +1,11 @@
 package com.vip.uyux.activity;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,10 @@ import com.vip.uyux.util.LogUtil;
 
 import java.util.HashMap;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 public class XiaoXiZXActivity extends ZjbBaseActivity implements View.OnClickListener {
 
@@ -87,12 +93,19 @@ public class XiaoXiZXActivity extends ZjbBaseActivity implements View.OnClickLis
         ((TextView) findViewById(R.id.textViewTitle)).setText("消息中心");
         dp20 = (int) DpUtils.convertDpToPixel(20f, this);
         dp10 = (int) DpUtils.convertDpToPixel(10f, this);
+        textTipNum[0].setVisibility(View.GONE);
+        textTipNum[1].setVisibility(View.GONE);
+        textTipNum[2].setVisibility(View.GONE);
+        textTipNum[3].setVisibility(View.GONE);
+        textTipNum[4].setVisibility(View.GONE);
     }
 
     @Override
     protected void setListeners() {
         findViewById(R.id.imageBack).setOnClickListener(this);
         findViewById(R.id.viewWuLiuZhuShou).setOnClickListener(this);
+        findViewById(R.id.viewKeFu).setOnClickListener(this);
+        findViewById(R.id.viewXiTongXiaoXi).setOnClickListener(this);
     }
 
     /**
@@ -130,6 +143,7 @@ public class XiaoXiZXActivity extends ZjbBaseActivity implements View.OnClickLis
                                 if (dataBeanList.get(i).getNum()==0){
                                     textTipNum[i].setVisibility(View.GONE);
                                 }else {
+                                    textTipNum[i].setVisibility(View.VISIBLE);
                                     ViewGroup.LayoutParams layoutParams = textTipNum[i].getLayoutParams();
                                     layoutParams.width = dp20;
                                     layoutParams.height = dp20;
@@ -166,6 +180,13 @@ public class XiaoXiZXActivity extends ZjbBaseActivity implements View.OnClickLis
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.viewXiTongXiaoXi:
+                intent.setClass(XiaoXiZXActivity.this,XiTongXiaoXiActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.viewKeFu:
+                rongYun();
+                break;
             case R.id.viewWuLiuZhuShou:
                 intent.setClass(this, WuLiuZhuShouActivity.class);
                 startActivity(intent);
@@ -176,6 +197,120 @@ public class XiaoXiZXActivity extends ZjbBaseActivity implements View.OnClickLis
             default:
                 break;
         }
+    }
+
+    String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager mActivityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
+                .getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 融云
+     */
+    private void rongYun() {
+        LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "cao");
+        if (getApplicationInfo().packageName.equals(getCurProcessName(XiaoXiZXActivity.this))) {
+            LogUtil.LogShitou("ChanPinXQCZActivity--getYunToken", userInfo.getYunToken());
+            RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    LogUtil.LogShitou("CheLiangXQActivity--onTokenIncorrect", "1111");
+                }
+
+                /**
+                 * 连接融云成功
+                 *
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    LogUtil.LogShitou("CheLiangXQActivity--onSuccess", "userid" + userid);
+                    final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
+//                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+//                    @Override
+//                    public UserInfo getUserInfo(String s) {
+//                        return userInfoRongYun;
+//                    }
+//                },true);
+//                RongIM.getInstance().refreshUserInfoCache(userInfoRongYun);
+                    /**
+                     * 设置当前用户信息，
+                     * @param userInfo 当前用户信息
+                     */
+                    RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
+                    /**
+                     * 设置消息体内是否携带用户信息。
+                     * @param state 是否携带用户信息，true 携带，false 不携带。
+                     */
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    //首先需要构造使用客服者的用户信息
+                    CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+                    CSCustomServiceInfo csInfo = csBuilder.nickName("优云优选").build();
+
+                    /**
+                     * 启动客户服聊天界面。
+                     *
+                     * @param context           应用上下文。
+                     * @param customerServiceId 要与之聊天的客服 Id。
+                     * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+                     * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+                     */
+                    RongIM.getInstance().startCustomerServiceChat(XiaoXiZXActivity.this, "KEFU152119192578109", "在线客服", csInfo);
+                }
+
+                /**
+                 * 连接融云失败
+                 *
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
+                }
+
+
+            });
+
+        }else {
+            LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "111111111111");
+        }
+//        final io.rong.imlib.model.UserInfo userInfoRongYun = new io.rong.imlib.model.UserInfo(userInfo.getUid(), userInfo.getUserName(), Uri.parse(userInfo.getHeadImg()));
+//        /**
+//         * 设置当前用户信息，
+//         * @param userInfo 当前用户信息
+//         */
+//        RongIM.getInstance().setCurrentUserInfo(userInfoRongYun);
+//        /**
+//         * 设置消息体内是否携带用户信息。
+//         * @param state 是否携带用户信息，true 携带，false 不携带。
+//         */
+//        RongIM.getInstance().setMessageAttachedUserInfo(true);
+//        //首先需要构造使用客服者的用户信息
+//        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+//        CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+//
+//        /**
+//         * 启动客户服聊天界面。
+//         *
+//         * @param context           应用上下文。
+//         * @param customerServiceId 要与之聊天的客服 Id。
+//         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+//         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+//         */
+//        RongIM.getInstance().startCustomerServiceChat(ChanPinXQCZActivity.this, userInfo.getUid(), "在线客服", csInfo);
     }
 
     @Override

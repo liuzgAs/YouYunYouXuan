@@ -1,5 +1,6 @@
 package com.vip.uyux.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -63,15 +64,42 @@ public class IndexRecom {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         private int id;
         private String title;
         private String img;
+        private String headimg;
         private String url;
         private int type;
         private int isc;
         private String nickname;
+        private String des;
         private int collectNum;
+        private int style;
+
+        public String getHeadimg() {
+            return headimg;
+        }
+
+        public void setHeadimg(String headimg) {
+            this.headimg = headimg;
+        }
+
+        public String getDes() {
+            return des;
+        }
+
+        public void setDes(String des) {
+            this.des = des;
+        }
+
+        public int getStyle() {
+            return style;
+        }
+
+        public void setStyle(int style) {
+            this.style = style;
+        }
 
         public String getUrl() {
             return url;

@@ -8,12 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.vip.uyux.customview.ResizableImageView
+            android:foreground="#44000000"
             android:id="@+id/imageTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@mipmap/wodejifen_bg" />
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/textContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +23,7 @@
             android:layout_margin="@dimen/leftAndRight"
             android:text="只用3块钱的星巴克"
             android:textColor="@color/white"
-            android:textSize="@dimen/normal_textsize" />
+            android:textSize="@dimen/bigText" />
     </RelativeLayout>
 
 

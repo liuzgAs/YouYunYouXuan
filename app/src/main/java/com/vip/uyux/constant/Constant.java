@@ -467,6 +467,18 @@ public class Constant {
          * 用户协议
          */
         public static final String YONG_HU_XIE_YI = "/Article/info/type/Reg";
+        /**
+         * 好物分享
+         */
+        public static final String INDEX_SHAREINFO = "/Index/shareInfo";
+        /**
+         * 海报分享
+         */
+        public static final String GOODS_POSTER = "/Goods/poster";
+        /**
+         * 系统消息
+         */
+        public static final String MASSAGE_MSG = "/massage/msg";
     }
 
     public static class IntentKey {
@@ -537,6 +549,7 @@ public class Constant {
         public static final String SHUA_XIN_CE_PING = "shua_xin_ce_ping";
         public static final String SHUA_XIN_SHOU_CANG = "shuaXinShouCang";
         public static final String SHUA_XIN_TIPS = "shuaXinTips";
+        public static final String GUANBIDENGLU = "guanBiDengLu";
     }
 
 
