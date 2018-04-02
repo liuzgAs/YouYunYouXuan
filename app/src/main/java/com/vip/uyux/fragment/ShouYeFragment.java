@@ -188,11 +188,13 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
 
             @Override
             public View onCreateView(ViewGroup parent) {
+                LogUtil.LogShitou("ShouYeFragment--onCreateView", "11111111111");
                 View view = LayoutInflater.from(mContext).inflate(R.layout.header_index, null);
                 int screenWidth = ScreenUtils.getScreenWidth(mContext);
                 banner = view.findViewById(R.id.banner);
                 ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
                 layoutParams.width = screenWidth;
+                LogUtil.LogShitou("ShouYeFragment--onCreateView", ""+(int) (578f * (float) screenWidth / 1080f));
                 layoutParams.height = (int) (578f * (float) screenWidth / 1080f);
                 banner.setLayoutParams(layoutParams);
                 banner.setScrollDuration(1000);
