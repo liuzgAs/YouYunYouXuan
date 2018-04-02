@@ -126,7 +126,7 @@ public class HaiTaoActivity extends ZjbBaseNotLeftActivity implements View.OnCli
             case R.id.viewSearch:
                 Intent intent = new Intent();
                 if (isLogin) {
-                    intent.setClass(HaiTaoActivity.this, XiaoXiZXActivity.class);
+                    intent.setClass(HaiTaoActivity.this, SouSuoActivity.class);
                     startActivity(intent);
                 } else {
                     ToLoginActivity.toLoginActivity(HaiTaoActivity.this);

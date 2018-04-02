@@ -62,6 +62,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
     private ImageView sanJiaoUp;
     private ImageView sanJiaoDown;
     private ImageView sanJiaoUp1;
+    private ImageView imageBack1;
     private ImageView sanJiaoDown1;
     private View relativeLayout2;
 
@@ -87,6 +88,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         editSouSuo = (EditText) findViewById(R.id.editSouSuo);
         imageSouSuo = (ImageView) findViewById(R.id.imageSouSuo);
+        imageBack1= (ImageView) findViewById(R.id.imageBack1);
         scrollHot = (ScrollView) findViewById(R.id.scrollHot);
         viewSearch = findViewById(R.id.viewSearch);
         textZongHe = (TextView) findViewById(R.id.textZongHe);
@@ -472,7 +474,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
                 editSouSuo.setText(keywords);
                 editSouSuo.setSelection(keywords.length());
                 break;
-            case R.id.imageBack:
+            case R.id.imageBack1:
                 finish();
                 break;
             default:
