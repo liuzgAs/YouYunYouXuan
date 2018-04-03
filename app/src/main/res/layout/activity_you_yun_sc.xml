@@ -24,7 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:fitsSystemWindows="true">
+            android:visibility="gone"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -170,11 +172,6 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <RelativeLayout
-            android:id="@+id/viewDiBu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.jude.easyrecyclerview.EasyRecyclerView
                 android:background="@color/white"
@@ -183,14 +180,8 @@
                 android:layout_height="match_parent"
                 app:layout_empty="@layout/view_empty"
                 app:layout_progress="@layout/view_progress"
-                app:scrollbarStyle="insideOverlay" />
-            <RelativeLayout
-                android:id="@+id/viewTouch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </RelativeLayout>
-        </RelativeLayout>
+                app:scrollbarStyle="insideOverlay"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     </android.support.design.widget.CoordinatorLayout>
 
 </RelativeLayout>

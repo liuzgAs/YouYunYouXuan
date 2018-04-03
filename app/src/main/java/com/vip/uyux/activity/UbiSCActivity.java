@@ -11,10 +11,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -64,7 +62,7 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
     private TextView textDuiHuanJL;
     private TextView textScore;
     private EditText editSearch;
-    private View viewTouch;
+//    private View viewTouch;
     private View coordinator;
     private String keywords="";
     private TextView textZhiShiQi;
@@ -94,7 +92,7 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
         textScore = (TextView) findViewById(R.id.textScore);
         textDuiHuanJL = (TextView) findViewById(R.id.textDuiHuanJL);
         editSearch = (EditText) findViewById(R.id.editSearch);
-        viewTouch = findViewById(R.id.viewTouch);
+//        viewTouch = findViewById(R.id.viewTouch);
         coordinator = findViewById(R.id.coordinator);
         banner = (ConvenientBanner) findViewById(R.id.banner);
         banner.setScrollDuration(1000);
@@ -178,6 +176,83 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
 
             }
         });
+        adapter.addHeader(new RecyclerArrayAdapter.ItemView() {
+            private TextView textDuiHuanJL1;
+            private TextView textScore1;
+            private EditText editSearch1;
+            private TextView textZhiShiQi1;
+            private View viewSearch;
+            private ConvenientBanner banner1;
+            @Override
+            public View onCreateView(ViewGroup parent) {
+                View view = LayoutInflater.from(UbiSCActivity.this).inflate(R.layout.header_ubi, null);
+                textScore1 = view.findViewById(R.id.textScore);
+                textDuiHuanJL1 = view.findViewById(R.id.textDuiHuanJL);
+                editSearch1 = view.findViewById(R.id.editSearch);
+                banner1 = view.findViewById(R.id.banner);
+                banner.setScrollDuration(1000);
+                banner.startTurning(3000);
+                textZhiShiQi1 = view.findViewById(R.id.textZhiShiQi);
+                viewSearch= view.findViewById(R.id.viewSearch);
+                editSearch1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (b) {
+                            ViewGroup.LayoutParams layoutParams = editSearch1.getLayoutParams();
+                            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                            editSearch1.setLayoutParams(layoutParams);
+                        } else {
+                            ViewGroup.LayoutParams layoutParams = editSearch1.getLayoutParams();
+                            layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                            editSearch1.setLayoutParams(layoutParams);
+                        }
+                    }
+                });
+                editSearch1.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        keywords = editable.toString().trim();
+                        onRefresh();
+                    }
+                });
+                return view;
+            }
+
+            @Override
+            public void onBindView(View headerView) {
+                if (customerGetintegralshop1!=null){
+                    bannerList = customerGetintegralshop1.getBanner();
+                    my_integral = customerGetintegralshop1.getMy_integral();
+                    exchange_recode = customerGetintegralshop1.getExchange_recode();
+                    textScore1.setText(String.valueOf(my_integral));
+                    textDuiHuanJL1.setText(String.valueOf(exchange_recode));
+                    if (bannerList != null) {
+                        if (bannerList.size() > 0) {
+                            banner1.setPages(new CBViewHolderCreator() {
+                                @Override
+                                public Object createHolder() {
+                                    return new IndexBannerImgHolderView();
+                                }
+                            }, bannerList);
+                        } else {
+                            textZhiShiQi1.setText("0/0");
+                        }
+                    } else {
+                        textZhiShiQi1.setText("0/0");
+                    }
+                }
+            }
+        });
         adapter.setNoMore(R.layout.view_nomore_ubi, new RecyclerArrayAdapter.OnNoMoreListener() {
             @Override
             public void onNoMoreShow() {
@@ -246,34 +321,34 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
                 onRefresh();
             }
         });
-        viewTouch.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewTouch.setFocusable(true);
-                viewTouch.setFocusableInTouchMode(true);
-                viewTouch.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
-                            0);
-                }
-                return false;
-            }
-        });
-        coordinator.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                coordinator.setFocusable(true);
-                coordinator.setFocusableInTouchMode(true);
-                coordinator.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
-                            0);
-                }
-                return false;
-            }
-        });
+//        viewTouch.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                viewTouch.setFocusable(true);
+//                viewTouch.setFocusableInTouchMode(true);
+//                viewTouch.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                if (imm != null) {
+//                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+//                            0);
+//                }
+//                return false;
+//            }
+//        });
+//        coordinator.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                coordinator.setFocusable(true);
+//                coordinator.setFocusableInTouchMode(true);
+//                coordinator.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                if (imm != null) {
+//                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+//                            0);
+//                }
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -315,7 +390,7 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
         params.put("keywords", keywords);
         return new OkObject(params, url);
     }
-
+    CustomerGetintegralshop customerGetintegralshop1;
     @Override
     public void onRefresh() {
         page = 1;
@@ -327,26 +402,7 @@ public class UbiSCActivity extends ZjbBaseActivity implements View.OnClickListen
                     page++;
                     CustomerGetintegralshop customerGetintegralshop = GsonUtils.parseJSON(s, CustomerGetintegralshop.class);
                     if (customerGetintegralshop.getStatus() == 1) {
-                        top_img = customerGetintegralshop.getTop_img();
-                        bannerList = customerGetintegralshop.getBanner();
-                        my_integral = customerGetintegralshop.getMy_integral();
-                        exchange_recode = customerGetintegralshop.getExchange_recode();
-                        textScore.setText(String.valueOf(my_integral));
-                        textDuiHuanJL.setText(String.valueOf(exchange_recode));
-                        if (bannerList != null) {
-                            if (bannerList.size() > 0) {
-                                banner.setPages(new CBViewHolderCreator() {
-                                    @Override
-                                    public Object createHolder() {
-                                        return new IndexBannerImgHolderView();
-                                    }
-                                }, bannerList);
-                            } else {
-                                textZhiShiQi.setText("0/0");
-                            }
-                        } else {
-                            textZhiShiQi.setText("0/0");
-                        }
+                        customerGetintegralshop1=customerGetintegralshop;
                         List<CustomerGetintegralshop.DataBean> dataBeanList = customerGetintegralshop.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);

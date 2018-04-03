@@ -23,6 +23,8 @@ public class IndexRecom {
     private List<AdvsBean> banner;
     private List<AdvsBean> banner2;
     private List<DataBean> data;
+    private List<EvaluationBean> evaluation;
+
 
     public int getStatus() {
         return status;
@@ -62,6 +64,14 @@ public class IndexRecom {
 
     public void setData(List<DataBean> data) {
         this.data = data;
+    }
+
+    public List<EvaluationBean> getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(List<EvaluationBean> evaluation) {
+        this.evaluation = evaluation;
     }
 
     public static class DataBean implements Serializable{
@@ -166,4 +176,79 @@ public class IndexRecom {
         }
     }
 
+    public static class EvaluationBean implements Serializable{
+        /**
+         * img : http://app.uyux.vip/attachment/images/20180327/110ce923889cd14e9ff4841fe84ed4f1.jpg
+         * title : 收纳，让房间精致起来
+         * price : ￥25起
+         * id : 57
+         * nickname : 优选推荐
+         * des : 收纳，让房间精致起来
+         * url : http://app.uyux.vip/api/Article/hwinfo/id/57.html
+         */
+
+        private String img;
+        private String title;
+        private String price;
+        private int id;
+        private String nickname;
+        private String des;
+        private String url;
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getDes() {
+            return des;
+        }
+
+        public void setDes(String des) {
+            this.des = des;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+    }
 }

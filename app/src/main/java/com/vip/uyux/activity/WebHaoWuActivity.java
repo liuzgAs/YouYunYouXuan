@@ -58,6 +58,7 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
     private ProgressBar pb1;
     private TextView mTv_title;
     private View viewBar;
+    private IndexRecom.EvaluationBean evaluationBean;
     private ImageView imageShouCang;
 
     private BroadcastReceiver reciver = new BroadcastReceiver() {
@@ -152,6 +153,7 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
         Intent intent = getIntent();
         mUrl = intent.getStringExtra(Constant.IntentKey.URL);
         title = intent.getStringExtra(Constant.IntentKey.TITLE);
+        evaluationBean=(IndexRecom.EvaluationBean)intent.getSerializableExtra(Constant.IntentKey.TYPE);
         dataBean = (IndexRecom.DataBean) intent.getSerializableExtra(Constant.IntentKey.BEAN);
     }
 
@@ -171,10 +173,15 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
 
     @Override
     protected void initViews() {
-        if (dataBean.getIsc() == 1) {
-            imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
-        } else {
-            imageShouCang.setImageResource(R.mipmap.shoucang_xq);
+        if (dataBean!=null){
+            imageShouCang.setVisibility(View.VISIBLE);
+            if (dataBean.getIsc() == 1) {
+                imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
+            } else {
+                imageShouCang.setImageResource(R.mipmap.shoucang_xq);
+            }
+        }else {
+            imageShouCang.setVisibility(View.GONE);
         }
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
         layoutParams.height = (int) (getResources().getDimension(R.dimen.titleHeight) + ScreenUtils.getStatusBarHeight(this));
@@ -309,7 +316,11 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
             params.put("tokenTime",tokenTime);
         }
         params.put("type","hw");
-        params.put("id",String.valueOf(dataBean.getId()));
+        if (dataBean!=null){
+            params.put("id",String.valueOf(dataBean.getId()));
+        }else if (evaluationBean!=null){
+            params.put("id",String.valueOf(evaluationBean.getId()));
+        }
         return new OkObject(params, url);
     }
 

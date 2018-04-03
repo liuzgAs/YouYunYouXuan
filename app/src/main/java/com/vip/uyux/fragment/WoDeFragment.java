@@ -439,10 +439,14 @@ public class WoDeFragment extends ZjbBaseFragment implements View.OnClickListene
                 }
                 break;
             case R.id.viewDiBu:
-                intent.setClass(mContext, WebActivity.class);
-                intent.putExtra(Constant.IntentKey.TITLE, vip_url_title);
-                intent.putExtra(Constant.IntentKey.URL, vip_url);
-                startActivity(intent);
+                if (isLogin){
+                    intent.setClass(mContext, WebActivity.class);
+                    intent.putExtra(Constant.IntentKey.TITLE, vip_url_title);
+                    intent.putExtra(Constant.IntentKey.URL, vip_url);
+                    startActivity(intent);
+                }else {
+                    ToLoginActivity.toLoginActivity(mContext);
+                }
                 break;
             case R.id.viewGuanYuWM:
                 intent.setClass(mContext, WebActivity.class);

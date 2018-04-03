@@ -58,6 +58,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private RecyclerArrayAdapter<IndexRecom.DataBean> adapter;
     private List<AdvsBean> bannerBeanList;
     private List<AdvsBean> banner2BeanList;
+    private List<IndexRecom.EvaluationBean> evaluations;
 
     public TuiJianFragment() {
         // Required empty public constructor
@@ -142,6 +143,14 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 
             private PageIndicatorView pageIndicatorView;
             private View viewRecom;
+            private View evaluation;
+            private ImageView imageImg;
+            private TextView textTitle;
+            private TextView textprice;
+            private TextView textDes;
+            private TextView textName;
+
+
             //            private ImageView image0000;
 //            private ImageView image0003;
 //            private ImageView image0004;
@@ -162,6 +171,13 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
 //                image0400 = view.findViewById(R.id.image0400);
                 id_viewpager = view.findViewById(R.id.id_viewpager);
                 viewViewPager = view.findViewById(R.id.viewViewPager);
+                evaluation = view.findViewById(R.id.evaluation);
+                imageImg = view.findViewById(R.id.imageImg);
+                textTitle = view.findViewById(R.id.textTitle);
+                textprice = view.findViewById(R.id.textprice);
+                textDes = view.findViewById(R.id.textDes);
+                textName = view.findViewById(R.id.textName);
+
                 image0300.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -169,6 +185,17 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                         intent.putExtra(Constant.IntentKey.BEAN, banner2BeanList.get(0));
                         intent.setAction(Constant.BroadcastCode.ADV);
                         mContext.sendBroadcast(intent);
+                    }
+                });
+                evaluation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, WebHaoWuActivity.class);
+                        intent.putExtra(Constant.IntentKey.TITLE, evaluations.get(0).getTitle());
+                        intent.putExtra(Constant.IntentKey.URL, evaluations.get(0).getUrl());
+                        intent.putExtra(Constant.IntentKey.TYPE, evaluations.get(0));
+                        startActivity(intent);
                     }
                 });
                 viewRecom = view.findViewById(R.id.viewRecom);
@@ -206,6 +233,25 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     }
                 } else {
                     viewRecom.setVisibility(View.GONE);
+                }
+                if (evaluations != null) {
+                    if (evaluations.size()>0){
+                        evaluation.setVisibility(View.VISIBLE);
+                        textTitle.setText(evaluations.get(0).getTitle());
+                        textprice.setText(evaluations.get(0).getPrice());
+                        textDes.setText(evaluations.get(0).getDes());
+                        textName.setText(evaluations.get(0).getNickname());
+                        GlideApp.with(getContext())
+                                .asBitmap()
+                                .centerCrop()
+                                .transform(new RoundedCorners((int) DpUtils.convertDpToPixel(12, getContext())))
+                                .load(evaluations.get(0).getImg())
+                                .into(imageImg);
+                    }else {
+                        evaluation.setVisibility(View.GONE);
+                    }
+                } else {
+                    evaluation.setVisibility(View.GONE);
                 }
             }
         });
@@ -279,7 +325,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     intent.setClass(mContext, WebHaoWuActivity.class);
                     intent.putExtra(Constant.IntentKey.TITLE, adapter.getItem(position).getTitle());
                     intent.putExtra(Constant.IntentKey.URL, adapter.getItem(position).getUrl());
-                    intent.putExtra(Constant.IntentKey.BEAN,adapter.getItem(position));
+                    intent.putExtra(Constant.IntentKey.BEAN, adapter.getItem(position));
                     startActivity(intent);
                 }
             }
@@ -328,6 +374,7 @@ public class TuiJianFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                     if (indexRecom.getStatus() == 1) {
                         bannerBeanList = indexRecom.getBanner();
                         banner2BeanList = indexRecom.getBanner2();
+                        evaluations = indexRecom.getEvaluation();
                         List<IndexRecom.DataBean> dataBeanList = indexRecom.getData();
                         adapter.clear();
                         adapter.addAll(dataBeanList);

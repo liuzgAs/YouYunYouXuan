@@ -194,11 +194,9 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
                 banner = view.findViewById(R.id.banner);
                 ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
                 layoutParams.width = screenWidth;
+                banner.setLayoutParams(layoutParams);
                 LogUtil.LogShitou("ShouYeFragment--onCreateView", ""+(int) (578f * (float) screenWidth / 1080f));
                 layoutParams.height = (int) (578f * (float) screenWidth / 1080f);
-                banner.setLayoutParams(layoutParams);
-                banner.setScrollDuration(1000);
-                banner.startTurning(3000);
                 textZhiShiQi = view.findViewById(R.id.textZhiShiQi);
                 banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
@@ -310,14 +308,24 @@ public class ShouYeFragment extends ZjbBaseFragment implements SwipeRefreshLayou
             @Override
             public void onBindView(View headerView) {
                 if (bannerList != null) {
-                    if (bannerList.size() > 0) {
+                    if (bannerList.size() > 1) {
+                        banner.setScrollDuration(1000);
+                        banner.startTurning(3000);
                         banner.setPages(new CBViewHolderCreator() {
                             @Override
                             public Object createHolder() {
                                 return new IndexBannerImgHolderView();
                             }
                         }, bannerList);
-                    } else {
+                    } else if(bannerList.size() == 1){
+                        banner.setManualPageable(false);
+                        banner.setPages(new CBViewHolderCreator() {
+                            @Override
+                            public Object createHolder() {
+                                return new IndexBannerImgHolderView();
+                            }
+                        }, bannerList);
+                    }else {
                         textZhiShiQi.setText("0/0");
                     }
                 } else {

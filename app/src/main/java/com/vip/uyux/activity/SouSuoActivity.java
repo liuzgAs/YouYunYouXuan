@@ -128,7 +128,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
         adapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                ApiClient.post(SouSuoActivity.this, getOkObject(), new ApiClient.CallBack() {
+                ApiClient.post(SouSuoActivity.this, getOkObjectSouSuo(), new ApiClient.CallBack() {
                     @Override
                     public void onSuccess(String s) {
                         LogUtil.LogShitou("DingDanGLActivity--加载更多", s + "");
@@ -340,7 +340,7 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-
+        SouSuo();
     }
 
     /**

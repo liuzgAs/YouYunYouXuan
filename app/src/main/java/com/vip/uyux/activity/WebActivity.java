@@ -11,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,6 +39,9 @@ public class WebActivity extends ZjbBaseActivity implements View.OnClickListener
     private ProgressBar pb1;
     private TextView mTv_title;
     private View viewBar;
+    private ImageView imageShouCang;
+    private ImageView imageFenXiang;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +68,15 @@ public class WebActivity extends ZjbBaseActivity implements View.OnClickListener
         mWebView = (WebView) findViewById(R.id.webView);
         pb1 = (ProgressBar) findViewById(R.id.progressBar2);
         mTv_title = (TextView) findViewById(R.id.textViewTitle);
+        imageShouCang= (ImageView) findViewById(R.id.imageShouCang);
+        imageFenXiang= (ImageView) findViewById(R.id.imageFenXiang);
+
     }
 
     @Override
     protected void initViews() {
+        imageShouCang.setVisibility(View.INVISIBLE);
+        imageFenXiang.setVisibility(View.INVISIBLE);
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
         layoutParams.height = (int) (getResources().getDimension(R.dimen.titleHeight) + ScreenUtils.getStatusBarHeight(this));
         viewBar.setLayoutParams(layoutParams);
