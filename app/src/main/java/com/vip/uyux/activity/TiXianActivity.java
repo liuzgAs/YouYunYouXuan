@@ -188,7 +188,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
      * date： 2017/8/28 0028 上午 9:55
      */
     private OkObject getTXOkObject() {
-        String url = Constant.HOST + Constant.Url.WITHDRAW_ADDDONECOM;
+        String url = Constant.HOST + Constant.Url.WITHDRAW_ADDDONE;
         HashMap<String, String> params = new HashMap<>();
         if (isLogin) {
             params.put("uid", userInfo.getUid());
@@ -238,7 +238,11 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
 //                }
 //                chooseBank();
 //                tiXian();
-                chooseType();
+                if (type==2){
+                    yjtiXian();
+                }else {
+                    chooseType();
+                }
                 break;
             case R.id.imageBack:
                 finish();
@@ -547,5 +551,49 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
                 Toast.makeText(TiXianActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void yjtiXian() {
+        showLoadingDialog();
+        ApiClient.post(TiXianActivity.this, getyjTXOkObject(), new ApiClient.CallBack() {
+            @Override
+            public void onSuccess(String s) {
+                cancelLoadingDialog();
+                LogUtil.LogShitou("TiXianActivity--onSuccess", s + "");
+                try {
+                    SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
+                    if (simpleInfo.getStatus() == 1) {
+                        final Intent intent = new Intent(Constant.BroadcastCode.TIXIAN);
+                        sendBroadcast(intent);
+                        Toast.makeText(TiXianActivity.this, "提现申请成功，请等待工作人员审核~", Toast.LENGTH_SHORT).show();
+                        finish();
+
+                    } else if (simpleInfo.getStatus() == 3) {
+                        MyDialog.showReLoginDialog(TiXianActivity.this);
+                    } else {
+                        MyDialog.showTipDialog(TiXianActivity.this, simpleInfo.getInfo());
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(TiXianActivity.this, "数据出错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError() {
+                cancelLoadingDialog();
+                Toast.makeText(TiXianActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private OkObject getyjTXOkObject() {
+        String url = Constant.HOST + Constant.Url.WITHDRAW_ADDDONECOM;
+        HashMap<String, String> params = new HashMap<>();
+        if (isLogin) {
+            params.put("uid", userInfo.getUid());
+            params.put("tokenTime", tokenTime);
+        }
+        params.put("money", editJinE.getText().toString().trim());
+        return new OkObject(params, url);
     }
 }

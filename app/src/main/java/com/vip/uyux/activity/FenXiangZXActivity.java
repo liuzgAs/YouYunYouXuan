@@ -57,6 +57,9 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
                         isShare = false;
                     }
                     break;
+                case Constant.BroadcastCode.TIXIAN:
+                    initData();
+                    break;
                 default:
                     break;
             }
@@ -257,6 +260,7 @@ public class FenXiangZXActivity extends ZjbBaseActivity implements View.OnClickL
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BroadcastCode.WX_SHARE);
         filter.addAction(Constant.BroadcastCode.WX_SHARE_FAIL);
+        filter.addAction(Constant.BroadcastCode.TIXIAN);
         registerReceiver(reciver, filter);
     }
 

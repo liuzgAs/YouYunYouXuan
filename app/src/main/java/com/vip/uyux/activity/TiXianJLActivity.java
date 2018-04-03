@@ -194,7 +194,7 @@ public class TiXianJLActivity extends ZjbBaseActivity implements SwipeRefreshLay
                 url = Constant.HOST + Constant.Url.WITHDRAW_TCOMMISSION;
                 break;
             default:
-                url = Constant.HOST + Constant.Url.WITHDRAW_TBALANCE;
+                url = Constant.HOST + Constant.Url.WITHDRAW_TCOMMISSION;
                 break;
         }
         HashMap<String, String> params = new HashMap<>();

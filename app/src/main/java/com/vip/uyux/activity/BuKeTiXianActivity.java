@@ -1,9 +1,6 @@
 package com.vip.uyux.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -38,19 +35,6 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     private TextView textViewTitle;
     private String upUrl;
     private ImageView imageWhat;
-    private BroadcastReceiver reciver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            switch (action) {
-                case Constant.BroadcastCode.TIXIAN:
-                    initData();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
     private TextView textViewRight;
 
     @Override
@@ -249,14 +233,10 @@ public class BuKeTiXianActivity extends ZjbBaseActivity implements View.OnClickL
     @Override
     public void onStart() {
         super.onStart();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constant.BroadcastCode.TIXIAN);
-        registerReceiver(reciver, filter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(reciver);
     }
 }

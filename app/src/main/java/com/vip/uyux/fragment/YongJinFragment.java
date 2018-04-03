@@ -2,6 +2,10 @@ package com.vip.uyux.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,6 +48,19 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
     private View mInflate;
     private int type;
     private int typeP;
+    private BroadcastReceiver reciver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case Constant.BroadcastCode.TIXIAN:
+                    initData();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public YongJinFragment() {
         // Required empty public constructor
@@ -277,5 +294,18 @@ public class YongJinFragment extends ZjbBaseFragment implements SwipeRefreshLayo
                 }
             }
         });
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BroadcastCode.TIXIAN);
+        getActivity().registerReceiver(reciver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(reciver);
     }
 }
