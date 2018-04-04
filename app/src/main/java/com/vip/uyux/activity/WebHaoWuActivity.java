@@ -174,14 +174,17 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
     @Override
     protected void initViews() {
         if (dataBean!=null){
-            imageShouCang.setVisibility(View.VISIBLE);
             if (dataBean.getIsc() == 1) {
                 imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
             } else {
                 imageShouCang.setImageResource(R.mipmap.shoucang_xq);
             }
-        }else {
-            imageShouCang.setVisibility(View.GONE);
+        }else if (evaluationBean!=null){
+            if (evaluationBean.getIsc() == 1) {
+                imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
+            } else {
+                imageShouCang.setImageResource(R.mipmap.shoucang_xq);
+            }
         }
         ViewGroup.LayoutParams layoutParams = viewBar.getLayoutParams();
         layoutParams.height = (int) (getResources().getDimension(R.dimen.titleHeight) + ScreenUtils.getStatusBarHeight(this));
@@ -284,14 +287,26 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.imageShouCang:
-                if (isLogin) {
-                    if (dataBean.getIsc() == 0) {
-                        shouCang();
+                if(dataBean!=null){
+                    if (isLogin) {
+                        if (dataBean.getIsc() == 0) {
+                            shouCang();
+                        } else {
+                            quXiaoSC();
+                        }
                     } else {
-                        quXiaoSC();
+                        ToLoginActivity.toLoginActivity(this);
                     }
-                } else {
-                    ToLoginActivity.toLoginActivity(this);
+                }else if (evaluationBean!=null){
+                    if (isLogin) {
+                        if (evaluationBean.getIsc() == 0) {
+                            shouCang();
+                        } else {
+                            quXiaoSC();
+                        }
+                    } else {
+                        ToLoginActivity.toLoginActivity(this);
+                    }
                 }
                 break;
             case R.id.imageBack:
@@ -363,7 +378,12 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
      */
     private void quXiaoSC() {
         String url = Constant.HOST + Constant.Url.GOODS_CANCLECOLLECT;
-        ShouCangShanChu shouCangShanChu = new ShouCangShanChu(1, "android", userInfo.getUid(), tokenTime, dataBean.getId(), 2);
+        ShouCangShanChu shouCangShanChu=null;
+        if (dataBean!=null){
+           shouCangShanChu = new ShouCangShanChu(1, "android", userInfo.getUid(), tokenTime, dataBean.getId(), 2);
+        }else if (evaluationBean!=null){
+            shouCangShanChu = new ShouCangShanChu(1, "android", userInfo.getUid(), tokenTime, evaluationBean.getId(), 2);
+        }
         showLoadingDialog();
         ApiClient.postJson(WebHaoWuActivity.this, url, GsonUtils.parseObject(shouCangShanChu), new ApiClient.CallBack() {
             @Override
@@ -377,7 +397,12 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
                         intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);
                         sendBroadcast(intent);
                         Toast.makeText(WebHaoWuActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
-                        dataBean.setIsc(0);
+                        if (dataBean!=null){
+                            dataBean.setIsc(0);
+                        }else if (evaluationBean!=null){
+                            evaluationBean.setIsc(0);
+
+                        }
                         imageShouCang.setImageResource(R.mipmap.shoucang_xq);
                     } else if (simpleInfo.getStatus() == 3) {
                         MyDialog.showReLoginDialog(WebHaoWuActivity.this);
@@ -409,7 +434,11 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
             params.put("uid", userInfo.getUid());
             params.put("tokenTime", tokenTime);
         }
-        params.put("item_id", String.valueOf(dataBean.getId()));
+        if (dataBean!=null){
+            params.put("item_id", String.valueOf(dataBean.getId()));
+        } else if (evaluationBean!=null) {
+            params.put("item_id", String.valueOf(evaluationBean.getId()));
+        }
         params.put("type", String.valueOf(2));
         return new OkObject(params, url);
     }
@@ -428,7 +457,11 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);
                     if (simpleInfo.getStatus() == 1) {
                         Toast.makeText(WebHaoWuActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
-                        dataBean.setIsc(1);
+                        if (dataBean!=null){
+                            dataBean.setIsc(1);
+                        }else if (evaluationBean!=null){
+                            evaluationBean.setIsc(1);
+                        }
                         imageShouCang.setImageResource(R.mipmap.shoucang_xq_true);
                         Intent intent = new Intent();
                         intent.setAction(Constant.BroadcastCode.SHUA_XIN_SHOU_CANG);

@@ -31,7 +31,9 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<YouHuiQuan> {
     private final TextView btnBtnDes;
     private final View viewBg;
     private final View viewKeZengSong;
+    private final View ZengSongpy;
     private final View viewZengSong;
+
     YouHuiQuan data;
     OnFinishListener onFinishListener;
     OnShareYouHuiQuanListener OnShareYouHuiQuanListener;
@@ -52,15 +54,18 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<YouHuiQuan> {
         viewZengSong = $(R.id.viewZengSong);
         imageKeZengSong = $(R.id.imageKeZengSong);
         imageGou = $(R.id.imageGou);
+        ZengSongpy = $(R.id.ZengSongpy);
         viewKeZengSong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (data.isZhanKai()){
                     data.setZhanKai(false);
                     viewZengSong.setVisibility(View.GONE);
+
                 }else {
                     data.setZhanKai(true);
                     viewZengSong.setVisibility(View.VISIBLE);
+
                 }
             }
         });
@@ -97,17 +102,23 @@ public class YouHuiQuanViewHolder extends BaseViewHolder<YouHuiQuan> {
             viewBg.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.basic_color));
             btnBtnDes.setTextColor(ContextCompat.getColor(getContext(),R.color.basic_color));
             btnBtnDes.setBackgroundResource(R.drawable.shape_basic01_1dp_25dp);
+            viewKeZengSong.setClickable(true);
         }else {
             viewBg.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.youHuiQuanGray));
             btnBtnDes.setTextColor(ContextCompat.getColor(getContext(),R.color.text_gray));
             btnBtnDes.setBackgroundResource(R.drawable.shape_gray1dp_20dp);
+            viewKeZengSong.setClickable(false);
         }
         if (data.getIs_send()==1){
             viewKeZengSong.setEnabled(true);
             imageKeZengSong.setVisibility(View.VISIBLE);
+            ZengSongpy.setVisibility(View.VISIBLE);
+            viewZengSong.setEnabled(true);
         }else {
-            viewKeZengSong.setEnabled(false);
+            viewKeZengSong.setEnabled(true);
             imageKeZengSong.setVisibility(View.GONE);
+            ZengSongpy.setVisibility(View.GONE);
+            viewZengSong.setEnabled(false);
         }
         if (data.isZhanKai()){
             viewZengSong.setVisibility(View.VISIBLE);

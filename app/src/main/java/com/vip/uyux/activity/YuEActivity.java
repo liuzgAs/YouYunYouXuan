@@ -40,6 +40,7 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
     private RecyclerArrayAdapter<WithdrawNotwithdraw.DataBean> adapter;
     private TextView textShouYi;
     private TextView textStart;
+    private TextView textViewRight;
     private TextView textEnd;
     private String date_begin = "";
     private String date_end = "";
@@ -67,11 +68,13 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
         textShouYi = (TextView) findViewById(R.id.textShouYi);
         textStart = (TextView) findViewById(R.id.textStart);
         textEnd = (TextView) findViewById(R.id.textEnd);
+        textViewRight= (TextView) findViewById(R.id.textViewRight);
     }
 
     @Override
     protected void initViews() {
         ((TextView) findViewById(R.id.textViewTitle)).setText("我的余额");
+        textViewRight.setText("提现记录");
         initRecycler();
     }
 
@@ -162,6 +165,7 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
         findViewById(R.id.btnLiJiTX).setOnClickListener(this);
         findViewById(R.id.viewStart).setOnClickListener(this);
         findViewById(R.id.viewEnd).setOnClickListener(this);
+        textViewRight.setOnClickListener(this);
     }
 
     @Override
@@ -180,6 +184,12 @@ public class YuEActivity extends ZjbBaseActivity implements View.OnClickListener
                 break;
             case R.id.imageBack:
                 finish();
+                break;
+            case R.id.textViewRight:
+                Intent intent1 = new Intent();
+                intent1.setClass(YuEActivity.this, TiXianJLActivity.class);
+                intent1.putExtra(Constant.IntentKey.TYPE,1);
+                startActivity(intent1);
                 break;
             case R.id.viewStart:
                 Calendar c1 = Calendar.getInstance();

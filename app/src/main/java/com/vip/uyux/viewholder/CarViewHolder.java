@@ -121,10 +121,11 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (TextUtils.isEmpty(editable.toString())) {
-                    editNum.setText("1");
-                    editNum.setSelection(1);
+//                    editNum.setSelection(1);
+                    data.setNum(0);
+                }else {
+                    data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
                 }
-                data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
                 if (!isFrist) {
                     gengXinCarNum();
                 }
@@ -240,11 +241,11 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
      * 更新购物车数量
      */
     private void gengXinCarNum() {
-        onProgressDialogListener.show();
+//        onProgressDialogListener.show();
         ApiClient.post(getContext(), getOkObject(), new ApiClient.CallBack() {
             @Override
             public void onSuccess(String s) {
-                onProgressDialogListener.hide();
+//                onProgressDialogListener.hide();
                 LogUtil.LogShitou("CarViewHolder--onSuccess", s + "");
                 try {
                     SimpleInfo simpleInfo = GsonUtils.parseJSON(s, SimpleInfo.class);

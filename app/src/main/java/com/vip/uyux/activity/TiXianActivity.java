@@ -98,6 +98,7 @@ public class TiXianActivity extends ZjbBaseActivity implements View.OnClickListe
         switch (type) {
             case 1:
                 ((TextView) findViewById(R.id.textViewTitle)).setText("余额提现");
+                textViewRight.setVisibility(View.INVISIBLE);
                 break;
             case 2:
                 ((TextView) findViewById(R.id.textViewTitle)).setText("佣金提现");

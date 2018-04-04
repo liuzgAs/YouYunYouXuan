@@ -191,6 +191,7 @@ public class IndexRecom {
         private String title;
         private String price;
         private int id;
+        private int isc;
         private String nickname;
         private String des;
         private String url;
@@ -205,6 +206,14 @@ public class IndexRecom {
 
         public String getTitle() {
             return title;
+        }
+
+        public int getIsc() {
+            return isc;
+        }
+
+        public void setIsc(int isc) {
+            this.isc = isc;
         }
 
         public void setTitle(String title) {

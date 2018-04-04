@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/leftAndRight"
-            android:text="全积分价："
+            android:text="U币："
             android:textSize="@dimen/litterText" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textYuanJia"
             android:layout_toRightOf="@+id/textYuanJia"
-            android:text="分"
+            android:text=" U币"
             android:textColor="@color/basic_color"
             android:textSize="@dimen/moreLitterText" />
 
@@ -109,6 +109,7 @@
         android:paddingRight="5dp"
         android:paddingTop="2dp"
         android:text="原价¥3200"
+        android:visibility="invisible"
         android:textColor="#fe7b81"
         android:textSize="@dimen/moreLitterText" />
 
@@ -145,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textYongYouJF"
             android:layout_toRightOf="@+id/textYongYouJF"
-            android:text="积分"
+            android:text="U币"
             android:textSize="@dimen/normal_textsize" />
 
         <TextView
@@ -155,7 +156,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/leftAndRight"
-            android:text="积分不足"
+            android:text="U币不足"
             android:textColor="@color/basic_color"
             android:textSize="@dimen/litterText" />
     </RelativeLayout>
