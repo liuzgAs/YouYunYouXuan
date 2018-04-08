@@ -24,11 +24,10 @@ public class YinDaoActivity extends ZjbBaseNotLeftActivity {
     private ViewPager mMyPager;
     private PageIndicatorView mPageIndicatorView;
     private int[] imgs = new int[]{
-            R.mipmap.welcome1,
-            R.mipmap.welcome2,
-            R.mipmap.welcome3,
-            R.mipmap.welcome4,
-            R.mipmap.welcome5,
+            R.mipmap.welcome11,
+            R.mipmap.welcome12,
+            R.mipmap.welcome13,
+            R.mipmap.welcome14,
     };
 
     @Override

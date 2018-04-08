@@ -115,8 +115,8 @@ public class HuanYingActivity extends ZjbBaseNotLeftActivity {
                             public void run() {
                                 RequestOptions options = new RequestOptions();
                                 options.centerCrop()
-                                        .placeholder(R.mipmap.newwercome)
-                                        .error(R.mipmap.newwercome);
+                                        .placeholder(R.mipmap.qidong1)
+                                        .error(R.mipmap.qidong1);
                                 Glide.with(HuanYingActivity.this)
                                         .load(indexStartad.getAdvs().get(0).getImg())
                                         .apply(options)
