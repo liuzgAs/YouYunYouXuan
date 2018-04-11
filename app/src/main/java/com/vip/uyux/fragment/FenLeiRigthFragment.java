@@ -158,7 +158,9 @@ public class FenLeiRigthFragment extends ZjbBaseFragment {
     public void onRefresh() {
         adapter.clear();
 //                recyclerView.showProgress();
-        adapter.addAll(dataBean.getList());
+        if (dataBean!=null){
+            adapter.addAll(dataBean.getList());
+        }
     }
 
     @Override

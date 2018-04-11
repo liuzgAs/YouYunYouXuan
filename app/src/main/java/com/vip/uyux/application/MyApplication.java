@@ -24,7 +24,7 @@ import io.rong.imkit.RongIM;
  * @date 2015/12/31
  */
 public class MyApplication extends MultiDexApplication {
-    private static Context context;
+    private  static Context context;
     private List<Activity> activityList = new LinkedList<Activity>();
     private static MyApplication instance;
 
@@ -47,6 +47,7 @@ public class MyApplication extends MultiDexApplication {
     public static Context getContext() {
         return context;
     }
+
 
     /**
      * 单例模式中获取唯一的MyApplication实例
@@ -77,6 +78,7 @@ public class MyApplication extends MultiDexApplication {
 
     /**
      * 初始化云推送通道
+     *
      * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {
@@ -87,6 +89,7 @@ public class MyApplication extends MultiDexApplication {
             public void onSuccess(String response) {
                 Log.e("MyApplication", "init cloudchannel success");
             }
+
             @Override
             public void onFailed(String errorCode, String errorMessage) {
                 Log.e("MyApplication", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);

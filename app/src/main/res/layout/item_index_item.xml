@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/itemIndexWidth"
+    android:layout_width="140dp"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
     <com.vip.uyux.customview.YuanJiaoImageView
         android:id="@+id/imageImg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/itemIndexWidth"
+        android:layout_height="140dp"
         android:scaleType="centerCrop"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:paddingTop="3dp"
         android:text="五星会员省8元"
         android:textColor="@color/white"
-        android:textSize="@dimen/litterText" />
+        android:textSize="10dp" />
 
     <ImageView
         android:layout_marginRight="5dp"
