@@ -191,6 +191,7 @@ public class WebHaoWuActivity extends ZjbBaseActivity implements View.OnClickLis
         viewBar.setLayoutParams(layoutParams);
         if (!TextUtils.isEmpty(title)) {
             mTv_title.setText(title);
+            mTv_title.getPaint().setFakeBoldText(false);
         }
         mWebView.loadUrl(mUrl);
         mWebView.setWebViewClient(new WebViewClient());//覆盖第三方浏览器
