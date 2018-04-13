@@ -838,6 +838,9 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
      */
     private void rongYun() {
         LogUtil.LogShitou("ChanPinXQCZActivity--rongYun", "cao");
+        if (userInfo==null){
+            return;
+        }
         if (getApplicationInfo().packageName.equals(getCurProcessName(ChanPinXQCZActivity.this))) {
             LogUtil.LogShitou("ChanPinXQCZActivity--getYunToken", userInfo.getYunToken());
             RongIM.connect(userInfo.getYunToken(), new RongIMClient.ConnectCallback() {
@@ -901,6 +904,8 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
                 public void onError(RongIMClient.ErrorCode errorCode) {
                     LogUtil.LogShitou("CheLiangXQActivity--onError", "" + errorCode.toString());
                 }
+
+
 
 
             });
