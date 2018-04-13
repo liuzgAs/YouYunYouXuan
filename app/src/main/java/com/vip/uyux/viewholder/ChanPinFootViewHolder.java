@@ -33,6 +33,7 @@ public class ChanPinFootViewHolder extends BaseViewHolder<ImgsBean> {
             GlideApp.with(getContext())
                     .asBitmap()
                     .load(data.getImg())
+                    .thumbnail( 0.6f )
                     .into(new SimpleTarget<Bitmap>(data.getWidth(),data.getHeigth()) {
                         @Override
                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
@@ -49,6 +50,7 @@ public class ChanPinFootViewHolder extends BaseViewHolder<ImgsBean> {
             GlideApp.with(getContext())
                     .asBitmap()
                     .load(data.getImg())
+                    .thumbnail( 0.6f )
                     .placeholder(R.mipmap.ic_empty_h)
                     .dontAnimate()
                     .into(new SimpleTarget<Bitmap>() {

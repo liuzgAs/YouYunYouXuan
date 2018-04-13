@@ -93,6 +93,7 @@
             android:gravity="center"
             android:inputType="number"
             android:text="1"
+            android:maxLength="8"
             android:textSize="@dimen/litterText" />
 
         <ImageView
