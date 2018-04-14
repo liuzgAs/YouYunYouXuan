@@ -36,7 +36,7 @@ public class ChanPinFootViewHolder extends BaseViewHolder<ImgsBean> {
                     .thumbnail( 0.6f )
                     .into(new SimpleTarget<Bitmap>(data.getWidth(),data.getHeigth()) {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
                             imageImg.setImageBitmap(resource);
                         }
 
@@ -55,7 +55,8 @@ public class ChanPinFootViewHolder extends BaseViewHolder<ImgsBean> {
                     .dontAnimate()
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+
                             int width = resource.getWidth();
                             int height = resource.getHeight();
                             data.setWidth(width);

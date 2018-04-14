@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.Selection;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -115,7 +116,27 @@ public class CarViewHolder extends BaseViewHolder<CartIndex.CartBean> {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Editable editable = editNum.getText();
+                int len = editable.length();
 
+                if (len > 8) {
+                    Toast.makeText(getContext(),"不能再多了",Toast.LENGTH_SHORT).show();
+                    int selEndIndex = Selection.getSelectionEnd(editable);
+                    String str = editable.toString();
+                    //截取新字符串
+                    String newStr = str.substring(0, 8);
+                    editNum.setText(newStr);
+                    editable = editNum.getText();
+
+                    //新字符串的长度
+                    int newLen = editable.length();
+                    //旧光标位置超过字符串长度
+                    if (selEndIndex > newLen) {
+                        selEndIndex = editable.length();
+                    }
+                    //设置新光标所在的位置
+                    Selection.setSelection(editable, selEndIndex);
+                }
             }
 
             @Override

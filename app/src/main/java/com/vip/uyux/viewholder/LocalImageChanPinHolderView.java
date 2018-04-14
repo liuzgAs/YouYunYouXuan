@@ -27,7 +27,6 @@ public class LocalImageChanPinHolderView implements Holder<String> {
     public void UpdateUI(final Context context, int position, final String data) {
         GlideApp.with(context)
                 .load(data)
-                .thumbnail(0.6f)
                 .placeholder(R.mipmap.ic_empty)
                 .transition(new DrawableTransitionOptions().crossFade(500))
                 .into(imageView);

@@ -15,7 +15,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.Selection;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -1109,28 +1112,41 @@ public class ChanPinXQCZActivity extends ZjbBaseActivity implements SwipeRefresh
 //                return null;
 //            }
 //        }});
-//        editNum.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                if (TextUtils.isEmpty(editable.toString())) {
-//                    editNum.setText("1");
-//                    editNum.setSelection(1);
-//                }
-////                data.setNum(Integer.parseInt(editNum.getText().toString().trim()));
-////                Double price = Arith.mul((double) data.getNum(), Double.parseDouble(data.getGoods_price()));
-////                ((QueRenDDActivity) getContext()).textSum.setText("¥" + price);
-//            }
-//        });
+        editNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Editable editable = editNum.getText();
+                int len = editable.length();
+
+                if (len > 8) {
+                    Toast.makeText(ChanPinXQCZActivity.this,"不能再多了",Toast.LENGTH_SHORT).show();
+                    int selEndIndex = Selection.getSelectionEnd(editable);
+                    String str = editable.toString();
+                    //截取新字符串
+                    String newStr = str.substring(0, 8);
+                    editNum.setText(newStr);
+                    editable = editNum.getText();
+
+                    //新字符串的长度
+                    int newLen = editable.length();
+                    //旧光标位置超过字符串长度
+                    if (selEndIndex > newLen) {
+                        selEndIndex = editable.length();
+                    }
+                    //设置新光标所在的位置
+                    Selection.setSelection(editable, selEndIndex);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
         dialog_chan_pin.findViewById(R.id.buttonSure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
