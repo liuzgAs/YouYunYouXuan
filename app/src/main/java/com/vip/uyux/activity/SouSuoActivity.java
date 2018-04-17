@@ -83,8 +83,8 @@ public class SouSuoActivity extends ZjbBaseActivity implements SwipeRefreshLayou
 
     @Override
     protected void findID() {
-        flowTagLayout01 = (FlowTagLayout) findViewById(R.id.flowTagLayout01);
-        flowTagLayout02 = (FlowTagLayout) findViewById(R.id.flowTagLayout02);
+        flowTagLayout02 = (FlowTagLayout) findViewById(R.id.flowTagLayout01);
+        flowTagLayout01 = (FlowTagLayout) findViewById(R.id.flowTagLayout02);
         recyclerView = (EasyRecyclerView) findViewById(R.id.recyclerView);
         editSouSuo = (EditText) findViewById(R.id.editSouSuo);
         imageSouSuo = (ImageView) findViewById(R.id.imageSouSuo);
