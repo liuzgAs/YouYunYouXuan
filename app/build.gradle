@@ -6,8 +6,8 @@ android {
         applicationId "com.vip.uyux"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 18041301
-        versionName "1.6.7"
+        versionCode 18041701
+        versionName "1.6.8"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

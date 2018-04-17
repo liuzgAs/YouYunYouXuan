@@ -119,12 +119,14 @@ public class FenLeiRigthFragment extends ZjbBaseFragment {
 
             @Override
             public void onBindView(View headerView) {
-                if (dataBean.getImg() != null) {
-                    GlideApp.with(mContext)
-                            .load(dataBean.getImg())
-                            .centerCrop()
-                            .placeholder(R.mipmap.ic_empty)
-                            .into(imageImg);
+                if (dataBean!=null){
+                    if (dataBean.getImg() != null) {
+                        GlideApp.with(mContext)
+                                .load(dataBean.getImg())
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_empty)
+                                .into(imageImg);
+                    }
                 }
             }
         });
